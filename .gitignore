@@ -49,3 +49,4 @@ nbdist/
 .editorconfig
 /log
 /logs
+.DS_Store

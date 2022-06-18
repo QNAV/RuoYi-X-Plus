@@ -1,0 +1,31 @@
+version: '3.5'
+
+services:
+  ruoyi-application-admin:
+    image: ruoyi-application-admin
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "ruoyi-application-admin"
+    volumes:
+      - tmp:/tmp
+      - logs:/logs
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - quicknav
+    environment:
+      RUN_ENV: dev
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+volumes:
+  logs:
+  tmp:
+
+networks:
+  quicknav:
+    name: 'quicknav'
