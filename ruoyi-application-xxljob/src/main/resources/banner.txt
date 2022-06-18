@@ -1,0 +1,2 @@
+Application Version: ${ruoyi-x-plus.version}
+Spring Boot Version: ${spring-boot.version}
