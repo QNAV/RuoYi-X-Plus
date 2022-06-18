@@ -19,7 +19,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 VOLUME /tmp /logs
 
 # 添加服务jar包
-ADD target/ruoyi-application-admin-22.6.0.jar /app.jar
+ADD target/ruoyi-application-admin.jar /app.jar
 
 # JVM参数（必须配合docker资源限制机制，比如最大给多少内存容器即可，JVM会自动分配）
 ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:InitialRAMPercentage=50.0 -XX:MinRAMPercentage=50.0 -XX:MaxRAMPercentage=50.0 -XX:-UseAdaptiveSizePolicy"
