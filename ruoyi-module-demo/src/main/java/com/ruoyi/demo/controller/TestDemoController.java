@@ -18,6 +18,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.demo.domain.TestDemo;
 import com.ruoyi.demo.domain.bo.TestDemoBo;
 import com.ruoyi.demo.domain.bo.TestDemoImportVo;
+import com.ruoyi.demo.domain.to.TestDemoQuery;
 import com.ruoyi.demo.domain.vo.TestDemoVo;
 import com.ruoyi.demo.service.ITestDemoService;
 import io.swagger.annotations.*;
@@ -55,8 +56,8 @@ public class TestDemoController extends BaseController {
     @ApiOperation("查询测试单表列表")
     @SaCheckPermission("demo:demo:list")
     @GetMapping("/list")
-    public TableDataInfo<TestDemoVo> list(@Validated(QueryGroup.class) TestDemoBo bo, PageQuery pageQuery) {
-        return iTestDemoService.queryPageList(bo, pageQuery);
+    public TableDataInfo<TestDemoVo> list(@Validated(QueryGroup.class) TestDemoQuery query, PageQuery pageQuery) {
+        return iTestDemoService.queryPageList(query, pageQuery);
     }
 
     /**
@@ -65,8 +66,8 @@ public class TestDemoController extends BaseController {
     @ApiOperation("自定义分页查询")
     @SaCheckPermission("demo:demo:list")
     @GetMapping("/page")
-    public TableDataInfo<TestDemoVo> page(@Validated(QueryGroup.class) TestDemoBo bo, PageQuery pageQuery) {
-        return iTestDemoService.customPageList(bo, pageQuery);
+    public TableDataInfo<TestDemoVo> page(@Validated(QueryGroup.class) TestDemoQuery query, PageQuery pageQuery) {
+        return iTestDemoService.customPageList(query, pageQuery);
     }
 
     @ApiOperation("导入测试-校验")
@@ -91,8 +92,8 @@ public class TestDemoController extends BaseController {
     @SaCheckPermission("demo:demo:export")
     @Log(title = "测试单表", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(@Validated TestDemoBo bo, HttpServletResponse response) {
-        List<TestDemoVo> list = iTestDemoService.queryList(bo);
+    public void export(@Validated TestDemoQuery query, HttpServletResponse response) {
+        List<TestDemoVo> list = iTestDemoService.queryList(query);
         // 测试雪花id导出
 //        for (TestDemoVo vo : list) {
 //            vo.setId(1234567891234567893L);

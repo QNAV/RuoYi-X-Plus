@@ -4,6 +4,7 @@ import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.demo.domain.TestDemo;
 import com.ruoyi.demo.domain.bo.TestDemoBo;
+import com.ruoyi.demo.domain.to.TestDemoQuery;
 import com.ruoyi.demo.domain.vo.TestDemoVo;
 
 import java.util.Collection;
@@ -27,17 +28,17 @@ public interface ITestDemoService {
     /**
      * 查询列表
      */
-    TableDataInfo<TestDemoVo> queryPageList(TestDemoBo bo, PageQuery pageQuery);
+    TableDataInfo<TestDemoVo> queryPageList(TestDemoQuery query, PageQuery pageQuery);
 
     /**
      * 自定义分页查询
      */
-    TableDataInfo<TestDemoVo> customPageList(TestDemoBo bo, PageQuery pageQuery);
+    TableDataInfo<TestDemoVo> customPageList(TestDemoQuery query, PageQuery pageQuery);
 
     /**
      * 查询列表
      */
-    List<TestDemoVo> queryList(TestDemoBo bo);
+    List<TestDemoVo> queryList(TestDemoQuery query);
 
     /**
      * 根据新增业务对象插入测试单表

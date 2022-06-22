@@ -19,6 +19,7 @@ import com.ruoyi.oss.constant.OssConstant;
 import com.ruoyi.oss.factory.OssFactory;
 import com.ruoyi.system.domain.SysOssConfig;
 import com.ruoyi.system.domain.bo.SysOssConfigBo;
+import com.ruoyi.system.domain.to.SysOssConfigQuery;
 import com.ruoyi.system.domain.vo.SysOssConfigVo;
 import com.ruoyi.system.mapper.SysOssConfigMapper;
 import com.ruoyi.system.service.ISysOssConfigService;
@@ -34,8 +35,6 @@ import java.util.List;
  * 对象存储配置Service业务层处理
  *
  * @author weibocy
- * @author 孤舟烟雨
- * @date 2021-08-13
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -68,18 +67,18 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
     }
 
     @Override
-    public TableDataInfo<SysOssConfigVo> queryPageList(SysOssConfigBo bo, PageQuery pageQuery) {
-        LambdaQueryWrapper<SysOssConfig> lqw = buildQueryWrapper(bo);
+    public TableDataInfo<SysOssConfigVo> queryPageList(SysOssConfigQuery ossConfigQuery, PageQuery pageQuery) {
+        LambdaQueryWrapper<SysOssConfig> lqw = buildQueryWrapper(ossConfigQuery);
         Page<SysOssConfigVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
     }
 
 
-    private LambdaQueryWrapper<SysOssConfig> buildQueryWrapper(SysOssConfigBo bo) {
+    private LambdaQueryWrapper<SysOssConfig> buildQueryWrapper(SysOssConfigQuery ossConfigQuery) {
         LambdaQueryWrapper<SysOssConfig> lqw = Wrappers.lambdaQuery();
-        lqw.eq(StringUtils.isNotBlank(bo.getConfigKey()), SysOssConfig::getConfigKey, bo.getConfigKey());
-        lqw.like(StringUtils.isNotBlank(bo.getBucketName()), SysOssConfig::getBucketName, bo.getBucketName());
-        lqw.eq(StringUtils.isNotBlank(bo.getStatus()), SysOssConfig::getStatus, bo.getStatus());
+        lqw.eq(StringUtils.isNotBlank(ossConfigQuery.getConfigKey()), SysOssConfig::getConfigKey, ossConfigQuery.getConfigKey());
+        lqw.like(StringUtils.isNotBlank(ossConfigQuery.getBucketName()), SysOssConfig::getBucketName, ossConfigQuery.getBucketName());
+        lqw.eq(StringUtils.isNotBlank(ossConfigQuery.getStatus()), SysOssConfig::getStatus, ossConfigQuery.getStatus());
         return lqw;
     }
 

@@ -8,6 +8,7 @@ import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.SysNotice;
+import com.ruoyi.system.domain.to.SysNoticeQuery;
 import com.ruoyi.system.service.ISysNoticeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,8 +37,8 @@ public class SysNoticeController extends BaseController {
     @ApiOperation("获取通知公告列表")
     @SaCheckPermission("system:notice:list")
     @GetMapping("/list")
-    public TableDataInfo<SysNotice> list(SysNotice notice, PageQuery pageQuery) {
-        return noticeService.selectPageNoticeList(notice, pageQuery);
+    public TableDataInfo<SysNotice> list(SysNoticeQuery noticeQuery, PageQuery pageQuery) {
+        return noticeService.selectPageNoticeList(noticeQuery, pageQuery);
     }
 
     /**

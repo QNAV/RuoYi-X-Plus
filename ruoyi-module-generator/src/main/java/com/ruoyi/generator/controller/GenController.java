@@ -11,6 +11,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.generator.domain.GenTable;
 import com.ruoyi.generator.domain.GenTableColumn;
+import com.ruoyi.generator.domain.to.GenTableQuery;
 import com.ruoyi.generator.service.IGenTableService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,8 +45,8 @@ public class GenController extends BaseController {
     @ApiOperation("查询代码生成列表")
     @SaCheckPermission("tool:gen:list")
     @GetMapping("/list")
-    public TableDataInfo<GenTable> genList(GenTable genTable, PageQuery pageQuery) {
-        return genTableService.selectPageGenTableList(genTable, pageQuery);
+    public TableDataInfo<GenTable> genList(GenTableQuery genTableQuery, PageQuery pageQuery) {
+        return genTableService.selectPageGenTableList(genTableQuery, pageQuery);
     }
 
     /**
@@ -71,8 +72,8 @@ public class GenController extends BaseController {
     @ApiOperation("查询数据库列表")
     @SaCheckPermission("tool:gen:list")
     @GetMapping("/db/list")
-    public TableDataInfo<GenTable> dataList(GenTable genTable, PageQuery pageQuery) {
-        return genTableService.selectPageDbTableList(genTable, pageQuery);
+    public TableDataInfo<GenTable> dataList(GenTableQuery genTableQuery, PageQuery pageQuery) {
+        return genTableService.selectPageDbTableList(genTableQuery, pageQuery);
     }
 
     /**

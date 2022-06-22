@@ -15,6 +15,7 @@ import com.ruoyi.common.core.service.DictService;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
+import com.ruoyi.system.domain.to.SysDictTypeQuery;
 import com.ruoyi.system.mapper.SysDictDataMapper;
 import com.ruoyi.system.mapper.SysDictTypeMapper;
 import com.ruoyi.system.service.ISysDictTypeService;
@@ -38,14 +39,13 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
     private final SysDictDataMapper dictDataMapper;
 
     @Override
-    public TableDataInfo<SysDictType> selectPageDictTypeList(SysDictType dictType, PageQuery pageQuery) {
-        Map<String, Object> params = dictType.getParams();
+    public TableDataInfo<SysDictType> selectPageDictTypeList(SysDictTypeQuery dictTypeQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysDictType> lqw = new LambdaQueryWrapper<SysDictType>()
-            .like(StringUtils.isNotBlank(dictType.getDictName()), SysDictType::getDictName, dictType.getDictName())
-            .eq(StringUtils.isNotBlank(dictType.getStatus()), SysDictType::getStatus, dictType.getStatus())
-            .like(StringUtils.isNotBlank(dictType.getDictType()), SysDictType::getDictType, dictType.getDictType())
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysDictType::getCreateTime, params.get("beginTime"), params.get("endTime"));
+            .like(StringUtils.isNotBlank(dictTypeQuery.getDictName()), SysDictType::getDictName, dictTypeQuery.getDictName())
+            .eq(StringUtils.isNotBlank(dictTypeQuery.getStatus()), SysDictType::getStatus, dictTypeQuery.getStatus())
+            .like(StringUtils.isNotBlank(dictTypeQuery.getDictType()), SysDictType::getDictType, dictTypeQuery.getDictType())
+            .between(dictTypeQuery.getBeginTime() != null && dictTypeQuery.getEndTime() != null,
+                SysDictType::getCreateTime, dictTypeQuery.getBeginTime(), dictTypeQuery.getEndTime());
         Page<SysDictType> page = baseMapper.selectPage(pageQuery.build(), lqw);
         return TableDataInfo.build(page);
     }
@@ -53,18 +53,17 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
     /**
      * 根据条件分页查询字典类型
      *
-     * @param dictType 字典类型信息
+     * @param dictTypeQuery 字典类型查询对象
      * @return 字典类型集合信息
      */
     @Override
-    public List<SysDictType> selectDictTypeList(SysDictType dictType) {
-        Map<String, Object> params = dictType.getParams();
+    public List<SysDictType> selectDictTypeList(SysDictTypeQuery dictTypeQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysDictType>()
-            .like(StringUtils.isNotBlank(dictType.getDictName()), SysDictType::getDictName, dictType.getDictName())
-            .eq(StringUtils.isNotBlank(dictType.getStatus()), SysDictType::getStatus, dictType.getStatus())
-            .like(StringUtils.isNotBlank(dictType.getDictType()), SysDictType::getDictType, dictType.getDictType())
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysDictType::getCreateTime, params.get("beginTime"), params.get("endTime")));
+            .like(StringUtils.isNotBlank(dictTypeQuery.getDictName()), SysDictType::getDictName, dictTypeQuery.getDictName())
+            .eq(StringUtils.isNotBlank(dictTypeQuery.getStatus()), SysDictType::getStatus, dictTypeQuery.getStatus())
+            .like(StringUtils.isNotBlank(dictTypeQuery.getDictType()), SysDictType::getDictType, dictTypeQuery.getDictType())
+            .between(dictTypeQuery.getBeginTime() != null && dictTypeQuery.getEndTime() != null,
+                SysDictType::getCreateTime, dictTypeQuery.getBeginTime(), dictTypeQuery.getEndTime()));
     }
 
     /**

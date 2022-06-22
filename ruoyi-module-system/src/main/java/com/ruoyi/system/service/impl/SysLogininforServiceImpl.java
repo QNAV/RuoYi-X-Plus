@@ -12,6 +12,7 @@ import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
 import com.ruoyi.system.domain.SysLogininfor;
+import com.ruoyi.system.domain.to.SysLogininforQuery;
 import com.ruoyi.system.mapper.SysLogininforMapper;
 import com.ruoyi.system.service.ISysLogininforService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 系统访问日志情况信息 服务层处理
@@ -91,14 +91,13 @@ public class SysLogininforServiceImpl implements ISysLogininforService, Logininf
     }
 
     @Override
-    public TableDataInfo<SysLogininfor> selectPageLogininforList(SysLogininfor logininfor, PageQuery pageQuery) {
-        Map<String, Object> params = logininfor.getParams();
+    public TableDataInfo<SysLogininfor> selectPageLogininforList(SysLogininforQuery logininforQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysLogininfor> lqw = new LambdaQueryWrapper<SysLogininfor>()
-            .like(StringUtils.isNotBlank(logininfor.getIpaddr()), SysLogininfor::getIpaddr, logininfor.getIpaddr())
-            .eq(StringUtils.isNotBlank(logininfor.getStatus()), SysLogininfor::getStatus, logininfor.getStatus())
-            .like(StringUtils.isNotBlank(logininfor.getUserName()), SysLogininfor::getUserName, logininfor.getUserName())
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysLogininfor::getLoginTime, params.get("beginTime"), params.get("endTime"));
+            .like(StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
+            .eq(StringUtils.isNotBlank(logininforQuery.getStatus()), SysLogininfor::getStatus, logininforQuery.getStatus())
+            .like(StringUtils.isNotBlank(logininforQuery.getUserName()), SysLogininfor::getUserName, logininforQuery.getUserName())
+            .between(logininforQuery.getBeginTime() != null && logininforQuery.getEndTime() != null,
+                SysLogininfor::getLoginTime, logininforQuery.getBeginTime(), logininforQuery.getEndTime());
         if (StringUtils.isBlank(pageQuery.getOrderByColumn())) {
             pageQuery.setOrderByColumn("info_id");
             pageQuery.setIsAsc("desc");
@@ -121,18 +120,17 @@ public class SysLogininforServiceImpl implements ISysLogininforService, Logininf
     /**
      * 查询系统登录日志集合
      *
-     * @param logininfor 访问日志对象
+     * @param logininforQuery 访问日志查询对象
      * @return 登录记录集合
      */
     @Override
-    public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor) {
-        Map<String, Object> params = logininfor.getParams();
+    public List<SysLogininfor> selectLogininforList(SysLogininforQuery logininforQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysLogininfor>()
-            .like(StringUtils.isNotBlank(logininfor.getIpaddr()), SysLogininfor::getIpaddr, logininfor.getIpaddr())
-            .eq(StringUtils.isNotBlank(logininfor.getStatus()), SysLogininfor::getStatus, logininfor.getStatus())
-            .like(StringUtils.isNotBlank(logininfor.getUserName()), SysLogininfor::getUserName, logininfor.getUserName())
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysLogininfor::getLoginTime, params.get("beginTime"), params.get("endTime"))
+            .like(StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
+            .eq(StringUtils.isNotBlank(logininforQuery.getStatus()), SysLogininfor::getStatus, logininforQuery.getStatus())
+            .like(StringUtils.isNotBlank(logininforQuery.getUserName()), SysLogininfor::getUserName, logininforQuery.getUserName())
+            .between(logininforQuery.getBeginTime() != null && logininforQuery.getEndTime() != null,
+                SysLogininfor::getLoginTime, logininforQuery.getBeginTime(), logininforQuery.getEndTime())
             .orderByDesc(SysLogininfor::getInfoId));
     }
 

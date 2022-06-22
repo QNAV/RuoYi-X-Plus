@@ -14,6 +14,8 @@ import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.TreeBuildUtils;
 import com.ruoyi.system.domain.SysRoleMenu;
+import com.ruoyi.system.domain.to.SysMenuQuery;
+import com.ruoyi.system.domain.to.SysMenuUniqueQuery;
 import com.ruoyi.system.domain.vo.MetaVo;
 import com.ruoyi.system.domain.vo.RouterVo;
 import com.ruoyi.system.mapper.SysMenuMapper;
@@ -46,32 +48,32 @@ public class SysMenuServiceImpl implements ISysMenuService {
      */
     @Override
     public List<SysMenu> selectMenuList(Long userId) {
-        return selectMenuList(new SysMenu(), userId);
+        return selectMenuList(new SysMenuQuery(), userId);
     }
 
     /**
      * 查询系统菜单列表
      *
-     * @param menu 菜单信息
+     * @param menuQuery 菜单查询对象
      * @return 菜单列表
      */
     @Override
-    public List<SysMenu> selectMenuList(SysMenu menu, Long userId) {
+    public List<SysMenu> selectMenuList(SysMenuQuery menuQuery, Long userId) {
         List<SysMenu> menuList = null;
         // 管理员显示所有菜单信息
         if (LoginHelper.isAdmin(userId)) {
             menuList = baseMapper.selectList(new LambdaQueryWrapper<SysMenu>()
-                .like(StringUtils.isNotBlank(menu.getMenuName()), SysMenu::getMenuName, menu.getMenuName())
-                .eq(StringUtils.isNotBlank(menu.getVisible()), SysMenu::getVisible, menu.getVisible())
-                .eq(StringUtils.isNotBlank(menu.getStatus()), SysMenu::getStatus, menu.getStatus())
+                .like(StringUtils.isNotBlank(menuQuery.getMenuName()), SysMenu::getMenuName, menuQuery.getMenuName())
+                .eq(StringUtils.isNotBlank(menuQuery.getVisible()), SysMenu::getVisible, menuQuery.getVisible())
+                .eq(StringUtils.isNotBlank(menuQuery.getStatus()), SysMenu::getStatus, menuQuery.getStatus())
                 .orderByAsc(SysMenu::getParentId)
                 .orderByAsc(SysMenu::getOrderNum));
         } else {
             QueryWrapper<SysMenu> wrapper = Wrappers.query();
             wrapper.eq("sur.user_id", userId)
-                .like(StringUtils.isNotBlank(menu.getMenuName()), "m.menu_name", menu.getMenuName())
-                .eq(StringUtils.isNotBlank(menu.getVisible()), "m.visible", menu.getVisible())
-                .eq(StringUtils.isNotBlank(menu.getStatus()), "m.status", menu.getStatus())
+                .like(StringUtils.isNotBlank(menuQuery.getMenuName()), "m.menu_name", menuQuery.getMenuName())
+                .eq(StringUtils.isNotBlank(menuQuery.getVisible()), "m.visible", menuQuery.getVisible())
+                .eq(StringUtils.isNotBlank(menuQuery.getStatus()), "m.status", menuQuery.getStatus())
                 .orderByAsc("m.parent_id")
                 .orderByAsc("m.order_num");
             menuList = baseMapper.selectMenuListByUserId(wrapper);

@@ -3,6 +3,7 @@ package com.ruoyi.system.service;
 import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.SysLogininfor;
+import com.ruoyi.system.domain.to.SysLogininforQuery;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public interface ISysLogininforService {
 
 
-    TableDataInfo<SysLogininfor> selectPageLogininforList(SysLogininfor logininfor, PageQuery pageQuery);
+    TableDataInfo<SysLogininfor> selectPageLogininforList(SysLogininforQuery logininforQuery, PageQuery pageQuery);
 
     /**
      * 新增系统登录日志
@@ -26,10 +27,10 @@ public interface ISysLogininforService {
     /**
      * 查询系统登录日志集合
      *
-     * @param logininfor 访问日志对象
+     * @param logininforQuery 访问日志对象
      * @return 登录记录集合
      */
-    List<SysLogininfor> selectLogininforList(SysLogininfor logininfor);
+    List<SysLogininfor> selectLogininforList(SysLogininforQuery logininforQuery);
 
     /**
      * 批量删除系统登录日志

@@ -3,6 +3,7 @@ package com.ruoyi.system.service;
 import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.SysConfig;
+import com.ruoyi.system.domain.to.SysConfigQuery;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public interface ISysConfigService {
 
 
-    TableDataInfo<SysConfig> selectPageConfigList(SysConfig config, PageQuery pageQuery);
+    TableDataInfo<SysConfig> selectPageConfigList(SysConfigQuery configQuery, PageQuery pageQuery);
 
     /**
      * 查询参数配置信息
@@ -42,10 +43,10 @@ public interface ISysConfigService {
     /**
      * 查询参数配置列表
      *
-     * @param config 参数配置信息
+     * @param configQuery 参数配置查询对象
      * @return 参数配置集合
      */
-    List<SysConfig> selectConfigList(SysConfig config);
+    List<SysConfig> selectConfigList(SysConfigQuery configQuery);
 
     /**
      * 新增参数配置

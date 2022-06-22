@@ -9,6 +9,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.demo.domain.TestDemo;
 import com.ruoyi.demo.domain.bo.TestDemoBo;
+import com.ruoyi.demo.domain.to.TestDemoQuery;
 import com.ruoyi.demo.domain.vo.TestDemoVo;
 import com.ruoyi.demo.mapper.TestDemoMapper;
 import com.ruoyi.demo.service.ITestDemoService;
@@ -37,8 +38,8 @@ public class TestDemoServiceImpl implements ITestDemoService {
     }
 
     @Override
-    public TableDataInfo<TestDemoVo> queryPageList(TestDemoBo bo, PageQuery pageQuery) {
-        LambdaQueryWrapper<TestDemo> lqw = buildQueryWrapper(bo);
+    public TableDataInfo<TestDemoVo> queryPageList(TestDemoQuery query, PageQuery pageQuery) {
+        LambdaQueryWrapper<TestDemo> lqw = buildQueryWrapper(query);
         Page<TestDemoVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
     }
@@ -47,24 +48,23 @@ public class TestDemoServiceImpl implements ITestDemoService {
      * 自定义分页查询
      */
     @Override
-    public TableDataInfo<TestDemoVo> customPageList(TestDemoBo bo, PageQuery pageQuery) {
-        LambdaQueryWrapper<TestDemo> lqw = buildQueryWrapper(bo);
+    public TableDataInfo<TestDemoVo> customPageList(TestDemoQuery query, PageQuery pageQuery) {
+        LambdaQueryWrapper<TestDemo> lqw = buildQueryWrapper(query);
         Page<TestDemoVo> result = baseMapper.customPageList(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
     }
 
     @Override
-    public List<TestDemoVo> queryList(TestDemoBo bo) {
-        return baseMapper.selectVoList(buildQueryWrapper(bo));
+    public List<TestDemoVo> queryList(TestDemoQuery query) {
+        return baseMapper.selectVoList(buildQueryWrapper(query));
     }
 
-    private LambdaQueryWrapper<TestDemo> buildQueryWrapper(TestDemoBo bo) {
-        Map<String, Object> params = bo.getParams();
+    private LambdaQueryWrapper<TestDemo> buildQueryWrapper(TestDemoQuery query) {
         LambdaQueryWrapper<TestDemo> lqw = Wrappers.lambdaQuery();
-        lqw.like(StringUtils.isNotBlank(bo.getTestKey()), TestDemo::getTestKey, bo.getTestKey());
-        lqw.eq(StringUtils.isNotBlank(bo.getValue()), TestDemo::getValue, bo.getValue());
-        lqw.between(params.get("beginCreateTime") != null && params.get("endCreateTime") != null,
-            TestDemo::getCreateTime, params.get("beginCreateTime"), params.get("endCreateTime"));
+        lqw.like(StringUtils.isNotBlank(query.getTestKey()), TestDemo::getTestKey, query.getTestKey());
+        lqw.eq(StringUtils.isNotBlank(query.getValue()), TestDemo::getValue, query.getValue());
+        lqw.between(query.getBeginCreateTime() != null && query.getEndCreateTime() != null,
+            TestDemo::getCreateTime, query.getBeginCreateTime(), query.getEndCreateTime());
         return lqw;
     }
 

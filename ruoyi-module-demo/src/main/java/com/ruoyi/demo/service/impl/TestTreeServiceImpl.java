@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.demo.domain.TestTree;
 import com.ruoyi.demo.domain.bo.TestTreeBo;
+import com.ruoyi.demo.domain.to.TestTreeQuery;
 import com.ruoyi.demo.domain.vo.TestTreeVo;
 import com.ruoyi.demo.mapper.TestTreeMapper;
 import com.ruoyi.demo.service.ITestTreeService;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 测试树表Service业务层处理
@@ -36,17 +36,16 @@ public class TestTreeServiceImpl implements ITestTreeService {
 
     // @DS("slave") // 切换从库查询
     @Override
-    public List<TestTreeVo> queryList(TestTreeBo bo) {
-        LambdaQueryWrapper<TestTree> lqw = buildQueryWrapper(bo);
+    public List<TestTreeVo> queryList(TestTreeQuery query) {
+        LambdaQueryWrapper<TestTree> lqw = buildQueryWrapper(query);
         return baseMapper.selectVoList(lqw);
     }
 
-    private LambdaQueryWrapper<TestTree> buildQueryWrapper(TestTreeBo bo) {
-        Map<String, Object> params = bo.getParams();
+    private LambdaQueryWrapper<TestTree> buildQueryWrapper(TestTreeQuery query) {
         LambdaQueryWrapper<TestTree> lqw = Wrappers.lambdaQuery();
-        lqw.like(StringUtils.isNotBlank(bo.getTreeName()), TestTree::getTreeName, bo.getTreeName());
-        lqw.between(params.get("beginCreateTime") != null && params.get("endCreateTime") != null,
-            TestTree::getCreateTime, params.get("beginCreateTime"), params.get("endCreateTime"));
+        lqw.like(StringUtils.isNotBlank(query.getTreeName()), TestTree::getTreeName, query.getTreeName());
+        lqw.between(query.getBeginCreateTime() != null && query.getEndCreateTime() != null,
+            TestTree::getCreateTime, query.getBeginCreateTime(), query.getEndCreateTime());
         return lqw;
     }
 

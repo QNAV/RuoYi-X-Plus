@@ -3,6 +3,7 @@ package com.ruoyi.system.service;
 import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.SysPost;
+import com.ruoyi.system.domain.to.SysPostQuery;
 
 import java.util.List;
 
@@ -14,15 +15,15 @@ import java.util.List;
 public interface ISysPostService {
 
 
-    TableDataInfo<SysPost> selectPagePostList(SysPost post, PageQuery pageQuery);
+    TableDataInfo<SysPost> selectPagePostList(SysPostQuery postQuery, PageQuery pageQuery);
 
     /**
      * 查询岗位信息集合
      *
-     * @param post 岗位信息
+     * @param postQuery 岗位信息查询对象
      * @return 岗位列表
      */
-    List<SysPost> selectPostList(SysPost post);
+    List<SysPost> selectPostList(SysPostQuery postQuery);
 
     /**
      * 查询所有岗位

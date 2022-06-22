@@ -3,6 +3,7 @@ package com.ruoyi.system.service;
 import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.system.domain.to.SysDictDataQuery;
 
 import java.util.List;
 
@@ -14,15 +15,15 @@ import java.util.List;
 public interface ISysDictDataService {
 
 
-    TableDataInfo<SysDictData> selectPageDictDataList(SysDictData dictData, PageQuery pageQuery);
+    TableDataInfo<SysDictData> selectPageDictDataList(SysDictDataQuery dictDataQuery, PageQuery pageQuery);
 
     /**
      * 根据条件分页查询字典数据
      *
-     * @param dictData 字典数据信息
+     * @param dictDataQuery 字典数据查询对象
      * @return 字典数据集合信息
      */
-    List<SysDictData> selectDictDataList(SysDictData dictData);
+    List<SysDictData> selectDictDataList(SysDictDataQuery dictDataQuery);
 
     /**
      * 根据字典类型和字典键值查询字典数据信息

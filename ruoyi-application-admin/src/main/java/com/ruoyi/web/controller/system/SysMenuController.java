@@ -9,6 +9,7 @@ import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.to.SysMenuQuery;
 import com.ruoyi.system.service.ISysMenuService;
 import com.ruoyi.web.model.dto.RoleMenuTreeSelectDTO;
 import io.swagger.annotations.Api;
@@ -40,8 +41,8 @@ public class SysMenuController extends BaseController {
     @ApiOperation("获取菜单列表")
     @SaCheckPermission("system:menu:list")
     @GetMapping("/list")
-    public R<List<SysMenu>> list(SysMenu menu) {
-        List<SysMenu> menus = menuService.selectMenuList(menu, getUserId());
+    public R<List<SysMenu>> list(SysMenuQuery menuQuery) {
+        List<SysMenu> menus = menuService.selectMenuList(menuQuery, getUserId());
         return R.ok(menus);
     }
 
@@ -60,8 +61,8 @@ public class SysMenuController extends BaseController {
      */
     @ApiOperation("获取菜单下拉树列表")
     @GetMapping("/treeselect")
-    public R<List<Tree<Long>>> treeselect(SysMenu menu) {
-        List<SysMenu> menus = menuService.selectMenuList(menu, getUserId());
+    public R<List<Tree<Long>>> treeselect(SysMenuQuery menuQuery) {
+        List<SysMenu> menus = menuService.selectMenuList(menuQuery, getUserId());
         return R.ok(menuService.buildMenuTreeSelect(menus));
     }
 

@@ -11,6 +11,7 @@ import com.ruoyi.common.core.validate.QueryGroup;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.demo.domain.bo.TestTreeBo;
+import com.ruoyi.demo.domain.to.TestTreeQuery;
 import com.ruoyi.demo.domain.vo.TestTreeVo;
 import com.ruoyi.demo.service.ITestTreeService;
 import io.swagger.annotations.Api;
@@ -47,8 +48,8 @@ public class TestTreeController extends BaseController {
     @ApiOperation("查询测试树表列表")
     @SaCheckPermission("demo:tree:list")
     @GetMapping("/list")
-    public R<List<TestTreeVo>> list(@Validated(QueryGroup.class) TestTreeBo bo) {
-        List<TestTreeVo> list = iTestTreeService.queryList(bo);
+    public R<List<TestTreeVo>> list(@Validated(QueryGroup.class) TestTreeQuery query) {
+        List<TestTreeVo> list = iTestTreeService.queryList(query);
         return R.ok(list);
     }
 
@@ -59,8 +60,8 @@ public class TestTreeController extends BaseController {
     @SaCheckPermission("demo:tree:export")
     @Log(title = "测试树表", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
-    public void export(@Validated TestTreeBo bo, HttpServletResponse response) {
-        List<TestTreeVo> list = iTestTreeService.queryList(bo);
+    public void export(@Validated TestTreeQuery query, HttpServletResponse response) {
+        List<TestTreeVo> list = iTestTreeService.queryList(query);
         ExcelUtil.exportExcel(list, "测试树表", TestTreeVo.class, response);
     }
 

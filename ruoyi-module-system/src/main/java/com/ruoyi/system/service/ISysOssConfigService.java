@@ -3,6 +3,7 @@ package com.ruoyi.system.service;
 import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.bo.SysOssConfigBo;
+import com.ruoyi.system.domain.to.SysOssConfigQuery;
 import com.ruoyi.system.domain.vo.SysOssConfigVo;
 
 import java.util.Collection;
@@ -11,8 +12,6 @@ import java.util.Collection;
  * 对象存储配置Service接口
  *
  * @author weibocy
- * @author 孤舟烟雨
- * @date 2021-08-13
  */
 public interface ISysOssConfigService {
 
@@ -29,7 +28,7 @@ public interface ISysOssConfigService {
     /**
      * 查询列表
      */
-    TableDataInfo<SysOssConfigVo> queryPageList(SysOssConfigBo bo, PageQuery pageQuery);
+    TableDataInfo<SysOssConfigVo> queryPageList(SysOssConfigQuery ossConfigQuery, PageQuery pageQuery);
 
 
     /**

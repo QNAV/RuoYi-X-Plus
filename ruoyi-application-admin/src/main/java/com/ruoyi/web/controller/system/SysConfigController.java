@@ -10,6 +10,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysConfig;
+import com.ruoyi.system.domain.to.SysConfigQuery;
 import com.ruoyi.system.service.ISysConfigService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,16 +42,16 @@ public class SysConfigController extends BaseController {
     @ApiOperation("获取参数配置列表")
     @SaCheckPermission("system:config:list")
     @GetMapping("/list")
-    public TableDataInfo<SysConfig> list(SysConfig config, PageQuery pageQuery) {
-        return configService.selectPageConfigList(config, pageQuery);
+    public TableDataInfo<SysConfig> list(SysConfigQuery configQuery, PageQuery pageQuery) {
+        return configService.selectPageConfigList(configQuery, pageQuery);
     }
 
     @ApiOperation("导出参数配置列表")
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:config:export")
     @PostMapping("/export")
-    public void export(SysConfig config, HttpServletResponse response) {
-        List<SysConfig> list = configService.selectConfigList(config);
+    public void export(SysConfigQuery configQuery, HttpServletResponse response) {
+        List<SysConfig> list = configService.selectConfigList(configQuery);
         ExcelUtil.exportExcel(list, "参数数据", SysConfig.class, response);
     }
 

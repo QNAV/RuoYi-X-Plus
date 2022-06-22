@@ -3,6 +3,7 @@ package com.ruoyi.system.service;
 import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.SysNotice;
+import com.ruoyi.system.domain.to.SysNoticeQuery;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public interface ISysNoticeService {
 
 
-    TableDataInfo<SysNotice> selectPageNoticeList(SysNotice notice, PageQuery pageQuery);
+    TableDataInfo<SysNotice> selectPageNoticeList(SysNoticeQuery noticeQuery, PageQuery pageQuery);
 
     /**
      * 查询公告信息
@@ -27,10 +28,10 @@ public interface ISysNoticeService {
     /**
      * 查询公告列表
      *
-     * @param notice 公告信息
+     * @param noticeQuery 公告查询对象
      * @return 公告集合
      */
-    List<SysNotice> selectNoticeList(SysNotice notice);
+    List<SysNotice> selectNoticeList(SysNoticeQuery noticeQuery);
 
     /**
      * 新增公告

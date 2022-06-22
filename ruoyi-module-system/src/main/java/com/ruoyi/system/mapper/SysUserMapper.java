@@ -71,10 +71,10 @@ public interface SysUserMapper extends BaseMapperPlus<SysUserMapper, SysUser, Sy
     /**
      * 通过手机号查询用户
      *
-     * @param phonenumber 手机号
+     * @param phoneNumber 手机号
      * @return 用户对象信息
      */
-    SysUser selectUserByPhonenumber(String phonenumber);
+    SysUser selectUserByPhoneNumber(String phoneNumber);
 
     /**
      * 通过用户ID查询用户

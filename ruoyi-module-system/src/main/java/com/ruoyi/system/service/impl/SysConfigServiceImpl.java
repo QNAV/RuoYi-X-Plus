@@ -14,6 +14,7 @@ import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
 import com.ruoyi.system.domain.SysConfig;
+import com.ruoyi.system.domain.to.SysConfigQuery;
 import com.ruoyi.system.mapper.SysConfigMapper;
 import com.ruoyi.system.service.ISysConfigService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,6 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 参数配置 服务层实现
@@ -36,14 +36,13 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
     private final SysConfigMapper baseMapper;
 
     @Override
-    public TableDataInfo<SysConfig> selectPageConfigList(SysConfig config, PageQuery pageQuery) {
-        Map<String, Object> params = config.getParams();
+    public TableDataInfo<SysConfig> selectPageConfigList(SysConfigQuery configQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysConfig> lqw = new LambdaQueryWrapper<SysConfig>()
-            .like(StringUtils.isNotBlank(config.getConfigName()), SysConfig::getConfigName, config.getConfigName())
-            .eq(StringUtils.isNotBlank(config.getConfigType()), SysConfig::getConfigType, config.getConfigType())
-            .like(StringUtils.isNotBlank(config.getConfigKey()), SysConfig::getConfigKey, config.getConfigKey())
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysConfig::getCreateTime, params.get("beginTime"), params.get("endTime"));
+            .like(StringUtils.isNotBlank(configQuery.getConfigName()), SysConfig::getConfigName, configQuery.getConfigName())
+            .eq(StringUtils.isNotBlank(configQuery.getConfigType()), SysConfig::getConfigType, configQuery.getConfigType())
+            .like(StringUtils.isNotBlank(configQuery.getConfigKey()), SysConfig::getConfigKey, configQuery.getConfigKey())
+            .between(configQuery.getBeginTime() != null && configQuery.getBeginTime() != null,
+                SysConfig::getCreateTime, configQuery.getBeginTime(), configQuery.getEndTime());
         Page<SysConfig> page = baseMapper.selectPage(pageQuery.build(), lqw);
         return TableDataInfo.build(page);
     }
@@ -98,18 +97,17 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
     /**
      * 查询参数配置列表
      *
-     * @param config 参数配置信息
+     * @param configQuery 参数配置查询对象
      * @return 参数配置集合
      */
     @Override
-    public List<SysConfig> selectConfigList(SysConfig config) {
-        Map<String, Object> params = config.getParams();
+    public List<SysConfig> selectConfigList(SysConfigQuery configQuery) {
         LambdaQueryWrapper<SysConfig> lqw = new LambdaQueryWrapper<SysConfig>()
-            .like(StringUtils.isNotBlank(config.getConfigName()), SysConfig::getConfigName, config.getConfigName())
-            .eq(StringUtils.isNotBlank(config.getConfigType()), SysConfig::getConfigType, config.getConfigType())
-            .like(StringUtils.isNotBlank(config.getConfigKey()), SysConfig::getConfigKey, config.getConfigKey())
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysConfig::getCreateTime, params.get("beginTime"), params.get("endTime"));
+            .like(StringUtils.isNotBlank(configQuery.getConfigName()), SysConfig::getConfigName, configQuery.getConfigName())
+            .eq(StringUtils.isNotBlank(configQuery.getConfigType()), SysConfig::getConfigType, configQuery.getConfigType())
+            .like(StringUtils.isNotBlank(configQuery.getConfigKey()), SysConfig::getConfigKey, configQuery.getConfigKey())
+            .between(configQuery.getBeginTime() != null && configQuery.getEndTime() != null,
+                SysConfig::getCreateTime, configQuery.getBeginTime(), configQuery.getEndTime());
         return baseMapper.selectList(lqw);
     }
 
@@ -171,7 +169,7 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
      */
     @Override
     public void loadingConfigCache() {
-        List<SysConfig> configsList = selectConfigList(new SysConfig());
+        List<SysConfig> configsList = selectConfigList(new SysConfigQuery());
         for (SysConfig config : configsList) {
             RedisUtils.setCacheObject(getCacheKey(config.getConfigKey()), config.getConfigValue());
         }

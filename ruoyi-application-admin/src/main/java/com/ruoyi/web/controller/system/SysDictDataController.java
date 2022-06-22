@@ -10,6 +10,7 @@ import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.system.domain.to.SysDictDataQuery;
 import com.ruoyi.system.service.ISysDictDataService;
 import com.ruoyi.system.service.ISysDictTypeService;
 import io.swagger.annotations.Api;
@@ -41,16 +42,16 @@ public class SysDictDataController extends BaseController {
     @ApiOperation("查询字典数据列表")
     @SaCheckPermission("system:dict:list")
     @GetMapping("/list")
-    public TableDataInfo<SysDictData> list(SysDictData dictData, PageQuery pageQuery) {
-        return dictDataService.selectPageDictDataList(dictData, pageQuery);
+    public TableDataInfo<SysDictData> list(SysDictDataQuery dictDataQuery, PageQuery pageQuery) {
+        return dictDataService.selectPageDictDataList(dictDataQuery, pageQuery);
     }
 
     @ApiOperation("导出字典数据列表")
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:dict:export")
     @PostMapping("/export")
-    public void export(SysDictData dictData, HttpServletResponse response) {
-        List<SysDictData> list = dictDataService.selectDictDataList(dictData);
+    public void export(SysDictDataQuery dictDataQuery, HttpServletResponse response) {
+        List<SysDictData> list = dictDataService.selectDictDataList(dictDataQuery);
         ExcelUtil.exportExcel(list, "字典数据", SysDictData.class, response);
     }
 

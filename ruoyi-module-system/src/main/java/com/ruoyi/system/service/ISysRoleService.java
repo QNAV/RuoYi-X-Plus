@@ -4,6 +4,7 @@ import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.SysUserRole;
+import com.ruoyi.system.domain.to.SysRoleQuery;
 
 import java.util.List;
 import java.util.Set;
@@ -16,15 +17,15 @@ import java.util.Set;
 public interface ISysRoleService {
 
 
-    TableDataInfo<SysRole> selectPageRoleList(SysRole role, PageQuery pageQuery);
+    TableDataInfo<SysRole> selectPageRoleList(SysRoleQuery roleQuery, PageQuery pageQuery);
 
     /**
      * 根据条件分页查询角色数据
      *
-     * @param role 角色信息
+     * @param roleQuery 角色信息查询对象
      * @return 角色数据集合信息
      */
-    List<SysRole> selectRoleList(SysRole role);
+    List<SysRole> selectRoleList(SysRoleQuery roleQuery);
 
     /**
      * 根据用户ID查询角色列表

@@ -11,6 +11,7 @@ import com.ruoyi.common.core.service.OperLogService;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
 import com.ruoyi.system.domain.SysOperLog;
+import com.ruoyi.system.domain.to.SysOperLogQuery;
 import com.ruoyi.system.mapper.SysOperLogMapper;
 import com.ruoyi.system.service.ISysOperLogService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 操作日志 服务层处理
@@ -48,22 +48,21 @@ public class SysOperLogServiceImpl implements ISysOperLogService, OperLogService
     }
 
     @Override
-    public TableDataInfo<SysOperLog> selectPageOperLogList(SysOperLog operLog, PageQuery pageQuery) {
-        Map<String, Object> params = operLog.getParams();
+    public TableDataInfo<SysOperLog> selectPageOperLogList(SysOperLogQuery operLogQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysOperLog> lqw = new LambdaQueryWrapper<SysOperLog>()
-            .like(StringUtils.isNotBlank(operLog.getTitle()), SysOperLog::getTitle, operLog.getTitle())
-            .eq(operLog.getBusinessType() != null && operLog.getBusinessType() > 0,
-                SysOperLog::getBusinessType, operLog.getBusinessType())
+            .like(StringUtils.isNotBlank(operLogQuery.getTitle()), SysOperLog::getTitle, operLogQuery.getTitle())
+            .eq(operLogQuery.getBusinessType() != null && operLogQuery.getBusinessType() > 0,
+                SysOperLog::getBusinessType, operLogQuery.getBusinessType())
             .func(f -> {
-                if (ArrayUtil.isNotEmpty(operLog.getBusinessTypes())) {
-                    f.in(SysOperLog::getBusinessType, Arrays.asList(operLog.getBusinessTypes()));
+                if (ArrayUtil.isNotEmpty(operLogQuery.getBusinessTypes())) {
+                    f.in(SysOperLog::getBusinessType, Arrays.asList(operLogQuery.getBusinessTypes()));
                 }
             })
-            .eq(operLog.getStatus() != null,
-                SysOperLog::getStatus, operLog.getStatus())
-            .like(StringUtils.isNotBlank(operLog.getOperName()), SysOperLog::getOperName, operLog.getOperName())
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysOperLog::getOperTime, params.get("beginTime"), params.get("endTime"));
+            .eq(operLogQuery.getStatus() != null,
+                SysOperLog::getStatus, operLogQuery.getStatus())
+            .like(StringUtils.isNotBlank(operLogQuery.getOperName()), SysOperLog::getOperName, operLogQuery.getOperName())
+            .between(operLogQuery.getBeginTime() != null && operLogQuery.getEndTime() != null,
+                SysOperLog::getOperTime, operLogQuery.getBeginTime(), operLogQuery.getEndTime());
         if (StringUtils.isBlank(pageQuery.getOrderByColumn())) {
             pageQuery.setOrderByColumn("oper_id");
             pageQuery.setIsAsc("desc");
@@ -86,26 +85,25 @@ public class SysOperLogServiceImpl implements ISysOperLogService, OperLogService
     /**
      * 查询系统操作日志集合
      *
-     * @param operLog 操作日志对象
+     * @param operLogQuery 操作日志查询对象
      * @return 操作日志集合
      */
     @Override
-    public List<SysOperLog> selectOperLogList(SysOperLog operLog) {
-        Map<String, Object> params = operLog.getParams();
+    public List<SysOperLog> selectOperLogList(SysOperLogQuery operLogQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysOperLog>()
-            .like(StringUtils.isNotBlank(operLog.getTitle()), SysOperLog::getTitle, operLog.getTitle())
-            .eq(operLog.getBusinessType() != null && operLog.getBusinessType() > 0,
-                SysOperLog::getBusinessType, operLog.getBusinessType())
+            .like(StringUtils.isNotBlank(operLogQuery.getTitle()), SysOperLog::getTitle, operLogQuery.getTitle())
+            .eq(operLogQuery.getBusinessType() != null && operLogQuery.getBusinessType() > 0,
+                SysOperLog::getBusinessType, operLogQuery.getBusinessType())
             .func(f -> {
-                if (ArrayUtil.isNotEmpty(operLog.getBusinessTypes())) {
-                    f.in(SysOperLog::getBusinessType, Arrays.asList(operLog.getBusinessTypes()));
+                if (ArrayUtil.isNotEmpty(operLogQuery.getBusinessTypes())) {
+                    f.in(SysOperLog::getBusinessType, Arrays.asList(operLogQuery.getBusinessTypes()));
                 }
             })
-            .eq(operLog.getStatus() != null && operLog.getStatus() > 0,
-                SysOperLog::getStatus, operLog.getStatus())
-            .like(StringUtils.isNotBlank(operLog.getOperName()), SysOperLog::getOperName, operLog.getOperName())
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysOperLog::getOperTime, params.get("beginTime"), params.get("endTime"))
+            .eq(operLogQuery.getStatus() != null && operLogQuery.getStatus() > 0,
+                SysOperLog::getStatus, operLogQuery.getStatus())
+            .like(StringUtils.isNotBlank(operLogQuery.getOperName()), SysOperLog::getOperName, operLogQuery.getOperName())
+            .between(operLogQuery.getBeginTime() != null && operLogQuery.getEndTime() != null,
+                SysOperLog::getOperTime, operLogQuery.getBeginTime(), operLogQuery.getEndTime())
             .orderByDesc(SysOperLog::getOperId));
     }
 

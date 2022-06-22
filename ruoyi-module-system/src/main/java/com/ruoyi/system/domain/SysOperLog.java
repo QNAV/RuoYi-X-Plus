@@ -153,11 +153,4 @@ public class SysOperLog implements Serializable {
     @ExcelProperty(value = "操作时间")
     private Date operTime;
 
-    /**
-     * 请求参数
-     */
-    @ApiModelProperty(value = "请求参数")
-    @TableField(exist = false)
-    private Map<String, Object> params = new HashMap<>();
-
 }

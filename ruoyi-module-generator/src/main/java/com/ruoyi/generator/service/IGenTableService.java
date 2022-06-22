@@ -4,6 +4,7 @@ import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.generator.domain.GenTable;
 import com.ruoyi.generator.domain.GenTableColumn;
+import com.ruoyi.generator.domain.to.GenTableQuery;
 
 import java.util.List;
 import java.util.Map;
@@ -26,18 +27,18 @@ public interface IGenTableService {
     /**
      * 查询业务列表
      *
-     * @param genTable 业务信息
+     * @param genTableQuery 业务信息查询对象
      * @return 业务集合
      */
-    TableDataInfo<GenTable> selectPageGenTableList(GenTable genTable, PageQuery pageQuery);
+    TableDataInfo<GenTable> selectPageGenTableList(GenTableQuery genTableQuery, PageQuery pageQuery);
 
     /**
      * 查询据库列表
      *
-     * @param genTable 业务信息
+     * @param genTableQuery 业务信息查询对象
      * @return 数据库表集合
      */
-    TableDataInfo<GenTable> selectPageDbTableList(GenTable genTable, PageQuery pageQuery);
+    TableDataInfo<GenTable> selectPageDbTableList(GenTableQuery genTableQuery, PageQuery pageQuery);
 
     /**
      * 查询据库列表

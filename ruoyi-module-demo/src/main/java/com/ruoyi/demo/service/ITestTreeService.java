@@ -1,6 +1,7 @@
 package com.ruoyi.demo.service;
 
 import com.ruoyi.demo.domain.bo.TestTreeBo;
+import com.ruoyi.demo.domain.to.TestTreeQuery;
 import com.ruoyi.demo.domain.vo.TestTreeVo;
 
 import java.util.Collection;
@@ -23,7 +24,7 @@ public interface ITestTreeService {
     /**
      * 查询列表
      */
-    List<TestTreeVo> queryList(TestTreeBo bo);
+    List<TestTreeVo> queryList(TestTreeQuery query);
 
     /**
      * 根据新增业务对象插入测试树表

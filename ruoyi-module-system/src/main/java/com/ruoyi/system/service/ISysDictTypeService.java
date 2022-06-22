@@ -4,6 +4,7 @@ import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.domain.entity.SysDictType;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.system.domain.to.SysDictTypeQuery;
 
 import java.util.List;
 
@@ -15,15 +16,15 @@ import java.util.List;
 public interface ISysDictTypeService {
 
 
-    TableDataInfo<SysDictType> selectPageDictTypeList(SysDictType dictType, PageQuery pageQuery);
+    TableDataInfo<SysDictType> selectPageDictTypeList(SysDictTypeQuery dictTypeQuery, PageQuery pageQuery);
 
     /**
      * 根据条件分页查询字典类型
      *
-     * @param dictType 字典类型信息
+     * @param dictTypeQuery 字典类型查询对象
      * @return 字典类型集合信息
      */
-    List<SysDictType> selectDictTypeList(SysDictType dictType);
+    List<SysDictType> selectDictTypeList(SysDictTypeQuery dictTypeQuery);
 
     /**
      * 根据所有字典类型

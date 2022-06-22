@@ -9,6 +9,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysOperLog;
+import com.ruoyi.system.domain.to.SysOperLogQuery;
 import com.ruoyi.system.service.ISysOperLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,16 +37,16 @@ public class SysOperlogController extends BaseController {
     @ApiOperation("查询操作日志记录列表")
     @SaCheckPermission("monitor:operlog:list")
     @GetMapping("/list")
-    public TableDataInfo<SysOperLog> list(SysOperLog operLog, PageQuery pageQuery) {
-        return operLogService.selectPageOperLogList(operLog, pageQuery);
+    public TableDataInfo<SysOperLog> list(SysOperLogQuery operLogQuery, PageQuery pageQuery) {
+        return operLogService.selectPageOperLogList(operLogQuery, pageQuery);
     }
 
     @ApiOperation("导出操作日志记录列表")
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:operlog:export")
     @PostMapping("/export")
-    public void export(SysOperLog operLog, HttpServletResponse response) {
-        List<SysOperLog> list = operLogService.selectOperLogList(operLog);
+    public void export(SysOperLogQuery operLogQuery, HttpServletResponse response) {
+        List<SysOperLog> list = operLogService.selectOperLogList(operLogQuery);
         ExcelUtil.exportExcel(list, "操作日志", SysOperLog.class, response);
     }
 

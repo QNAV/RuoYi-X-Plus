@@ -10,6 +10,7 @@ import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.domain.SysUserPost;
+import com.ruoyi.system.domain.to.SysPostQuery;
 import com.ruoyi.system.mapper.SysPostMapper;
 import com.ruoyi.system.mapper.SysUserPostMapper;
 import com.ruoyi.system.service.ISysPostService;
@@ -32,11 +33,11 @@ public class SysPostServiceImpl implements ISysPostService {
     private final SysUserPostMapper userPostMapper;
 
     @Override
-    public TableDataInfo<SysPost> selectPagePostList(SysPost post, PageQuery pageQuery) {
+    public TableDataInfo<SysPost> selectPagePostList(SysPostQuery postQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysPost> lqw = new LambdaQueryWrapper<SysPost>()
-            .like(StringUtils.isNotBlank(post.getPostCode()), SysPost::getPostCode, post.getPostCode())
-            .eq(StringUtils.isNotBlank(post.getStatus()), SysPost::getStatus, post.getStatus())
-            .like(StringUtils.isNotBlank(post.getPostName()), SysPost::getPostName, post.getPostName());
+            .like(StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
+            .eq(StringUtils.isNotBlank(postQuery.getStatus()), SysPost::getStatus, postQuery.getStatus())
+            .like(StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName());
         Page<SysPost> page = baseMapper.selectPage(pageQuery.build(), lqw);
         return TableDataInfo.build(page);
     }
@@ -44,15 +45,15 @@ public class SysPostServiceImpl implements ISysPostService {
     /**
      * 查询岗位信息集合
      *
-     * @param post 岗位信息
+     * @param postQuery 岗位信息查询对象
      * @return 岗位信息集合
      */
     @Override
-    public List<SysPost> selectPostList(SysPost post) {
+    public List<SysPost> selectPostList(SysPostQuery postQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysPost>()
-            .like(StringUtils.isNotBlank(post.getPostCode()), SysPost::getPostCode, post.getPostCode())
-            .eq(StringUtils.isNotBlank(post.getStatus()), SysPost::getStatus, post.getStatus())
-            .like(StringUtils.isNotBlank(post.getPostName()), SysPost::getPostName, post.getPostName()));
+            .like(StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
+            .eq(StringUtils.isNotBlank(postQuery.getStatus()), SysPost::getStatus, postQuery.getStatus())
+            .like(StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName()));
     }
 
     /**

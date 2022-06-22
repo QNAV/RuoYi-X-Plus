@@ -2,7 +2,6 @@ package com.ruoyi.system.domain;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelDictFormat;
@@ -13,8 +12,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 系统访问记录表 sys_logininfor
@@ -93,12 +90,5 @@ public class SysLogininfor implements Serializable {
     @ApiModelProperty(value = "访问时间")
     @ExcelProperty(value = "访问时间")
     private Date loginTime;
-
-    /**
-     * 请求参数
-     */
-    @ApiModelProperty(value = "请求参数")
-    @TableField(exist = false)
-    private Map<String, Object> params = new HashMap<>();
 
 }

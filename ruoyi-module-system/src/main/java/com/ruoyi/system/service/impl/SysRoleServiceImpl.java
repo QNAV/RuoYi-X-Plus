@@ -17,6 +17,7 @@ import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.system.domain.SysRoleDept;
 import com.ruoyi.system.domain.SysRoleMenu;
 import com.ruoyi.system.domain.SysUserRole;
+import com.ruoyi.system.domain.to.SysRoleQuery;
 import com.ruoyi.system.mapper.SysRoleDeptMapper;
 import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.mapper.SysRoleMenuMapper;
@@ -43,32 +44,31 @@ public class SysRoleServiceImpl implements ISysRoleService {
     private final SysRoleDeptMapper roleDeptMapper;
 
     @Override
-    public TableDataInfo<SysRole> selectPageRoleList(SysRole role, PageQuery pageQuery) {
-        Page<SysRole> page = baseMapper.selectPageRoleList(pageQuery.build(), this.buildQueryWrapper(role));
+    public TableDataInfo<SysRole> selectPageRoleList(SysRoleQuery roleQuery, PageQuery pageQuery) {
+        Page<SysRole> page = baseMapper.selectPageRoleList(pageQuery.build(), this.buildQueryWrapper(roleQuery));
         return TableDataInfo.build(page);
     }
 
     /**
      * 根据条件分页查询角色数据
      *
-     * @param role 角色信息
+     * @param roleQuery 角色信息查询对象
      * @return 角色数据集合信息
      */
     @Override
-    public List<SysRole> selectRoleList(SysRole role) {
-        return baseMapper.selectRoleList(this.buildQueryWrapper(role));
+    public List<SysRole> selectRoleList(SysRoleQuery roleQuery) {
+        return baseMapper.selectRoleList(this.buildQueryWrapper(roleQuery));
     }
 
-    private Wrapper<SysRole> buildQueryWrapper(SysRole role) {
-        Map<String, Object> params = role.getParams();
+    private Wrapper<SysRole> buildQueryWrapper(SysRoleQuery roleQuery) {
         QueryWrapper<SysRole> wrapper = Wrappers.query();
         wrapper.eq("r.del_flag", UserConstants.ROLE_NORMAL)
-            .eq(ObjectUtil.isNotNull(role.getRoleId()), "r.role_id", role.getRoleId())
-            .like(StringUtils.isNotBlank(role.getRoleName()), "r.role_name", role.getRoleName())
-            .eq(StringUtils.isNotBlank(role.getStatus()), "r.status", role.getStatus())
-            .like(StringUtils.isNotBlank(role.getRoleKey()), "r.role_key", role.getRoleKey())
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                "r.create_time", params.get("beginTime"), params.get("endTime"))
+            .eq(ObjectUtil.isNotNull(roleQuery.getRoleId()), "r.role_id", roleQuery.getRoleId())
+            .like(StringUtils.isNotBlank(roleQuery.getRoleName()), "r.role_name", roleQuery.getRoleName())
+            .eq(StringUtils.isNotBlank(roleQuery.getStatus()), "r.status", roleQuery.getStatus())
+            .like(StringUtils.isNotBlank(roleQuery.getRoleKey()), "r.role_key", roleQuery.getRoleKey())
+            .between(roleQuery.getBeginCreateTime() != null && roleQuery.getEndCreateTime() != null,
+                "r.create_time", roleQuery.getBeginCreateTime(), roleQuery.getEndCreateTime())
             .orderByAsc("r.role_sort");
         return wrapper;
     }
@@ -119,7 +119,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
      */
     @Override
     public List<SysRole> selectRoleAll() {
-        return this.selectRoleList(new SysRole());
+        return this.selectRoleList(new SysRoleQuery());
     }
 
     /**
@@ -198,7 +198,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public void checkRoleDataScope(Long roleId) {
         if (!LoginHelper.isAdmin()) {
-            SysRole role = new SysRole();
+            SysRoleQuery role = new SysRoleQuery();
             role.setRoleId(roleId);
             List<SysRole> roles = this.selectRoleList(role);
             if (CollUtil.isEmpty(roles)) {

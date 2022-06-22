@@ -10,6 +10,7 @@ import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.to.SysDeptQuery;
 import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.web.model.dto.RoleDeptTreeSelectDTO;
 import io.swagger.annotations.Api;
@@ -41,8 +42,8 @@ public class SysDeptController extends BaseController {
     @ApiOperation("获取部门列表")
     @SaCheckPermission("system:dept:list")
     @GetMapping("/list")
-    public R<List<SysDept>> list(SysDept dept) {
-        List<SysDept> depts = deptService.selectDeptList(dept);
+    public R<List<SysDept>> list(SysDeptQuery deptQuery) {
+        List<SysDept> depts = deptService.selectDeptList(deptQuery);
         return R.ok(depts);
     }
 
@@ -53,7 +54,7 @@ public class SysDeptController extends BaseController {
     @SaCheckPermission("system:dept:list")
     @GetMapping("/list/exclude/{deptId}")
     public R<List<SysDept>> excludeChild(@ApiParam("部门ID") @PathVariable(value = "deptId", required = false) Long deptId) {
-        List<SysDept> depts = deptService.selectDeptList(new SysDept());
+        List<SysDept> depts = deptService.selectDeptList(new SysDeptQuery());
         depts.removeIf(d -> d.getDeptId().equals(deptId)
             || ArrayUtil.contains(StringUtils.split(d.getAncestors(), ","), deptId + ""));
         return R.ok(depts);
@@ -75,8 +76,8 @@ public class SysDeptController extends BaseController {
      */
     @ApiOperation("获取部门下拉树列表")
     @GetMapping("/treeselect")
-    public R<List<Tree<Long>>> treeselect(SysDept dept) {
-        List<SysDept> depts = deptService.selectDeptList(dept);
+    public R<List<Tree<Long>>> treeselect(SysDeptQuery deptQuery) {
+        List<SysDept> depts = deptService.selectDeptList(deptQuery);
         return R.ok(deptService.buildDeptTreeSelect(depts));
     }
 
@@ -86,7 +87,7 @@ public class SysDeptController extends BaseController {
     @ApiOperation("加载对应角色部门列表树")
     @GetMapping(value = "/roleDeptTreeSelect/{roleId}")
     public R<RoleDeptTreeSelectDTO> roleDeptTreeSelect(@ApiParam("角色ID") @PathVariable("roleId") Long roleId) {
-        List<SysDept> depts = deptService.selectDeptList(new SysDept());
+        List<SysDept> depts = deptService.selectDeptList(new SysDeptQuery());
         RoleDeptTreeSelectDTO data =  new RoleDeptTreeSelectDTO();
         data.setCheckedKeys(deptService.selectDeptListByRoleId(roleId));
         data.setDepts(deptService.buildDeptTreeSelect(depts));

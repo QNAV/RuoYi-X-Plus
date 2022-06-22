@@ -11,6 +11,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 业务表 gen_table
@@ -168,6 +169,12 @@ public class GenTable extends BaseEntity {
     @TableField(exist = false)
     private String parentMenuName;
 
+    /**
+     * 传入参数（暂时预留）
+     */
+    @TableField(exist = false)
+    private Map<String, String> params;
+
     public boolean isSub() {
         return isSub(this.tplCategory);
     }
@@ -203,4 +210,5 @@ public class GenTable extends BaseEntity {
         }
         return StringUtils.equalsAnyIgnoreCase(javaField, GenConstants.BASE_ENTITY);
     }
+
 }

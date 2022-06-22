@@ -83,7 +83,7 @@ public class SysUser extends BaseEntity {
      */
     @Sensitive(strategy = SensitiveStrategy.PHONE)
     @ApiModelProperty(value = "手机号码")
-    private String phonenumber;
+    private String phoneNumber;
 
     /**
      * 用户性别

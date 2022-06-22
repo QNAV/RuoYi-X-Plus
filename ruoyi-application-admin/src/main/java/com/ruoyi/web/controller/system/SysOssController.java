@@ -16,7 +16,7 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.system.domain.SysOss;
-import com.ruoyi.system.domain.bo.SysOssBo;
+import com.ruoyi.system.domain.to.SysOssQuery;
 import com.ruoyi.system.domain.vo.SysOssVo;
 import com.ruoyi.system.service.ISysOssService;
 import com.ruoyi.web.model.dto.OssUploadDTO;
@@ -54,8 +54,8 @@ public class SysOssController extends BaseController {
     @ApiOperation("查询OSS对象存储列表")
     @SaCheckPermission("system:oss:list")
     @GetMapping("/list")
-    public TableDataInfo<SysOssVo> list(@Validated(QueryGroup.class) SysOssBo bo, PageQuery pageQuery) {
-        return iSysOssService.queryPageList(bo, pageQuery);
+    public TableDataInfo<SysOssVo> list(@Validated(QueryGroup.class) SysOssQuery query, PageQuery pageQuery) {
+        return iSysOssService.queryPageList(query, pageQuery);
     }
 
     /**

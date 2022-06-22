@@ -10,6 +10,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysPost;
+import com.ruoyi.system.domain.to.SysPostQuery;
 import com.ruoyi.system.service.ISysPostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,16 +42,16 @@ public class SysPostController extends BaseController {
     @ApiOperation("获取岗位列表")
     @SaCheckPermission("system:post:list")
     @GetMapping("/list")
-    public TableDataInfo<SysPost> list(SysPost post, PageQuery pageQuery) {
-        return postService.selectPagePostList(post, pageQuery);
+    public TableDataInfo<SysPost> list(SysPostQuery postQuery, PageQuery pageQuery) {
+        return postService.selectPagePostList(postQuery, pageQuery);
     }
 
     @ApiOperation("导出岗位列表")
     @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:post:export")
     @PostMapping("/export")
-    public void export(SysPost post, HttpServletResponse response) {
-        List<SysPost> list = postService.selectPostList(post);
+    public void export(SysPostQuery postQuery, HttpServletResponse response) {
+        List<SysPost> list = postService.selectPostList(postQuery);
         ExcelUtil.exportExcel(list, "岗位数据", SysPost.class, response);
     }
 

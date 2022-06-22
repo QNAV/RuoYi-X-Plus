@@ -3,6 +3,7 @@ package com.ruoyi.system.service;
 import com.ruoyi.common.core.domain.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.system.domain.to.SysUserQuery;
 
 import java.util.List;
 
@@ -14,31 +15,31 @@ import java.util.List;
 public interface ISysUserService {
 
 
-    TableDataInfo<SysUser> selectPageUserList(SysUser user, PageQuery pageQuery);
+    TableDataInfo<SysUser> selectPageUserList(SysUserQuery userQuery, PageQuery pageQuery);
 
     /**
      * 根据条件分页查询用户列表
      *
-     * @param user 用户信息
+     * @param userQuery 用户信息查询对象
      * @return 用户信息集合信息
      */
-    List<SysUser> selectUserList(SysUser user);
+    List<SysUser> selectUserList(SysUserQuery userQuery);
 
     /**
      * 根据条件分页查询已分配用户角色列表
      *
-     * @param user 用户信息
+     * @param userQuery 用户信息查询对象
      * @return 用户信息集合信息
      */
-    TableDataInfo<SysUser> selectAllocatedList(SysUser user, PageQuery pageQuery);
+    TableDataInfo<SysUser> selectAllocatedList(SysUserQuery userQuery, PageQuery pageQuery);
 
     /**
      * 根据条件分页查询未分配用户角色列表
      *
-     * @param user 用户信息
+     * @param userQuery 用户信息查询对象
      * @return 用户信息集合信息
      */
-    TableDataInfo<SysUser> selectUnallocatedList(SysUser user, PageQuery pageQuery);
+    TableDataInfo<SysUser> selectUnallocatedList(SysUserQuery userQuery, PageQuery pageQuery);
 
     /**
      * 通过用户名查询用户
@@ -51,10 +52,10 @@ public interface ISysUserService {
     /**
      * 通过手机号查询用户
      *
-     * @param phonenumber 手机号
+     * @param phoneNumber 手机号
      * @return 用户对象信息
      */
-    SysUser selectUserByPhonenumber(String phonenumber);
+    SysUser selectUserByPhoneNumber(String phoneNumber);
 
     /**
      * 通过用户ID查询用户

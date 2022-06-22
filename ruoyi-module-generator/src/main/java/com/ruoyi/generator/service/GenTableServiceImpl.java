@@ -22,6 +22,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.generator.domain.GenTable;
 import com.ruoyi.generator.domain.GenTableColumn;
+import com.ruoyi.generator.domain.to.GenTableQuery;
 import com.ruoyi.generator.mapper.GenTableColumnMapper;
 import com.ruoyi.generator.mapper.GenTableMapper;
 import com.ruoyi.generator.util.GenUtils;
@@ -86,25 +87,24 @@ public class GenTableServiceImpl implements IGenTableService {
     }
 
     @Override
-    public TableDataInfo<GenTable> selectPageGenTableList(GenTable genTable, PageQuery pageQuery) {
-        Page<GenTable> page = baseMapper.selectPage(pageQuery.build(), this.buildGenTableQueryWrapper(genTable));
+    public TableDataInfo<GenTable> selectPageGenTableList(GenTableQuery genTableQuery, PageQuery pageQuery) {
+        Page<GenTable> page = baseMapper.selectPage(pageQuery.build(), this.buildGenTableQueryWrapper(genTableQuery));
         return TableDataInfo.build(page);
     }
 
-    private QueryWrapper<GenTable> buildGenTableQueryWrapper(GenTable genTable) {
-        Map<String, Object> params = genTable.getParams();
+    private QueryWrapper<GenTable> buildGenTableQueryWrapper(GenTableQuery genTableQuery) {
         QueryWrapper<GenTable> wrapper = Wrappers.query();
-        wrapper.like(StringUtils.isNotBlank(genTable.getTableName()), "lower(table_name)", StringUtils.lowerCase(genTable.getTableName()))
-            .like(StringUtils.isNotBlank(genTable.getTableComment()), "lower(table_comment)", StringUtils.lowerCase(genTable.getTableComment()))
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                "create_time", params.get("beginTime"), params.get("endTime"));
+        wrapper.like(StringUtils.isNotBlank(genTableQuery.getTableName()), "lower(table_name)", StringUtils.lowerCase(genTableQuery.getTableName()))
+            .like(StringUtils.isNotBlank(genTableQuery.getTableComment()), "lower(table_comment)", StringUtils.lowerCase(genTableQuery.getTableComment()))
+            .between(genTableQuery.getBeginCreateTime() != null && genTableQuery.getEndCreateTime() != null,
+                "create_time", genTableQuery.getBeginCreateTime(), genTableQuery.getEndCreateTime());
         return wrapper;
     }
 
 
     @Override
-    public TableDataInfo<GenTable> selectPageDbTableList(GenTable genTable, PageQuery pageQuery) {
-        Page<GenTable> page = baseMapper.selectPageDbTableList(pageQuery.build(), genTable);
+    public TableDataInfo<GenTable> selectPageDbTableList(GenTableQuery genTableQuery, PageQuery pageQuery) {
+        Page<GenTable> page = baseMapper.selectPageDbTableList(pageQuery.build(), genTableQuery);
         return TableDataInfo.build(page);
     }
 

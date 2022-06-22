@@ -12,6 +12,7 @@ import com.ruoyi.common.core.validate.EditGroup;
 import com.ruoyi.common.core.validate.QueryGroup;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.bo.SysOssConfigBo;
+import com.ruoyi.system.domain.to.SysOssConfigQuery;
 import com.ruoyi.system.domain.vo.SysOssConfigVo;
 import com.ruoyi.system.service.ISysOssConfigService;
 import io.swagger.annotations.Api;
@@ -29,8 +30,6 @@ import java.util.Arrays;
  * 对象存储配置Controller
  *
  * @author weibocy
- * @author 孤舟烟雨
- * @date 2021-08-13
  */
 @Validated
 @Api(value = "对象存储配置控制器", tags = {"对象存储配置管理"})
@@ -47,8 +46,8 @@ public class SysOssConfigController extends BaseController {
     @ApiOperation("查询对象存储配置列表")
     @SaCheckPermission("system:oss:list")
     @GetMapping("/list")
-    public TableDataInfo<SysOssConfigVo> list(@Validated(QueryGroup.class) SysOssConfigBo bo, PageQuery pageQuery) {
-        return iSysOssConfigService.queryPageList(bo, pageQuery);
+    public TableDataInfo<SysOssConfigVo> list(@Validated(QueryGroup.class) SysOssConfigQuery query, PageQuery pageQuery) {
+        return iSysOssConfigService.queryPageList(query, pageQuery);
     }
 
     /**

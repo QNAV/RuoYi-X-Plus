@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.mapper.BaseMapperPlus;
 import com.ruoyi.generator.domain.GenTable;
+import com.ruoyi.generator.domain.to.GenTableQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,10 +20,10 @@ public interface GenTableMapper extends BaseMapperPlus<GenTableMapper, GenTable,
     /**
      * 查询据库列表
      *
-     * @param genTable 查询条件
+     * @param genTableQuery 查询条件
      * @return 数据库表集合
      */
-    Page<GenTable> selectPageDbTableList(@Param("page") Page<GenTable> page, @Param("genTable") GenTable genTable);
+    Page<GenTable> selectPageDbTableList(@Param("page") Page<GenTable> page, @Param("genTable") GenTableQuery genTableQuery);
 
     /**
      * 查询据库列表

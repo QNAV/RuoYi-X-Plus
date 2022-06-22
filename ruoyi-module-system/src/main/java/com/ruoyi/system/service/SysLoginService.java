@@ -166,17 +166,17 @@ public class SysLoginService {
         return user;
     }
 
-    private SysUser loadUserByPhonenumber(String phonenumber) {
-        SysUser user = userService.selectUserByPhonenumber(phonenumber);
+    private SysUser loadUserByPhonenumber(String phoneNumber) {
+        SysUser user = userService.selectUserByPhoneNumber(phoneNumber);
         if (ObjectUtil.isNull(user)) {
-            log.info("登录用户：{} 不存在.", phonenumber);
-            throw new UserException("user.not.exists", phonenumber);
+            log.info("登录用户：{} 不存在.", phoneNumber);
+            throw new UserException("user.not.exists", phoneNumber);
         } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
-            log.info("登录用户：{} 已被删除.", phonenumber);
-            throw new UserException("user.password.delete", phonenumber);
+            log.info("登录用户：{} 已被删除.", phoneNumber);
+            throw new UserException("user.password.delete", phoneNumber);
         } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
-            log.info("登录用户：{} 已被停用.", phonenumber);
-            throw new UserException("user.blocked", phonenumber);
+            log.info("登录用户：{} 已被停用.", phoneNumber);
+            throw new UserException("user.blocked", phoneNumber);
         }
         return user;
     }

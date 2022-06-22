@@ -15,6 +15,7 @@ import com.ruoyi.common.helper.DataBaseHelper;
 import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.TreeBuildUtils;
+import com.ruoyi.system.domain.to.SysDeptQuery;
 import com.ruoyi.system.mapper.SysDeptMapper;
 import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.mapper.SysUserMapper;
@@ -42,17 +43,17 @@ public class SysDeptServiceImpl implements ISysDeptService {
     /**
      * 查询部门管理数据
      *
-     * @param dept 部门信息
+     * @param deptQuery 部门查询对象
      * @return 部门信息集合
      */
     @Override
-    public List<SysDept> selectDeptList(SysDept dept) {
+    public List<SysDept> selectDeptList(SysDeptQuery deptQuery) {
         LambdaQueryWrapper<SysDept> lqw = new LambdaQueryWrapper<>();
         lqw.eq(SysDept::getDelFlag, "0")
-            .eq(ObjectUtil.isNotNull(dept.getDeptId()), SysDept::getDeptId, dept.getDeptId())
-            .eq(ObjectUtil.isNotNull(dept.getParentId()), SysDept::getParentId, dept.getParentId())
-            .like(StringUtils.isNotBlank(dept.getDeptName()), SysDept::getDeptName, dept.getDeptName())
-            .eq(StringUtils.isNotBlank(dept.getStatus()), SysDept::getStatus, dept.getStatus())
+            .eq(ObjectUtil.isNotNull(deptQuery.getDeptId()), SysDept::getDeptId, deptQuery.getDeptId())
+            .eq(ObjectUtil.isNotNull(deptQuery.getParentId()), SysDept::getParentId, deptQuery.getParentId())
+            .like(StringUtils.isNotBlank(deptQuery.getDeptName()), SysDept::getDeptName, deptQuery.getDeptName())
+            .eq(StringUtils.isNotBlank(deptQuery.getStatus()), SysDept::getStatus, deptQuery.getStatus())
             .orderByAsc(SysDept::getParentId)
             .orderByAsc(SysDept::getOrderNum);
         return baseMapper.selectDeptList(lqw);
@@ -162,9 +163,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Override
     public void checkDeptDataScope(Long deptId) {
         if (!LoginHelper.isAdmin()) {
-            SysDept dept = new SysDept();
-            dept.setDeptId(deptId);
-            List<SysDept> depts = this.selectDeptList(dept);
+            SysDeptQuery deptQuery = new SysDeptQuery();
+            deptQuery.setDeptId(deptId);
+            List<SysDept> depts = this.selectDeptList(deptQuery);
             if (CollUtil.isEmpty(depts)) {
                 throw new ServiceException("没有权限访问部门数据！");
             }

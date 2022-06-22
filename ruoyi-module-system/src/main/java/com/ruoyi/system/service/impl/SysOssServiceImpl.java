@@ -15,6 +15,7 @@ import com.ruoyi.oss.entity.UploadResult;
 import com.ruoyi.oss.factory.OssFactory;
 import com.ruoyi.system.domain.SysOss;
 import com.ruoyi.system.domain.bo.SysOssBo;
+import com.ruoyi.system.domain.to.SysOssQuery;
 import com.ruoyi.system.domain.vo.SysOssVo;
 import com.ruoyi.system.mapper.SysOssMapper;
 import com.ruoyi.system.service.ISysOssService;
@@ -41,8 +42,8 @@ public class SysOssServiceImpl implements ISysOssService {
     private final SysOssMapper baseMapper;
 
     @Override
-    public TableDataInfo<SysOssVo> queryPageList(SysOssBo bo, PageQuery pageQuery) {
-        LambdaQueryWrapper<SysOss> lqw = buildQueryWrapper(bo);
+    public TableDataInfo<SysOssVo> queryPageList(SysOssQuery query, PageQuery pageQuery) {
+        LambdaQueryWrapper<SysOss> lqw = buildQueryWrapper(query);
         Page<SysOssVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
     }
@@ -62,17 +63,16 @@ public class SysOssServiceImpl implements ISysOssService {
         return list;
     }
 
-    private LambdaQueryWrapper<SysOss> buildQueryWrapper(SysOssBo bo) {
-        Map<String, Object> params = bo.getParams();
+    private LambdaQueryWrapper<SysOss> buildQueryWrapper(SysOssQuery query) {
         LambdaQueryWrapper<SysOss> lqw = Wrappers.lambdaQuery();
-        lqw.like(StringUtils.isNotBlank(bo.getFileName()), SysOss::getFileName, bo.getFileName());
-        lqw.like(StringUtils.isNotBlank(bo.getOriginalName()), SysOss::getOriginalName, bo.getOriginalName());
-        lqw.eq(StringUtils.isNotBlank(bo.getFileSuffix()), SysOss::getFileSuffix, bo.getFileSuffix());
-        lqw.eq(StringUtils.isNotBlank(bo.getUrl()), SysOss::getUrl, bo.getUrl());
-        lqw.between(params.get("beginCreateTime") != null && params.get("endCreateTime") != null,
-            SysOss::getCreateTime, params.get("beginCreateTime"), params.get("endCreateTime"));
-        lqw.eq(StringUtils.isNotBlank(bo.getCreateBy()), SysOss::getCreateBy, bo.getCreateBy());
-        lqw.eq(StringUtils.isNotBlank(bo.getService()), SysOss::getService, bo.getService());
+        lqw.like(StringUtils.isNotBlank(query.getFileName()), SysOss::getFileName, query.getFileName());
+        lqw.like(StringUtils.isNotBlank(query.getOriginalName()), SysOss::getOriginalName, query.getOriginalName());
+        lqw.eq(StringUtils.isNotBlank(query.getFileSuffix()), SysOss::getFileSuffix, query.getFileSuffix());
+        lqw.eq(StringUtils.isNotBlank(query.getUrl()), SysOss::getUrl, query.getUrl());
+        lqw.between(query.getBeginCreateTime() != null && query.getEndCreateTime() != null,
+            SysOss::getCreateTime, query.getBeginCreateTime(), query.getEndCreateTime());
+        lqw.eq(StringUtils.isNotBlank(query.getCreateBy()), SysOss::getCreateBy, query.getCreateBy());
+        lqw.eq(StringUtils.isNotBlank(query.getService()), SysOss::getService, query.getService());
         return lqw;
     }
 

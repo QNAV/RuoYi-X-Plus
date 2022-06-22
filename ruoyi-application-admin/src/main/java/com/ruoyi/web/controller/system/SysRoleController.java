@@ -15,6 +15,8 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysUserRole;
+import com.ruoyi.system.domain.to.SysRoleQuery;
+import com.ruoyi.system.domain.to.SysUserQuery;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.system.service.SysPermissionService;
@@ -45,16 +47,16 @@ public class SysRoleController extends BaseController {
     @ApiOperation("查询角色信息列表")
     @SaCheckPermission("system:role:list")
     @GetMapping("/list")
-    public TableDataInfo<SysRole> list(SysRole role, PageQuery pageQuery) {
-        return roleService.selectPageRoleList(role, pageQuery);
+    public TableDataInfo<SysRole> list(SysRoleQuery roleQuery, PageQuery pageQuery) {
+        return roleService.selectPageRoleList(roleQuery, pageQuery);
     }
 
     @ApiOperation("导出角色信息列表")
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:role:export")
     @PostMapping("/export")
-    public void export(SysRole role, HttpServletResponse response) {
-        List<SysRole> list = roleService.selectRoleList(role);
+    public void export(SysRoleQuery roleQuery, HttpServletResponse response) {
+        List<SysRole> list = roleService.selectRoleList(roleQuery);
         ExcelUtil.exportExcel(list, "角色数据", SysRole.class, response);
     }
 
@@ -168,8 +170,8 @@ public class SysRoleController extends BaseController {
     @ApiOperation("查询已分配用户角色列表")
     @SaCheckPermission("system:role:list")
     @GetMapping("/authUser/allocatedList")
-    public TableDataInfo<SysUser> allocatedList(SysUser user, PageQuery pageQuery) {
-        return userService.selectAllocatedList(user, pageQuery);
+    public TableDataInfo<SysUser> allocatedList(SysUserQuery userQuery, PageQuery pageQuery) {
+        return userService.selectAllocatedList(userQuery, pageQuery);
     }
 
     /**
@@ -178,8 +180,8 @@ public class SysRoleController extends BaseController {
     @ApiOperation("查询未分配用户角色列表")
     @SaCheckPermission("system:role:list")
     @GetMapping("/authUser/unallocatedList")
-    public TableDataInfo<SysUser> unallocatedList(SysUser user, PageQuery pageQuery) {
-        return userService.selectUnallocatedList(user, pageQuery);
+    public TableDataInfo<SysUser> unallocatedList(SysUserQuery userQuery, PageQuery pageQuery) {
+        return userService.selectUnallocatedList(userQuery, pageQuery);
     }
 
     /**
