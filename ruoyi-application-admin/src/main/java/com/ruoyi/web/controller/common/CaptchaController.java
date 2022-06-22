@@ -18,6 +18,7 @@ import com.ruoyi.sms.config.properties.SmsProperties;
 import com.ruoyi.sms.core.SmsTemplate;
 import com.ruoyi.sms.entity.SmsResult;
 import com.ruoyi.system.service.ISysConfigService;
+import com.ruoyi.web.model.dto.CaptchaImageDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -81,12 +82,12 @@ public class CaptchaController {
      */
     @ApiOperation("生成验证码")
     @GetMapping("/captchaImage")
-    public R<Map<String, Object>> getCode() {
-        Map<String, Object> ajax = new HashMap<>();
+    public R<CaptchaImageDto> getCode() {
+        CaptchaImageDto data = new CaptchaImageDto();
         boolean captchaOnOff = configService.selectCaptchaOnOff();
-        ajax.put("captchaOnOff", captchaOnOff);
+        data.setCaptchaOnOff(captchaOnOff);
         if (!captchaOnOff) {
-            return R.ok(ajax);
+            return R.ok(data);
         }
         // 保存验证码信息
         String uuid = IdUtil.simpleUUID();
@@ -101,9 +102,9 @@ public class CaptchaController {
         captcha.createCode();
         String code = isMath ? getCodeResult(captcha.getCode()) : captcha.getCode();
         RedisUtils.setCacheObject(verifyKey, code, Duration.ofMinutes(Constants.CAPTCHA_EXPIRATION));
-        ajax.put("uuid", uuid);
-        ajax.put("img", captcha.getImageBase64());
-        return R.ok(ajax);
+        data.setUuid(uuid);
+        data.setImg(captcha.getImageBase64());
+        return R.ok(data);
     }
 
     private String getCodeResult(String capStr) {
