@@ -9,10 +9,10 @@ import java.io.IOException;
 
 /**
  * 超出 JS 最大最小值 处理
- *
+ * 暂时取消此自动转换使用
  * @author weibocy
  */
-@JacksonStdImpl
+//@JacksonStdImpl
 public class BigNumberSerializer extends NumberSerializer {
 
     /**
