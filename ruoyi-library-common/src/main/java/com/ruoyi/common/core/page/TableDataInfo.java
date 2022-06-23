@@ -24,18 +24,6 @@ public class TableDataInfo<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 总记录数
-     */
-    @ApiModelProperty("总记录数")
-    private long total;
-
-    /**
-     * 列表数据
-     */
-    @ApiModelProperty("列表数据")
-    private List<T> rows;
-
-    /**
      * 消息状态码
      */
     @ApiModelProperty("消息状态码")
@@ -48,22 +36,31 @@ public class TableDataInfo<T> implements Serializable {
     private String msg;
 
     /**
+     * 数据对象
+     */
+    @ApiModelProperty("数据对象")
+    private TableData<T> data;
+
+    /**
      * 分页
      *
      * @param list  列表数据
      * @param total 总记录数
      */
     public TableDataInfo(List<T> list, long total) {
-        this.rows = list;
-        this.total = total;
+        this.data = new TableData<>();
+        this.data.setRows(list);
+        this.data.setTotal(total);
     }
 
     public static <T> TableDataInfo<T> build(IPage<T> page) {
         TableDataInfo<T> rspData = new TableDataInfo<>();
         rspData.setCode(HttpStatus.HTTP_OK);
         rspData.setMsg("查询成功");
-        rspData.setRows(page.getRecords());
-        rspData.setTotal(page.getTotal());
+        TableData<T> tableData = new TableData<>();
+        tableData.setRows(page.getRecords());
+        tableData.setTotal(page.getTotal());
+        rspData.setData(tableData);
         return rspData;
     }
 
@@ -71,8 +68,10 @@ public class TableDataInfo<T> implements Serializable {
         TableDataInfo<T> rspData = new TableDataInfo<>();
         rspData.setCode(HttpStatus.HTTP_OK);
         rspData.setMsg("查询成功");
-        rspData.setRows(list);
-        rspData.setTotal(list.size());
+        TableData<T> tableData = new TableData<>();
+        tableData.setRows(list);
+        tableData.setTotal(list.size());
+        rspData.setData(tableData);
         return rspData;
     }
 
@@ -81,6 +80,26 @@ public class TableDataInfo<T> implements Serializable {
         rspData.setCode(HttpStatus.HTTP_OK);
         rspData.setMsg("查询成功");
         return rspData;
+    }
+
+    /**
+     * 分页数据对象
+     */
+    @Data
+    @ApiModel("分页数据对象")
+    @NoArgsConstructor
+    public static class TableData<T> {
+        /**
+         * 总记录数
+         */
+        @ApiModelProperty("总记录数")
+        private long total;
+
+        /**
+         * 列表数据
+         */
+        @ApiModelProperty("列表数据")
+        private List<T> rows;
     }
 
 }
