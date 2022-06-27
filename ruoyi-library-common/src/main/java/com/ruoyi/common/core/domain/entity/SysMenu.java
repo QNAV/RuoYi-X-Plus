@@ -35,7 +35,7 @@ public class SysMenu extends TreeEntity<SysMenu> {
     /**
      * 菜单名称
      */
-    @ApiModelProperty(value = "菜单名称")
+    @ApiModelProperty(value = "菜单名称", required = true)
     @NotBlank(message = "菜单名称不能为空")
     @Size(min = 0, max = 50, message = "菜单名称长度不能超过50个字符")
     private String menuName;
@@ -43,7 +43,7 @@ public class SysMenu extends TreeEntity<SysMenu> {
     /**
      * 显示顺序
      */
-    @ApiModelProperty(value = "显示顺序")
+    @ApiModelProperty(value = "显示顺序", required = true)
     @NotNull(message = "显示顺序不能为空")
     private Integer orderNum;
 
@@ -82,7 +82,7 @@ public class SysMenu extends TreeEntity<SysMenu> {
     /**
      * 类型（M目录 C菜单 F按钮）
      */
-    @ApiModelProperty(value = "类型（M目录 C菜单 F按钮）")
+    @ApiModelProperty(value = "类型（M目录 C菜单 F按钮）", required = true)
     @NotBlank(message = "菜单类型不能为空")
     private String menuType;
 

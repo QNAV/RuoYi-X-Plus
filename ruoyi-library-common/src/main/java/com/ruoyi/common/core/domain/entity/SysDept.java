@@ -37,7 +37,7 @@ public class SysDept extends TreeEntity<SysDept> {
     /**
      * 部门名称
      */
-    @ApiModelProperty(value = "部门名称")
+    @ApiModelProperty(value = "部门名称", required = true)
     @NotBlank(message = "部门名称不能为空")
     @Size(min = 0, max = 30, message = "部门名称长度不能超过30个字符")
     private String deptName;
@@ -45,7 +45,7 @@ public class SysDept extends TreeEntity<SysDept> {
     /**
      * 显示顺序
      */
-    @ApiModelProperty(value = "显示顺序")
+    @ApiModelProperty(value = "显示顺序", required = true)
     @NotNull(message = "显示顺序不能为空")
     private Integer orderNum;
 

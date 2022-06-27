@@ -41,7 +41,7 @@ public class SysDictType extends BaseEntity {
     /**
      * 字典名称
      */
-    @ApiModelProperty(value = "字典名称")
+    @ApiModelProperty(value = "字典名称", required = true)
     @ExcelProperty(value = "字典名称")
     @NotBlank(message = "字典名称不能为空")
     @Size(min = 0, max = 100, message = "字典类型名称长度不能超过100个字符")
@@ -50,7 +50,7 @@ public class SysDictType extends BaseEntity {
     /**
      * 字典类型
      */
-    @ApiModelProperty(value = "字典类型")
+    @ApiModelProperty(value = "字典类型", required = true)
     @ExcelProperty(value = "字典类型")
     @NotBlank(message = "字典类型不能为空")
     @Size(min = 0, max = 100, message = "字典类型类型长度不能超过100个字符")

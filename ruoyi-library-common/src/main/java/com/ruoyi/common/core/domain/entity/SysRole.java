@@ -43,7 +43,7 @@ public class SysRole extends BaseEntity {
     /**
      * 角色名称
      */
-    @ApiModelProperty(value = "角色名称")
+    @ApiModelProperty(value = "角色名称", required = true)
     @ExcelProperty(value = "角色名称")
     @NotBlank(message = "角色名称不能为空")
     @Size(min = 0, max = 30, message = "角色名称长度不能超过30个字符")
@@ -52,7 +52,7 @@ public class SysRole extends BaseEntity {
     /**
      * 角色权限
      */
-    @ApiModelProperty(value = "角色权限")
+    @ApiModelProperty(value = "角色权限", required = true)
     @ExcelProperty(value = "角色权限")
     @NotBlank(message = "权限字符不能为空")
     @Size(min = 0, max = 100, message = "权限字符长度不能超过100个字符")
@@ -61,7 +61,7 @@ public class SysRole extends BaseEntity {
     /**
      * 角色排序
      */
-    @ApiModelProperty(value = "角色排序")
+    @ApiModelProperty(value = "角色排序", required = true)
     @ExcelProperty(value = "角色排序")
     @NotNull(message = "显示顺序不能为空")
     private Integer roleSort;
@@ -89,9 +89,10 @@ public class SysRole extends BaseEntity {
     /**
      * 角色状态（0正常 1停用）
      */
-    @ApiModelProperty(value = "角色状态（0正常 1停用）")
+    @ApiModelProperty(value = "角色状态（0正常 1停用）", required = true)
     @ExcelProperty(value = "角色状态", converter = ExcelDictConvert.class)
     @ExcelDictFormat(dictType = "sys_common_status")
+    @NotBlank(message = "角色状态不能为空")
     private String status;
 
     /**
@@ -117,7 +118,7 @@ public class SysRole extends BaseEntity {
     /**
      * 菜单组
      */
-    @ApiModelProperty(value = "菜单组")
+    @ApiModelProperty(value = "菜单组", required = true)
     @TableField(exist = false)
     private Long[] menuIds;
 

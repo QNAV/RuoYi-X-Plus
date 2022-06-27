@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +50,7 @@ public class SysUser extends BaseEntity {
     /**
      * 用户账号
      */
-    @ApiModelProperty(value = "用户账号")
+    @ApiModelProperty(value = "用户账号", required = true)
     @Xss(message = "用户账号不能包含脚本字符")
     @NotBlank(message = "用户账号不能为空")
     @Size(min = 0, max = 30, message = "用户账号长度不能超过30个字符")
@@ -58,9 +59,10 @@ public class SysUser extends BaseEntity {
     /**
      * 用户昵称
      */
-    @ApiModelProperty(value = "用户昵称")
+    @ApiModelProperty(value = "用户昵称", required = true)
     @Xss(message = "用户昵称不能包含脚本字符")
     @Size(min = 0, max = 30, message = "用户昵称长度不能超过30个字符")
+    @NotBlank(message = "用户昵称不能为空")
     private String nickName;
 
     /**
@@ -100,12 +102,13 @@ public class SysUser extends BaseEntity {
     /**
      * 密码
      */
-    @ApiModelProperty(value = "密码")
+    @ApiModelProperty(value = "密码", required = true)
     @TableField(
         insertStrategy = FieldStrategy.NOT_EMPTY,
         updateStrategy = FieldStrategy.NOT_EMPTY,
         whereStrategy = FieldStrategy.NOT_EMPTY
     )
+    @NotBlank(message = "密码不能为空")
     private String password;
 
     /**
@@ -156,15 +159,17 @@ public class SysUser extends BaseEntity {
     /**
      * 角色组
      */
-    @ApiModelProperty(value = "角色组")
+    @ApiModelProperty(value = "角色组", required = true)
     @TableField(exist = false)
+    @NotNull(message = "角色组不能为空")
     private Long[] roleIds;
 
     /**
      * 岗位组
      */
-    @ApiModelProperty(value = "岗位组")
+    @ApiModelProperty(value = "岗位组", required = true)
     @TableField(exist = false)
+    @NotNull(message = "岗位组不能为空")
     private Long[] postIds;
 
     /**
