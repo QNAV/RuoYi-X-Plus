@@ -19,26 +19,26 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@ApiModel("分页响应对象")
+@ApiModel(value = "TableDataInfo", description = "分页响应对象")
 public class TableDataInfo<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
      * 消息状态码
      */
-    @ApiModelProperty("消息状态码")
+    @ApiModelProperty(value = "消息状态码", required = true)
     private int code;
 
     /**
      * 消息内容
      */
-    @ApiModelProperty("消息内容")
+    @ApiModelProperty(value = "消息内容", required = true)
     private String msg;
 
     /**
      * 数据对象
      */
-    @ApiModelProperty("数据对象")
+    @ApiModelProperty(value = "数据对象", required = true)
     private TableData<T> data;
 
     /**
@@ -79,6 +79,7 @@ public class TableDataInfo<T> implements Serializable {
         TableDataInfo<T> rspData = new TableDataInfo<>();
         rspData.setCode(HttpStatus.HTTP_OK);
         rspData.setMsg("查询成功");
+        rspData.setData(null);
         return rspData;
     }
 
@@ -86,7 +87,7 @@ public class TableDataInfo<T> implements Serializable {
      * 分页数据对象
      */
     @Data
-    @ApiModel("分页数据对象")
+    @ApiModel(value = "TableData", description = "分页数据对象")
     @NoArgsConstructor
     public static class TableData<T> {
         /**

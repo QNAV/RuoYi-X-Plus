@@ -10,7 +10,7 @@ import java.util.Date;
  * 参数配置查询对象
  * @author weibocy
  */
-@ApiModel("参数配置业务对象")
+@ApiModel(value = "SysConfigQuery", description = "参数配置业务对象")
 @Data
 public class SysConfigQuery {
 

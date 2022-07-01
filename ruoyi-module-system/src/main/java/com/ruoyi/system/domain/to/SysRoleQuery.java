@@ -10,7 +10,7 @@ import java.util.Date;
  * 角色查询对象
  * @author weibocy
  */
-@ApiModel("角色查询对象")
+@ApiModel(value = "SysRoleQuery", description = "角色查询对象")
 @Data
 public class SysRoleQuery {
 

@@ -10,7 +10,7 @@ import java.util.Date;
  * 操作日志记录查询对象
  * @author weibocy
  */
-@ApiModel("操作日志记录查询对象")
+@ApiModel(value = "SysOperLogQuery", description = "操作日志记录查询对象")
 @Data
 public class SysOperLogQuery {
 

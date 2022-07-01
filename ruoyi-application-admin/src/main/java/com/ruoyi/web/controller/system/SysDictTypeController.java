@@ -28,7 +28,7 @@ import java.util.List;
  * @author weibocy
  */
 @Validated
-@Api(value = "数据字典信息控制器", tags = {"数据字典信息管理"})
+@Api(value = "数据字典信息管理", tags = {"SysDictTypeService"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/dict/type")
@@ -36,18 +36,27 @@ public class SysDictTypeController extends BaseController {
 
     private final ISysDictTypeService dictTypeService;
 
-    @ApiOperation("查询字典类型列表")
+    @ApiOperation(value = "查询字典类型列表", nickname = "SysDictTypePostList")
     @SaCheckPermission("system:dict:list")
-    @GetMapping("/list")
-    public TableDataInfo<SysDictType> list(SysDictTypeQuery dictTypeQuery, PageQuery pageQuery) {
+    @PostMapping("/list")
+    public TableDataInfo<SysDictType> list(@RequestBody SysDictTypeQuery dictTypeQuery,
+                                           @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
+                                           @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
+                                           @ApiParam("排序列") @RequestParam String orderByColumn,
+                                           @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setPageNum(pageNum);
+        pageQuery.setPageSize(pageSize);
+        pageQuery.setOrderByColumn(orderByColumn);
+        pageQuery.setIsAsc(isAsc);
         return dictTypeService.selectPageDictTypeList(dictTypeQuery, pageQuery);
     }
 
-    @ApiOperation("导出字典类型列表")
+    @ApiOperation(value = "导出字典类型列表", nickname = "SysDictTypePostExport")
     @Log(title = "字典类型", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:dict:export")
     @PostMapping("/export")
-    public void export(SysDictTypeQuery dictTypeQuery, HttpServletResponse response) {
+    public void export(@RequestBody SysDictTypeQuery dictTypeQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysDictType> list = dictTypeService.selectDictTypeList(dictTypeQuery);
         ExcelUtil.exportExcel(list, "字典类型", SysDictType.class, response);
     }
@@ -55,20 +64,20 @@ public class SysDictTypeController extends BaseController {
     /**
      * 查询字典类型详细
      */
-    @ApiOperation("查询字典类型详细")
+    @ApiOperation(value = "查询字典类型详细", nickname = "SysDictTypeGetInfo")
     @SaCheckPermission("system:dict:query")
-    @GetMapping(value = "/{dictId}")
-    public R<SysDictType> getInfo(@ApiParam("字典ID") @PathVariable Long dictId) {
+    @GetMapping(value = "/info")
+    public R<SysDictType> info(@ApiParam(value = "字典ID", required = true) @RequestParam Long dictId) {
         return R.ok(dictTypeService.selectDictTypeById(dictId));
     }
 
     /**
      * 新增字典类型
      */
-    @ApiOperation("新增字典类型")
+    @ApiOperation(value = "新增字典类型", nickname = "SysDictTypePostAdd")
     @SaCheckPermission("system:dict:add")
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
-    @PostMapping
+    @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysDictType dict) {
         if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
             return R.fail("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
@@ -79,10 +88,10 @@ public class SysDictTypeController extends BaseController {
     /**
      * 修改字典类型
      */
-    @ApiOperation("修改字典类型")
+    @ApiOperation(value = "修改字典类型", nickname = "SysDictTypePostEdit")
     @SaCheckPermission("system:dict:edit")
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
-    @PutMapping
+    @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysDictType dict) {
         if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
             return R.fail("修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
@@ -93,11 +102,11 @@ public class SysDictTypeController extends BaseController {
     /**
      * 删除字典类型
      */
-    @ApiOperation("删除字典类型")
+    @ApiOperation(value = "删除字典类型", nickname = "SysDictTypePostRemove")
     @SaCheckPermission("system:dict:remove")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{dictIds}")
-    public R<Void> remove(@ApiParam("字典ID串") @PathVariable Long[] dictIds) {
+    @PostMapping("/remove")
+    public R<Void> remove(@ApiParam(value = "字典ID串", required = true) @RequestParam Long[] dictIds) {
         dictTypeService.deleteDictTypeByIds(dictIds);
         return R.ok();
     }
@@ -105,10 +114,10 @@ public class SysDictTypeController extends BaseController {
     /**
      * 刷新字典缓存
      */
-    @ApiOperation("刷新字典缓存")
+    @ApiOperation(value = "刷新字典缓存", nickname = "SysDictTypePostRefreshCache")
     @SaCheckPermission("system:dict:remove")
     @Log(title = "字典类型", businessType = BusinessType.CLEAN)
-    @DeleteMapping("/refreshCache")
+    @PostMapping("/refreshCache")
     public R<Void> refreshCache() {
         dictTypeService.resetDictCache();
         return R.ok();
@@ -118,8 +127,8 @@ public class SysDictTypeController extends BaseController {
      * 获取字典选择框列表
      */
     @ApiOperation("获取字典选择框列表")
-    @GetMapping("/optionselect")
-    public R<List<SysDictType>> optionselect() {
+    @GetMapping("/optionSelect")
+    public R<List<SysDictType>> optionSelect() {
         List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
         return R.ok(dictTypes);
     }

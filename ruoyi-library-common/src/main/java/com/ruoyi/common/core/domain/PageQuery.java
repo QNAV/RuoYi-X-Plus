@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.sql.SqlUtil;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ import java.io.Serializable;
  * @author weibocy
  */
 
+@ApiModel(value = "PageQuery", description = "分页查询实体类")
 @Data
 public class PageQuery implements Serializable {
 
@@ -46,14 +48,14 @@ public class PageQuery implements Serializable {
     private String isAsc;
 
     /**
-     * 当前记录起始索引 默认值
+     * 当前记录起始索引 默认值 1
      */
     public static final int DEFAULT_PAGE_NUM = 1;
 
     /**
-     * 每页显示记录数 默认值 默认查全部
+     * 每页显示记录数 默认值 10
      */
-    public static final int DEFAULT_PAGE_SIZE = Integer.MAX_VALUE;
+    public static final int DEFAULT_PAGE_SIZE = 10;
 
     public <T> Page<T> build() {
         Integer pageNum = ObjectUtil.defaultIfNull(getPageNum(), DEFAULT_PAGE_NUM);

@@ -8,7 +8,7 @@ import lombok.Data;
  * 字典数据查询对象
  * @author weibocy
  */
-@ApiModel("字典数据查询对象")
+@ApiModel(value = "SysDictDataQuery", description = "字典数据查询对象")
 @Data
 public class SysDictDataQuery {
 

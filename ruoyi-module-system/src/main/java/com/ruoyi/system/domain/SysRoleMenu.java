@@ -15,7 +15,7 @@ import lombok.Data;
 
 @Data
 @TableName("sys_role_menu")
-@ApiModel("角色和菜单关联")
+@ApiModel(value = "SysRoleMenu", description = "角色和菜单关联")
 public class SysRoleMenu {
 
     /**

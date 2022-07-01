@@ -9,7 +9,7 @@ import lombok.Data;
  * @author weibocy
  */
 @Data
-@ApiModel("菜单名称是否唯一查询对象")
+@ApiModel(value = "SysMenuUniqueQuery", description = "菜单名称是否唯一查询对象")
 public class SysMenuUniqueQuery {
 
     /**

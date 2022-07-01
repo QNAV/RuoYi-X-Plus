@@ -27,7 +27,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_post")
 @ExcelIgnoreUnannotated
-@ApiModel("岗位信息业务对象")
+@ApiModel(value = "SysPost", description = "岗位信息业务对象")
 public class SysPost extends BaseEntity {
 
     /**

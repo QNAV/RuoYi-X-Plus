@@ -14,7 +14,7 @@ import java.util.Properties;
  * @author weibocy
  */
 @Data
-@ApiModel("缓存监控详细信息返回对象")
+@ApiModel(value = "CacheInfoDTO", description = "缓存监控详细信息返回对象")
 public class CacheInfoDTO {
 
     /**

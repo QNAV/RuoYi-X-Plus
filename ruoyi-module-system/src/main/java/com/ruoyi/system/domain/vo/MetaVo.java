@@ -12,7 +12,7 @@ import lombok.Data;
  */
 
 @Data
-@ApiModel("路由显示信息")
+@ApiModel(value = "MetaVo", description = "路由显示信息")
 public class MetaVo {
 
     /**

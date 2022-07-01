@@ -10,7 +10,7 @@ import lombok.Data;
  * @author weibocy
  */
 @Data
-@ApiModel("个人信息返回对象")
+@ApiModel(value = "ProfileDTO", description = "个人信息返回对象")
 public class ProfileDTO {
 
     /**

@@ -28,7 +28,7 @@ import java.util.List;
  * @author weibocy
  */
 @Validated
-@Api(value = "岗位信息控制器", tags = {"岗位信息管理"})
+@Api(value = "岗位信息管理", tags = {"SysPostService"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/post")
@@ -39,18 +39,27 @@ public class SysPostController extends BaseController {
     /**
      * 获取岗位列表
      */
-    @ApiOperation("获取岗位列表")
+    @ApiOperation(value = "获取岗位列表", nickname = "SysPostPostList")
     @SaCheckPermission("system:post:list")
-    @GetMapping("/list")
-    public TableDataInfo<SysPost> list(SysPostQuery postQuery, PageQuery pageQuery) {
+    @PostMapping("/list")
+    public TableDataInfo<SysPost> list(@RequestBody SysPostQuery postQuery,
+                                       @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
+                                       @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
+                                       @ApiParam("排序列") @RequestParam String orderByColumn,
+                                       @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setPageNum(pageNum);
+        pageQuery.setPageSize(pageSize);
+        pageQuery.setOrderByColumn(orderByColumn);
+        pageQuery.setIsAsc(isAsc);
         return postService.selectPagePostList(postQuery, pageQuery);
     }
 
-    @ApiOperation("导出岗位列表")
+    @ApiOperation(value = "导出岗位列表", nickname = "SysPostPostExport")
     @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:post:export")
     @PostMapping("/export")
-    public void export(SysPostQuery postQuery, HttpServletResponse response) {
+    public void export(@RequestBody SysPostQuery postQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysPost> list = postService.selectPostList(postQuery);
         ExcelUtil.exportExcel(list, "岗位数据", SysPost.class, response);
     }
@@ -58,20 +67,20 @@ public class SysPostController extends BaseController {
     /**
      * 根据岗位编号获取详细信息
      */
-    @ApiOperation("根据岗位编号获取详细信息")
+    @ApiOperation(value = "根据岗位编号获取详细信息", nickname = "SysPostGetInfo")
     @SaCheckPermission("system:post:query")
-    @GetMapping(value = "/{postId}")
-    public R<SysPost> getInfo(@ApiParam("岗位ID") @PathVariable Long postId) {
+    @GetMapping(value = "/info")
+    public R<SysPost> info(@ApiParam(value = "岗位ID", required = true) @RequestParam Long postId) {
         return R.ok(postService.selectPostById(postId));
     }
 
     /**
      * 新增岗位
      */
-    @ApiOperation("新增岗位")
+    @ApiOperation(value = "新增岗位", nickname = "SysPostPostAdd")
     @SaCheckPermission("system:post:add")
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
-    @PostMapping
+    @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysPost post) {
         if (UserConstants.NOT_UNIQUE.equals(postService.checkPostNameUnique(post))) {
             return R.fail("新增岗位'" + post.getPostName() + "'失败，岗位名称已存在");
@@ -84,10 +93,10 @@ public class SysPostController extends BaseController {
     /**
      * 修改岗位
      */
-    @ApiOperation("修改岗位")
+    @ApiOperation(value = "修改岗位", nickname = "SysPostPostEdit")
     @SaCheckPermission("system:post:edit")
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
-    @PutMapping
+    @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysPost post) {
         if (UserConstants.NOT_UNIQUE.equals(postService.checkPostNameUnique(post))) {
             return R.fail("修改岗位'" + post.getPostName() + "'失败，岗位名称已存在");
@@ -100,20 +109,20 @@ public class SysPostController extends BaseController {
     /**
      * 删除岗位
      */
-    @ApiOperation("删除岗位")
+    @ApiOperation(value = "删除岗位", nickname = "SysPostPostRemove")
     @SaCheckPermission("system:post:remove")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{postIds}")
-    public R<Void> remove(@ApiParam("岗位ID串") @PathVariable Long[] postIds) {
+    @PostMapping("/remove")
+    public R<Void> remove(@ApiParam(value = "岗位ID串", required = true) @RequestParam Long[] postIds) {
         return toAjax(postService.deletePostByIds(postIds));
     }
 
     /**
      * 获取岗位选择框列表
      */
-    @ApiOperation("获取岗位选择框列表")
-    @GetMapping("/optionselect")
-    public R<List<SysPost>> optionselect() {
+    @ApiOperation(value = "获取岗位选择框列表", nickname = "SysPostGetOptionSelect")
+    @GetMapping("/optionSelect")
+    public R<List<SysPost>> optionSelect() {
         List<SysPost> posts = postService.selectPostAll();
         return R.ok(posts);
     }

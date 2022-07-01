@@ -9,21 +9,21 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 
 /**
- * 用户登录对象
+ * 用户密码登录表单对象
  *
  * @author weibocy
  */
 
 @Data
-@ApiModel("用户登录对象")
-public class LoginBody {
+@ApiModel(value = "UserNameLoginBody", description = "用户密码登录表单对象")
+public class UserNameLoginBody {
 
     /**
      * 用户名
      */
     @NotBlank(message = "{user.username.not.blank}")
     @Length(min = UserConstants.USERNAME_MIN_LENGTH, max = UserConstants.USERNAME_MAX_LENGTH, message = "{user.username.length.valid}")
-    @ApiModelProperty(value = "用户名")
+    @ApiModelProperty(value = "用户名", required = true)
     private String username;
 
     /**
@@ -31,19 +31,21 @@ public class LoginBody {
      */
     @NotBlank(message = "{user.password.not.blank}")
     @Length(min = UserConstants.PASSWORD_MIN_LENGTH, max = UserConstants.PASSWORD_MAX_LENGTH, message = "{user.password.length.valid}")
-    @ApiModelProperty(value = "用户密码")
+    @ApiModelProperty(value = "用户密码", required = true)
     private String password;
 
     /**
      * 验证码
      */
-    @ApiModelProperty(value = "验证码")
+    @NotBlank(message = "验证码不能为空")
+    @ApiModelProperty(value = "验证码", required = true)
     private String code;
 
     /**
      * 唯一标识
      */
-    @ApiModelProperty(value = "唯一标识")
+    @NotBlank(message = "唯一标识不能为空")
+    @ApiModelProperty(value = "唯一标识", required = true)
     private String uuid;
 
 }

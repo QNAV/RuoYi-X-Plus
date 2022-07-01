@@ -16,6 +16,7 @@ import com.ruoyi.common.utils.redis.RedisUtils;
 import com.ruoyi.system.domain.SysUserOnline;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,16 +30,16 @@ import java.util.stream.Collectors;
  *
  * @author weibocy
  */
-@Api(value = "在线用户监控", tags = {"在线用户监控管理"})
+@Api(value = "在线用户监控管理", tags = {"SysUserOnlineService"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/monitor/online")
 public class SysUserOnlineController extends BaseController {
 
-    @ApiOperation("在线用户列表")
+    @ApiOperation(value = "在线用户列表", nickname = "SysUserOnlineGetList")
     @SaCheckPermission("monitor:online:list")
     @GetMapping("/list")
-    public TableDataInfo<SysUserOnline> list(String ipaddr, String userName) {
+    public TableDataInfo<SysUserOnline> list(@ApiParam(value = "ip地址") @RequestParam(required = false) String ipaddr, @ApiParam(value = "用户名") @RequestParam(required = false) String userName) {
         // 获取所有未过期的 token
         List<String> keys = StpUtil.searchTokenValue("", -1, 0);
         List<UserOnlineDTO> userOnlineDTOList = new ArrayList<>();
@@ -73,11 +74,11 @@ public class SysUserOnlineController extends BaseController {
     /**
      * 强退用户
      */
-    @ApiOperation("强退用户")
+    @ApiOperation(value = "强退用户", nickname = "SysUserOnlinePostForceLogout")
     @SaCheckPermission("monitor:online:forceLogout")
     @Log(title = "在线用户", businessType = BusinessType.FORCE)
-    @DeleteMapping("/{tokenId}")
-    public R<Void> forceLogout(@PathVariable String tokenId) {
+    @PostMapping("/forceLogout")
+    public R<Void> forceLogout(@ApiParam(value = "tokenId", required = true) @RequestParam String tokenId) {
         try {
             StpUtil.kickoutByTokenValue(tokenId);
         } catch (NotLoginException e) {

@@ -40,7 +40,7 @@ import java.util.List;
  * @author weibocy
  */
 @Validated
-@Api(value = "对象存储控制器", tags = {"对象存储管理"})
+@Api(value = "对象存储管理", tags = {"SysOssService"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/oss")
@@ -51,22 +51,29 @@ public class SysOssController extends BaseController {
     /**
      * 查询OSS对象存储列表
      */
-    @ApiOperation("查询OSS对象存储列表")
+    @ApiOperation(value = "查询OSS对象存储列表", nickname = "SysOssPostList")
     @SaCheckPermission("system:oss:list")
-    @GetMapping("/list")
-    public TableDataInfo<SysOssVo> list(@Validated(QueryGroup.class) SysOssQuery query, PageQuery pageQuery) {
+    @PostMapping("/list")
+    public TableDataInfo<SysOssVo> list(@Validated(QueryGroup.class) SysOssQuery query,
+                                        @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
+                                        @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
+                                        @ApiParam("排序列") @RequestParam String orderByColumn,
+                                        @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setPageNum(pageNum);
+        pageQuery.setPageSize(pageSize);
+        pageQuery.setOrderByColumn(orderByColumn);
+        pageQuery.setIsAsc(isAsc);
         return iSysOssService.queryPageList(query, pageQuery);
     }
 
     /**
      * 查询OSS对象基于id串
      */
-    @ApiOperation("查询OSS对象基于ID")
+    @ApiOperation(value = "查询OSS对象基于ID", nickname = "SysOssGetListByIds")
     @SaCheckPermission("system:oss:list")
-    @GetMapping("/listByIds/{ossIds}")
-    public R<List<SysOssVo>> listByIds(@ApiParam("OSS对象ID串")
-                                     @NotEmpty(message = "主键不能为空")
-                                     @PathVariable Long[] ossIds) {
+    @GetMapping("/listByIds")
+    public R<List<SysOssVo>> listByIds(@ApiParam(value = "OSS对象ID串", required = true) @RequestParam Long[] ossIds) {
         List<SysOssVo> list = iSysOssService.listByIds(Arrays.asList(ossIds));
         return R.ok(list);
     }
@@ -74,7 +81,7 @@ public class SysOssController extends BaseController {
     /**
      * 上传OSS对象存储
      */
-    @ApiOperation("上传OSS对象存储")
+    @ApiOperation(value = "上传OSS对象存储", nickname = "SysOssPostUpload")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "file", value = "文件", paramType = "query", dataTypeClass = File.class, required = true)
     })
@@ -93,10 +100,10 @@ public class SysOssController extends BaseController {
         return R.ok(data);
     }
 
-    @ApiOperation("下载OSS对象存储")
+    @ApiOperation(value = "下载OSS对象存储", nickname = "SysOssGetDownload")
     @SaCheckPermission("system:oss:download")
-    @GetMapping("/download/{ossId}")
-    public void download(@ApiParam("OSS对象ID") @PathVariable Long ossId, HttpServletResponse response) throws IOException {
+    @GetMapping("/download")
+    public void download(@ApiParam(value = "OSS对象ID", required = true) @RequestParam Long ossId, @ApiParam(hidden = true) HttpServletResponse response) throws IOException {
         SysOss sysOss = iSysOssService.getById(ossId);
         if (ObjectUtil.isNull(sysOss)) {
             throw new ServiceException("文件数据不存在!");
@@ -120,13 +127,11 @@ public class SysOssController extends BaseController {
     /**
      * 删除OSS对象存储
      */
-    @ApiOperation("删除OSS对象存储")
+    @ApiOperation(value = "删除OSS对象存储", nickname = "SysOssPostRemove")
     @SaCheckPermission("system:oss:remove")
     @Log(title = "OSS对象存储", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{ossIds}")
-    public R<Void> remove(@ApiParam("OSS对象ID串")
-                                   @NotEmpty(message = "主键不能为空")
-                                   @PathVariable Long[] ossIds) {
+    @PostMapping("/remove")
+    public R<Void> remove(@ApiParam(value = "OSS对象ID串", required = true) @RequestParam Long[] ossIds) {
         return toAjax(iSysOssService.deleteWithValidByIds(Arrays.asList(ossIds), true) ? 1 : 0);
     }
 

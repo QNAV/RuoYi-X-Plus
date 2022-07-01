@@ -8,7 +8,7 @@ import lombok.Data;
  * 图片验证码返回对象
  * @author weibocy
  */
-@ApiModel("图片验证码返回对象")
+@ApiModel(value = "CaptchaImageDto", description = "图片验证码返回对象")
 @Data
 public class CaptchaImageDto {
 

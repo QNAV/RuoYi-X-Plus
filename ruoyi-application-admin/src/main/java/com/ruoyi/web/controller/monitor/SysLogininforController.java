@@ -13,6 +13,7 @@ import com.ruoyi.system.domain.to.SysLogininforQuery;
 import com.ruoyi.system.service.ISysLogininforService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ import java.util.List;
  * @author weibocy
  */
 @Validated
-@Api(value = "系统访问记录", tags = {"系统访问记录管理"})
+@Api(value = "系统访问记录管理", tags = {"SysLoginService"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/monitor/logininfor")
@@ -34,34 +35,43 @@ public class SysLogininforController extends BaseController {
 
     private final ISysLogininforService logininforService;
 
-    @ApiOperation("查询系统访问记录列表")
+    @ApiOperation(value = "查询系统访问记录列表", nickname = "SysLogininforPostList")
     @SaCheckPermission("monitor:logininfor:list")
-    @GetMapping("/list")
-    public TableDataInfo<SysLogininfor> list(SysLogininforQuery logininforQuery, PageQuery pageQuery) {
+    @PostMapping("/list")
+    public TableDataInfo<SysLogininfor> list(@RequestBody SysLogininforQuery logininforQuery,
+                                             @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
+                                             @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
+                                             @ApiParam("排序列") @RequestParam String orderByColumn,
+                                             @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setPageNum(pageNum);
+        pageQuery.setPageSize(pageSize);
+        pageQuery.setOrderByColumn(orderByColumn);
+        pageQuery.setIsAsc(isAsc);
         return logininforService.selectPageLogininforList(logininforQuery, pageQuery);
     }
 
-    @ApiOperation("导出系统访问记录列表")
+    @ApiOperation(value = "导出系统访问记录列表", nickname = "SysLogininforPostExport")
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:logininfor:export")
     @PostMapping("/export")
-    public void export(SysLogininforQuery logininforQuery, HttpServletResponse response) {
+    public void export(@RequestBody SysLogininforQuery logininforQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysLogininfor> list = logininforService.selectLogininforList(logininforQuery);
         ExcelUtil.exportExcel(list, "登录日志", SysLogininfor.class, response);
     }
 
-    @ApiOperation("删除系统访问记录")
+    @ApiOperation(value = "删除系统访问记录", nickname = "SysLogininforPostRemove")
     @SaCheckPermission("monitor:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{infoIds}")
-    public R<Void> remove(@PathVariable Long[] infoIds) {
+    @PostMapping("/remove")
+    public R<Void> remove(@ApiParam(value = "登录日志ID组", required = true) @RequestParam Long[] infoIds) {
         return toAjax(logininforService.deleteLogininforByIds(infoIds));
     }
 
-    @ApiOperation("清空系统访问记录")
+    @ApiOperation(value = "清空系统访问记录", nickname = "SysLogininforPostClean")
     @SaCheckPermission("monitor:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.CLEAN)
-    @DeleteMapping("/clean")
+    @PostMapping("/clean")
     public R<Void> clean() {
         logininforService.cleanLogininfor();
         return R.ok();

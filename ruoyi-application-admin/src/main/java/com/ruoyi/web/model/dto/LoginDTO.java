@@ -10,7 +10,7 @@ import lombok.Data;
  * @author weibocy
  */
 @Data
-@ApiModel("用户登录返回对象")
+@ApiModel(value = "LoginDTO", description = "用户登录返回对象")
 public class LoginDTO {
 
     @ApiModelProperty("身份令牌")

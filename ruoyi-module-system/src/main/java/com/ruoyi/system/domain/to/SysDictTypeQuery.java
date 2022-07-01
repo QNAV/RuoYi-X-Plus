@@ -11,7 +11,7 @@ import java.util.Date;
  * 字典类型查询对象
  * @author weibocy
  */
-@ApiModel("字典类型查询对象")
+@ApiModel(value = "SysDictTypeQuery", description = "字典类型查询对象")
 @Data
 public class SysDictTypeQuery {
 

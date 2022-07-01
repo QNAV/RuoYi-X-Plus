@@ -6,7 +6,7 @@ import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.core.domain.model.LoginBody;
+import com.ruoyi.common.core.domain.model.UserNameLoginBody;
 import com.ruoyi.common.core.domain.model.SmsLoginBody;
 import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.system.domain.vo.RouterVo;
@@ -18,12 +18,10 @@ import com.ruoyi.web.model.dto.LoginDTO;
 import com.ruoyi.web.model.dto.UserInfoDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -35,7 +33,7 @@ import java.util.Set;
  * @author weibocy
  */
 @Validated
-@Api(value = "登录验证控制器", tags = {"登录验证管理"})
+@Api(value = "登录验证管理", tags = {"SysLoginService"})
 @RequiredArgsConstructor
 @RestController
 public class SysLoginController {
@@ -46,19 +44,19 @@ public class SysLoginController {
     private final SysPermissionService permissionService;
 
     /**
-     * 登录方法
+     * 用户名登录方法
      *
-     * @param loginBody 登录信息
+     * @param userNameLoginBody 用户名登录信息
      * @return 结果
      */
     @Anonymous
-    @ApiOperation("登录方法")
+    @ApiOperation(value = "用户名登录方法", nickname = "SysLoginPostLogin")
     @PostMapping("/login")
-    public R<LoginDTO> login(@Validated @RequestBody LoginBody loginBody) {
+    public R<LoginDTO> login(@Validated @RequestBody UserNameLoginBody userNameLoginBody) {
         LoginDTO result = new LoginDTO();
         // 生成令牌
-        String token = loginService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
-            loginBody.getUuid());
+        String token = loginService.login(userNameLoginBody.getUsername(), userNameLoginBody.getPassword(), userNameLoginBody.getCode(),
+            userNameLoginBody.getUuid());
         result.setToken(token);
         return R.ok(result);
     }
@@ -70,7 +68,7 @@ public class SysLoginController {
      * @return 结果
      */
     @Anonymous
-    @ApiOperation("短信登录(示例)")
+    @ApiOperation(value = "短信登录(示例)", nickname = "SysLoginPostSmsLogin")
     @PostMapping("/smsLogin")
     public R<LoginDTO> smsLogin(@Validated @RequestBody SmsLoginBody smsLoginBody) {
         LoginDTO result = new LoginDTO();
@@ -87,9 +85,9 @@ public class SysLoginController {
      * @return 结果
      */
     @Anonymous
-    @ApiOperation("小程序登录(示例)")
-    @PostMapping("/xcxLogin")
-    public R<LoginDTO> xcxLogin(@NotBlank(message = "{xcx.code.not.blank}") String xcxCode) {
+    @ApiOperation(value = "小程序登录(示例)", nickname = "SysLoginGetXcxLogin")
+    @GetMapping("/xcxLogin")
+    public R<LoginDTO> xcxLogin(@NotBlank(message = "{xcx.code.not.blank}") @ApiParam(value = "小程序code", required = true) @RequestParam String xcxCode) {
         LoginDTO result = new LoginDTO();
         // 生成令牌
         String token = loginService.xcxLogin(xcxCode);
@@ -98,7 +96,7 @@ public class SysLoginController {
     }
 
     @Anonymous
-    @ApiOperation("登出方法")
+    @ApiOperation(value = "登出方法", nickname = "SysLoginPostLogout")
     @PostMapping("/logout")
     public R<Void> logout() {
         try {
@@ -111,13 +109,13 @@ public class SysLoginController {
     }
 
     /**
-     * 获取用户信息
+     * 获取已登录用户信息
      *
      * @return 用户信息
      */
-    @ApiOperation("获取用户信息")
-    @GetMapping("getInfo")
-    public R<UserInfoDTO> getInfo() {
+    @ApiOperation(value = "获取已登录用户信息", nickname = "SysLoginGetInfo")
+    @GetMapping("/info")
+    public R<UserInfoDTO> info() {
         UserInfoDTO data = new UserInfoDTO();
         SysUser user = userService.selectUserById(LoginHelper.getUserId());
         // 角色集合
@@ -131,13 +129,13 @@ public class SysLoginController {
     }
 
     /**
-     * 获取路由信息
+     * 获取菜单路由信息
      *
      * @return 路由信息
      */
-    @ApiOperation("获取路由信息")
-    @GetMapping("getRouters")
-    public R<List<RouterVo>> getRouters() {
+    @ApiOperation(value = "获取菜单路由信息", nickname = "SysLoginGetRouters")
+    @GetMapping("/routers")
+    public R<List<RouterVo>> routers() {
         Long userId = LoginHelper.getUserId();
         List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
         return R.ok(menuService.buildMenus(menus));

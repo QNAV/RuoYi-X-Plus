@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("对象存储配置业务对象")
+@ApiModel(value = "SysOssConfigBo", description = "对象存储配置业务对象")
 public class SysOssConfigBo extends BaseEntity {
 
     /**

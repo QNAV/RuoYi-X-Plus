@@ -11,7 +11,7 @@ import lombok.Data;
  */
 
 @Data
-@ApiModel("当前在线会话业务对象")
+@ApiModel(value = "SysUserOnline", description = "当前在线会话业务对象")
 public class SysUserOnline {
 
     /**

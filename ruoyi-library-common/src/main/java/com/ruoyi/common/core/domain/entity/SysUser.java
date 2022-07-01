@@ -31,7 +31,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_user")
-@ApiModel("用户信息业务对象")
+@ApiModel(value = "SysUser", description = "用户信息业务对象")
 public class SysUser extends BaseEntity {
 
     /**

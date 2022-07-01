@@ -10,7 +10,7 @@ import lombok.Data;
  * @author weibocy
  */
 @Data
-@ApiModel("通知公告查询对象")
+@ApiModel(value = "SysNoticeQuery", description = "通知公告查询对象")
 public class SysNoticeQuery {
 
     /**

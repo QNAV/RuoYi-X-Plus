@@ -9,7 +9,7 @@ import lombok.Data;
  * @author weibocy
  */
 @Data
-@ApiModel("用户头像上传返回对象")
+@ApiModel(value = "AvatarUploadDTO", description = "用户头像上传返回对象")
 public class AvatarUploadDTO {
 
     /**

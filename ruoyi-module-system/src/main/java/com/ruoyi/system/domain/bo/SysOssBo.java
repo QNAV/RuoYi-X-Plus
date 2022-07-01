@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("OSS对象存储分页查询对象")
+@ApiModel(value = "SysOssBo", description = "OSS对象存储分页查询对象")
 public class SysOssBo extends BaseEntity {
 
     /**

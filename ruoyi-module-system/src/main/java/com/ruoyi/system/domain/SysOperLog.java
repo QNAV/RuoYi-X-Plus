@@ -25,7 +25,7 @@ import java.util.Map;
 @Data
 @TableName("sys_oper_log")
 @ExcelIgnoreUnannotated
-@ApiModel("操作日志记录业务对象")
+@ApiModel(value = "SysOperLog", description = "操作日志记录业务对象")
 public class SysOperLog implements Serializable {
 
     private static final long serialVersionUID = 1L;

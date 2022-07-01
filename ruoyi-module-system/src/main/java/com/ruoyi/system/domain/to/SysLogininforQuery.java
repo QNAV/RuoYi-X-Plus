@@ -10,7 +10,7 @@ import java.util.Date;
  * 系统访问记录查询对象
  * @author weibocy
  */
-@ApiModel("系统访问记录查询对象")
+@ApiModel(value = "SysLogininforQuery", description = "系统访问记录查询对象")
 @Data
 public class SysLogininforQuery {
 

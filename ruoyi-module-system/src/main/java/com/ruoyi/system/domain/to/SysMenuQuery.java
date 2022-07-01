@@ -8,7 +8,7 @@ import lombok.Data;
  * 菜单权限查询对象
  * @author weibocy
  */
-@ApiModel("菜单权限查询对象")
+@ApiModel(value = "SysMenuQuery", description = "菜单权限查询对象")
 @Data
 public class SysMenuQuery {
 

@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_dict_data")
 @ExcelIgnoreUnannotated
-@ApiModel("字典数据业务对象")
+@ApiModel(value = "SysDictData", description = "字典数据业务对象")
 public class SysDictData extends BaseEntity {
 
     /**

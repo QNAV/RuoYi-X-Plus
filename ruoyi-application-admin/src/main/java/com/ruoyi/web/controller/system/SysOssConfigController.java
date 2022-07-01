@@ -32,7 +32,7 @@ import java.util.Arrays;
  * @author weibocy
  */
 @Validated
-@Api(value = "对象存储配置控制器", tags = {"对象存储配置管理"})
+@Api(value = "对象存储配置管理", tags = {"SysOssConfigService"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/oss/config")
@@ -43,33 +43,40 @@ public class SysOssConfigController extends BaseController {
     /**
      * 查询对象存储配置列表
      */
-    @ApiOperation("查询对象存储配置列表")
+    @ApiOperation(value = "查询对象存储配置列表", nickname = "SysOssConfigPostList")
     @SaCheckPermission("system:oss:list")
-    @GetMapping("/list")
-    public TableDataInfo<SysOssConfigVo> list(@Validated(QueryGroup.class) SysOssConfigQuery query, PageQuery pageQuery) {
+    @PostMapping("/list")
+    public TableDataInfo<SysOssConfigVo> list(@RequestBody @Validated(QueryGroup.class) SysOssConfigQuery query,
+                                              @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
+                                              @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
+                                              @ApiParam("排序列") @RequestParam String orderByColumn,
+                                              @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setPageNum(pageNum);
+        pageQuery.setPageSize(pageSize);
+        pageQuery.setOrderByColumn(orderByColumn);
+        pageQuery.setIsAsc(isAsc);
         return iSysOssConfigService.queryPageList(query, pageQuery);
     }
 
     /**
      * 获取对象存储配置详细信息
      */
-    @ApiOperation("获取对象存储配置详细信息")
+    @ApiOperation(value = "获取对象存储配置详细信息", nickname = "SysOssConfigGetInfo")
     @SaCheckPermission("system:oss:query")
-    @GetMapping("/{ossConfigId}")
-    public R<SysOssConfigVo> getInfo(@ApiParam("OSS配置ID")
-                                              @NotNull(message = "主键不能为空")
-                                              @PathVariable("ossConfigId") Long ossConfigId) {
+    @GetMapping("/info")
+    public R<SysOssConfigVo> info(@ApiParam(value = "OSS配置ID", required = true) @RequestParam Long ossConfigId) {
         return R.ok(iSysOssConfigService.queryById(ossConfigId));
     }
 
     /**
      * 新增对象存储配置
      */
-    @ApiOperation("新增对象存储配置")
+    @ApiOperation(value = "新增对象存储配置", nickname = "SysOssConfigPostAdd")
     @SaCheckPermission("system:oss:add")
     @Log(title = "对象存储配置", businessType = BusinessType.INSERT)
     @RepeatSubmit()
-    @PostMapping()
+    @PostMapping("/add")
     public R<Void> add(@Validated(AddGroup.class) @RequestBody SysOssConfigBo bo) {
         return toAjax(iSysOssConfigService.insertByBo(bo) ? 1 : 0);
     }
@@ -77,11 +84,11 @@ public class SysOssConfigController extends BaseController {
     /**
      * 修改对象存储配置
      */
-    @ApiOperation("修改对象存储配置")
+    @ApiOperation(value = "修改对象存储配置", nickname = "SysOssConfigPostEdit")
     @SaCheckPermission("system:oss:edit")
     @Log(title = "对象存储配置", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
-    @PutMapping()
+    @PostMapping("/edit")
     public R<Void> edit(@Validated(EditGroup.class) @RequestBody SysOssConfigBo bo) {
         return toAjax(iSysOssConfigService.updateByBo(bo) ? 1 : 0);
     }
@@ -89,24 +96,22 @@ public class SysOssConfigController extends BaseController {
     /**
      * 删除对象存储配置
      */
-    @ApiOperation("删除对象存储配置")
+    @ApiOperation(value = "删除对象存储配置", nickname = "SysOssConfigPostRemove")
     @SaCheckPermission("system:oss:remove")
     @Log(title = "对象存储配置", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{ossConfigIds}")
-    public R<Void> remove(@ApiParam("OSS配置ID串")
-                                   @NotEmpty(message = "主键不能为空")
-                                   @PathVariable Long[] ossConfigIds) {
+    @PostMapping("/remove")
+    public R<Void> remove(@ApiParam(value = "OSS配置ID串", required = true) @RequestParam Long[] ossConfigIds) {
         return toAjax(iSysOssConfigService.deleteWithValidByIds(Arrays.asList(ossConfigIds), true) ? 1 : 0);
     }
 
     /**
      * 状态修改
      */
-    @ApiOperation("状态修改")
+    @ApiOperation(value = "状态修改", nickname = "SysOssConfigPostChangeStatus")
     @SaCheckPermission("system:oss:edit")
     @Log(title = "对象存储状态修改", businessType = BusinessType.UPDATE)
-    @PutMapping("/changeStatus")
-    public R<Void> changeStatus(@RequestBody SysOssConfigBo bo) {
+    @PostMapping("/changeStatus")
+    public R<Void> changeStatus(@RequestBody @Validated SysOssConfigBo bo) {
         return toAjax(iSysOssConfigService.updateOssConfigStatus(bo));
     }
 }

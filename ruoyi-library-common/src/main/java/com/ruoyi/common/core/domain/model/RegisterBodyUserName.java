@@ -12,9 +12,12 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("用户注册对象")
-public class RegisterBody extends LoginBody {
+@ApiModel(value = "RegisterBodyUserName", description = "用户注册对象")
+public class RegisterBodyUserName extends UserNameLoginBody {
 
+    /**
+     * 用户类型
+     */
     @ApiModelProperty(value = "用户类型")
     private String userType;
 

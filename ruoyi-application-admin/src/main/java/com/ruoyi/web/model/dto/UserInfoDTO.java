@@ -12,7 +12,7 @@ import java.util.Set;
  * @author weibocy
  */
 @Data
-@ApiModel("用户信息返回对象")
+@ApiModel(value = "UserInfoDTO", description = "用户信息返回对象")
 public class UserInfoDTO {
 
     /**

@@ -9,7 +9,7 @@ import lombok.Data;
  * @author weibocy
  */
 @Data
-@ApiModel("部门查询对象")
+@ApiModel(value = "SysDeptQuery", description = "部门查询对象")
 public class SysDeptQuery {
 
     /**

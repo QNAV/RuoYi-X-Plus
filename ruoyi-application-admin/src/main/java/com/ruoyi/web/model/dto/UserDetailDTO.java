@@ -13,7 +13,7 @@ import java.util.List;
  * 用户详情返回对象
  * @author weibocy
  */
-@ApiModel("用户详情返回对象")
+@ApiModel(value = "UserDetailDTO", description = "用户详情返回对象")
 @Data
 public class UserDetailDTO {
 

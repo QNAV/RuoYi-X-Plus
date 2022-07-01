@@ -8,7 +8,7 @@ import lombok.Data;
  * 岗位信息查询对象
  * @author weibocy
  */
-@ApiModel("岗位信息查询对象")
+@ApiModel(value = "SysPostQuery", description = "岗位信息查询对象")
 @Data
 public class SysPostQuery {
 

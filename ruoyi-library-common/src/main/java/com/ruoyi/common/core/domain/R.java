@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-@ApiModel("请求响应对象")
+@ApiModel(value = "Response", description = "请求响应对象")
 public class R<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -28,13 +28,13 @@ public class R<T> implements Serializable {
      */
     public static final int FAIL = 500;
 
-    @ApiModelProperty("消息状态码")
+    @ApiModelProperty(value = "消息状态码", required = true)
     private int code;
 
-    @ApiModelProperty("消息内容")
+    @ApiModelProperty(value = "消息内容", required = true)
     private String msg;
 
-    @ApiModelProperty("数据对象")
+    @ApiModelProperty(value = "数据对象", required = true)
     private T data;
 
     public static <T> R<T> ok() {

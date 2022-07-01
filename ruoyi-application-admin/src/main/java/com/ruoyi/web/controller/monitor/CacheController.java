@@ -21,7 +21,7 @@ import java.util.*;
  *
  * @author weibocy
  */
-@Api(value = "缓存监控", tags = {"缓存监控管理"})
+@Api(value = "缓存监控管理", tags = {"CacheService"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/monitor/cache")
@@ -29,10 +29,10 @@ public class CacheController {
 
     private final RedisTemplate<String, String> redisTemplate;
 
-    @ApiOperation("获取缓存监控详细信息")
+    @ApiOperation(value = "获取缓存监控详细信息", nickname = "CacheGetInfo")
     @SaCheckPermission("monitor:cache:list")
-    @GetMapping()
-    public R<CacheInfoDTO> getInfo() throws Exception {
+    @GetMapping("/info")
+    public R<CacheInfoDTO> info() throws Exception {
         Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::info);
         Properties commandStats = (Properties) redisTemplate.execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
         Object dbSize = redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::dbSize);

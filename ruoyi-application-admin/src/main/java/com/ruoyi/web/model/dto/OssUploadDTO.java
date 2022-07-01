@@ -9,7 +9,7 @@ import lombok.Data;
  * @author weibocy
  */
 @Data
-@ApiModel("OSS上传结果返回对象")
+@ApiModel(value = "OssUploadDTO", description = "OSS上传结果返回对象")
 public class OssUploadDTO {
 
     /**

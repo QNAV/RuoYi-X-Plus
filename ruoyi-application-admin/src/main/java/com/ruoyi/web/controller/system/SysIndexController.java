@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author weibocy
  */
-@Api(value = "首页控制器", tags = {"首页管理"})
+@Api(value = "首页管理", tags = {"SysIndexService"})
 @RequiredArgsConstructor
 @RestController
 public class SysIndexController {
@@ -26,7 +26,7 @@ public class SysIndexController {
     /**
      * 访问首页，提示语
      */
-    @ApiOperation("访问首页，提示语")
+    @ApiOperation(value = "访问首页，提示语", nickname = "SysIndexGetIndex")
     @GetMapping("/")
     public String index() {
         return StringUtils.format("欢迎使用{}后台管理框架，当前版本：v{}，请通过前端地址访问。", ruoyiConfig.getName(), ruoyiConfig.getVersion());

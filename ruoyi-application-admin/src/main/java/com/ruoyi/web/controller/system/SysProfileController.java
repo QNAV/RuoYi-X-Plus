@@ -7,6 +7,7 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.domain.model.UpdatePwdBody;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.utils.StringUtils;
@@ -34,7 +35,7 @@ import java.util.Arrays;
  * @author weibocy
  */
 @Validated
-@Api(value = "个人信息控制器", tags = {"个人信息管理"})
+@Api(value = "个人信息管理", tags = {"SysProfileService"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/user/profile")
@@ -46,7 +47,7 @@ public class SysProfileController extends BaseController {
     /**
      * 个人信息
      */
-    @ApiOperation("个人信息")
+    @ApiOperation(value = "个人信息", nickname = "SysProfileGetProfile")
     @GetMapping
     public R<ProfileDTO> profile() {
         SysUser user = userService.selectUserById(getUserId());
@@ -60,9 +61,9 @@ public class SysProfileController extends BaseController {
     /**
      * 修改用户
      */
-    @ApiOperation("修改用户")
+    @ApiOperation(value = "修改用户", nickname = "SysProfilePostUpdateProfile")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
-    @PutMapping
+    @PostMapping
     public R<Void> updateProfile(@RequestBody SysUser user) {
         if (StringUtils.isNotEmpty(user.getPhoneNumber())
             && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
@@ -84,25 +85,21 @@ public class SysProfileController extends BaseController {
     /**
      * 重置密码
      */
-    @ApiOperation("重置密码")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "oldPassword", value = "旧密码", paramType = "query", dataTypeClass = String.class),
-        @ApiImplicitParam(name = "newPassword", value = "新密码", paramType = "query", dataTypeClass = String.class)
-    })
+    @ApiOperation(value = "重置密码", nickname = "SysProfilePostUpdatePwd")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
-    @PutMapping("/updatePwd")
-    public R<Void> updatePwd(String oldPassword, String newPassword) {
+    @PostMapping("/updatePwd")
+    public R<Void> updatePwd(@Validated @RequestBody UpdatePwdBody updatePwdBody) {
         SysUser user = userService.selectUserById(LoginHelper.getUserId());
         String userName = user.getUserName();
         String password = user.getPassword();
-        if (!BCrypt.checkpw(oldPassword, password)) {
+        if (!BCrypt.checkpw(updatePwdBody.getOldPassword(), password)) {
             return R.fail("修改密码失败，旧密码错误");
         }
-        if (BCrypt.checkpw(newPassword, password)) {
+        if (BCrypt.checkpw(updatePwdBody.getNewPassword(), password)) {
             return R.fail("新密码不能与旧密码相同");
         }
 
-        if (userService.resetUserPwd(userName, BCrypt.hashpw(newPassword)) > 0) {
+        if (userService.resetUserPwd(userName, BCrypt.hashpw(updatePwdBody.getNewPassword())) > 0) {
             return R.ok();
         }
         return R.fail("修改密码异常，请联系管理员");
@@ -111,7 +108,7 @@ public class SysProfileController extends BaseController {
     /**
      * 头像上传
      */
-    @ApiOperation("头像上传")
+    @ApiOperation(value = "头像上传", nickname = "SysProfilePostAvatar")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "avatarfile", value = "用户头像", paramType = "query", dataTypeClass = File.class, required = true)
     })

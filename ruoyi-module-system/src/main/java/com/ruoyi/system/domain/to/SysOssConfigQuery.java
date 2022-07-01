@@ -8,7 +8,7 @@ import lombok.Data;
  * 对象存储配置查询对象
  * @author weibocy
  */
-@ApiModel("对象存储配置查询对象")
+@ApiModel(value = "SysOssConfigQuery", description = "对象存储配置查询对象")
 @Data
 public class SysOssConfigQuery {
 

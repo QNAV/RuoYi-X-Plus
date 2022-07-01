@@ -27,7 +27,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_dict_type")
 @ExcelIgnoreUnannotated
-@ApiModel("字典类型业务对象")
+@ApiModel(value = "SysDictType", description = "字典类型业务对象")
 public class SysDictType extends BaseEntity {
 
     /**

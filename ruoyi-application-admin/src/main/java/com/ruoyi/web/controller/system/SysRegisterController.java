@@ -3,7 +3,7 @@ package com.ruoyi.web.controller.system;
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.domain.model.RegisterBody;
+import com.ruoyi.common.core.domain.model.RegisterBodyUserName;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.SysRegisterService;
 import io.swagger.annotations.Api;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author weibocy
  */
 @Validated
-@Api(value = "注册验证控制器", tags = {"注册验证管理"})
+@Api(value = "注册验证管理", tags = {"SysRegisterService"})
 @RequiredArgsConstructor
 @RestController
 public class SysRegisterController extends BaseController {
@@ -29,9 +29,9 @@ public class SysRegisterController extends BaseController {
     private final ISysConfigService configService;
 
     @Anonymous
-    @ApiOperation("用户注册")
+    @ApiOperation(value = "用户注册", nickname = "SysRegisterPostRegister")
     @PostMapping("/register")
-    public R<Void> register(@Validated @RequestBody RegisterBody user) {
+    public R<Void> register(@Validated @RequestBody RegisterBodyUserName user) {
         if (!("true".equals(configService.selectConfigByKey("sys.account.registerUser")))) {
             return R.fail("当前系统没有开启注册功能！");
         }

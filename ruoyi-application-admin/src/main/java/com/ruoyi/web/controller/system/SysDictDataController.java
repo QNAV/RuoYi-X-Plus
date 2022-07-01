@@ -30,7 +30,7 @@ import java.util.List;
  * @author weibocy
  */
 @Validated
-@Api(value = "数据字典信息控制器", tags = {"数据字典信息管理"})
+@Api(value = "数据字典信息管理", tags = {"SysDictDataService"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/dict/data")
@@ -39,18 +39,27 @@ public class SysDictDataController extends BaseController {
     private final ISysDictDataService dictDataService;
     private final ISysDictTypeService dictTypeService;
 
-    @ApiOperation("查询字典数据列表")
+    @ApiOperation(value = "查询字典数据列表", nickname = "SysDictDataPostList")
     @SaCheckPermission("system:dict:list")
-    @GetMapping("/list")
-    public TableDataInfo<SysDictData> list(SysDictDataQuery dictDataQuery, PageQuery pageQuery) {
+    @PostMapping("/list")
+    public TableDataInfo<SysDictData> list(@RequestBody SysDictDataQuery dictDataQuery,
+                                           @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
+                                           @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
+                                           @ApiParam("排序列") @RequestParam String orderByColumn,
+                                           @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setPageNum(pageNum);
+        pageQuery.setPageSize(pageSize);
+        pageQuery.setOrderByColumn(orderByColumn);
+        pageQuery.setIsAsc(isAsc);
         return dictDataService.selectPageDictDataList(dictDataQuery, pageQuery);
     }
 
-    @ApiOperation("导出字典数据列表")
+    @ApiOperation(value = "导出字典数据列表", nickname = "SysDictDataPostExport")
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:dict:export")
     @PostMapping("/export")
-    public void export(SysDictDataQuery dictDataQuery, HttpServletResponse response) {
+    public void export(@RequestBody SysDictDataQuery dictDataQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysDictData> list = dictDataService.selectDictDataList(dictDataQuery);
         ExcelUtil.exportExcel(list, "字典数据", SysDictData.class, response);
     }
@@ -58,19 +67,19 @@ public class SysDictDataController extends BaseController {
     /**
      * 查询字典数据详细
      */
-    @ApiOperation("查询字典数据详细")
+    @ApiOperation(value = "查询字典数据详细", nickname = "SysDictDataGetInfo")
     @SaCheckPermission("system:dict:query")
-    @GetMapping(value = "/{dictCode}")
-    public R<SysDictData> getInfo(@ApiParam("字典code") @PathVariable Long dictCode) {
+    @GetMapping(value = "/info")
+    public R<SysDictData> info(@ApiParam(value = "字典code", required = true) @RequestParam Long dictCode) {
         return R.ok(dictDataService.selectDictDataById(dictCode));
     }
 
     /**
      * 根据字典类型查询字典数据信息
      */
-    @ApiOperation("根据字典类型查询字典数据信息")
-    @GetMapping(value = "/type/{dictType}")
-    public R<List<SysDictData>> dictType(@ApiParam("字典类型") @PathVariable String dictType) {
+    @ApiOperation(value = "根据字典类型查询字典数据信息", nickname = "SysDictDataGetType")
+    @GetMapping(value = "/type")
+    public R<List<SysDictData>> dictType(@ApiParam(value = "字典类型",required = true) @RequestParam String dictType) {
         List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
         if (ObjectUtil.isNull(data)) {
             data = new ArrayList<>();
@@ -81,10 +90,10 @@ public class SysDictDataController extends BaseController {
     /**
      * 新增字典类型
      */
-    @ApiOperation("新增字典类型")
+    @ApiOperation(value = "新增字典类型", nickname = "SysDictDataPostAdd")
     @SaCheckPermission("system:dict:add")
     @Log(title = "字典数据", businessType = BusinessType.INSERT)
-    @PostMapping
+    @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysDictData dict) {
         return toAjax(dictDataService.insertDictData(dict));
     }
@@ -92,10 +101,10 @@ public class SysDictDataController extends BaseController {
     /**
      * 修改保存字典类型
      */
-    @ApiOperation("修改保存字典类型")
+    @ApiOperation(value = "修改保存字典类型", nickname = "SysDictDataPostEdit")
     @SaCheckPermission("system:dict:edit")
     @Log(title = "字典数据", businessType = BusinessType.UPDATE)
-    @PutMapping
+    @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysDictData dict) {
         return toAjax(dictDataService.updateDictData(dict));
     }
@@ -103,11 +112,11 @@ public class SysDictDataController extends BaseController {
     /**
      * 删除字典类型
      */
-    @ApiOperation("删除字典类型")
+    @ApiOperation(value = "删除字典类型", nickname = "SysDictDataPostRemove")
     @SaCheckPermission("system:dict:remove")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{dictCodes}")
-    public R<Void> remove(@ApiParam("字典code串") @PathVariable Long[] dictCodes) {
+    @PostMapping("/remove")
+    public R<Void> remove(@ApiParam(value = "字典code串", required = true) @RequestParam Long[] dictCodes) {
         dictDataService.deleteDictDataByIds(dictCodes);
         return R.ok();
     }

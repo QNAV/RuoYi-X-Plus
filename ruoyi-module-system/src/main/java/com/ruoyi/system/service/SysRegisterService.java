@@ -4,7 +4,7 @@ import cn.dev33.satoken.secure.BCrypt;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.core.domain.model.RegisterBody;
+import com.ruoyi.common.core.domain.model.RegisterBodyUserName;
 import com.ruoyi.common.core.service.LogininforService;
 import com.ruoyi.common.enums.UserType;
 import com.ruoyi.common.exception.user.CaptchaException;
@@ -35,7 +35,7 @@ public class SysRegisterService {
     /**
      * 注册
      */
-    public void register(RegisterBody registerBody) {
+    public void register(RegisterBodyUserName registerBody) {
         HttpServletRequest request = ServletUtils.getRequest();
         String username = registerBody.getUsername();
         String password = registerBody.getPassword();

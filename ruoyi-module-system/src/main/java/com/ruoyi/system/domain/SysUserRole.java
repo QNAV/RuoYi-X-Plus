@@ -15,7 +15,7 @@ import lombok.Data;
 
 @Data
 @TableName("sys_user_role")
-@ApiModel("用户和角色关联")
+@ApiModel(value = "SysUserRole", description = "用户和角色关联")
 public class SysUserRole {
 
     /**

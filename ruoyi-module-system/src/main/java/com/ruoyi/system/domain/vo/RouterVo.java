@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@ApiModel("路由配置信息")
+@ApiModel(value = "RouterVo", description = "路由配置信息")
 public class RouterVo {
 
     /**

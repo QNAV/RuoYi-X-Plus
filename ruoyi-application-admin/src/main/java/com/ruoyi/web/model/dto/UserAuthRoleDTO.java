@@ -13,7 +13,7 @@ import java.util.List;
  * @author weibocy
  */
 @Data
-@ApiModel("用户授权角色返回对象")
+@ApiModel(value = "UserAuthRoleDTO", description = "用户授权角色返回对象")
 public class UserAuthRoleDTO {
 
     @ApiModelProperty("用户信息业务对象")

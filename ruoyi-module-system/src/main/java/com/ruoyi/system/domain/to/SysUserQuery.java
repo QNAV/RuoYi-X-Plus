@@ -11,7 +11,7 @@ import java.util.Date;
  * @author weibocy
  */
 @Data
-@ApiModel("用户信息查询对象")
+@ApiModel(value = "SysUserQuery", description = "用户信息查询对象")
 public class SysUserQuery {
 
     /**

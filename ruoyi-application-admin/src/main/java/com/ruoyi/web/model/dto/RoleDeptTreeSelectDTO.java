@@ -12,7 +12,7 @@ import java.util.List;
  * @author weibocy
  */
 @Data
-@ApiModel("角色部门列表树返回对象")
+@ApiModel(value = "RoleDeptTreeSelectDTO", description = "角色部门列表树返回对象")
 public class RoleDeptTreeSelectDTO {
 
     /**

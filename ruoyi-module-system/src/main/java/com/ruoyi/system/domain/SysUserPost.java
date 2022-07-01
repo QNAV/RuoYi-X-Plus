@@ -15,7 +15,7 @@ import lombok.Data;
 
 @Data
 @TableName("sys_user_post")
-@ApiModel("用户和岗位关联")
+@ApiModel(value = "SysUserPost", description = "用户和岗位关联")
 public class SysUserPost {
 
     /**

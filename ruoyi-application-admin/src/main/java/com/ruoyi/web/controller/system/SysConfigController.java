@@ -28,7 +28,7 @@ import java.util.List;
  * @author weibocy
  */
 @Validated
-@Api(value = "参数配置控制器", tags = {"参数配置管理"})
+@Api(value = "参数配置管理", tags = {"SysConfigService"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/config")
@@ -39,18 +39,27 @@ public class SysConfigController extends BaseController {
     /**
      * 获取参数配置列表
      */
-    @ApiOperation("获取参数配置列表")
+    @ApiOperation(value = "获取参数配置列表", nickname = "SysConfigPostList")
     @SaCheckPermission("system:config:list")
-    @GetMapping("/list")
-    public TableDataInfo<SysConfig> list(SysConfigQuery configQuery, PageQuery pageQuery) {
+    @PostMapping("/list")
+    public TableDataInfo<SysConfig> list(@RequestBody SysConfigQuery configQuery,
+                                         @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
+                                         @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
+                                         @ApiParam("排序列") @RequestParam String orderByColumn,
+                                         @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setPageNum(pageNum);
+        pageQuery.setPageSize(pageSize);
+        pageQuery.setOrderByColumn(orderByColumn);
+        pageQuery.setIsAsc(isAsc);
         return configService.selectPageConfigList(configQuery, pageQuery);
     }
 
-    @ApiOperation("导出参数配置列表")
+    @ApiOperation(value = "导出参数配置列表", nickname = "SysConfigPostExport")
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:config:export")
     @PostMapping("/export")
-    public void export(SysConfigQuery configQuery, HttpServletResponse response) {
+    public void export(@RequestBody SysConfigQuery configQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysConfig> list = configService.selectConfigList(configQuery);
         ExcelUtil.exportExcel(list, "参数数据", SysConfig.class, response);
     }
@@ -58,29 +67,29 @@ public class SysConfigController extends BaseController {
     /**
      * 根据参数编号获取详细信息
      */
-    @ApiOperation("根据参数编号获取详细信息")
+    @ApiOperation(value = "根据参数编号获取详细信息", nickname = "SysConfigGetInfo")
     @SaCheckPermission("system:config:query")
-    @GetMapping(value = "/{configId}")
-    public R<SysConfig> getInfo(@ApiParam("参数ID") @PathVariable Long configId) {
+    @GetMapping(value = "/info")
+    public R<SysConfig> info(@ApiParam(value = "参数ID", required = true) @RequestParam Long configId) {
         return R.ok(configService.selectConfigById(configId));
     }
 
     /**
      * 根据参数键名查询参数值
      */
-    @ApiOperation("根据参数键名查询参数值")
-    @GetMapping(value = "/configKey/{configKey}")
-    public R<Void> getConfigKey(@ApiParam("参数Key") @PathVariable String configKey) {
+    @ApiOperation(value = "根据参数键名查询参数值", nickname = "SysConfigGetConfigKey")
+    @GetMapping(value = "/configKey")
+    public R<Void> configKey(@ApiParam(value = "参数Key", required = true) @RequestParam String configKey) {
         return R.ok(configService.selectConfigByKey(configKey));
     }
 
     /**
      * 新增参数配置
      */
-    @ApiOperation("新增参数配置")
+    @ApiOperation(value = "新增参数配置", nickname = "SysConfigPostAdd")
     @SaCheckPermission("system:config:add")
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
-    @PostMapping
+    @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysConfig config) {
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
             return R.fail("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
@@ -91,10 +100,10 @@ public class SysConfigController extends BaseController {
     /**
      * 修改参数配置
      */
-    @ApiOperation("修改参数配置")
+    @ApiOperation(value = "修改参数配置", nickname = "SysConfigPostEdit")
     @SaCheckPermission("system:config:edit")
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
-    @PutMapping
+    @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysConfig config) {
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
             return R.fail("修改参数'" + config.getConfigName() + "'失败，参数键名已存在");
@@ -105,10 +114,10 @@ public class SysConfigController extends BaseController {
     /**
      * 根据参数键名修改参数配置
      */
-    @ApiOperation("根据参数键名修改参数配置")
+    @ApiOperation(value = "根据参数键名修改参数配置", nickname = "SysConfigPostUpdateByKey")
     @SaCheckPermission("system:config:edit")
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
-    @PutMapping("/updateByKey")
+    @PostMapping("/updateByKey")
     public R<Void> updateByKey(@RequestBody SysConfig config) {
         return toAjax(configService.updateConfig(config));
     }
@@ -116,11 +125,11 @@ public class SysConfigController extends BaseController {
     /**
      * 删除参数配置
      */
-    @ApiOperation("删除参数配置")
+    @ApiOperation(value = "删除参数配置", nickname = "SysConfigPostRemove")
     @SaCheckPermission("system:config:remove")
     @Log(title = "参数管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{configIds}")
-    public R<Void> remove(@ApiParam("参数ID串") @PathVariable Long[] configIds) {
+    @PostMapping("/remove")
+    public R<Void> remove(@ApiParam(value = "参数ID串", required = true) @RequestParam Long[] configIds) {
         configService.deleteConfigByIds(configIds);
         return R.ok();
     }
@@ -128,10 +137,10 @@ public class SysConfigController extends BaseController {
     /**
      * 刷新参数缓存
      */
-    @ApiOperation("刷新参数缓存")
+    @ApiOperation(value = "刷新参数缓存", nickname = "SysConfigPostRefreshCache")
     @SaCheckPermission("system:config:remove")
     @Log(title = "参数管理", businessType = BusinessType.CLEAN)
-    @DeleteMapping("/refreshCache")
+    @PostMapping("/refreshCache")
     public R<Void> refreshCache() {
         configService.resetConfigCache();
         return R.ok();

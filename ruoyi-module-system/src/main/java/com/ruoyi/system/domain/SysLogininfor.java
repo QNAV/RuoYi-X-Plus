@@ -22,7 +22,7 @@ import java.util.Date;
 @Data
 @TableName("sys_logininfor")
 @ExcelIgnoreUnannotated
-@ApiModel("系统访问记录业务对象")
+@ApiModel(value = "SysLogininfor", description = "系统访问记录业务对象")
 public class SysLogininfor implements Serializable {
     private static final long serialVersionUID = 1L;
 

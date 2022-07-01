@@ -10,7 +10,7 @@ import java.util.Date;
  * OSS对象存储查询对象
  * @author weibocy
  */
-@ApiModel("OSS对象存储查询对象")
+@ApiModel(value = "SysOssQuery", description = "OSS对象存储查询对象")
 @Data
 public class SysOssQuery {
 
@@ -41,6 +41,7 @@ public class SysOssQuery {
     /**
      * 服务商
      */
+    @ApiModelProperty("服务商")
     private String service;
 
 

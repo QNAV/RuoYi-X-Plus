@@ -10,11 +10,9 @@ import lombok.Data;
  * 对象存储配置视图对象 sys_oss_config
  *
  * @author weibocy
- * @author 孤舟烟雨
- * @date 2021-08-13
  */
 @Data
-@ApiModel("对象存储配置视图对象")
+@ApiModel(value = "SysOssConfigVo", description = "对象存储配置视图对象")
 @ExcelIgnoreUnannotated
 public class SysOssConfigVo {
 

@@ -41,7 +41,7 @@ import java.util.Map;
 @Anonymous
 @Slf4j
 @Validated
-@Api(value = "验证码操作处理", tags = {"验证码管理"})
+@Api(value = "验证码管理", tags = {"CaptchaService"})
 @RequiredArgsConstructor
 @RestController
 public class CaptchaController {
@@ -53,7 +53,7 @@ public class CaptchaController {
     /**
      * 短信验证码
      */
-    @ApiOperation("短信验证码")
+    @ApiOperation(value = "短信验证码", nickname = "CaptchaGetSmsCaptcha")
     @GetMapping("/captchaSms")
     public R<Void> smsCaptcha(@ApiParam("用户手机号")
                               @NotBlank(message = "{user.phonenumber.not.blank}")
@@ -80,7 +80,7 @@ public class CaptchaController {
     /**
      * 生成验证码
      */
-    @ApiOperation("生成验证码")
+    @ApiOperation(value = "生成验证码", nickname = "CaptchaGetGetCode")
     @GetMapping("/captchaImage")
     public R<CaptchaImageDto> getCode() {
         CaptchaImageDto data = new CaptchaImageDto();

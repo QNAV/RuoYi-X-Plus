@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
  */
 
 @Data
-@ApiModel("短信登录对象")
+@ApiModel(value = "SmsLoginBody", description = "短信登录对象")
 public class SmsLoginBody {
 
     /**

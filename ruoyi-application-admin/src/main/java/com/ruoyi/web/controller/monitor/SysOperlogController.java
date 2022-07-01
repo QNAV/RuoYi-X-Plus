@@ -13,6 +13,7 @@ import com.ruoyi.system.domain.to.SysOperLogQuery;
 import com.ruoyi.system.service.ISysOperLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ import java.util.List;
  * @author weibocy
  */
 @Validated
-@Api(value = "操作日志记录", tags = {"操作日志记录管理"})
+@Api(value = "操作日志记录管理", tags = {"SysOperlogService"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/monitor/operlog")
@@ -34,34 +35,43 @@ public class SysOperlogController extends BaseController {
 
     private final ISysOperLogService operLogService;
 
-    @ApiOperation("查询操作日志记录列表")
+    @ApiOperation(value = "查询操作日志记录列表", nickname = "SysOperLogPostList")
     @SaCheckPermission("monitor:operlog:list")
-    @GetMapping("/list")
-    public TableDataInfo<SysOperLog> list(SysOperLogQuery operLogQuery, PageQuery pageQuery) {
+    @PostMapping("/list")
+    public TableDataInfo<SysOperLog> list(@RequestBody SysOperLogQuery operLogQuery,
+                                          @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
+                                          @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
+                                          @ApiParam("排序列") @RequestParam String orderByColumn,
+                                          @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+        PageQuery pageQuery = new PageQuery();
+        pageQuery.setPageNum(pageNum);
+        pageQuery.setPageSize(pageSize);
+        pageQuery.setOrderByColumn(orderByColumn);
+        pageQuery.setIsAsc(isAsc);
         return operLogService.selectPageOperLogList(operLogQuery, pageQuery);
     }
 
-    @ApiOperation("导出操作日志记录列表")
+    @ApiOperation(value = "导出操作日志记录列表", nickname = "SysOperLogPostExport")
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:operlog:export")
     @PostMapping("/export")
-    public void export(SysOperLogQuery operLogQuery, HttpServletResponse response) {
+    public void export(@RequestBody SysOperLogQuery operLogQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysOperLog> list = operLogService.selectOperLogList(operLogQuery);
         ExcelUtil.exportExcel(list, "操作日志", SysOperLog.class, response);
     }
 
-    @ApiOperation("删除操作日志记录")
+    @ApiOperation(value = "删除操作日志记录", nickname = "SysOperLogPostRemove")
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @SaCheckPermission("monitor:operlog:remove")
-    @DeleteMapping("/{operIds}")
-    public R<Void> remove(@PathVariable Long[] operIds) {
+    @PostMapping("/remove")
+    public R<Void> remove(@ApiParam(value = "操作日志ID组", required = true) @RequestParam Long[] operIds) {
         return toAjax(operLogService.deleteOperLogByIds(operIds));
     }
 
-    @ApiOperation("清空操作日志记录")
+    @ApiOperation(value = "清空操作日志记录", nickname = "SysOperLogPostClean")
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
     @SaCheckPermission("monitor:operlog:remove")
-    @DeleteMapping("/clean")
+    @PostMapping("/clean")
     public R<Void> clean() {
         operLogService.cleanOperLog();
         return R.ok();
