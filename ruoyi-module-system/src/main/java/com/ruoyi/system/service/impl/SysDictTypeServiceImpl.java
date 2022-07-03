@@ -41,10 +41,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
     @Override
     public TableDataInfo<SysDictType> selectPageDictTypeList(SysDictTypeQuery dictTypeQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysDictType> lqw = new LambdaQueryWrapper<SysDictType>()
-            .like(StringUtils.isNotBlank(dictTypeQuery.getDictName()), SysDictType::getDictName, dictTypeQuery.getDictName())
-            .eq(StringUtils.isNotBlank(dictTypeQuery.getStatus()), SysDictType::getStatus, dictTypeQuery.getStatus())
-            .like(StringUtils.isNotBlank(dictTypeQuery.getDictType()), SysDictType::getDictType, dictTypeQuery.getDictType())
-            .between(dictTypeQuery.getBeginTime() != null && dictTypeQuery.getEndTime() != null,
+            .like(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getDictName()), SysDictType::getDictName, dictTypeQuery.getDictName())
+            .eq(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getStatus()), SysDictType::getStatus, dictTypeQuery.getStatus())
+            .like(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getDictType()), SysDictType::getDictType, dictTypeQuery.getDictType())
+            .between(dictTypeQuery != null && dictTypeQuery.getBeginTime() != null && dictTypeQuery.getEndTime() != null,
                 SysDictType::getCreateTime, dictTypeQuery.getBeginTime(), dictTypeQuery.getEndTime());
         Page<SysDictType> page = baseMapper.selectPage(pageQuery.build(), lqw);
         return TableDataInfo.build(page);
@@ -59,10 +59,10 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
     @Override
     public List<SysDictType> selectDictTypeList(SysDictTypeQuery dictTypeQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysDictType>()
-            .like(StringUtils.isNotBlank(dictTypeQuery.getDictName()), SysDictType::getDictName, dictTypeQuery.getDictName())
-            .eq(StringUtils.isNotBlank(dictTypeQuery.getStatus()), SysDictType::getStatus, dictTypeQuery.getStatus())
-            .like(StringUtils.isNotBlank(dictTypeQuery.getDictType()), SysDictType::getDictType, dictTypeQuery.getDictType())
-            .between(dictTypeQuery.getBeginTime() != null && dictTypeQuery.getEndTime() != null,
+            .like(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getDictName()), SysDictType::getDictName, dictTypeQuery.getDictName())
+            .eq(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getStatus()), SysDictType::getStatus, dictTypeQuery.getStatus())
+            .like(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getDictType()), SysDictType::getDictType, dictTypeQuery.getDictType())
+            .between(dictTypeQuery != null && dictTypeQuery.getBeginTime() != null && dictTypeQuery.getEndTime() != null,
                 SysDictType::getCreateTime, dictTypeQuery.getBeginTime(), dictTypeQuery.getEndTime()));
     }
 

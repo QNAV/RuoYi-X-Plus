@@ -38,11 +38,12 @@ public class SysLogininforController extends BaseController {
     @ApiOperation(value = "查询系统访问记录列表", nickname = "SysLogininforPostList")
     @SaCheckPermission("monitor:logininfor:list")
     @PostMapping("/list")
-    public TableDataInfo<SysLogininfor> list(@RequestBody SysLogininforQuery logininforQuery,
-                                             @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
-                                             @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
-                                             @ApiParam("排序列") @RequestParam String orderByColumn,
-                                             @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+    public TableDataInfo<SysLogininfor> list(@RequestBody(required = false) SysLogininforQuery logininforQuery,
+                                             @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
+                                             @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
+                                             @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
+                                             @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
+        // 分页参数组装
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNum(pageNum);
         pageQuery.setPageSize(pageSize);
@@ -55,7 +56,7 @@ public class SysLogininforController extends BaseController {
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:logininfor:export")
     @PostMapping("/export")
-    public void export(@RequestBody SysLogininforQuery logininforQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysLogininforQuery logininforQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysLogininfor> list = logininforService.selectLogininforList(logininforQuery);
         ExcelUtil.exportExcel(list, "登录日志", SysLogininfor.class, response);
     }
@@ -64,7 +65,7 @@ public class SysLogininforController extends BaseController {
     @SaCheckPermission("monitor:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "登录日志ID组", required = true) @RequestParam Long[] infoIds) {
+    public R<Void> remove(@ApiParam(value = "登录日志ID组", required = true, allowMultiple = true) @RequestParam Long[] infoIds) {
         return toAjax(logininforService.deleteLogininforByIds(infoIds));
     }
 

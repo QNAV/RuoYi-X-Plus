@@ -50,18 +50,18 @@ public class SysOperLogServiceImpl implements ISysOperLogService, OperLogService
     @Override
     public TableDataInfo<SysOperLog> selectPageOperLogList(SysOperLogQuery operLogQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysOperLog> lqw = new LambdaQueryWrapper<SysOperLog>()
-            .like(StringUtils.isNotBlank(operLogQuery.getTitle()), SysOperLog::getTitle, operLogQuery.getTitle())
-            .eq(operLogQuery.getBusinessType() != null && operLogQuery.getBusinessType() > 0,
+            .like(operLogQuery != null && StringUtils.isNotBlank(operLogQuery.getTitle()), SysOperLog::getTitle, operLogQuery.getTitle())
+            .eq(operLogQuery != null && operLogQuery.getBusinessType() != null && operLogQuery.getBusinessType() > 0,
                 SysOperLog::getBusinessType, operLogQuery.getBusinessType())
             .func(f -> {
-                if (ArrayUtil.isNotEmpty(operLogQuery.getBusinessTypes())) {
+                if (operLogQuery != null && ArrayUtil.isNotEmpty(operLogQuery.getBusinessTypes())) {
                     f.in(SysOperLog::getBusinessType, Arrays.asList(operLogQuery.getBusinessTypes()));
                 }
             })
-            .eq(operLogQuery.getStatus() != null,
+            .eq(operLogQuery != null && operLogQuery.getStatus() != null,
                 SysOperLog::getStatus, operLogQuery.getStatus())
-            .like(StringUtils.isNotBlank(operLogQuery.getOperName()), SysOperLog::getOperName, operLogQuery.getOperName())
-            .between(operLogQuery.getBeginTime() != null && operLogQuery.getEndTime() != null,
+            .like(operLogQuery != null && StringUtils.isNotBlank(operLogQuery.getOperName()), SysOperLog::getOperName, operLogQuery.getOperName())
+            .between(operLogQuery != null && operLogQuery.getBeginTime() != null && operLogQuery.getEndTime() != null,
                 SysOperLog::getOperTime, operLogQuery.getBeginTime(), operLogQuery.getEndTime());
         if (StringUtils.isBlank(pageQuery.getOrderByColumn())) {
             pageQuery.setOrderByColumn("oper_id");
@@ -91,18 +91,18 @@ public class SysOperLogServiceImpl implements ISysOperLogService, OperLogService
     @Override
     public List<SysOperLog> selectOperLogList(SysOperLogQuery operLogQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysOperLog>()
-            .like(StringUtils.isNotBlank(operLogQuery.getTitle()), SysOperLog::getTitle, operLogQuery.getTitle())
-            .eq(operLogQuery.getBusinessType() != null && operLogQuery.getBusinessType() > 0,
+            .like(operLogQuery != null && StringUtils.isNotBlank(operLogQuery.getTitle()), SysOperLog::getTitle, operLogQuery.getTitle())
+            .eq(operLogQuery != null && operLogQuery.getBusinessType() != null && operLogQuery.getBusinessType() > 0,
                 SysOperLog::getBusinessType, operLogQuery.getBusinessType())
             .func(f -> {
-                if (ArrayUtil.isNotEmpty(operLogQuery.getBusinessTypes())) {
+                if (operLogQuery != null && ArrayUtil.isNotEmpty(operLogQuery.getBusinessTypes())) {
                     f.in(SysOperLog::getBusinessType, Arrays.asList(operLogQuery.getBusinessTypes()));
                 }
             })
-            .eq(operLogQuery.getStatus() != null && operLogQuery.getStatus() > 0,
+            .eq(operLogQuery != null && operLogQuery.getStatus() != null && operLogQuery.getStatus() > 0,
                 SysOperLog::getStatus, operLogQuery.getStatus())
-            .like(StringUtils.isNotBlank(operLogQuery.getOperName()), SysOperLog::getOperName, operLogQuery.getOperName())
-            .between(operLogQuery.getBeginTime() != null && operLogQuery.getEndTime() != null,
+            .like(operLogQuery != null && StringUtils.isNotBlank(operLogQuery.getOperName()), SysOperLog::getOperName, operLogQuery.getOperName())
+            .between(operLogQuery != null && operLogQuery.getBeginTime() != null && operLogQuery.getEndTime() != null,
                 SysOperLog::getOperTime, operLogQuery.getBeginTime(), operLogQuery.getEndTime())
             .orderByDesc(SysOperLog::getOperId));
     }

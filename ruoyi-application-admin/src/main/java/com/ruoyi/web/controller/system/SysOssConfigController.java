@@ -46,11 +46,11 @@ public class SysOssConfigController extends BaseController {
     @ApiOperation(value = "查询对象存储配置列表", nickname = "SysOssConfigPostList")
     @SaCheckPermission("system:oss:list")
     @PostMapping("/list")
-    public TableDataInfo<SysOssConfigVo> list(@RequestBody @Validated(QueryGroup.class) SysOssConfigQuery query,
-                                              @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
-                                              @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
-                                              @ApiParam("排序列") @RequestParam String orderByColumn,
-                                              @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+    public TableDataInfo<SysOssConfigVo> list(@RequestBody(required = false) @Validated(QueryGroup.class) SysOssConfigQuery query,
+                                              @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
+                                              @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
+                                              @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
+                                              @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNum(pageNum);
         pageQuery.setPageSize(pageSize);
@@ -100,7 +100,7 @@ public class SysOssConfigController extends BaseController {
     @SaCheckPermission("system:oss:remove")
     @Log(title = "对象存储配置", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "OSS配置ID串", required = true) @RequestParam Long[] ossConfigIds) {
+    public R<Void> remove(@ApiParam(value = "OSS配置ID组", required = true, allowMultiple = true) @RequestParam Long[] ossConfigIds) {
         return toAjax(iSysOssConfigService.deleteWithValidByIds(Arrays.asList(ossConfigIds), true) ? 1 : 0);
     }
 

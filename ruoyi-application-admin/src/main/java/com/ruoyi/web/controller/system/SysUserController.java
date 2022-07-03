@@ -62,11 +62,11 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "获取用户列表", nickname = "SysUserPostList")
     @SaCheckPermission("system:user:list")
     @PostMapping("/list")
-    public TableDataInfo<SysUser> list(@RequestBody SysUserQuery userQuery,
-                                       @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
-                                       @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
-                                       @ApiParam("排序列") @RequestParam String orderByColumn,
-                                       @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+    public TableDataInfo<SysUser> list(@RequestBody(required = false) SysUserQuery userQuery,
+                                       @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
+                                       @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
+                                       @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
+                                       @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNum(pageNum);
         pageQuery.setPageSize(pageSize);
@@ -79,7 +79,7 @@ public class SysUserController extends BaseController {
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:user:export")
     @PostMapping("/export")
-    public void export(@RequestBody SysUserQuery userQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysUserQuery userQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysUser> list = userService.selectUserList(userQuery);
         List<SysUserExportVo> listVo = BeanUtil.copyToList(list, SysUserExportVo.class);
         for (int i = 0; i < list.size(); i++) {
@@ -180,7 +180,7 @@ public class SysUserController extends BaseController {
     @SaCheckPermission("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "角色ID串", required = true) @RequestParam Long[] userIds) {
+    public R<Void> remove(@ApiParam(value = "角色ID串", required = true, allowMultiple = true) @RequestParam Long[] userIds) {
         if (ArrayUtil.contains(userIds, getUserId())) {
             return R.fail("当前用户不能删除");
         }

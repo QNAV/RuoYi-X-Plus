@@ -93,10 +93,10 @@ public class SysLogininforServiceImpl implements ISysLogininforService, Logininf
     @Override
     public TableDataInfo<SysLogininfor> selectPageLogininforList(SysLogininforQuery logininforQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysLogininfor> lqw = new LambdaQueryWrapper<SysLogininfor>()
-            .like(StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
-            .eq(StringUtils.isNotBlank(logininforQuery.getStatus()), SysLogininfor::getStatus, logininforQuery.getStatus())
-            .like(StringUtils.isNotBlank(logininforQuery.getUserName()), SysLogininfor::getUserName, logininforQuery.getUserName())
-            .between(logininforQuery.getBeginTime() != null && logininforQuery.getEndTime() != null,
+            .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
+            .eq(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getStatus()), SysLogininfor::getStatus, logininforQuery.getStatus())
+            .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getUserName()), SysLogininfor::getUserName, logininforQuery.getUserName())
+            .between(logininforQuery != null && logininforQuery.getBeginTime() != null && logininforQuery.getEndTime() != null,
                 SysLogininfor::getLoginTime, logininforQuery.getBeginTime(), logininforQuery.getEndTime());
         if (StringUtils.isBlank(pageQuery.getOrderByColumn())) {
             pageQuery.setOrderByColumn("info_id");
@@ -126,10 +126,10 @@ public class SysLogininforServiceImpl implements ISysLogininforService, Logininf
     @Override
     public List<SysLogininfor> selectLogininforList(SysLogininforQuery logininforQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysLogininfor>()
-            .like(StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
-            .eq(StringUtils.isNotBlank(logininforQuery.getStatus()), SysLogininfor::getStatus, logininforQuery.getStatus())
-            .like(StringUtils.isNotBlank(logininforQuery.getUserName()), SysLogininfor::getUserName, logininforQuery.getUserName())
-            .between(logininforQuery.getBeginTime() != null && logininforQuery.getEndTime() != null,
+            .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
+            .eq(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getStatus()), SysLogininfor::getStatus, logininforQuery.getStatus())
+            .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getUserName()), SysLogininfor::getUserName, logininforQuery.getUserName())
+            .between(logininforQuery != null && logininforQuery.getBeginTime() != null && logininforQuery.getEndTime() != null,
                 SysLogininfor::getLoginTime, logininforQuery.getBeginTime(), logininforQuery.getEndTime())
             .orderByDesc(SysLogininfor::getInfoId));
     }

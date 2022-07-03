@@ -63,11 +63,11 @@ public class SysRoleServiceImpl implements ISysRoleService {
     private Wrapper<SysRole> buildQueryWrapper(SysRoleQuery roleQuery) {
         QueryWrapper<SysRole> wrapper = Wrappers.query();
         wrapper.eq("r.del_flag", UserConstants.ROLE_NORMAL)
-            .eq(ObjectUtil.isNotNull(roleQuery.getRoleId()), "r.role_id", roleQuery.getRoleId())
-            .like(StringUtils.isNotBlank(roleQuery.getRoleName()), "r.role_name", roleQuery.getRoleName())
-            .eq(StringUtils.isNotBlank(roleQuery.getStatus()), "r.status", roleQuery.getStatus())
-            .like(StringUtils.isNotBlank(roleQuery.getRoleKey()), "r.role_key", roleQuery.getRoleKey())
-            .between(roleQuery.getBeginCreateTime() != null && roleQuery.getEndCreateTime() != null,
+            .eq(roleQuery != null && ObjectUtil.isNotNull(roleQuery.getRoleId()), "r.role_id", roleQuery.getRoleId())
+            .like(roleQuery != null && StringUtils.isNotBlank(roleQuery.getRoleName()), "r.role_name", roleQuery.getRoleName())
+            .eq(roleQuery != null && StringUtils.isNotBlank(roleQuery.getStatus()), "r.status", roleQuery.getStatus())
+            .like(roleQuery != null && StringUtils.isNotBlank(roleQuery.getRoleKey()), "r.role_key", roleQuery.getRoleKey())
+            .between(roleQuery != null && roleQuery.getBeginCreateTime() != null && roleQuery.getEndCreateTime() != null,
                 "r.create_time", roleQuery.getBeginCreateTime(), roleQuery.getEndCreateTime())
             .orderByAsc("r.role_sort");
         return wrapper;

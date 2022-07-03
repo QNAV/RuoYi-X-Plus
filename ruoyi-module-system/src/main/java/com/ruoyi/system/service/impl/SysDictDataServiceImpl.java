@@ -30,9 +30,9 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
     @Override
     public TableDataInfo<SysDictData> selectPageDictDataList(SysDictDataQuery dictDataQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysDictData> lqw = new LambdaQueryWrapper<SysDictData>()
-            .eq(StringUtils.isNotBlank(dictDataQuery.getDictType()), SysDictData::getDictType, dictDataQuery.getDictType())
-            .like(StringUtils.isNotBlank(dictDataQuery.getDictLabel()), SysDictData::getDictLabel, dictDataQuery.getDictLabel())
-            .eq(StringUtils.isNotBlank(dictDataQuery.getStatus()), SysDictData::getStatus, dictDataQuery.getStatus())
+            .eq(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictType()), SysDictData::getDictType, dictDataQuery.getDictType())
+            .like(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictLabel()), SysDictData::getDictLabel, dictDataQuery.getDictLabel())
+            .eq(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getStatus()), SysDictData::getStatus, dictDataQuery.getStatus())
             .orderByAsc(SysDictData::getDictSort);
         Page<SysDictData> page = baseMapper.selectPage(pageQuery.build(), lqw);
         return TableDataInfo.build(page);
@@ -47,9 +47,9 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
     @Override
     public List<SysDictData> selectDictDataList(SysDictDataQuery dictDataQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysDictData>()
-            .eq(StringUtils.isNotBlank(dictDataQuery.getDictType()), SysDictData::getDictType, dictDataQuery.getDictType())
-            .like(StringUtils.isNotBlank(dictDataQuery.getDictLabel()), SysDictData::getDictLabel, dictDataQuery.getDictLabel())
-            .eq(StringUtils.isNotBlank(dictDataQuery.getStatus()), SysDictData::getStatus, dictDataQuery.getStatus())
+            .eq(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictType()), SysDictData::getDictType, dictDataQuery.getDictType())
+            .like(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictLabel()), SysDictData::getDictLabel, dictDataQuery.getDictLabel())
+            .eq(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getStatus()), SysDictData::getStatus, dictDataQuery.getStatus())
             .orderByAsc(SysDictData::getDictSort));
     }
 

@@ -42,11 +42,11 @@ public class SysConfigController extends BaseController {
     @ApiOperation(value = "获取参数配置列表", nickname = "SysConfigPostList")
     @SaCheckPermission("system:config:list")
     @PostMapping("/list")
-    public TableDataInfo<SysConfig> list(@RequestBody SysConfigQuery configQuery,
-                                         @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
-                                         @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
-                                         @ApiParam("排序列") @RequestParam String orderByColumn,
-                                         @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+    public TableDataInfo<SysConfig> list(@RequestBody(required = false) SysConfigQuery configQuery,
+                                         @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
+                                         @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
+                                         @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
+                                         @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNum(pageNum);
         pageQuery.setPageSize(pageSize);
@@ -59,7 +59,7 @@ public class SysConfigController extends BaseController {
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:config:export")
     @PostMapping("/export")
-    public void export(@RequestBody SysConfigQuery configQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysConfigQuery configQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysConfig> list = configService.selectConfigList(configQuery);
         ExcelUtil.exportExcel(list, "参数数据", SysConfig.class, response);
     }
@@ -129,7 +129,7 @@ public class SysConfigController extends BaseController {
     @SaCheckPermission("system:config:remove")
     @Log(title = "参数管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "参数ID串", required = true) @RequestParam Long[] configIds) {
+    public R<Void> remove(@ApiParam(value = "参数ID串", required = true, allowMultiple = true) @RequestParam Long[] configIds) {
         configService.deleteConfigByIds(configIds);
         return R.ok();
     }

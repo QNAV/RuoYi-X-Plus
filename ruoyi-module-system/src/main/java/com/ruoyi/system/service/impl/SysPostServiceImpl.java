@@ -35,9 +35,9 @@ public class SysPostServiceImpl implements ISysPostService {
     @Override
     public TableDataInfo<SysPost> selectPagePostList(SysPostQuery postQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysPost> lqw = new LambdaQueryWrapper<SysPost>()
-            .like(StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
-            .eq(StringUtils.isNotBlank(postQuery.getStatus()), SysPost::getStatus, postQuery.getStatus())
-            .like(StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName());
+            .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
+            .eq(postQuery != null && StringUtils.isNotBlank(postQuery.getStatus()), SysPost::getStatus, postQuery.getStatus())
+            .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName());
         Page<SysPost> page = baseMapper.selectPage(pageQuery.build(), lqw);
         return TableDataInfo.build(page);
     }
@@ -51,9 +51,9 @@ public class SysPostServiceImpl implements ISysPostService {
     @Override
     public List<SysPost> selectPostList(SysPostQuery postQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysPost>()
-            .like(StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
-            .eq(StringUtils.isNotBlank(postQuery.getStatus()), SysPost::getStatus, postQuery.getStatus())
-            .like(StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName()));
+            .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
+            .eq(postQuery != null && StringUtils.isNotBlank(postQuery.getStatus()), SysPost::getStatus, postQuery.getStatus())
+            .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName()));
     }
 
     /**

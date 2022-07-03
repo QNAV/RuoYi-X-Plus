@@ -48,11 +48,11 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "查询角色信息列表", nickname = "SysRolePostList")
     @SaCheckPermission("system:role:list")
     @PostMapping("/list")
-    public TableDataInfo<SysRole> list(@RequestBody SysRoleQuery roleQuery,
-                                       @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
-                                       @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
-                                       @ApiParam("排序列") @RequestParam String orderByColumn,
-                                       @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+    public TableDataInfo<SysRole> list(@RequestBody(required = false) SysRoleQuery roleQuery,
+                                       @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
+                                       @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
+                                       @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
+                                       @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNum(pageNum);
         pageQuery.setPageSize(pageSize);
@@ -65,7 +65,7 @@ public class SysRoleController extends BaseController {
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:role:export")
     @PostMapping("/export")
-    public void export(@RequestBody SysRoleQuery roleQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysRoleQuery roleQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysRole> list = roleService.selectRoleList(roleQuery);
         ExcelUtil.exportExcel(list, "角色数据", SysRole.class, response);
     }
@@ -180,11 +180,11 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "查询已分配用户角色列表", nickname = "SysRolePostAllocatedList")
     @SaCheckPermission("system:role:list")
     @PostMapping("/authUser/allocatedList")
-    public TableDataInfo<SysUser> allocatedList(@RequestBody SysUserQuery userQuery,
-                                                @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
-                                                @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
-                                                @ApiParam("排序列") @RequestParam String orderByColumn,
-                                                @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+    public TableDataInfo<SysUser> allocatedList(@RequestBody(required = false) SysUserQuery userQuery,
+                                                @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
+                                                @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
+                                                @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
+                                                @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNum(pageNum);
         pageQuery.setPageSize(pageSize);
@@ -199,11 +199,11 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "查询未分配用户角色列表", nickname = "SysRolePostUnallocatedList")
     @SaCheckPermission("system:role:list")
     @PostMapping("/authUser/unallocatedList")
-    public TableDataInfo<SysUser> unallocatedList(@RequestBody SysUserQuery userQuery,
-                                                  @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
-                                                  @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
-                                                  @ApiParam("排序列") @RequestParam String orderByColumn,
-                                                  @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+    public TableDataInfo<SysUser> unallocatedList(@RequestBody(required = false) SysUserQuery userQuery,
+                                                  @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
+                                                  @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
+                                                  @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
+                                                  @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNum(pageNum);
         pageQuery.setPageSize(pageSize);

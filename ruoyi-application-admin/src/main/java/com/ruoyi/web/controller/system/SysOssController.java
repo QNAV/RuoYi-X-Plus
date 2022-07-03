@@ -54,11 +54,11 @@ public class SysOssController extends BaseController {
     @ApiOperation(value = "查询OSS对象存储列表", nickname = "SysOssPostList")
     @SaCheckPermission("system:oss:list")
     @PostMapping("/list")
-    public TableDataInfo<SysOssVo> list(@Validated(QueryGroup.class) SysOssQuery query,
-                                        @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
-                                        @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
-                                        @ApiParam("排序列") @RequestParam String orderByColumn,
-                                        @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+    public TableDataInfo<SysOssVo> list(@RequestBody(required = false) @Validated(QueryGroup.class) SysOssQuery query,
+                                        @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
+                                        @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
+                                        @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
+                                        @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNum(pageNum);
         pageQuery.setPageSize(pageSize);
@@ -131,7 +131,7 @@ public class SysOssController extends BaseController {
     @SaCheckPermission("system:oss:remove")
     @Log(title = "OSS对象存储", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "OSS对象ID串", required = true) @RequestParam Long[] ossIds) {
+    public R<Void> remove(@ApiParam(value = "OSS对象ID组", required = true, allowMultiple = true) @RequestParam Long[] ossIds) {
         return toAjax(iSysOssService.deleteWithValidByIds(Arrays.asList(ossIds), true) ? 1 : 0);
     }
 

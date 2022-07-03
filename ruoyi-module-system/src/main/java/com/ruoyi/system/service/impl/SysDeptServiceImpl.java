@@ -50,10 +50,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
     public List<SysDept> selectDeptList(SysDeptQuery deptQuery) {
         LambdaQueryWrapper<SysDept> lqw = new LambdaQueryWrapper<>();
         lqw.eq(SysDept::getDelFlag, "0")
-            .eq(ObjectUtil.isNotNull(deptQuery.getDeptId()), SysDept::getDeptId, deptQuery.getDeptId())
-            .eq(ObjectUtil.isNotNull(deptQuery.getParentId()), SysDept::getParentId, deptQuery.getParentId())
-            .like(StringUtils.isNotBlank(deptQuery.getDeptName()), SysDept::getDeptName, deptQuery.getDeptName())
-            .eq(StringUtils.isNotBlank(deptQuery.getStatus()), SysDept::getStatus, deptQuery.getStatus())
+            .eq(deptQuery != null && ObjectUtil.isNotNull(deptQuery.getDeptId()), SysDept::getDeptId, deptQuery.getDeptId())
+            .eq(deptQuery != null && ObjectUtil.isNotNull(deptQuery.getParentId()), SysDept::getParentId, deptQuery.getParentId())
+            .like(deptQuery != null && StringUtils.isNotBlank(deptQuery.getDeptName()), SysDept::getDeptName, deptQuery.getDeptName())
+            .eq(deptQuery != null && StringUtils.isNotBlank(deptQuery.getStatus()), SysDept::getStatus, deptQuery.getStatus())
             .orderByAsc(SysDept::getParentId)
             .orderByAsc(SysDept::getOrderNum);
         return baseMapper.selectDeptList(lqw);

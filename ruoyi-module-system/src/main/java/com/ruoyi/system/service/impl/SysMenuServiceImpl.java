@@ -63,17 +63,17 @@ public class SysMenuServiceImpl implements ISysMenuService {
         // 管理员显示所有菜单信息
         if (LoginHelper.isAdmin(userId)) {
             menuList = baseMapper.selectList(new LambdaQueryWrapper<SysMenu>()
-                .like(StringUtils.isNotBlank(menuQuery.getMenuName()), SysMenu::getMenuName, menuQuery.getMenuName())
-                .eq(StringUtils.isNotBlank(menuQuery.getVisible()), SysMenu::getVisible, menuQuery.getVisible())
-                .eq(StringUtils.isNotBlank(menuQuery.getStatus()), SysMenu::getStatus, menuQuery.getStatus())
+                .like(menuQuery != null && StringUtils.isNotBlank(menuQuery.getMenuName()), SysMenu::getMenuName, menuQuery.getMenuName())
+                .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getVisible()), SysMenu::getVisible, menuQuery.getVisible())
+                .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getStatus()), SysMenu::getStatus, menuQuery.getStatus())
                 .orderByAsc(SysMenu::getParentId)
                 .orderByAsc(SysMenu::getOrderNum));
         } else {
             QueryWrapper<SysMenu> wrapper = Wrappers.query();
             wrapper.eq("sur.user_id", userId)
-                .like(StringUtils.isNotBlank(menuQuery.getMenuName()), "m.menu_name", menuQuery.getMenuName())
-                .eq(StringUtils.isNotBlank(menuQuery.getVisible()), "m.visible", menuQuery.getVisible())
-                .eq(StringUtils.isNotBlank(menuQuery.getStatus()), "m.status", menuQuery.getStatus())
+                .like(menuQuery != null && StringUtils.isNotBlank(menuQuery.getMenuName()), "m.menu_name", menuQuery.getMenuName())
+                .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getVisible()), "m.visible", menuQuery.getVisible())
+                .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getStatus()), "m.status", menuQuery.getStatus())
                 .orderByAsc("m.parent_id")
                 .orderByAsc("m.order_num");
             menuList = baseMapper.selectMenuListByUserId(wrapper);

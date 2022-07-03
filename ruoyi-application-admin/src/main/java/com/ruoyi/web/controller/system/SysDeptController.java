@@ -42,7 +42,7 @@ public class SysDeptController extends BaseController {
     @ApiOperation(value = "获取部门列表", nickname = "SysDeptPostList")
     @SaCheckPermission("system:dept:list")
     @PostMapping("/list")
-    public R<List<SysDept>> list(@RequestBody SysDeptQuery deptQuery) {
+    public R<List<SysDept>> list(@RequestBody(required = false) SysDeptQuery deptQuery) {
         List<SysDept> depts = deptService.selectDeptList(deptQuery);
         return R.ok(depts);
     }
@@ -53,7 +53,7 @@ public class SysDeptController extends BaseController {
     @ApiOperation(value = "查询部门列表（排除节点）", nickname = "SysDeptGetExcludeChild")
     @SaCheckPermission("system:dept:list")
     @GetMapping("/list/exclude")
-    public R<List<SysDept>> excludeChild(@ApiParam("部门ID") @RequestParam Long deptId) {
+    public R<List<SysDept>> excludeChild(@ApiParam(value = "部门ID", required = true) @RequestParam Long deptId) {
         List<SysDept> depts = deptService.selectDeptList(new SysDeptQuery());
         depts.removeIf(d -> d.getDeptId().equals(deptId)
             || ArrayUtil.contains(StringUtils.split(d.getAncestors(), ","), deptId + ""));
@@ -66,7 +66,7 @@ public class SysDeptController extends BaseController {
     @ApiOperation(value = "根据部门编号获取详细信息", nickname = "SysDeptGetInfo")
     @SaCheckPermission("system:dept:query")
     @GetMapping(value = "/info")
-    public R<SysDept> info(@ApiParam("部门ID") @RequestParam Long deptId) {
+    public R<SysDept> info(@ApiParam(value = "部门ID", required = true) @RequestParam Long deptId) {
         deptService.checkDeptDataScope(deptId);
         return R.ok(deptService.selectDeptById(deptId));
     }
@@ -76,7 +76,7 @@ public class SysDeptController extends BaseController {
      */
     @ApiOperation(value = "获取部门下拉树列表", nickname = "SysDeptPostTreeSelect")
     @PostMapping("/treeSelect")
-    public R<List<Tree<Long>>> treeSelect(@RequestBody SysDeptQuery deptQuery) {
+    public R<List<Tree<Long>>> treeSelect(@RequestBody(required = false) SysDeptQuery deptQuery) {
         List<SysDept> depts = deptService.selectDeptList(deptQuery);
         return R.ok(deptService.buildDeptTreeSelect(depts));
     }
@@ -86,7 +86,7 @@ public class SysDeptController extends BaseController {
      */
     @ApiOperation(value = "加载对应角色部门列表树", nickname = "SysDeptGetRoleDeptTreeSelect")
     @GetMapping(value = "/roleDeptTreeSelect")
-    public R<RoleDeptTreeSelectDTO> roleDeptTreeSelect(@ApiParam("角色ID") @RequestParam Long roleId) {
+    public R<RoleDeptTreeSelectDTO> roleDeptTreeSelect(@ApiParam(value = "角色ID", required = true) @RequestParam Long roleId) {
         List<SysDept> depts = deptService.selectDeptList(new SysDeptQuery());
         RoleDeptTreeSelectDTO data =  new RoleDeptTreeSelectDTO();
         data.setCheckedKeys(deptService.selectDeptListByRoleId(roleId));
@@ -136,7 +136,7 @@ public class SysDeptController extends BaseController {
     @SaCheckPermission("system:dept:remove")
     @Log(title = "部门管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam("部门ID串") @RequestParam Long deptId) {
+    public R<Void> remove(@ApiParam(value = "部门ID串", required = true) @RequestParam Long deptId) {
         if (deptService.hasChildByDeptId(deptId)) {
             return R.fail("存在下级部门,不允许删除");
         }

@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author weibocy
  */
-public class PlusDataPermissionInterceptor extends JsqlParserSupport implements InnerInterceptor {
+public class DataPermissionInterceptor extends JsqlParserSupport implements InnerInterceptor {
 
     private final PlusDataPermissionHandler dataPermissionHandler = new PlusDataPermissionHandler();
 

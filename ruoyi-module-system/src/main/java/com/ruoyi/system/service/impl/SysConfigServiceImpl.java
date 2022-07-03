@@ -38,10 +38,10 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
     @Override
     public TableDataInfo<SysConfig> selectPageConfigList(SysConfigQuery configQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysConfig> lqw = new LambdaQueryWrapper<SysConfig>()
-            .like(StringUtils.isNotBlank(configQuery.getConfigName()), SysConfig::getConfigName, configQuery.getConfigName())
-            .eq(StringUtils.isNotBlank(configQuery.getConfigType()), SysConfig::getConfigType, configQuery.getConfigType())
-            .like(StringUtils.isNotBlank(configQuery.getConfigKey()), SysConfig::getConfigKey, configQuery.getConfigKey())
-            .between(configQuery.getBeginTime() != null && configQuery.getBeginTime() != null,
+            .like(configQuery != null && StringUtils.isNotBlank(configQuery.getConfigName()), SysConfig::getConfigName, configQuery.getConfigName())
+            .eq(configQuery != null && StringUtils.isNotBlank(configQuery.getConfigType()), SysConfig::getConfigType, configQuery.getConfigType())
+            .like(configQuery != null && StringUtils.isNotBlank(configQuery.getConfigKey()), SysConfig::getConfigKey, configQuery.getConfigKey())
+            .between(configQuery != null && configQuery.getBeginTime() != null && configQuery.getBeginTime() != null,
                 SysConfig::getCreateTime, configQuery.getBeginTime(), configQuery.getEndTime());
         Page<SysConfig> page = baseMapper.selectPage(pageQuery.build(), lqw);
         return TableDataInfo.build(page);
@@ -103,10 +103,10 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
     @Override
     public List<SysConfig> selectConfigList(SysConfigQuery configQuery) {
         LambdaQueryWrapper<SysConfig> lqw = new LambdaQueryWrapper<SysConfig>()
-            .like(StringUtils.isNotBlank(configQuery.getConfigName()), SysConfig::getConfigName, configQuery.getConfigName())
-            .eq(StringUtils.isNotBlank(configQuery.getConfigType()), SysConfig::getConfigType, configQuery.getConfigType())
-            .like(StringUtils.isNotBlank(configQuery.getConfigKey()), SysConfig::getConfigKey, configQuery.getConfigKey())
-            .between(configQuery.getBeginTime() != null && configQuery.getEndTime() != null,
+            .like(configQuery != null && StringUtils.isNotBlank(configQuery.getConfigName()), SysConfig::getConfigName, configQuery.getConfigName())
+            .eq(configQuery != null && StringUtils.isNotBlank(configQuery.getConfigType()), SysConfig::getConfigType, configQuery.getConfigType())
+            .like(configQuery != null && StringUtils.isNotBlank(configQuery.getConfigKey()), SysConfig::getConfigKey, configQuery.getConfigKey())
+            .between(configQuery != null && configQuery.getBeginTime() != null && configQuery.getEndTime() != null,
                 SysConfig::getCreateTime, configQuery.getBeginTime(), configQuery.getEndTime());
         return baseMapper.selectList(lqw);
     }

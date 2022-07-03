@@ -73,13 +73,13 @@ public class SysUserServiceImpl implements ISysUserService {
     private Wrapper<SysUser> buildQueryWrapper(SysUserQuery userQuery) {
         QueryWrapper<SysUser> wrapper = Wrappers.query();
         wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
-            .eq(ObjectUtil.isNotNull(userQuery.getUserId()), "u.user_id", userQuery.getUserId())
-            .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
-            .eq(StringUtils.isNotBlank(userQuery.getStatus()), "u.status", userQuery.getStatus())
-            .like(StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber())
-            .between(userQuery.getBeginCreateTime() != null && userQuery.getEndCreateTime() != null,
+            .eq(userQuery != null && ObjectUtil.isNotNull(userQuery.getUserId()), "u.user_id", userQuery.getUserId())
+            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
+            .eq(userQuery != null && StringUtils.isNotBlank(userQuery.getStatus()), "u.status", userQuery.getStatus())
+            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber())
+            .between(userQuery != null && userQuery.getBeginCreateTime() != null && userQuery.getEndCreateTime() != null,
                 "u.create_time", userQuery.getBeginCreateTime(), userQuery.getEndCreateTime())
-            .and(ObjectUtil.isNotNull(userQuery.getDeptId()), w -> {
+            .and(userQuery != null && ObjectUtil.isNotNull(userQuery.getDeptId()), w -> {
                 List<SysDept> deptList = deptMapper.selectList(new LambdaQueryWrapper<SysDept>()
                     .select(SysDept::getDeptId)
                     .apply(DataBaseHelper.findInSet(userQuery.getDeptId(), "ancestors")));
@@ -100,10 +100,10 @@ public class SysUserServiceImpl implements ISysUserService {
     public TableDataInfo<SysUser> selectAllocatedList(SysUserQuery userQuery, PageQuery pageQuery) {
         QueryWrapper<SysUser> wrapper = Wrappers.query();
         wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
-            .eq(ObjectUtil.isNotNull(userQuery.getRoleId()), "r.role_id", userQuery.getRoleId())
-            .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
-            .eq(StringUtils.isNotBlank(userQuery.getStatus()), "u.status", userQuery.getStatus())
-            .like(StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
+            .eq(userQuery != null && ObjectUtil.isNotNull(userQuery.getRoleId()), "r.role_id", userQuery.getRoleId())
+            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
+            .eq(userQuery != null && StringUtils.isNotBlank(userQuery.getStatus()), "u.status", userQuery.getStatus())
+            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
         Page<SysUser> page = baseMapper.selectAllocatedList(pageQuery.build(), wrapper);
         return TableDataInfo.build(page);
     }
@@ -121,8 +121,8 @@ public class SysUserServiceImpl implements ISysUserService {
         wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
             .and(w -> w.ne("r.role_id", userQuery.getRoleId()).or().isNull("r.role_id"))
             .notIn(CollUtil.isNotEmpty(userIds), "u.user_id", userIds)
-            .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
-            .like(StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
+            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
+            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
         Page<SysUser> page = baseMapper.selectUnallocatedList(pageQuery.build(), wrapper);
         return TableDataInfo.build(page);
     }

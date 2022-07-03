@@ -1,6 +1,6 @@
 package com.ruoyi.framework.config;
 
-import com.ruoyi.framework.interceptor.PlusWebInvokeTimeInterceptor;
+import com.ruoyi.framework.interceptor.WebInvokeTimeInterceptor;
 import com.ruoyi.framework.interceptor.UndertowRevertInterceptor;
 import com.yomahub.tlog.web.interceptor.TLogWebInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
         // 全局链路跟踪拦截器
         registry.addInterceptor(new TLogWebInterceptor());
         // 全局访问性能拦截
-        registry.addInterceptor(new PlusWebInvokeTimeInterceptor());
+        registry.addInterceptor(new WebInvokeTimeInterceptor());
     }
 
     @Override

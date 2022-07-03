@@ -41,7 +41,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation(value = "获取菜单列表", nickname = "SysMenuPostList")
     @SaCheckPermission("system:menu:list")
     @PostMapping("/list")
-    public R<List<SysMenu>> list(@RequestBody SysMenuQuery menuQuery) {
+    public R<List<SysMenu>> list(@RequestBody(required = false) SysMenuQuery menuQuery) {
         List<SysMenu> menus = menuService.selectMenuList(menuQuery, getUserId());
         return R.ok(menus);
     }
@@ -61,7 +61,7 @@ public class SysMenuController extends BaseController {
      */
     @ApiOperation(value = "获取菜单下拉树列表", nickname = "SysMenuPostTreeSelect")
     @PostMapping("/treeSelect")
-    public R<List<Tree<Long>>> treeSelect(@RequestBody SysMenuQuery menuQuery) {
+    public R<List<Tree<Long>>> treeSelect(@RequestBody(required = false) SysMenuQuery menuQuery) {
         List<SysMenu> menus = menuService.selectMenuList(menuQuery, getUserId());
         return R.ok(menuService.buildMenuTreeSelect(menus));
     }

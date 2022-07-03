@@ -39,11 +39,11 @@ public class SysDictTypeController extends BaseController {
     @ApiOperation(value = "查询字典类型列表", nickname = "SysDictTypePostList")
     @SaCheckPermission("system:dict:list")
     @PostMapping("/list")
-    public TableDataInfo<SysDictType> list(@RequestBody SysDictTypeQuery dictTypeQuery,
-                                           @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
-                                           @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
-                                           @ApiParam("排序列") @RequestParam String orderByColumn,
-                                           @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+    public TableDataInfo<SysDictType> list(@RequestBody(required = false) SysDictTypeQuery dictTypeQuery,
+                                           @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
+                                           @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
+                                           @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
+                                           @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNum(pageNum);
         pageQuery.setPageSize(pageSize);
@@ -56,7 +56,7 @@ public class SysDictTypeController extends BaseController {
     @Log(title = "字典类型", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:dict:export")
     @PostMapping("/export")
-    public void export(@RequestBody SysDictTypeQuery dictTypeQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysDictTypeQuery dictTypeQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysDictType> list = dictTypeService.selectDictTypeList(dictTypeQuery);
         ExcelUtil.exportExcel(list, "字典类型", SysDictType.class, response);
     }
@@ -106,7 +106,7 @@ public class SysDictTypeController extends BaseController {
     @SaCheckPermission("system:dict:remove")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "字典ID串", required = true) @RequestParam Long[] dictIds) {
+    public R<Void> remove(@ApiParam(value = "字典ID串", required = true, allowMultiple = true) @RequestParam Long[] dictIds) {
         dictTypeService.deleteDictTypeByIds(dictIds);
         return R.ok();
     }

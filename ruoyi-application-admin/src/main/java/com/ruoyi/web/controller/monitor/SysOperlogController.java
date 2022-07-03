@@ -38,11 +38,11 @@ public class SysOperlogController extends BaseController {
     @ApiOperation(value = "查询操作日志记录列表", nickname = "SysOperLogPostList")
     @SaCheckPermission("monitor:operlog:list")
     @PostMapping("/list")
-    public TableDataInfo<SysOperLog> list(@RequestBody SysOperLogQuery operLogQuery,
-                                          @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam Integer pageNum,
-                                          @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam Integer pageSize,
-                                          @ApiParam("排序列") @RequestParam String orderByColumn,
-                                          @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam String isAsc) {
+    public TableDataInfo<SysOperLog> list(@RequestBody(required = false) SysOperLogQuery operLogQuery,
+                                          @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
+                                          @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
+                                          @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
+                                          @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNum(pageNum);
         pageQuery.setPageSize(pageSize);
@@ -55,7 +55,7 @@ public class SysOperlogController extends BaseController {
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:operlog:export")
     @PostMapping("/export")
-    public void export(@RequestBody SysOperLogQuery operLogQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysOperLogQuery operLogQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysOperLog> list = operLogService.selectOperLogList(operLogQuery);
         ExcelUtil.exportExcel(list, "操作日志", SysOperLog.class, response);
     }
@@ -64,7 +64,7 @@ public class SysOperlogController extends BaseController {
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @SaCheckPermission("monitor:operlog:remove")
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "操作日志ID组", required = true) @RequestParam Long[] operIds) {
+    public R<Void> remove(@ApiParam(value = "操作日志ID组", required = true, allowMultiple = true) @RequestParam Long[] operIds) {
         return toAjax(operLogService.deleteOperLogByIds(operIds));
     }
 

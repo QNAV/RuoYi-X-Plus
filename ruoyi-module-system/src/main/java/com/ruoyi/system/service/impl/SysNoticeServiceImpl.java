@@ -29,9 +29,9 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
     @Override
     public TableDataInfo<SysNotice> selectPageNoticeList(SysNoticeQuery noticeQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysNotice> lqw = new LambdaQueryWrapper<SysNotice>()
-            .like(StringUtils.isNotBlank(noticeQuery.getNoticeTitle()), SysNotice::getNoticeTitle, noticeQuery.getNoticeTitle())
-            .eq(StringUtils.isNotBlank(noticeQuery.getNoticeType()), SysNotice::getNoticeType, noticeQuery.getNoticeType())
-            .like(StringUtils.isNotBlank(noticeQuery.getCreateBy()), SysNotice::getCreateBy, noticeQuery.getCreateBy());
+            .like(noticeQuery != null && StringUtils.isNotBlank(noticeQuery.getNoticeTitle()), SysNotice::getNoticeTitle, noticeQuery.getNoticeTitle())
+            .eq(noticeQuery != null && StringUtils.isNotBlank(noticeQuery.getNoticeType()), SysNotice::getNoticeType, noticeQuery.getNoticeType())
+            .like(noticeQuery != null && StringUtils.isNotBlank(noticeQuery.getCreateBy()), SysNotice::getCreateBy, noticeQuery.getCreateBy());
         Page<SysNotice> page = baseMapper.selectPage(pageQuery.build(), lqw);
         return TableDataInfo.build(page);
     }
