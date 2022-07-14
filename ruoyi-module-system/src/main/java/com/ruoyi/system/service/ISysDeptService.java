@@ -2,7 +2,8 @@ package com.ruoyi.system.service;
 
 import cn.hutool.core.lang.tree.Tree;
 import com.ruoyi.common.core.domain.entity.SysDept;
-import com.ruoyi.system.domain.to.SysDeptQuery;
+import com.ruoyi.system.domain.bo.SysDeptQueryBo;
+import com.ruoyi.common.core.domain.vo.SysDeptVo;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface ISysDeptService {
      * @param deptQuery 部门查询对象
      * @return 部门信息集合
      */
-    List<SysDept> selectDeptList(SysDeptQuery deptQuery);
+    List<SysDeptVo> selectDeptList(SysDeptQueryBo deptQuery);
 
     /**
      * 构建前端所需要下拉树结构
@@ -26,7 +27,7 @@ public interface ISysDeptService {
      * @param depts 部门列表
      * @return 下拉树结构列表
      */
-    List<Tree<Long>> buildDeptTreeSelect(List<SysDept> depts);
+    List<Tree<Long>> buildDeptTreeSelect(List<SysDeptVo> depts);
 
     /**
      * 根据角色ID查询部门树信息
@@ -42,7 +43,7 @@ public interface ISysDeptService {
      * @param deptId 部门ID
      * @return 部门信息
      */
-    SysDept selectDeptById(Long deptId);
+    SysDeptVo selectDeptById(Long deptId);
 
     /**
      * 根据ID查询所有子部门数（正常状态）

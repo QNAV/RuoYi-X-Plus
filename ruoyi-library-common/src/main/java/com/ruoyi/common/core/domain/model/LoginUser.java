@@ -1,6 +1,6 @@
 package com.ruoyi.common.core.domain.model;
 
-import com.ruoyi.common.core.domain.dto.RoleDTO;
+import com.ruoyi.common.core.domain.bo.RoleBo;
 import com.ruoyi.common.helper.LoginHelper;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -94,7 +94,7 @@ public class LoginUser implements Serializable {
     /**
      * 角色对象
      */
-    private List<RoleDTO> roles;
+    private List<RoleBo> roles;
 
     /**
      * 数据权限 当前角色ID

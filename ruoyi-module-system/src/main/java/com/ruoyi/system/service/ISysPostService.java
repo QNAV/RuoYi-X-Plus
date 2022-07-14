@@ -1,9 +1,10 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.SysPost;
-import com.ruoyi.system.domain.to.SysPostQuery;
+import com.ruoyi.system.domain.bo.SysPostQueryBo;
+import com.ruoyi.system.domain.vo.SysPostVo;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public interface ISysPostService {
 
 
-    TableDataInfo<SysPost> selectPagePostList(SysPostQuery postQuery, PageQuery pageQuery);
+    TableDataInfo<SysPostVo> selectPagePostList(SysPostQueryBo postQuery, PageQuery pageQuery);
 
     /**
      * 查询岗位信息集合
@@ -23,7 +24,7 @@ public interface ISysPostService {
      * @param postQuery 岗位信息查询对象
      * @return 岗位列表
      */
-    List<SysPost> selectPostList(SysPostQuery postQuery);
+    List<SysPost> selectPostList(SysPostQueryBo postQuery);
 
     /**
      * 查询所有岗位
@@ -38,7 +39,7 @@ public interface ISysPostService {
      * @param postId 岗位ID
      * @return 角色对象信息
      */
-    SysPost selectPostById(Long postId);
+    SysPostVo selectPostById(Long postId);
 
     /**
      * 根据用户ID获取岗位选择框列表

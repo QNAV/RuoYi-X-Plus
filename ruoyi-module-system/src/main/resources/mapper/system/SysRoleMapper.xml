@@ -21,6 +21,23 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
+    <resultMap type="SysRoleVo" id="SysRoleVoResult">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="roleKey" column="role_key"/>
+        <result property="roleSort" column="role_sort"/>
+        <result property="dataScope" column="data_scope"/>
+        <result property="menuCheckStrictly" column="menu_check_strictly"/>
+        <result property="deptCheckStrictly" column="dept_check_strictly"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
     <sql id="selectRoleVo">
         select distinct r.role_id,
                         r.role_name,
@@ -49,6 +66,11 @@
         ${ew.getCustomSqlSegment}
     </select>
 
+    <select id="selectRoleVoList" resultMap="SysRoleVoResult">
+        <include refid="selectRoleVo"/>
+        ${ew.getCustomSqlSegment}
+    </select>
+
     <select id="selectRolePermissionByUserId" parameterType="Long" resultMap="SysRoleResult">
         <include refid="selectRoleVo"/>
         WHERE r.del_flag = '0' and sur.user_id = #{userId}
@@ -65,6 +87,11 @@
     <select id="selectRolesByUserName" parameterType="String" resultMap="SysRoleResult">
         <include refid="selectRoleVo"/>
         WHERE r.del_flag = '0' and u.user_name = #{userName}
+    </select>
+
+    <select id="selectPageRoleVoList" resultMap="SysRoleVoResult">
+        <include refid="selectRoleVo"/>
+        ${ew.getCustomSqlSegment}
     </select>
 
 </mapper>

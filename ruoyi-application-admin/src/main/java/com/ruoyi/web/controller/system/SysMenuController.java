@@ -8,10 +8,14 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.system.domain.to.SysMenuQuery;
+import com.ruoyi.system.domain.bo.SysMenuAddBo;
+import com.ruoyi.system.domain.bo.SysMenuEditBo;
+import com.ruoyi.system.domain.bo.SysMenuQueryBo;
+import com.ruoyi.common.core.domain.vo.SysMenuVo;
 import com.ruoyi.system.service.ISysMenuService;
-import com.ruoyi.web.model.dto.RoleMenuTreeSelectDTO;
+import com.ruoyi.web.model.vo.RoleMenuTreeSelectVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -41,8 +45,8 @@ public class SysMenuController extends BaseController {
     @ApiOperation(value = "获取菜单列表", nickname = "SysMenuPostList")
     @SaCheckPermission("system:menu:list")
     @PostMapping("/list")
-    public R<List<SysMenu>> list(@RequestBody(required = false) SysMenuQuery menuQuery) {
-        List<SysMenu> menus = menuService.selectMenuList(menuQuery, getUserId());
+    public R<List<SysMenuVo>> list(@RequestBody(required = false) SysMenuQueryBo menuQuery) {
+        List<SysMenuVo> menus = menuService.selectMenuList(menuQuery, getUserId());
         return R.ok(menus);
     }
 
@@ -52,7 +56,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation(value = "根据菜单编号获取详细信息", nickname = "SysMenuGetInfo")
     @SaCheckPermission("system:menu:query")
     @GetMapping(value = "/info")
-    public R<SysMenu> info(@ApiParam(value = "菜单ID", required = true) @RequestParam Long menuId) {
+    public R<SysMenuVo> info(@ApiParam(value = "菜单ID", required = true) @RequestParam Long menuId) {
         return R.ok(menuService.selectMenuById(menuId));
     }
 
@@ -61,8 +65,8 @@ public class SysMenuController extends BaseController {
      */
     @ApiOperation(value = "获取菜单下拉树列表", nickname = "SysMenuPostTreeSelect")
     @PostMapping("/treeSelect")
-    public R<List<Tree<Long>>> treeSelect(@RequestBody(required = false) SysMenuQuery menuQuery) {
-        List<SysMenu> menus = menuService.selectMenuList(menuQuery, getUserId());
+    public R<List<Tree<Long>>> treeSelect(@RequestBody(required = false) SysMenuQueryBo menuQuery) {
+        List<SysMenuVo> menus = menuService.selectMenuList(menuQuery, getUserId());
         return R.ok(menuService.buildMenuTreeSelect(menus));
     }
 
@@ -71,9 +75,9 @@ public class SysMenuController extends BaseController {
      */
     @ApiOperation(value = "加载对应角色菜单列表树", nickname = "SysMenuGetRoleMenuTreeSelect")
     @GetMapping(value = "/roleMenuTreeSelect")
-    public R<RoleMenuTreeSelectDTO> roleMenuTreeSelect(@ApiParam(value = "角色ID", required = true) @RequestParam Long roleId) {
-        List<SysMenu> menus = menuService.selectMenuList(getUserId());
-        RoleMenuTreeSelectDTO data = new RoleMenuTreeSelectDTO();
+    public R<RoleMenuTreeSelectVo> roleMenuTreeSelect(@ApiParam(value = "角色ID", required = true) @RequestParam Long roleId) {
+        List<SysMenuVo> menus = menuService.selectMenuList(getUserId());
+        RoleMenuTreeSelectVo data = new RoleMenuTreeSelectVo();
         data.setCheckedKeys(menuService.selectMenuListByRoleId(roleId));
         data.setMenus(menuService.buildMenuTreeSelect(menus));
         return R.ok(data);
@@ -86,7 +90,8 @@ public class SysMenuController extends BaseController {
     @SaCheckPermission("system:menu:add")
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
-    public R<Void> add(@Validated @RequestBody SysMenu menu) {
+    public R<Void> add(@Validated @RequestBody SysMenuAddBo menuBo) {
+        SysMenu menu = BeanCopyUtils.copy(menuBo, SysMenu.class);
         if (UserConstants.NOT_UNIQUE.equals(menuService.checkMenuNameUnique(menu))) {
             return R.fail("新增菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
         } else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath())) {
@@ -102,7 +107,8 @@ public class SysMenuController extends BaseController {
     @SaCheckPermission("system:menu:edit")
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
-    public R<Void> edit(@Validated @RequestBody SysMenu menu) {
+    public R<Void> edit(@Validated @RequestBody SysMenuEditBo menuBo) {
+        SysMenu menu = BeanCopyUtils.copy(menuBo, SysMenu.class);
         if (UserConstants.NOT_UNIQUE.equals(menuService.checkMenuNameUnique(menu))) {
             return R.fail("修改菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
         } else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath())) {

@@ -1,9 +1,10 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.system.domain.to.SysDictDataQuery;
+import com.ruoyi.system.domain.bo.SysDictDataQueryBo;
+import com.ruoyi.common.core.domain.vo.SysDictDataVo;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public interface ISysDictDataService {
 
 
-    TableDataInfo<SysDictData> selectPageDictDataList(SysDictDataQuery dictDataQuery, PageQuery pageQuery);
+    TableDataInfo<SysDictDataVo> selectPageDictDataList(SysDictDataQueryBo dictDataQuery, PageQuery pageQuery);
 
     /**
      * 根据条件分页查询字典数据
@@ -23,7 +24,7 @@ public interface ISysDictDataService {
      * @param dictDataQuery 字典数据查询对象
      * @return 字典数据集合信息
      */
-    List<SysDictData> selectDictDataList(SysDictDataQuery dictDataQuery);
+    List<SysDictData> selectDictDataList(SysDictDataQueryBo dictDataQuery);
 
     /**
      * 根据字典类型和字典键值查询字典数据信息
@@ -40,7 +41,7 @@ public interface ISysDictDataService {
      * @param dictCode 字典数据ID
      * @return 字典数据
      */
-    SysDictData selectDictDataById(Long dictCode);
+    SysDictDataVo selectDictDataById(Long dictCode);
 
     /**
      * 批量删除字典数据信息

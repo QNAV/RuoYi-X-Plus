@@ -6,17 +6,20 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.core.domain.bo.UpdatePwdBo;
 import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.core.domain.model.UpdatePwdBody;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.helper.LoginHelper;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.MimeTypeUtils;
 import com.ruoyi.system.domain.SysOss;
+import com.ruoyi.system.domain.bo.LoginUserUpdateBo;
+import com.ruoyi.common.core.domain.vo.SysUserVo;
 import com.ruoyi.system.service.ISysOssService;
 import com.ruoyi.system.service.ISysUserService;
-import com.ruoyi.web.model.dto.AvatarUploadDTO;
-import com.ruoyi.web.model.dto.ProfileDTO;
+import com.ruoyi.web.model.vo.AvatarUploadVo;
+import com.ruoyi.web.model.vo.ProfileVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -49,9 +52,9 @@ public class SysProfileController extends BaseController {
      */
     @ApiOperation(value = "个人信息", nickname = "SysProfileGetProfile")
     @GetMapping
-    public R<ProfileDTO> profile() {
-        SysUser user = userService.selectUserById(getUserId());
-        ProfileDTO data = new ProfileDTO();
+    public R<ProfileVo> profile() {
+        SysUserVo user = userService.selectUserVoById(getUserId());
+        ProfileVo data = new ProfileVo();
         data.setUser(user);
         data.setRoleGroup(userService.selectUserRoleGroup(user.getUserName()));
         data.setPostGroup(userService.selectUserPostGroup(user.getUserName()));
@@ -64,7 +67,8 @@ public class SysProfileController extends BaseController {
     @ApiOperation(value = "修改用户", nickname = "SysProfilePostUpdateProfile")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PostMapping
-    public R<Void> updateProfile(@RequestBody SysUser user) {
+    public R<Void> updateProfile(@RequestBody LoginUserUpdateBo userBo) {
+        SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
         if (StringUtils.isNotEmpty(user.getPhoneNumber())
             && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
@@ -88,7 +92,7 @@ public class SysProfileController extends BaseController {
     @ApiOperation(value = "重置密码", nickname = "SysProfilePostUpdatePwd")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PostMapping("/updatePwd")
-    public R<Void> updatePwd(@Validated @RequestBody UpdatePwdBody updatePwdBody) {
+    public R<Void> updatePwd(@Validated @RequestBody UpdatePwdBo updatePwdBody) {
         SysUser user = userService.selectUserById(LoginHelper.getUserId());
         String userName = user.getUserName();
         String password = user.getPassword();
@@ -114,8 +118,8 @@ public class SysProfileController extends BaseController {
     })
     @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")
-    public R<AvatarUploadDTO> avatar(@RequestPart("avatarfile") MultipartFile file) {
-        AvatarUploadDTO data = new AvatarUploadDTO();
+    public R<AvatarUploadVo> avatar(@RequestPart("avatarfile") MultipartFile file) {
+        AvatarUploadVo data = new AvatarUploadVo();
         if (!file.isEmpty()) {
             String extension = FileUtil.extName(file.getOriginalFilename());
             if (!StringUtils.equalsAnyIgnoreCase(extension, MimeTypeUtils.IMAGE_EXTENSION)) {

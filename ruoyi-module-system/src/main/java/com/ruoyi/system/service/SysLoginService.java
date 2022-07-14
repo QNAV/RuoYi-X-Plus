@@ -5,7 +5,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.domain.dto.RoleDTO;
+import com.ruoyi.common.core.domain.bo.RoleBo;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.core.domain.model.XcxLoginUser;
@@ -210,7 +210,7 @@ public class SysLoginService {
         loginUser.setMenuPermission(permissionService.getMenuPermission(user));
         loginUser.setRolePermission(permissionService.getRolePermission(user));
         loginUser.setDeptName(ObjectUtil.isNull(user.getDept()) ? "" : user.getDept().getDeptName());
-        List<RoleDTO> roles = BeanUtil.copyToList(user.getRoles(), RoleDTO.class);
+        List<RoleBo> roles = BeanUtil.copyToList(user.getRoles(), RoleBo.class);
         loginUser.setRoles(roles);
         return loginUser;
     }

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.constant.UserConstants;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.exception.ServiceException;
@@ -17,7 +17,8 @@ import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.system.domain.SysRoleDept;
 import com.ruoyi.system.domain.SysRoleMenu;
 import com.ruoyi.system.domain.SysUserRole;
-import com.ruoyi.system.domain.to.SysRoleQuery;
+import com.ruoyi.system.domain.bo.SysRoleQueryBo;
+import com.ruoyi.common.core.domain.vo.SysRoleVo;
 import com.ruoyi.system.mapper.SysRoleDeptMapper;
 import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.mapper.SysRoleMenuMapper;
@@ -44,8 +45,14 @@ public class SysRoleServiceImpl implements ISysRoleService {
     private final SysRoleDeptMapper roleDeptMapper;
 
     @Override
-    public TableDataInfo<SysRole> selectPageRoleList(SysRoleQuery roleQuery, PageQuery pageQuery) {
+    public TableDataInfo<SysRole> selectPageRoleList(SysRoleQueryBo roleQuery, PageQuery pageQuery) {
         Page<SysRole> page = baseMapper.selectPageRoleList(pageQuery.build(), this.buildQueryWrapper(roleQuery));
+        return TableDataInfo.build(page);
+    }
+
+    @Override
+    public TableDataInfo<SysRoleVo> selectPageRoleVoList(SysRoleQueryBo roleQuery, PageQuery pageQuery) {
+        Page<SysRoleVo> page = baseMapper.selectPageRoleVoList(pageQuery.build(), this.buildQueryWrapper(roleQuery));
         return TableDataInfo.build(page);
     }
 
@@ -56,11 +63,23 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 角色数据集合信息
      */
     @Override
-    public List<SysRole> selectRoleList(SysRoleQuery roleQuery) {
+    public List<SysRole> selectRoleList(SysRoleQueryBo roleQuery) {
         return baseMapper.selectRoleList(this.buildQueryWrapper(roleQuery));
     }
 
-    private Wrapper<SysRole> buildQueryWrapper(SysRoleQuery roleQuery) {
+
+    /**
+     * 根据条件分页查询角色数据
+     *
+     * @param roleQuery 角色信息查询对象
+     * @return 角色视图对象集合
+     */
+    @Override
+    public List<SysRoleVo> selectRoleVoList(SysRoleQueryBo roleQuery) {
+        return baseMapper.selectRoleVoList(this.buildQueryWrapper(roleQuery));
+    }
+
+    private Wrapper<SysRole> buildQueryWrapper(SysRoleQueryBo roleQuery) {
         QueryWrapper<SysRole> wrapper = Wrappers.query();
         wrapper.eq("r.del_flag", UserConstants.ROLE_NORMAL)
             .eq(roleQuery != null && ObjectUtil.isNotNull(roleQuery.getRoleId()), "r.role_id", roleQuery.getRoleId())
@@ -119,7 +138,17 @@ public class SysRoleServiceImpl implements ISysRoleService {
      */
     @Override
     public List<SysRole> selectRoleAll() {
-        return this.selectRoleList(new SysRoleQuery());
+        return this.selectRoleList(new SysRoleQueryBo());
+    }
+
+    /**
+     * 查询所有角色
+     *
+     * @return 角色视图对象列表
+     */
+    @Override
+    public List<SysRoleVo> selectRoleVoAll() {
+        return this.selectRoleVoList(new SysRoleQueryBo());
     }
 
     /**
@@ -142,6 +171,17 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public SysRole selectRoleById(Long roleId) {
         return baseMapper.selectById(roleId);
+    }
+
+    /**
+     * 通过角色ID查询角色
+     *
+     * @param roleId 角色ID
+     * @return 角色信息视图对象
+     */
+    @Override
+    public SysRoleVo selectRoleVoById(Long roleId) {
+        return baseMapper.selectVoById(roleId, SysRoleVo.class);
     }
 
     /**
@@ -198,7 +238,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public void checkRoleDataScope(Long roleId) {
         if (!LoginHelper.isAdmin()) {
-            SysRoleQuery role = new SysRoleQuery();
+            SysRoleQueryBo role = new SysRoleQueryBo();
             role.setRoleId(roleId);
             List<SysRole> roles = this.selectRoleList(role);
             if (CollUtil.isEmpty(roles)) {

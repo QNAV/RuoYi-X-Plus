@@ -1,9 +1,9 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.system.domain.bo.SysOssConfigBo;
-import com.ruoyi.system.domain.to.SysOssConfigQuery;
+import com.ruoyi.system.domain.bo.SysOssConfigEditBo;
+import com.ruoyi.system.domain.bo.SysOssConfigQueryBo;
 import com.ruoyi.system.domain.vo.SysOssConfigVo;
 
 import java.util.Collection;
@@ -28,7 +28,7 @@ public interface ISysOssConfigService {
     /**
      * 查询列表
      */
-    TableDataInfo<SysOssConfigVo> queryPageList(SysOssConfigQuery ossConfigQuery, PageQuery pageQuery);
+    TableDataInfo<SysOssConfigVo> queryPageList(SysOssConfigQueryBo ossConfigQuery, PageQuery pageQuery);
 
 
     /**
@@ -37,7 +37,7 @@ public interface ISysOssConfigService {
      * @param bo 对象存储配置新增业务对象
      * @return
      */
-    Boolean insertByBo(SysOssConfigBo bo);
+    Boolean insertByBo(SysOssConfigEditBo bo);
 
     /**
      * 根据编辑业务对象修改对象存储配置
@@ -45,7 +45,7 @@ public interface ISysOssConfigService {
      * @param bo 对象存储配置编辑业务对象
      * @return
      */
-    Boolean updateByBo(SysOssConfigBo bo);
+    Boolean updateByBo(SysOssConfigEditBo bo);
 
     /**
      * 校验并删除数据
@@ -59,6 +59,6 @@ public interface ISysOssConfigService {
     /**
      * 启用停用状态
      */
-    int updateOssConfigStatus(SysOssConfigBo bo);
+    int updateOssConfigStatus(SysOssConfigEditBo bo);
 
 }

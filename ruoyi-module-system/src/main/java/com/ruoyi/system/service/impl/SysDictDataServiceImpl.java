@@ -3,12 +3,13 @@ package com.ruoyi.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
-import com.ruoyi.system.domain.to.SysDictDataQuery;
+import com.ruoyi.system.domain.bo.SysDictDataQueryBo;
+import com.ruoyi.common.core.domain.vo.SysDictDataVo;
 import com.ruoyi.system.mapper.SysDictDataMapper;
 import com.ruoyi.system.service.ISysDictDataService;
 import lombok.RequiredArgsConstructor;
@@ -28,13 +29,13 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
     private final SysDictDataMapper baseMapper;
 
     @Override
-    public TableDataInfo<SysDictData> selectPageDictDataList(SysDictDataQuery dictDataQuery, PageQuery pageQuery) {
+    public TableDataInfo<SysDictDataVo> selectPageDictDataList(SysDictDataQueryBo dictDataQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysDictData> lqw = new LambdaQueryWrapper<SysDictData>()
             .eq(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictType()), SysDictData::getDictType, dictDataQuery.getDictType())
             .like(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictLabel()), SysDictData::getDictLabel, dictDataQuery.getDictLabel())
             .eq(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getStatus()), SysDictData::getStatus, dictDataQuery.getStatus())
             .orderByAsc(SysDictData::getDictSort);
-        Page<SysDictData> page = baseMapper.selectPage(pageQuery.build(), lqw);
+        Page<SysDictDataVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw, SysDictDataVo.class);
         return TableDataInfo.build(page);
     }
 
@@ -45,7 +46,7 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
      * @return 字典数据集合信息
      */
     @Override
-    public List<SysDictData> selectDictDataList(SysDictDataQuery dictDataQuery) {
+    public List<SysDictData> selectDictDataList(SysDictDataQueryBo dictDataQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysDictData>()
             .eq(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictType()), SysDictData::getDictType, dictDataQuery.getDictType())
             .like(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictLabel()), SysDictData::getDictLabel, dictDataQuery.getDictLabel())
@@ -76,8 +77,8 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
      * @return 字典数据
      */
     @Override
-    public SysDictData selectDictDataById(Long dictCode) {
-        return baseMapper.selectById(dictCode);
+    public SysDictDataVo selectDictDataById(Long dictCode) {
+        return baseMapper.selectVoById(dictCode, SysDictDataVo.class);
     }
 
     /**
@@ -88,9 +89,9 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
     @Override
     public void deleteDictDataByIds(Long[] dictCodes) {
         for (Long dictCode : dictCodes) {
-            SysDictData data = selectDictDataById(dictCode);
+            SysDictDataVo data = selectDictDataById(dictCode);
             baseMapper.deleteById(dictCode);
-            List<SysDictData> dictDatas = baseMapper.selectDictDataByType(data.getDictType());
+            List<SysDictDataVo> dictDatas = baseMapper.selectDictDataByType(data.getDictType());
             RedisUtils.setCacheObject(getCacheKey(data.getDictType()), dictDatas);
         }
     }
@@ -105,7 +106,7 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
     public int insertDictData(SysDictData data) {
         int row = baseMapper.insert(data);
         if (row > 0) {
-            List<SysDictData> dictDatas = baseMapper.selectDictDataByType(data.getDictType());
+            List<SysDictDataVo> dictDatas = baseMapper.selectDictDataByType(data.getDictType());
             RedisUtils.setCacheObject(getCacheKey(data.getDictType()), dictDatas);
         }
         return row;
@@ -121,7 +122,7 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
     public int updateDictData(SysDictData data) {
         int row = baseMapper.updateById(data);
         if (row > 0) {
-            List<SysDictData> dictDatas = baseMapper.selectDictDataByType(data.getDictType());
+            List<SysDictDataVo> dictDatas = baseMapper.selectDictDataByType(data.getDictType());
             RedisUtils.setCacheObject(getCacheKey(data.getDictType()), dictDatas);
         }
         return row;

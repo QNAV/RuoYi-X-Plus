@@ -5,14 +5,15 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.service.LogininforService;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
 import com.ruoyi.system.domain.SysLogininfor;
-import com.ruoyi.system.domain.to.SysLogininforQuery;
+import com.ruoyi.system.domain.bo.SysLogininforQueryBo;
+import com.ruoyi.system.domain.vo.SysLogininforVo;
 import com.ruoyi.system.mapper.SysLogininforMapper;
 import com.ruoyi.system.service.ISysLogininforService;
 import lombok.RequiredArgsConstructor;
@@ -91,7 +92,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService, Logininf
     }
 
     @Override
-    public TableDataInfo<SysLogininfor> selectPageLogininforList(SysLogininforQuery logininforQuery, PageQuery pageQuery) {
+    public TableDataInfo<SysLogininforVo> selectPageLogininforList(SysLogininforQueryBo logininforQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysLogininfor> lqw = new LambdaQueryWrapper<SysLogininfor>()
             .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
             .eq(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getStatus()), SysLogininfor::getStatus, logininforQuery.getStatus())
@@ -102,7 +103,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService, Logininf
             pageQuery.setOrderByColumn("info_id");
             pageQuery.setIsAsc("desc");
         }
-        Page<SysLogininfor> page = baseMapper.selectPage(pageQuery.build(), lqw);
+        Page<SysLogininforVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw, SysLogininforVo.class);
         return TableDataInfo.build(page);
     }
 
@@ -124,7 +125,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService, Logininf
      * @return 登录记录集合
      */
     @Override
-    public List<SysLogininfor> selectLogininforList(SysLogininforQuery logininforQuery) {
+    public List<SysLogininfor> selectLogininforList(SysLogininforQueryBo logininforQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysLogininfor>()
             .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
             .eq(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getStatus()), SysLogininfor::getStatus, logininforQuery.getStatus())

@@ -4,14 +4,15 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ArrayUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ruoyi.common.core.domain.PageQuery;
-import com.ruoyi.common.core.domain.dto.OperLogDTO;
+import com.ruoyi.common.core.domain.bo.PageQuery;
+import com.ruoyi.common.core.domain.bo.OperLogBo;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.service.OperLogService;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
 import com.ruoyi.system.domain.SysOperLog;
-import com.ruoyi.system.domain.to.SysOperLogQuery;
+import com.ruoyi.system.domain.bo.SysOperLogQueryBo;
+import com.ruoyi.system.domain.vo.SysOperLogVo;
 import com.ruoyi.system.mapper.SysOperLogMapper;
 import com.ruoyi.system.service.ISysOperLogService;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService, OperLogService
      */
     @Async
     @Override
-    public void recordOper(final OperLogDTO operLogDTO) {
+    public void recordOper(final OperLogBo operLogDTO) {
         SysOperLog operLog = BeanUtil.toBean(operLogDTO, SysOperLog.class);
         // 远程查询操作地点
         operLog.setOperLocation(AddressUtils.getRealAddressByIP(operLog.getOperIp()));
@@ -48,7 +49,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService, OperLogService
     }
 
     @Override
-    public TableDataInfo<SysOperLog> selectPageOperLogList(SysOperLogQuery operLogQuery, PageQuery pageQuery) {
+    public TableDataInfo<SysOperLogVo> selectPageOperLogList(SysOperLogQueryBo operLogQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysOperLog> lqw = new LambdaQueryWrapper<SysOperLog>()
             .like(operLogQuery != null && StringUtils.isNotBlank(operLogQuery.getTitle()), SysOperLog::getTitle, operLogQuery.getTitle())
             .eq(operLogQuery != null && operLogQuery.getBusinessType() != null && operLogQuery.getBusinessType() > 0,
@@ -67,7 +68,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService, OperLogService
             pageQuery.setOrderByColumn("oper_id");
             pageQuery.setIsAsc("desc");
         }
-        Page<SysOperLog> page = baseMapper.selectPage(pageQuery.build(), lqw);
+        Page<SysOperLogVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw, SysOperLogVo.class);
         return TableDataInfo.build(page);
     }
 
@@ -89,7 +90,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService, OperLogService
      * @return 操作日志集合
      */
     @Override
-    public List<SysOperLog> selectOperLogList(SysOperLogQuery operLogQuery) {
+    public List<SysOperLog> selectOperLogList(SysOperLogQueryBo operLogQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysOperLog>()
             .like(operLogQuery != null && StringUtils.isNotBlank(operLogQuery.getTitle()), SysOperLog::getTitle, operLogQuery.getTitle())
             .eq(operLogQuery != null && operLogQuery.getBusinessType() != null && operLogQuery.getBusinessType() > 0,
@@ -125,8 +126,8 @@ public class SysOperLogServiceImpl implements ISysOperLogService, OperLogService
      * @return 操作日志对象
      */
     @Override
-    public SysOperLog selectOperLogById(Long operId) {
-        return baseMapper.selectById(operId);
+    public SysOperLogVo selectOperLogById(Long operId) {
+        return baseMapper.selectVoById(operId, SysOperLogVo.class);
     }
 
     /**

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.ruoyi.common.constant.UserConstants;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.JsonUtils;
@@ -18,8 +18,8 @@ import com.ruoyi.common.utils.redis.RedisUtils;
 import com.ruoyi.oss.constant.OssConstant;
 import com.ruoyi.oss.factory.OssFactory;
 import com.ruoyi.system.domain.SysOssConfig;
-import com.ruoyi.system.domain.bo.SysOssConfigBo;
-import com.ruoyi.system.domain.to.SysOssConfigQuery;
+import com.ruoyi.system.domain.bo.SysOssConfigEditBo;
+import com.ruoyi.system.domain.bo.SysOssConfigQueryBo;
 import com.ruoyi.system.domain.vo.SysOssConfigVo;
 import com.ruoyi.system.mapper.SysOssConfigMapper;
 import com.ruoyi.system.service.ISysOssConfigService;
@@ -67,14 +67,14 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
     }
 
     @Override
-    public TableDataInfo<SysOssConfigVo> queryPageList(SysOssConfigQuery ossConfigQuery, PageQuery pageQuery) {
+    public TableDataInfo<SysOssConfigVo> queryPageList(SysOssConfigQueryBo ossConfigQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysOssConfig> lqw = buildQueryWrapper(ossConfigQuery);
         Page<SysOssConfigVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
     }
 
 
-    private LambdaQueryWrapper<SysOssConfig> buildQueryWrapper(SysOssConfigQuery ossConfigQuery) {
+    private LambdaQueryWrapper<SysOssConfig> buildQueryWrapper(SysOssConfigQueryBo ossConfigQuery) {
         LambdaQueryWrapper<SysOssConfig> lqw = Wrappers.lambdaQuery();
         lqw.eq(ossConfigQuery != null && StringUtils.isNotBlank(ossConfigQuery.getConfigKey()), SysOssConfig::getConfigKey, ossConfigQuery.getConfigKey());
         lqw.like(ossConfigQuery != null && StringUtils.isNotBlank(ossConfigQuery.getBucketName()), SysOssConfig::getBucketName, ossConfigQuery.getBucketName());
@@ -83,14 +83,14 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
     }
 
     @Override
-    public Boolean insertByBo(SysOssConfigBo bo) {
+    public Boolean insertByBo(SysOssConfigEditBo bo) {
         SysOssConfig config = BeanUtil.toBean(bo, SysOssConfig.class);
         validEntityBeforeSave(config);
         return setConfigCache(baseMapper.insert(config) > 0, config);
     }
 
     @Override
-    public Boolean updateByBo(SysOssConfigBo bo) {
+    public Boolean updateByBo(SysOssConfigEditBo bo) {
         SysOssConfig config = BeanUtil.toBean(bo, SysOssConfig.class);
         validEntityBeforeSave(config);
         LambdaUpdateWrapper<SysOssConfig> luw = new LambdaUpdateWrapper<>();
@@ -152,7 +152,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int updateOssConfigStatus(SysOssConfigBo bo) {
+    public int updateOssConfigStatus(SysOssConfigEditBo bo) {
         SysOssConfig sysOssConfig = BeanUtil.toBean(bo, SysOssConfig.class);
         int row = baseMapper.update(null, new LambdaUpdateWrapper<SysOssConfig>()
             .set(SysOssConfig::getStatus, "1"));

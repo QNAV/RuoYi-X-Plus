@@ -1,10 +1,11 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.SysUserRole;
-import com.ruoyi.system.domain.to.SysRoleQuery;
+import com.ruoyi.system.domain.bo.SysRoleQueryBo;
+import com.ruoyi.common.core.domain.vo.SysRoleVo;
 
 import java.util.List;
 import java.util.Set;
@@ -17,7 +18,9 @@ import java.util.Set;
 public interface ISysRoleService {
 
 
-    TableDataInfo<SysRole> selectPageRoleList(SysRoleQuery roleQuery, PageQuery pageQuery);
+    TableDataInfo<SysRole> selectPageRoleList(SysRoleQueryBo roleQuery, PageQuery pageQuery);
+
+    TableDataInfo<SysRoleVo> selectPageRoleVoList(SysRoleQueryBo roleQuery, PageQuery pageQuery);
 
     /**
      * 根据条件分页查询角色数据
@@ -25,7 +28,15 @@ public interface ISysRoleService {
      * @param roleQuery 角色信息查询对象
      * @return 角色数据集合信息
      */
-    List<SysRole> selectRoleList(SysRoleQuery roleQuery);
+    List<SysRole> selectRoleList(SysRoleQueryBo roleQuery);
+
+    /**
+     * 根据条件分页查询角色数据
+     *
+     * @param roleQuery 角色信息查询对象
+     * @return 角色数据视图对象集合
+     */
+    List<SysRoleVo> selectRoleVoList(SysRoleQueryBo roleQuery);
 
     /**
      * 根据用户ID查询角色列表
@@ -51,6 +62,13 @@ public interface ISysRoleService {
     List<SysRole> selectRoleAll();
 
     /**
+     * 查询所有角色
+     *
+     * @return 角色视图对象列表
+     */
+    List<SysRoleVo> selectRoleVoAll();
+
+    /**
      * 根据用户ID获取角色选择框列表
      *
      * @param userId 用户ID
@@ -65,6 +83,14 @@ public interface ISysRoleService {
      * @return 角色对象信息
      */
     SysRole selectRoleById(Long roleId);
+
+    /**
+     * 通过角色ID查询角色
+     *
+     * @param roleId 角色ID
+     * @return 角色视图对象
+     */
+    SysRoleVo selectRoleVoById(Long roleId);
 
     /**
      * 校验角色名称是否唯一

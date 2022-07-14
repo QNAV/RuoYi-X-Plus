@@ -8,18 +8,20 @@ import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpUtil;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.validate.QueryGroup;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.system.domain.SysOss;
-import com.ruoyi.system.domain.to.SysOssQuery;
+import com.ruoyi.system.domain.bo.SysOssPageQueryBo;
+import com.ruoyi.system.domain.bo.SysOssQueryBo;
 import com.ruoyi.system.domain.vo.SysOssVo;
 import com.ruoyi.system.service.ISysOssService;
-import com.ruoyi.web.model.dto.OssUploadDTO;
+import com.ruoyi.web.model.vo.OssUploadVo;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -28,7 +30,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotEmpty;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -54,16 +55,11 @@ public class SysOssController extends BaseController {
     @ApiOperation(value = "查询OSS对象存储列表", nickname = "SysOssPostList")
     @SaCheckPermission("system:oss:list")
     @PostMapping("/list")
-    public TableDataInfo<SysOssVo> list(@RequestBody(required = false) @Validated(QueryGroup.class) SysOssQuery query,
-                                        @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
-                                        @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
-                                        @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
-                                        @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPageNum(pageNum);
-        pageQuery.setPageSize(pageSize);
-        pageQuery.setOrderByColumn(orderByColumn);
-        pageQuery.setIsAsc(isAsc);
+    public TableDataInfo<SysOssVo> list(@RequestBody(required = false) @Validated(QueryGroup.class) SysOssPageQueryBo ossPageQuery) {
+        // 分页参数组装
+        PageQuery pageQuery = BeanCopyUtils.copy(ossPageQuery, PageQuery.class);
+        // 查询参数组装
+        SysOssQueryBo query = BeanCopyUtils.copy(ossPageQuery, SysOssQueryBo.class);
         return iSysOssService.queryPageList(query, pageQuery);
     }
 
@@ -88,12 +84,12 @@ public class SysOssController extends BaseController {
     @SaCheckPermission("system:oss:upload")
     @Log(title = "OSS对象存储", businessType = BusinessType.INSERT)
     @PostMapping("/upload")
-    public R<OssUploadDTO> upload(@RequestPart("file") MultipartFile file) {
+    public R<OssUploadVo> upload(@RequestPart("file") MultipartFile file) {
         if (ObjectUtil.isNull(file)) {
             throw new ServiceException("上传文件不能为空");
         }
         SysOss oss = iSysOssService.upload(file);
-        OssUploadDTO data = new OssUploadDTO();
+        OssUploadVo data = new OssUploadVo();
         data.setUrl(oss.getUrl());
         data.setFileName(oss.getOriginalName());
         data.setOssId(oss.getOssId().toString());

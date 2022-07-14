@@ -1,6 +1,7 @@
 package com.ruoyi.system.domain.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
+import com.ruoyi.common.core.domain.BaseVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,38 +15,38 @@ import lombok.Data;
 @Data
 @ApiModel(value = "SysOssConfigVo", description = "对象存储配置视图对象")
 @ExcelIgnoreUnannotated
-public class SysOssConfigVo {
+public class SysOssConfigVo extends BaseVo {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 主建
      */
-    @ApiModelProperty("主建")
+    @ApiModelProperty(value = "主建", required = true)
     private Long ossConfigId;
 
     /**
      * 配置key
      */
-    @ApiModelProperty("配置key")
+    @ApiModelProperty(value = "配置key", required = true)
     private String configKey;
 
     /**
      * accessKey
      */
-    @ApiModelProperty("accessKey")
+    @ApiModelProperty(value = "accessKey", required = true)
     private String accessKey;
 
     /**
      * 秘钥
      */
-    @ApiModelProperty("secretKey")
+    @ApiModelProperty(value = "secretKey", required = true)
     private String secretKey;
 
     /**
      * 桶名称
      */
-    @ApiModelProperty("桶名称")
+    @ApiModelProperty(value = "桶名称", required = true)
     private String bucketName;
 
     /**
@@ -69,7 +70,7 @@ public class SysOssConfigVo {
     /**
      * 是否https（Y=是,N=否）
      */
-    @ApiModelProperty("是否https（Y=是,N=否）")
+    @ApiModelProperty(value = "是否https（Y=是,N=否）", required = true)
     private String isHttps;
 
     /**
@@ -81,7 +82,7 @@ public class SysOssConfigVo {
     /**
      * 状态（0=正常,1=停用）
      */
-    @ApiModelProperty("状态（0=正常,1=停用）")
+    @ApiModelProperty(value = "状态（0=正常,1=停用）", required = true)
     private String status;
 
     /**

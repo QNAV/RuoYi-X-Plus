@@ -1,9 +1,9 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.SysOss;
-import com.ruoyi.system.domain.to.SysOssQuery;
+import com.ruoyi.system.domain.bo.SysOssQueryBo;
 import com.ruoyi.system.domain.vo.SysOssVo;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface ISysOssService {
 
-    TableDataInfo<SysOssVo> queryPageList(SysOssQuery query, PageQuery pageQuery);
+    TableDataInfo<SysOssVo> queryPageList(SysOssQueryBo query, PageQuery pageQuery);
 
     List<SysOssVo> listByIds(Collection<Long> ossIds);
 

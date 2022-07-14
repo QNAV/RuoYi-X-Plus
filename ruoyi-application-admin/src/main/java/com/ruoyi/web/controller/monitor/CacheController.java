@@ -3,7 +3,7 @@ package com.ruoyi.web.controller.monitor;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.web.model.dto.CacheInfoDTO;
+import com.ruoyi.web.model.vo.CacheInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +32,12 @@ public class CacheController {
     @ApiOperation(value = "获取缓存监控详细信息", nickname = "CacheGetInfo")
     @SaCheckPermission("monitor:cache:list")
     @GetMapping("/info")
-    public R<CacheInfoDTO> info() throws Exception {
+    public R<CacheInfoVo> info() throws Exception {
         Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::info);
         Properties commandStats = (Properties) redisTemplate.execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
         Object dbSize = redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::dbSize);
 
-        CacheInfoDTO result = new CacheInfoDTO();
+        CacheInfoVo result = new CacheInfoVo();
         result.setInfo(info);
         result.setDbSize(dbSize.toString());
 

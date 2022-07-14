@@ -6,7 +6,7 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.validate.AddGroup;
 import com.ruoyi.common.core.validate.EditGroup;
@@ -95,8 +95,8 @@ public class TestDemoController extends BaseController {
     public void export(@Validated TestDemoQuery query, HttpServletResponse response) {
         List<TestDemoVo> list = iTestDemoService.queryList(query);
         // 测试雪花id导出
-//        for (TestDemoVo vo : list) {
-//            vo.setId(1234567891234567893L);
+//        for (TestDemoVo bo : list) {
+//            bo.setId(1234567891234567893L);
 //        }
         ExcelUtil.exportExcel(list, "测试单表", TestDemoVo.class, response);
     }

@@ -4,11 +4,16 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.system.domain.SysNotice;
-import com.ruoyi.system.domain.to.SysNoticeQuery;
+import com.ruoyi.system.domain.bo.SysNoticeAddBo;
+import com.ruoyi.system.domain.bo.SysNoticeEditBo;
+import com.ruoyi.system.domain.bo.SysNoticePageQueryBo;
+import com.ruoyi.system.domain.bo.SysNoticeQueryBo;
+import com.ruoyi.system.domain.vo.SysNoticeVo;
 import com.ruoyi.system.service.ISysNoticeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,16 +42,11 @@ public class SysNoticeController extends BaseController {
     @ApiOperation(value = "获取通知公告列表", nickname = "SysNoticePostList")
     @SaCheckPermission("system:notice:list")
     @PostMapping("/list")
-    public TableDataInfo<SysNotice> list(@RequestBody(required = false) SysNoticeQuery noticeQuery,
-                                         @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
-                                         @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
-                                         @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
-                                         @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPageNum(pageNum);
-        pageQuery.setPageSize(pageSize);
-        pageQuery.setOrderByColumn(orderByColumn);
-        pageQuery.setIsAsc(isAsc);
+    public TableDataInfo<SysNoticeVo> list(@RequestBody(required = false) SysNoticePageQueryBo noticePageQuery) {
+        // 组装分页参数
+        PageQuery pageQuery = BeanCopyUtils.copy(noticePageQuery, PageQuery.class);
+        // 组装查询参数
+        SysNoticeQueryBo noticeQuery = BeanCopyUtils.copy(noticePageQuery, SysNoticeQueryBo.class);
         return noticeService.selectPageNoticeList(noticeQuery, pageQuery);
     }
 
@@ -56,7 +56,7 @@ public class SysNoticeController extends BaseController {
     @ApiOperation(value = "根据通知公告编号获取详细信息", nickname = "SysNoticeGetInfo")
     @SaCheckPermission("system:notice:query")
     @GetMapping(value = "/info")
-    public R<SysNotice> info(@ApiParam(value = "公告ID", required = true) @RequestParam Long noticeId) {
+    public R<SysNoticeVo> info(@ApiParam(value = "公告ID", required = true) @RequestParam Long noticeId) {
         return R.ok(noticeService.selectNoticeById(noticeId));
     }
 
@@ -67,7 +67,8 @@ public class SysNoticeController extends BaseController {
     @SaCheckPermission("system:notice:add")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping("/add")
-    public R<Void> add(@Validated @RequestBody SysNotice notice) {
+    public R<Void> add(@Validated @RequestBody SysNoticeAddBo noticeBo) {
+        SysNotice notice = BeanCopyUtils.copy(noticeBo, SysNotice.class);
         return toAjax(noticeService.insertNotice(notice));
     }
 
@@ -78,7 +79,8 @@ public class SysNoticeController extends BaseController {
     @SaCheckPermission("system:notice:edit")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
-    public R<Void> edit(@Validated @RequestBody SysNotice notice) {
+    public R<Void> edit(@Validated @RequestBody SysNoticeEditBo noticeBo) {
+        SysNotice notice = BeanCopyUtils.copy(noticeBo, SysNotice.class);
         return toAjax(noticeService.updateNotice(notice));
     }
 

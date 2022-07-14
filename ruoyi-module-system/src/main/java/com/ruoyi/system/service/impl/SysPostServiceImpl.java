@@ -4,13 +4,14 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.constant.UserConstants;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.domain.SysUserPost;
-import com.ruoyi.system.domain.to.SysPostQuery;
+import com.ruoyi.system.domain.bo.SysPostQueryBo;
+import com.ruoyi.system.domain.vo.SysPostVo;
 import com.ruoyi.system.mapper.SysPostMapper;
 import com.ruoyi.system.mapper.SysUserPostMapper;
 import com.ruoyi.system.service.ISysPostService;
@@ -33,12 +34,12 @@ public class SysPostServiceImpl implements ISysPostService {
     private final SysUserPostMapper userPostMapper;
 
     @Override
-    public TableDataInfo<SysPost> selectPagePostList(SysPostQuery postQuery, PageQuery pageQuery) {
+    public TableDataInfo<SysPostVo> selectPagePostList(SysPostQueryBo postQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysPost> lqw = new LambdaQueryWrapper<SysPost>()
             .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
             .eq(postQuery != null && StringUtils.isNotBlank(postQuery.getStatus()), SysPost::getStatus, postQuery.getStatus())
             .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName());
-        Page<SysPost> page = baseMapper.selectPage(pageQuery.build(), lqw);
+        Page<SysPostVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw, SysPostVo.class);
         return TableDataInfo.build(page);
     }
 
@@ -49,7 +50,7 @@ public class SysPostServiceImpl implements ISysPostService {
      * @return 岗位信息集合
      */
     @Override
-    public List<SysPost> selectPostList(SysPostQuery postQuery) {
+    public List<SysPost> selectPostList(SysPostQueryBo postQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysPost>()
             .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
             .eq(postQuery != null && StringUtils.isNotBlank(postQuery.getStatus()), SysPost::getStatus, postQuery.getStatus())
@@ -73,8 +74,8 @@ public class SysPostServiceImpl implements ISysPostService {
      * @return 角色对象信息
      */
     @Override
-    public SysPost selectPostById(Long postId) {
-        return baseMapper.selectById(postId);
+    public SysPostVo selectPostById(Long postId) {
+        return baseMapper.selectVoById(postId, SysPostVo.class);
     }
 
     /**
@@ -153,7 +154,7 @@ public class SysPostServiceImpl implements ISysPostService {
     @Override
     public int deletePostByIds(Long[] postIds) {
         for (Long postId : postIds) {
-            SysPost post = selectPostById(postId);
+            SysPostVo post = selectPostById(postId);
             if (countUserPostById(postId) > 0) {
                 throw new ServiceException(String.format("%1$s已分配,不能删除", post.getPostName()));
             }

@@ -1,9 +1,10 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.SysNotice;
-import com.ruoyi.system.domain.to.SysNoticeQuery;
+import com.ruoyi.system.domain.bo.SysNoticeQueryBo;
+import com.ruoyi.system.domain.vo.SysNoticeVo;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public interface ISysNoticeService {
 
 
-    TableDataInfo<SysNotice> selectPageNoticeList(SysNoticeQuery noticeQuery, PageQuery pageQuery);
+    TableDataInfo<SysNoticeVo> selectPageNoticeList(SysNoticeQueryBo noticeQuery, PageQuery pageQuery);
 
     /**
      * 查询公告信息
@@ -23,7 +24,7 @@ public interface ISysNoticeService {
      * @param noticeId 公告ID
      * @return 公告信息
      */
-    SysNotice selectNoticeById(Long noticeId);
+    SysNoticeVo selectNoticeById(Long noticeId);
 
     /**
      * 查询公告列表
@@ -31,7 +32,7 @@ public interface ISysNoticeService {
      * @param noticeQuery 公告查询对象
      * @return 公告集合
      */
-    List<SysNotice> selectNoticeList(SysNoticeQuery noticeQuery);
+    List<SysNotice> selectNoticeList(SysNoticeQueryBo noticeQuery);
 
     /**
      * 新增公告

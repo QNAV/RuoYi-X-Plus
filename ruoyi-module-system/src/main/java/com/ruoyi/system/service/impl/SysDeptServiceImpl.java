@@ -13,9 +13,11 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.helper.DataBaseHelper;
 import com.ruoyi.common.helper.LoginHelper;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.TreeBuildUtils;
-import com.ruoyi.system.domain.to.SysDeptQuery;
+import com.ruoyi.system.domain.bo.SysDeptQueryBo;
+import com.ruoyi.common.core.domain.vo.SysDeptVo;
 import com.ruoyi.system.mapper.SysDeptMapper;
 import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.mapper.SysUserMapper;
@@ -47,7 +49,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      * @return 部门信息集合
      */
     @Override
-    public List<SysDept> selectDeptList(SysDeptQuery deptQuery) {
+    public List<SysDeptVo> selectDeptList(SysDeptQueryBo deptQuery) {
         LambdaQueryWrapper<SysDept> lqw = new LambdaQueryWrapper<>();
         lqw.eq(SysDept::getDelFlag, "0")
             .eq(deptQuery != null && ObjectUtil.isNotNull(deptQuery.getDeptId()), SysDept::getDeptId, deptQuery.getDeptId())
@@ -56,7 +58,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
             .eq(deptQuery != null && StringUtils.isNotBlank(deptQuery.getStatus()), SysDept::getStatus, deptQuery.getStatus())
             .orderByAsc(SysDept::getParentId)
             .orderByAsc(SysDept::getOrderNum);
-        return baseMapper.selectDeptList(lqw);
+        List<SysDept> sysDeptList = baseMapper.selectDeptList(lqw);
+        List<SysDeptVo> voList = BeanCopyUtils.copyList(sysDeptList, SysDeptVo.class);
+        return voList;
     }
 
     /**
@@ -66,7 +70,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      * @return 下拉树结构列表
      */
     @Override
-    public List<Tree<Long>> buildDeptTreeSelect(List<SysDept> depts) {
+    public List<Tree<Long>> buildDeptTreeSelect(List<SysDeptVo> depts) {
         if (CollUtil.isEmpty(depts)) {
             return CollUtil.newArrayList();
         }
@@ -96,8 +100,8 @@ public class SysDeptServiceImpl implements ISysDeptService {
      * @return 部门信息
      */
     @Override
-    public SysDept selectDeptById(Long deptId) {
-        return baseMapper.selectById(deptId);
+    public SysDeptVo selectDeptById(Long deptId) {
+        return baseMapper.selectVoById(deptId, SysDeptVo.class);
     }
 
     /**
@@ -163,9 +167,9 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Override
     public void checkDeptDataScope(Long deptId) {
         if (!LoginHelper.isAdmin()) {
-            SysDeptQuery deptQuery = new SysDeptQuery();
+            SysDeptQueryBo deptQuery = new SysDeptQueryBo();
             deptQuery.setDeptId(deptId);
-            List<SysDept> depts = this.selectDeptList(deptQuery);
+            List<SysDeptVo> depts = this.selectDeptList(deptQuery);
             if (CollUtil.isEmpty(depts)) {
                 throw new ServiceException("没有权限访问部门数据！");
             }

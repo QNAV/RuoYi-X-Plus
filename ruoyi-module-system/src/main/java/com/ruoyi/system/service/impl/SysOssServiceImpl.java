@@ -4,7 +4,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
@@ -14,8 +14,7 @@ import com.ruoyi.oss.core.OssClient;
 import com.ruoyi.oss.entity.UploadResult;
 import com.ruoyi.oss.factory.OssFactory;
 import com.ruoyi.system.domain.SysOss;
-import com.ruoyi.system.domain.bo.SysOssBo;
-import com.ruoyi.system.domain.to.SysOssQuery;
+import com.ruoyi.system.domain.bo.SysOssQueryBo;
 import com.ruoyi.system.domain.vo.SysOssVo;
 import com.ruoyi.system.mapper.SysOssMapper;
 import com.ruoyi.system.service.ISysOssService;
@@ -28,7 +27,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 文件上传 服务层实现
@@ -42,7 +40,7 @@ public class SysOssServiceImpl implements ISysOssService {
     private final SysOssMapper baseMapper;
 
     @Override
-    public TableDataInfo<SysOssVo> queryPageList(SysOssQuery query, PageQuery pageQuery) {
+    public TableDataInfo<SysOssVo> queryPageList(SysOssQueryBo query, PageQuery pageQuery) {
         LambdaQueryWrapper<SysOss> lqw = buildQueryWrapper(query);
         Page<SysOssVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
@@ -63,7 +61,7 @@ public class SysOssServiceImpl implements ISysOssService {
         return list;
     }
 
-    private LambdaQueryWrapper<SysOss> buildQueryWrapper(SysOssQuery query) {
+    private LambdaQueryWrapper<SysOss> buildQueryWrapper(SysOssQueryBo query) {
         LambdaQueryWrapper<SysOss> lqw = Wrappers.lambdaQuery();
         lqw.like(query != null && StringUtils.isNotBlank(query.getFileName()), SysOss::getFileName, query.getFileName());
         lqw.like(query != null && StringUtils.isNotBlank(query.getOriginalName()), SysOss::getOriginalName, query.getOriginalName());

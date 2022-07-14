@@ -12,6 +12,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
@@ -138,9 +139,10 @@ public class GenTable extends BaseEntity {
     /**
      * 表列信息
      */
-    @ApiModelProperty("表列信息")
+    @ApiModelProperty(value = "表列信息", required = true)
     @Valid
     @TableField(exist = false)
+    @NotNull
     private List<GenTableColumn> columns;
 
     /**

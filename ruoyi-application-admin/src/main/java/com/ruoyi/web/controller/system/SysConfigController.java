@@ -5,12 +5,17 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysConfig;
-import com.ruoyi.system.domain.to.SysConfigQuery;
+import com.ruoyi.system.domain.bo.SysConfigAddBo;
+import com.ruoyi.system.domain.bo.SysConfigEditBo;
+import com.ruoyi.system.domain.bo.SysConfigPageQueryBo;
+import com.ruoyi.system.domain.bo.SysConfigQueryBo;
+import com.ruoyi.system.domain.vo.SysConfigVo;
 import com.ruoyi.system.service.ISysConfigService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,16 +47,11 @@ public class SysConfigController extends BaseController {
     @ApiOperation(value = "获取参数配置列表", nickname = "SysConfigPostList")
     @SaCheckPermission("system:config:list")
     @PostMapping("/list")
-    public TableDataInfo<SysConfig> list(@RequestBody(required = false) SysConfigQuery configQuery,
-                                         @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
-                                         @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
-                                         @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
-                                         @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPageNum(pageNum);
-        pageQuery.setPageSize(pageSize);
-        pageQuery.setOrderByColumn(orderByColumn);
-        pageQuery.setIsAsc(isAsc);
+    public TableDataInfo<SysConfigVo> list(@RequestBody(required = false) SysConfigPageQueryBo configPageQuery) {
+        // 分页参数组装
+        PageQuery pageQuery =  BeanCopyUtils.copy(configPageQuery, PageQuery.class);
+        // 查询参数组装
+        SysConfigQueryBo configQuery = BeanCopyUtils.copy(configPageQuery, SysConfigQueryBo.class);
         return configService.selectPageConfigList(configQuery, pageQuery);
     }
 
@@ -59,7 +59,7 @@ public class SysConfigController extends BaseController {
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:config:export")
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) SysConfigQuery configQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysConfigQueryBo configQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysConfig> list = configService.selectConfigList(configQuery);
         ExcelUtil.exportExcel(list, "参数数据", SysConfig.class, response);
     }
@@ -70,7 +70,7 @@ public class SysConfigController extends BaseController {
     @ApiOperation(value = "根据参数编号获取详细信息", nickname = "SysConfigGetInfo")
     @SaCheckPermission("system:config:query")
     @GetMapping(value = "/info")
-    public R<SysConfig> info(@ApiParam(value = "参数ID", required = true) @RequestParam Long configId) {
+    public R<SysConfigVo> info(@ApiParam(value = "参数ID", required = true) @RequestParam Long configId) {
         return R.ok(configService.selectConfigById(configId));
     }
 
@@ -90,7 +90,8 @@ public class SysConfigController extends BaseController {
     @SaCheckPermission("system:config:add")
     @Log(title = "参数管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
-    public R<Void> add(@Validated @RequestBody SysConfig config) {
+    public R<Void> add(@Validated @RequestBody SysConfigAddBo configBo) {
+        SysConfig config = BeanCopyUtils.copy(configBo, SysConfig.class);
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
             return R.fail("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
@@ -104,9 +105,10 @@ public class SysConfigController extends BaseController {
     @SaCheckPermission("system:config:edit")
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
-    public R<Void> edit(@Validated @RequestBody SysConfig config) {
+    public R<Void> edit(@Validated @RequestBody SysConfigEditBo configBo) {
+        SysConfig config = BeanCopyUtils.copy(configBo, SysConfig.class);
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
-            return R.fail("修改参数'" + config.getConfigName() + "'失败，参数键名已存在");
+            return R.fail("修改参数'" + configBo.getConfigName() + "'失败，参数键名已存在");
         }
         return toAjax(configService.updateConfig(config));
     }
@@ -118,7 +120,8 @@ public class SysConfigController extends BaseController {
     @SaCheckPermission("system:config:edit")
     @Log(title = "参数管理", businessType = BusinessType.UPDATE)
     @PostMapping("/updateByKey")
-    public R<Void> updateByKey(@RequestBody SysConfig config) {
+    public R<Void> updateByKey(@RequestBody SysConfigEditBo configBo) {
+        SysConfig config = BeanCopyUtils.copy(configBo, SysConfig.class);
         return toAjax(configService.updateConfig(config));
     }
 

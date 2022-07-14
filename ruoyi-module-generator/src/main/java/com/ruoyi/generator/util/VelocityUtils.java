@@ -139,22 +139,12 @@ public class VelocityUtils {
         templates.add("vm/java/serviceImpl.java.vm");
         templates.add("vm/java/controller.java.vm");
         templates.add("vm/xml/mapper.xml.vm");
-        if (DataBaseHelper.isOracle()) {
-            templates.add("vm/sql/oracle/sql.vm");
-        } else if (DataBaseHelper.isPostgerSql()) {
+        if (DataBaseHelper.isPostgerSql()) {
             templates.add("vm/sql/postgres/sql.vm");
-        } else if (DataBaseHelper.isSqlServer()) {
-            templates.add("vm/sql/sqlserver/sql.vm");
         } else {
             templates.add("vm/sql/sql.vm");
         }
-        templates.add("vm/js/api.js.vm");
-        if (GenConstants.TPL_CRUD.equals(tplCategory)) {
-            templates.add("vm/vue/index.vue.vm");
-        } else if (GenConstants.TPL_TREE.equals(tplCategory)) {
-            templates.add("vm/vue/index-tree.vue.vm");
-        } else if (GenConstants.TPL_SUB.equals(tplCategory)) {
-            templates.add("vm/vue/index.vue.vm");
+        if (GenConstants.TPL_SUB.equals(tplCategory)) {
             templates.add("vm/java/sub-domain.java.vm");
         }
         return templates;
@@ -182,8 +172,8 @@ public class VelocityUtils {
         if (template.contains("domain.java.vm")) {
             fileName = StringUtils.format("{}/domain/{}.java", javaPath, className);
         }
-        if (template.contains("vo.java.vm")) {
-            fileName = StringUtils.format("{}/domain/vo/{}Vo.java", javaPath, className);
+        if (template.contains("bo.java.vm")) {
+            fileName = StringUtils.format("{}/domain/bo/{}Vo.java", javaPath, className);
         }
         if (template.contains("bo.java.vm")) {
             fileName = StringUtils.format("{}/domain/bo/{}Bo.java", javaPath, className);

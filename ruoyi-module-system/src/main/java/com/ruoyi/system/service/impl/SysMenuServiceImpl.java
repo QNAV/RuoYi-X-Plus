@@ -11,13 +11,14 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.helper.LoginHelper;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.TreeBuildUtils;
 import com.ruoyi.system.domain.SysRoleMenu;
-import com.ruoyi.system.domain.to.SysMenuQuery;
-import com.ruoyi.system.domain.to.SysMenuUniqueQuery;
-import com.ruoyi.system.domain.vo.MetaVo;
-import com.ruoyi.system.domain.vo.RouterVo;
+import com.ruoyi.system.domain.bo.SysMenuQueryBo;
+import com.ruoyi.common.core.domain.vo.MetaVo;
+import com.ruoyi.common.core.domain.vo.RouterVo;
+import com.ruoyi.common.core.domain.vo.SysMenuVo;
 import com.ruoyi.system.mapper.SysMenuMapper;
 import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.mapper.SysRoleMenuMapper;
@@ -47,8 +48,8 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return 菜单列表
      */
     @Override
-    public List<SysMenu> selectMenuList(Long userId) {
-        return selectMenuList(new SysMenuQuery(), userId);
+    public List<SysMenuVo> selectMenuList(Long userId) {
+        return selectMenuList(new SysMenuQueryBo(), userId);
     }
 
     /**
@@ -58,16 +59,16 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return 菜单列表
      */
     @Override
-    public List<SysMenu> selectMenuList(SysMenuQuery menuQuery, Long userId) {
-        List<SysMenu> menuList = null;
+    public List<SysMenuVo> selectMenuList(SysMenuQueryBo menuQuery, Long userId) {
+        List<SysMenuVo> menuList = null;
         // 管理员显示所有菜单信息
         if (LoginHelper.isAdmin(userId)) {
-            menuList = baseMapper.selectList(new LambdaQueryWrapper<SysMenu>()
+            menuList = baseMapper.selectVoList(new LambdaQueryWrapper<SysMenu>()
                 .like(menuQuery != null && StringUtils.isNotBlank(menuQuery.getMenuName()), SysMenu::getMenuName, menuQuery.getMenuName())
                 .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getVisible()), SysMenu::getVisible, menuQuery.getVisible())
                 .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getStatus()), SysMenu::getStatus, menuQuery.getStatus())
                 .orderByAsc(SysMenu::getParentId)
-                .orderByAsc(SysMenu::getOrderNum));
+                .orderByAsc(SysMenu::getOrderNum), SysMenuVo.class);
         } else {
             QueryWrapper<SysMenu> wrapper = Wrappers.query();
             wrapper.eq("sur.user_id", userId)
@@ -76,7 +77,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
                 .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getStatus()), "m.status", menuQuery.getStatus())
                 .orderByAsc("m.parent_id")
                 .orderByAsc("m.order_num");
-            menuList = baseMapper.selectMenuListByUserId(wrapper);
+            menuList = BeanCopyUtils.copyList(baseMapper.selectMenuListByUserId(wrapper), SysMenuVo.class);
         }
         return menuList;
     }
@@ -186,7 +187,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return 下拉树结构列表
      */
     @Override
-    public List<Tree<Long>> buildMenuTreeSelect(List<SysMenu> menus) {
+    public List<Tree<Long>> buildMenuTreeSelect(List<SysMenuVo> menus) {
         if (CollUtil.isEmpty(menus)) {
             return CollUtil.newArrayList();
         }
@@ -204,8 +205,8 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return 菜单信息
      */
     @Override
-    public SysMenu selectMenuById(Long menuId) {
-        return baseMapper.selectById(menuId);
+    public SysMenuVo selectMenuById(Long menuId) {
+        return baseMapper.selectVoById(menuId, SysMenuVo.class);
     }
 
     /**

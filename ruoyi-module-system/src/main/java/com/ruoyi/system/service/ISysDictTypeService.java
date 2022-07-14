@@ -1,10 +1,11 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.domain.PageQuery;
-import com.ruoyi.common.core.domain.entity.SysDictData;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysDictType;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.system.domain.to.SysDictTypeQuery;
+import com.ruoyi.system.domain.bo.SysDictTypeQueryBo;
+import com.ruoyi.common.core.domain.vo.SysDictDataVo;
+import com.ruoyi.common.core.domain.vo.SysDictTypeVo;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public interface ISysDictTypeService {
 
 
-    TableDataInfo<SysDictType> selectPageDictTypeList(SysDictTypeQuery dictTypeQuery, PageQuery pageQuery);
+    TableDataInfo<SysDictTypeVo> selectPageDictTypeList(SysDictTypeQueryBo dictTypeQuery, PageQuery pageQuery);
 
     /**
      * 根据条件分页查询字典类型
@@ -24,7 +25,7 @@ public interface ISysDictTypeService {
      * @param dictTypeQuery 字典类型查询对象
      * @return 字典类型集合信息
      */
-    List<SysDictType> selectDictTypeList(SysDictTypeQuery dictTypeQuery);
+    List<SysDictType> selectDictTypeList(SysDictTypeQueryBo dictTypeQuery);
 
     /**
      * 根据所有字典类型
@@ -39,7 +40,7 @@ public interface ISysDictTypeService {
      * @param dictType 字典类型
      * @return 字典数据集合信息
      */
-    List<SysDictData> selectDictDataByType(String dictType);
+    List<SysDictDataVo> selectDictDataByType(String dictType);
 
     /**
      * 根据字典类型ID查询信息
@@ -47,7 +48,7 @@ public interface ISysDictTypeService {
      * @param dictId 字典类型ID
      * @return 字典类型
      */
-    SysDictType selectDictTypeById(Long dictId);
+    SysDictTypeVo selectDictTypeById(Long dictId);
 
     /**
      * 根据字典类型查询信息

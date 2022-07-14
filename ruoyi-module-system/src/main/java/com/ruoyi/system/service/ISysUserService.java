@@ -1,9 +1,10 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.system.domain.to.SysUserQuery;
+import com.ruoyi.system.domain.bo.SysUserQueryBo;
+import com.ruoyi.common.core.domain.vo.SysUserVo;
 
 import java.util.List;
 
@@ -15,7 +16,10 @@ import java.util.List;
 public interface ISysUserService {
 
 
-    TableDataInfo<SysUser> selectPageUserList(SysUserQuery userQuery, PageQuery pageQuery);
+    TableDataInfo<SysUser> selectPageUserList(SysUserQueryBo userQuery, PageQuery pageQuery);
+
+
+    TableDataInfo<SysUserVo> selectPageUserVoList(SysUserQueryBo userQuery, PageQuery pageQuery);
 
     /**
      * 根据条件分页查询用户列表
@@ -23,7 +27,7 @@ public interface ISysUserService {
      * @param userQuery 用户信息查询对象
      * @return 用户信息集合信息
      */
-    List<SysUser> selectUserList(SysUserQuery userQuery);
+    List<SysUser> selectUserList(SysUserQueryBo userQuery);
 
     /**
      * 根据条件分页查询已分配用户角色列表
@@ -31,7 +35,15 @@ public interface ISysUserService {
      * @param userQuery 用户信息查询对象
      * @return 用户信息集合信息
      */
-    TableDataInfo<SysUser> selectAllocatedList(SysUserQuery userQuery, PageQuery pageQuery);
+    TableDataInfo<SysUser> selectAllocatedList(SysUserQueryBo userQuery, PageQuery pageQuery);
+
+    /**
+     * 根据条件分页查询已分配用户角色列表
+     *
+     * @param userQuery 用户信息查询对象
+     * @return 用户信息集合信息
+     */
+    TableDataInfo<SysUserVo> selectAllocatedVoList(SysUserQueryBo userQuery, PageQuery pageQuery);
 
     /**
      * 根据条件分页查询未分配用户角色列表
@@ -39,7 +51,15 @@ public interface ISysUserService {
      * @param userQuery 用户信息查询对象
      * @return 用户信息集合信息
      */
-    TableDataInfo<SysUser> selectUnallocatedList(SysUserQuery userQuery, PageQuery pageQuery);
+    TableDataInfo<SysUser> selectUnallocatedList(SysUserQueryBo userQuery, PageQuery pageQuery);
+
+    /**
+     * 根据条件分页查询未分配用户角色列表
+     *
+     * @param userQuery 用户信息查询对象
+     * @return 用户信息集合信息
+     */
+    TableDataInfo<SysUserVo> selectUnallocatedVoList(SysUserQueryBo userQuery, PageQuery pageQuery);
 
     /**
      * 通过用户名查询用户
@@ -64,6 +84,14 @@ public interface ISysUserService {
      * @return 用户对象信息
      */
     SysUser selectUserById(Long userId);
+
+    /**
+     * 通过用户ID查询用户
+     *
+     * @param userId 用户ID
+     * @return 用户信息视图对象
+     */
+    SysUserVo selectUserVoById(Long userId);
 
     /**
      * 根据用户ID查询用户所属角色组

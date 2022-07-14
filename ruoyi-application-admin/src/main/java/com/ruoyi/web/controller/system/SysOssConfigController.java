@@ -5,14 +5,17 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.validate.AddGroup;
 import com.ruoyi.common.core.validate.EditGroup;
 import com.ruoyi.common.core.validate.QueryGroup;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.system.domain.bo.SysOssConfigBo;
-import com.ruoyi.system.domain.to.SysOssConfigQuery;
+import com.ruoyi.common.utils.BeanCopyUtils;
+import com.ruoyi.system.domain.bo.SysOssConfigAddBo;
+import com.ruoyi.system.domain.bo.SysOssConfigEditBo;
+import com.ruoyi.system.domain.bo.SysOssConfigPageQueryBo;
+import com.ruoyi.system.domain.bo.SysOssConfigQueryBo;
 import com.ruoyi.system.domain.vo.SysOssConfigVo;
 import com.ruoyi.system.service.ISysOssConfigService;
 import io.swagger.annotations.Api;
@@ -22,8 +25,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 
 /**
@@ -46,16 +47,11 @@ public class SysOssConfigController extends BaseController {
     @ApiOperation(value = "查询对象存储配置列表", nickname = "SysOssConfigPostList")
     @SaCheckPermission("system:oss:list")
     @PostMapping("/list")
-    public TableDataInfo<SysOssConfigVo> list(@RequestBody(required = false) @Validated(QueryGroup.class) SysOssConfigQuery query,
-                                              @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
-                                              @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
-                                              @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
-                                              @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPageNum(pageNum);
-        pageQuery.setPageSize(pageSize);
-        pageQuery.setOrderByColumn(orderByColumn);
-        pageQuery.setIsAsc(isAsc);
+    public TableDataInfo<SysOssConfigVo> list(@RequestBody(required = false) @Validated(QueryGroup.class) SysOssConfigPageQueryBo ossConfigPageQuery) {
+        // 分页参数组装
+        PageQuery pageQuery = BeanCopyUtils.copy(ossConfigPageQuery, PageQuery.class);
+        // 查询参数组装
+        SysOssConfigQueryBo query = BeanCopyUtils.copy(ossConfigPageQuery, SysOssConfigQueryBo.class);
         return iSysOssConfigService.queryPageList(query, pageQuery);
     }
 
@@ -77,7 +73,8 @@ public class SysOssConfigController extends BaseController {
     @Log(title = "对象存储配置", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping("/add")
-    public R<Void> add(@Validated(AddGroup.class) @RequestBody SysOssConfigBo bo) {
+    public R<Void> add(@Validated(AddGroup.class) @RequestBody SysOssConfigAddBo addBo) {
+        SysOssConfigEditBo bo = BeanCopyUtils.copy(addBo, SysOssConfigEditBo.class);
         return toAjax(iSysOssConfigService.insertByBo(bo) ? 1 : 0);
     }
 
@@ -89,7 +86,7 @@ public class SysOssConfigController extends BaseController {
     @Log(title = "对象存储配置", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PostMapping("/edit")
-    public R<Void> edit(@Validated(EditGroup.class) @RequestBody SysOssConfigBo bo) {
+    public R<Void> edit(@Validated(EditGroup.class) @RequestBody SysOssConfigEditBo bo) {
         return toAjax(iSysOssConfigService.updateByBo(bo) ? 1 : 0);
     }
 
@@ -111,7 +108,7 @@ public class SysOssConfigController extends BaseController {
     @SaCheckPermission("system:oss:edit")
     @Log(title = "对象存储状态修改", businessType = BusinessType.UPDATE)
     @PostMapping("/changeStatus")
-    public R<Void> changeStatus(@RequestBody @Validated SysOssConfigBo bo) {
+    public R<Void> changeStatus(@RequestBody @Validated SysOssConfigEditBo bo) {
         return toAjax(iSysOssConfigService.updateOssConfigStatus(bo));
     }
 }

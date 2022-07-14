@@ -1,6 +1,6 @@
 package com.ruoyi.demo.service;
 
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.demo.domain.TestDemo;
 import com.ruoyi.demo.domain.bo.TestDemoBo;

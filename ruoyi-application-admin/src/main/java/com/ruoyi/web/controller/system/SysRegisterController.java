@@ -3,7 +3,7 @@ package com.ruoyi.web.controller.system;
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.domain.model.RegisterBodyUserName;
+import com.ruoyi.common.core.domain.bo.UserNameRegisterBo;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.SysRegisterService;
 import io.swagger.annotations.Api;
@@ -31,7 +31,7 @@ public class SysRegisterController extends BaseController {
     @Anonymous
     @ApiOperation(value = "用户注册", nickname = "SysRegisterPostRegister")
     @PostMapping("/register")
-    public R<Void> register(@Validated @RequestBody RegisterBodyUserName user) {
+    public R<Void> register(@Validated @RequestBody UserNameRegisterBo user) {
         if (!("true".equals(configService.selectConfigByKey("sys.account.registerUser")))) {
             return R.fail("当前系统没有开启注册功能！");
         }

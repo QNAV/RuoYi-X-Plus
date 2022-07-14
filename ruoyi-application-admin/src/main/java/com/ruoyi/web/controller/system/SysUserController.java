@@ -8,27 +8,28 @@ import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.domain.vo.SysRoleVo;
+import com.ruoyi.common.core.domain.vo.SysUserVo;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.excel.ExcelResult;
 import com.ruoyi.common.helper.LoginHelper;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
-import com.ruoyi.system.domain.to.AuthRoleAllBody;
-import com.ruoyi.system.domain.to.SysUserQuery;
-import com.ruoyi.system.domain.vo.SysUserExportVo;
-import com.ruoyi.system.domain.vo.SysUserImportVo;
+import com.ruoyi.system.domain.bo.*;
+import com.ruoyi.system.domain.vo.*;
 import com.ruoyi.system.listener.SysUserImportListener;
 import com.ruoyi.system.service.ISysPostService;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
-import com.ruoyi.web.model.dto.UserAuthRoleDTO;
-import com.ruoyi.web.model.dto.UserDetailDTO;
+import com.ruoyi.web.model.vo.UserAuthRoleVo;
+import com.ruoyi.web.model.vo.UserDetailVo;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -62,24 +63,19 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "获取用户列表", nickname = "SysUserPostList")
     @SaCheckPermission("system:user:list")
     @PostMapping("/list")
-    public TableDataInfo<SysUser> list(@RequestBody(required = false) SysUserQuery userQuery,
-                                       @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
-                                       @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
-                                       @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
-                                       @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPageNum(pageNum);
-        pageQuery.setPageSize(pageSize);
-        pageQuery.setOrderByColumn(orderByColumn);
-        pageQuery.setIsAsc(isAsc);
-        return userService.selectPageUserList(userQuery, pageQuery);
+    public TableDataInfo<SysUserVo> list(@RequestBody(required = false) SysUserPageQueryBo userPageQuery) {
+        // 组装分页参数
+        PageQuery pageQuery = BeanCopyUtils.copy(userPageQuery, PageQuery.class);
+        // 组装查询参数
+        SysUserQueryBo userQuery = BeanCopyUtils.copy(userPageQuery, SysUserQueryBo.class);
+        return userService.selectPageUserVoList(userQuery, pageQuery);
     }
 
     @ApiOperation(value = "导出用户列表", nickname = "SysUserPostExport")
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:user:export")
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) SysUserQuery userQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysUserQueryBo userQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysUser> list = userService.selectUserList(userQuery);
         List<SysUserExportVo> listVo = BeanUtil.copyToList(list, SysUserExportVo.class);
         for (int i = 0; i < list.size(); i++) {
@@ -117,17 +113,17 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "根据用户编号获取详细信息", nickname = "SysUserGetInfo")
     @SaCheckPermission("system:user:query")
     @GetMapping(value = {"/info"})
-    public R<UserDetailDTO> info(@ApiParam(value = "用户ID",required = true) @RequestParam Long userId) {
+    public R<UserDetailVo> info(@ApiParam(value = "用户ID",required = true) @RequestParam Long userId) {
         userService.checkUserDataScope(userId);
-        UserDetailDTO data = new UserDetailDTO();
-        List<SysRole> roles = roleService.selectRoleAll();
+        UserDetailVo data = new UserDetailVo();
+        List<SysRoleVo> roles = roleService.selectRoleVoAll();
         data.setRoles(LoginHelper.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
-        data.setPosts(postService.selectPostAll());
+        data.setPosts(BeanCopyUtils.copyList(postService.selectPostAll(), SysPostVo.class));
         if (ObjectUtil.isNotNull(userId)) {
-            SysUser sysUser = userService.selectUserById(userId);
+            SysUserVo sysUser = userService.selectUserVoById(userId);
             data.setUser(sysUser);
             data.setPostIds(postService.selectPostListByUserId(userId));
-            data.setRoleIds(sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
+            data.setRoleIds(sysUser.getRoles().stream().map(SysRoleVo::getRoleId).collect(Collectors.toList()));
         }
         return R.ok(data);
     }
@@ -139,7 +135,8 @@ public class SysUserController extends BaseController {
     @SaCheckPermission("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
-    public R<Void> add(@Validated @RequestBody SysUser user) {
+    public R<Void> add(@Validated @RequestBody SysUserAddBo userBo) {
+        SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
         if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(user.getUserName()))) {
             return R.fail("新增用户'" + user.getUserName() + "'失败，登录账号已存在");
         } else if (StringUtils.isNotEmpty(user.getPhoneNumber())
@@ -160,7 +157,8 @@ public class SysUserController extends BaseController {
     @SaCheckPermission("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
-    public R<Void> edit(@Validated @RequestBody SysUser user) {
+    public R<Void> edit(@Validated @RequestBody SysUserEditBo userBo) {
+        SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
         userService.checkUserAllowed(user);
         userService.checkUserDataScope(user.getUserId());
         if (StringUtils.isNotEmpty(user.getPhoneNumber())
@@ -220,10 +218,10 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "根据用户编号获取授权角色", nickname = "SysUserGetAuthRole")
     @SaCheckPermission("system:user:query")
     @GetMapping("/authRole")
-    public R<UserAuthRoleDTO> authRole(@ApiParam(value = "用户ID", required = true) @RequestParam Long userId) {
+    public R<UserAuthRoleVo> authRole(@ApiParam(value = "用户ID", required = true) @RequestParam Long userId) {
         SysUser user = userService.selectUserById(userId);
         List<SysRole> roles = roleService.selectRolesByUserId(userId);
-        UserAuthRoleDTO data = new UserAuthRoleDTO();
+        UserAuthRoleVo data = new UserAuthRoleVo();
         data.setUser(user);
         data.setRoles(LoginHelper.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         return R.ok(data);
@@ -236,7 +234,7 @@ public class SysUserController extends BaseController {
     @SaCheckPermission("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.GRANT)
     @PostMapping("/insertAuthRole")
-    public R<Void> insertAuthRole(@RequestBody @Validated AuthRoleAllBody body) {
+    public R<Void> insertAuthRole(@RequestBody @Validated AuthRoleAllBo body) {
         userService.checkUserDataScope(body.getUserId());
         userService.insertUserAuth(body.getUserId(), body.getRoleIds());
         return R.ok();

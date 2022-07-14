@@ -4,18 +4,18 @@ import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.core.domain.bo.UserNameLoginBo;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.core.domain.model.UserNameLoginBody;
-import com.ruoyi.common.core.domain.model.SmsLoginBody;
+import com.ruoyi.common.core.domain.bo.SmsLoginBo;
 import com.ruoyi.common.helper.LoginHelper;
-import com.ruoyi.system.domain.vo.RouterVo;
+import com.ruoyi.common.core.domain.vo.RouterVo;
 import com.ruoyi.system.service.ISysMenuService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.system.service.SysLoginService;
 import com.ruoyi.system.service.SysPermissionService;
-import com.ruoyi.web.model.dto.LoginDTO;
-import com.ruoyi.web.model.dto.UserInfoDTO;
+import com.ruoyi.web.model.vo.LoginVo;
+import com.ruoyi.web.model.vo.UserInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -52,8 +52,8 @@ public class SysLoginController {
     @Anonymous
     @ApiOperation(value = "用户名登录方法", nickname = "SysLoginPostLogin")
     @PostMapping("/login")
-    public R<LoginDTO> login(@Validated @RequestBody UserNameLoginBody userNameLoginBody) {
-        LoginDTO result = new LoginDTO();
+    public R<LoginVo> login(@Validated @RequestBody UserNameLoginBo userNameLoginBody) {
+        LoginVo result = new LoginVo();
         // 生成令牌
         String token = loginService.login(userNameLoginBody.getUsername(), userNameLoginBody.getPassword(), userNameLoginBody.getCode(),
             userNameLoginBody.getUuid());
@@ -70,8 +70,8 @@ public class SysLoginController {
     @Anonymous
     @ApiOperation(value = "短信登录(示例)", nickname = "SysLoginPostSmsLogin")
     @PostMapping("/smsLogin")
-    public R<LoginDTO> smsLogin(@Validated @RequestBody SmsLoginBody smsLoginBody) {
-        LoginDTO result = new LoginDTO();
+    public R<LoginVo> smsLogin(@Validated @RequestBody SmsLoginBo smsLoginBody) {
+        LoginVo result = new LoginVo();
         // 生成令牌
         String token = loginService.smsLogin(smsLoginBody.getPhoneNumber(), smsLoginBody.getSmsCode());
         result.setToken(token);
@@ -87,8 +87,8 @@ public class SysLoginController {
     @Anonymous
     @ApiOperation(value = "小程序登录(示例)", nickname = "SysLoginGetXcxLogin")
     @GetMapping("/xcxLogin")
-    public R<LoginDTO> xcxLogin(@NotBlank(message = "{xcx.code.not.blank}") @ApiParam(value = "小程序code", required = true) @RequestParam String xcxCode) {
-        LoginDTO result = new LoginDTO();
+    public R<LoginVo> xcxLogin(@NotBlank(message = "{xcx.code.not.blank}") @ApiParam(value = "小程序code", required = true) @RequestParam String xcxCode) {
+        LoginVo result = new LoginVo();
         // 生成令牌
         String token = loginService.xcxLogin(xcxCode);
         result.setToken(token);
@@ -115,8 +115,8 @@ public class SysLoginController {
      */
     @ApiOperation(value = "获取已登录用户信息", nickname = "SysLoginGetInfo")
     @GetMapping("/info")
-    public R<UserInfoDTO> info() {
-        UserInfoDTO data = new UserInfoDTO();
+    public R<UserInfoVo> info() {
+        UserInfoVo data = new UserInfoVo();
         SysUser user = userService.selectUserById(LoginHelper.getUserId());
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(user);

@@ -7,6 +7,7 @@ import com.ruoyi.common.annotation.DataColumn;
 import com.ruoyi.common.annotation.DataPermission;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.mapper.BaseMapperPlus;
+import com.ruoyi.common.core.domain.vo.SysRoleVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,6 +24,12 @@ public interface SysRoleMapper extends BaseMapperPlus<SysRoleMapper, SysRole, Sy
     })
     Page<SysRole> selectPageRoleList(@Param("page") Page<SysRole> page, @Param(Constants.WRAPPER) Wrapper<SysRole> queryWrapper);
 
+
+    @DataPermission({
+        @DataColumn(key = "deptName", value = "d.dept_id")
+    })
+    Page<SysRoleVo> selectPageRoleVoList(@Param("page") Page<SysRole> page, @Param(Constants.WRAPPER) Wrapper<SysRole> queryWrapper);
+
     /**
      * 根据条件分页查询角色数据
      *
@@ -33,6 +40,17 @@ public interface SysRoleMapper extends BaseMapperPlus<SysRoleMapper, SysRole, Sy
         @DataColumn(key = "deptName", value = "d.dept_id")
     })
     List<SysRole> selectRoleList(@Param(Constants.WRAPPER) Wrapper<SysRole> queryWrapper);
+
+    /**
+     * 根据条件分页查询角色数据
+     *
+     * @param queryWrapper 查询条件
+     * @return 角色视图对象集合
+     */
+    @DataPermission({
+        @DataColumn(key = "deptName", value = "d.dept_id")
+    })
+    List<SysRoleVo> selectRoleVoList(@Param(Constants.WRAPPER) Wrapper<SysRole> queryWrapper);
 
     /**
      * 根据用户ID查询角色

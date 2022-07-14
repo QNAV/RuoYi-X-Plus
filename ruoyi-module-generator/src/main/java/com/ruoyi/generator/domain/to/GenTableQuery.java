@@ -8,10 +8,10 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
- * 代码生成对象表查询对象
+ * 代码生成查询对象
  * @author weibocy
  */
-@ApiModel(value = "GenTableQuery", description = "代码生成对象表查询对象")
+@ApiModel(value = "GenTableQuery", description = "代码生成查询对象")
 @Data
 public class GenTableQuery {
 

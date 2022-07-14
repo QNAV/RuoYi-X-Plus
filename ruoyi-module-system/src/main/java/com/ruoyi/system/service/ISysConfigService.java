@@ -1,9 +1,10 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.SysConfig;
-import com.ruoyi.system.domain.to.SysConfigQuery;
+import com.ruoyi.system.domain.bo.SysConfigQueryBo;
+import com.ruoyi.system.domain.vo.SysConfigVo;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public interface ISysConfigService {
 
 
-    TableDataInfo<SysConfig> selectPageConfigList(SysConfigQuery configQuery, PageQuery pageQuery);
+    TableDataInfo<SysConfigVo> selectPageConfigList(SysConfigQueryBo configQuery, PageQuery pageQuery);
 
     /**
      * 查询参数配置信息
@@ -23,7 +24,7 @@ public interface ISysConfigService {
      * @param configId 参数配置ID
      * @return 参数配置信息
      */
-    SysConfig selectConfigById(Long configId);
+    SysConfigVo selectConfigById(Long configId);
 
     /**
      * 根据键名查询参数配置信息
@@ -46,7 +47,7 @@ public interface ISysConfigService {
      * @param configQuery 参数配置查询对象
      * @return 参数配置集合
      */
-    List<SysConfig> selectConfigList(SysConfigQuery configQuery);
+    List<SysConfig> selectConfigList(SysConfigQueryBo configQuery);
 
     /**
      * 新增参数配置
@@ -94,6 +95,7 @@ public interface ISysConfigService {
      */
     String checkConfigKeyUnique(SysConfig config);
 
-    SysConfig getOne(SysConfig config);
+
+    SysConfigVo getOne(SysConfigQueryBo configQuery);
 
 }

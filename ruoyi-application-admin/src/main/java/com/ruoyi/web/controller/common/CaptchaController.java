@@ -18,7 +18,7 @@ import com.ruoyi.sms.config.properties.SmsProperties;
 import com.ruoyi.sms.core.SmsTemplate;
 import com.ruoyi.sms.entity.SmsResult;
 import com.ruoyi.system.service.ISysConfigService;
-import com.ruoyi.web.model.dto.CaptchaImageDto;
+import com.ruoyi.web.model.vo.CaptchaImageVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -82,8 +82,8 @@ public class CaptchaController {
      */
     @ApiOperation(value = "生成验证码", nickname = "CaptchaGetGetCode")
     @GetMapping("/captchaImage")
-    public R<CaptchaImageDto> getCode() {
-        CaptchaImageDto data = new CaptchaImageDto();
+    public R<CaptchaImageVo> getCode() {
+        CaptchaImageVo data = new CaptchaImageVo();
         boolean captchaOnOff = configService.selectCaptchaOnOff();
         data.setCaptchaOnOff(captchaOnOff);
         if (!captchaOnOff) {

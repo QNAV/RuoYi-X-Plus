@@ -1,9 +1,10 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.SysOperLog;
-import com.ruoyi.system.domain.to.SysOperLogQuery;
+import com.ruoyi.system.domain.bo.SysOperLogQueryBo;
+import com.ruoyi.system.domain.vo.SysOperLogVo;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface ISysOperLogService {
 
-    TableDataInfo<SysOperLog> selectPageOperLogList(SysOperLogQuery operLogQuery, PageQuery pageQuery);
+    TableDataInfo<SysOperLogVo> selectPageOperLogList(SysOperLogQueryBo operLogQuery, PageQuery pageQuery);
 
     /**
      * 新增操作日志
@@ -29,7 +30,7 @@ public interface ISysOperLogService {
      * @param operLogQuery 操作日志查询对象
      * @return 操作日志集合
      */
-    List<SysOperLog> selectOperLogList(SysOperLogQuery operLogQuery);
+    List<SysOperLog> selectOperLogList(SysOperLogQueryBo operLogQuery);
 
     /**
      * 批量删除系统操作日志
@@ -45,7 +46,7 @@ public interface ISysOperLogService {
      * @param operId 操作ID
      * @return 操作日志对象
      */
-    SysOperLog selectOperLogById(Long operId);
+    SysOperLogVo selectOperLogById(Long operId);
 
     /**
      * 清空操作日志

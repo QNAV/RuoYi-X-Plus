@@ -5,13 +5,15 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.IoUtil;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.generator.domain.GenTable;
 import com.ruoyi.generator.domain.GenTableColumn;
-import com.ruoyi.generator.domain.dto.GenInfoDto;
+import com.ruoyi.generator.domain.to.GenTablePageQuery;
+import com.ruoyi.generator.domain.vo.GenInfoVo;
 import com.ruoyi.generator.domain.to.GenTableQuery;
 import com.ruoyi.generator.service.IGenTableService;
 import io.swagger.annotations.*;
@@ -48,16 +50,11 @@ public class GenController extends BaseController {
     @ApiOperation(value = "查询代码生成列表", nickname = "GenPostList")
     @SaCheckPermission("tool:gen:list")
     @PostMapping("/list")
-    public TableDataInfo<GenTable> genList(@RequestBody(required = false) GenTableQuery genTableQuery,
-                                           @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
-                                           @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
-                                           @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
-                                           @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPageNum(pageNum);
-        pageQuery.setPageSize(pageSize);
-        pageQuery.setOrderByColumn(orderByColumn);
-        pageQuery.setIsAsc(isAsc);
+    public TableDataInfo<GenTable> genList(@RequestBody(required = false) GenTablePageQuery genTablePageQuery) {
+        // 组装分页参数
+        PageQuery pageQuery = BeanCopyUtils.copy(genTablePageQuery, PageQuery.class);
+        // 组装查询参数
+        GenTableQuery genTableQuery = BeanCopyUtils.copy(genTablePageQuery, GenTableQuery.class);
         return genTableService.selectPageGenTableList(genTableQuery, pageQuery);
     }
 
@@ -67,11 +64,11 @@ public class GenController extends BaseController {
     @ApiOperation(value = "获取代码生成业务信息", nickname = "GenGetInfo")
     @SaCheckPermission("tool:gen:query")
     @GetMapping(value = "/info")
-    public R<GenInfoDto> info(@ApiParam(value = "生成表编号", required = true) @RequestParam Long tableId) {
+    public R<GenInfoVo> info(@ApiParam(value = "生成表编号", required = true) @RequestParam Long tableId) {
         GenTable table = genTableService.selectGenTableById(tableId);
         List<GenTable> tables = genTableService.selectGenTableAll();
         List<GenTableColumn> list = genTableService.selectGenTableColumnListByTableId(tableId);
-        GenInfoDto data = new GenInfoDto();
+        GenInfoVo data = new GenInfoVo();
         data.setInfo(table);
         data.setRows(list);
         data.setTables(tables);
@@ -84,16 +81,11 @@ public class GenController extends BaseController {
     @ApiOperation(value = "查询数据库列表", nickname = "GenPostDbList")
     @SaCheckPermission("tool:gen:list")
     @PostMapping("/db/list")
-    public TableDataInfo<GenTable> dbList(@RequestBody(required = false) GenTableQuery genTableQuery,
-                                            @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
-                                            @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
-                                            @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
-                                            @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPageNum(pageNum);
-        pageQuery.setPageSize(pageSize);
-        pageQuery.setOrderByColumn(orderByColumn);
-        pageQuery.setIsAsc(isAsc);
+    public TableDataInfo<GenTable> dbList(@RequestBody(required = false) GenTablePageQuery genTablePageQuery) {
+        // 组装分页参数
+        PageQuery pageQuery = BeanCopyUtils.copy(genTablePageQuery, PageQuery.class);
+        // 组装查询参数
+        GenTableQuery genTableQuery = BeanCopyUtils.copy(genTablePageQuery, GenTableQuery.class);
         return genTableService.selectPageDbTableList(genTableQuery, pageQuery);
     }
 

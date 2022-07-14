@@ -2,11 +2,12 @@ package com.ruoyi.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysNotice;
-import com.ruoyi.system.domain.to.SysNoticeQuery;
+import com.ruoyi.system.domain.bo.SysNoticeQueryBo;
+import com.ruoyi.system.domain.vo.SysNoticeVo;
 import com.ruoyi.system.mapper.SysNoticeMapper;
 import com.ruoyi.system.service.ISysNoticeService;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +28,12 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
     private final SysNoticeMapper baseMapper;
 
     @Override
-    public TableDataInfo<SysNotice> selectPageNoticeList(SysNoticeQuery noticeQuery, PageQuery pageQuery) {
+    public TableDataInfo<SysNoticeVo> selectPageNoticeList(SysNoticeQueryBo noticeQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysNotice> lqw = new LambdaQueryWrapper<SysNotice>()
             .like(noticeQuery != null && StringUtils.isNotBlank(noticeQuery.getNoticeTitle()), SysNotice::getNoticeTitle, noticeQuery.getNoticeTitle())
             .eq(noticeQuery != null && StringUtils.isNotBlank(noticeQuery.getNoticeType()), SysNotice::getNoticeType, noticeQuery.getNoticeType())
             .like(noticeQuery != null && StringUtils.isNotBlank(noticeQuery.getCreateBy()), SysNotice::getCreateBy, noticeQuery.getCreateBy());
-        Page<SysNotice> page = baseMapper.selectPage(pageQuery.build(), lqw);
+        Page<SysNoticeVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw, SysNoticeVo.class);
         return TableDataInfo.build(page);
     }
 
@@ -43,8 +44,8 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
      * @return 公告信息
      */
     @Override
-    public SysNotice selectNoticeById(Long noticeId) {
-        return baseMapper.selectById(noticeId);
+    public SysNoticeVo selectNoticeById(Long noticeId) {
+        return baseMapper.selectVoById(noticeId, SysNoticeVo.class);
     }
 
     /**
@@ -54,7 +55,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
      * @return 公告集合
      */
     @Override
-    public List<SysNotice> selectNoticeList(SysNoticeQuery noticeQuery) {
+    public List<SysNotice> selectNoticeList(SysNoticeQueryBo noticeQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysNotice>()
             .like(StringUtils.isNotBlank(noticeQuery.getNoticeTitle()), SysNotice::getNoticeTitle, noticeQuery.getNoticeTitle())
             .eq(StringUtils.isNotBlank(noticeQuery.getNoticeType()), SysNotice::getNoticeType, noticeQuery.getNoticeType())

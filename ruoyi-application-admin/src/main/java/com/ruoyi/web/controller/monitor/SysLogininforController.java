@@ -4,12 +4,15 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysLogininfor;
-import com.ruoyi.system.domain.to.SysLogininforQuery;
+import com.ruoyi.system.domain.bo.SysLogininforPageQueryBo;
+import com.ruoyi.system.domain.bo.SysLogininforQueryBo;
+import com.ruoyi.system.domain.vo.SysLogininforVo;
 import com.ruoyi.system.service.ISysLogininforService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,17 +41,11 @@ public class SysLogininforController extends BaseController {
     @ApiOperation(value = "查询系统访问记录列表", nickname = "SysLogininforPostList")
     @SaCheckPermission("monitor:logininfor:list")
     @PostMapping("/list")
-    public TableDataInfo<SysLogininfor> list(@RequestBody(required = false) SysLogininforQuery logininforQuery,
-                                             @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
-                                             @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
-                                             @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
-                                             @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
+    public TableDataInfo<SysLogininforVo> list(@RequestBody(required = false) SysLogininforPageQueryBo logininforPageQuery) {
         // 分页参数组装
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPageNum(pageNum);
-        pageQuery.setPageSize(pageSize);
-        pageQuery.setOrderByColumn(orderByColumn);
-        pageQuery.setIsAsc(isAsc);
+        PageQuery pageQuery =  BeanCopyUtils.copy(logininforPageQuery, PageQuery.class);
+        // 查询参数组装
+        SysLogininforQueryBo logininforQuery = BeanCopyUtils.copy(logininforPageQuery, SysLogininforQueryBo.class);
         return logininforService.selectPageLogininforList(logininforQuery, pageQuery);
     }
 
@@ -56,7 +53,7 @@ public class SysLogininforController extends BaseController {
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:logininfor:export")
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) SysLogininforQuery logininforQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysLogininforQueryBo logininforQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysLogininfor> list = logininforService.selectLogininforList(logininforQuery);
         ExcelUtil.exportExcel(list, "登录日志", SysLogininfor.class, response);
     }

@@ -6,18 +6,19 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.domain.PageQuery;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.helper.LoginHelper;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysUserRole;
-import com.ruoyi.system.domain.to.AuthUserAllBody;
-import com.ruoyi.system.domain.to.SysRoleQuery;
-import com.ruoyi.system.domain.to.SysUserQuery;
+import com.ruoyi.system.domain.bo.*;
+import com.ruoyi.common.core.domain.vo.SysRoleVo;
+import com.ruoyi.common.core.domain.vo.SysUserVo;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.system.service.SysPermissionService;
@@ -48,24 +49,19 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "查询角色信息列表", nickname = "SysRolePostList")
     @SaCheckPermission("system:role:list")
     @PostMapping("/list")
-    public TableDataInfo<SysRole> list(@RequestBody(required = false) SysRoleQuery roleQuery,
-                                       @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
-                                       @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
-                                       @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
-                                       @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPageNum(pageNum);
-        pageQuery.setPageSize(pageSize);
-        pageQuery.setOrderByColumn(orderByColumn);
-        pageQuery.setIsAsc(isAsc);
-        return roleService.selectPageRoleList(roleQuery, pageQuery);
+    public TableDataInfo<SysRoleVo> list(@RequestBody(required = false) SysRolePageQueryBo rolePageQuery) {
+        // 组装分页参数
+        PageQuery pageQuery = BeanCopyUtils.copy(rolePageQuery, PageQuery.class);
+        // 组装查询参数
+        SysRoleQueryBo roleQuery = BeanCopyUtils.copy(rolePageQuery, SysRoleQueryBo.class);
+        return roleService.selectPageRoleVoList(roleQuery, pageQuery);
     }
 
     @ApiOperation(value = "导出角色信息列表", nickname = "SysRolePostExport")
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:role:export")
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) SysRoleQuery roleQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysRoleQueryBo roleQuery, @ApiParam(hidden = true) HttpServletResponse response) {
         List<SysRole> list = roleService.selectRoleList(roleQuery);
         ExcelUtil.exportExcel(list, "角色数据", SysRole.class, response);
     }
@@ -76,9 +72,9 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "根据角色编号获取详细信息", nickname = "SysRoleGetInfo")
     @SaCheckPermission("system:role:query")
     @GetMapping(value = "/info")
-    public R<SysRole> info(@ApiParam(value = "角色ID",required = true) @RequestParam Long roleId) {
+    public R<SysRoleVo> info(@ApiParam(value = "角色ID",required = true) @RequestParam Long roleId) {
         roleService.checkRoleDataScope(roleId);
-        return R.ok(roleService.selectRoleById(roleId));
+        return R.ok(roleService.selectRoleVoById(roleId));
     }
 
     /**
@@ -170,8 +166,8 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "获取角色选择框列表", nickname = "SysRoleGetOptionSelect")
     @SaCheckPermission("system:role:query")
     @GetMapping("/optionSelect")
-    public R<List<SysRole>> optionSelect() {
-        return R.ok(roleService.selectRoleAll());
+    public R<List<SysRoleVo>> optionSelect() {
+        return R.ok(roleService.selectRoleVoAll());
     }
 
     /**
@@ -180,17 +176,12 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "查询已分配用户角色列表", nickname = "SysRolePostAllocatedList")
     @SaCheckPermission("system:role:list")
     @PostMapping("/authUser/allocatedList")
-    public TableDataInfo<SysUser> allocatedList(@RequestBody(required = false) SysUserQuery userQuery,
-                                                @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
-                                                @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
-                                                @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
-                                                @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPageNum(pageNum);
-        pageQuery.setPageSize(pageSize);
-        pageQuery.setOrderByColumn(orderByColumn);
-        pageQuery.setIsAsc(isAsc);
-        return userService.selectAllocatedList(userQuery, pageQuery);
+    public TableDataInfo<SysUserVo> allocatedList(@RequestBody(required = false) SysUserPageQueryBo userPageQuery) {
+        // 组装分页参数
+        PageQuery pageQuery = BeanCopyUtils.copy(userPageQuery, PageQuery.class);
+        // 组装查询参数
+        SysUserQueryBo userQuery = BeanCopyUtils.copy(userPageQuery, SysUserQueryBo.class);
+        return userService.selectAllocatedVoList(userQuery, pageQuery);
     }
 
     /**
@@ -199,17 +190,12 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "查询未分配用户角色列表", nickname = "SysRolePostUnallocatedList")
     @SaCheckPermission("system:role:list")
     @PostMapping("/authUser/unallocatedList")
-    public TableDataInfo<SysUser> unallocatedList(@RequestBody(required = false) SysUserQuery userQuery,
-                                                  @ApiParam(value = "当前页数", defaultValue = "1") @RequestParam(required = false) Integer pageNum,
-                                                  @ApiParam(value = "分页大小", defaultValue = "10") @RequestParam(required = false) Integer pageSize,
-                                                  @ApiParam("排序列") @RequestParam(required = false) String orderByColumn,
-                                                  @ApiParam(value = "排序的方向", example = "asc,desc") @RequestParam(required = false) String isAsc) {
-        PageQuery pageQuery = new PageQuery();
-        pageQuery.setPageNum(pageNum);
-        pageQuery.setPageSize(pageSize);
-        pageQuery.setOrderByColumn(orderByColumn);
-        pageQuery.setIsAsc(isAsc);
-        return userService.selectUnallocatedList(userQuery, pageQuery);
+    public TableDataInfo<SysUserVo> unallocatedList(@RequestBody(required = false) SysUserPageQueryBo userPageQuery) {
+        // 组装分页参数
+        PageQuery pageQuery = BeanCopyUtils.copy(userPageQuery, PageQuery.class);
+        // 组装查询参数
+        SysUserQueryBo userQuery = BeanCopyUtils.copy(userPageQuery, SysUserQueryBo.class);
+        return userService.selectUnallocatedVoList(userQuery, pageQuery);
     }
 
     /**
@@ -230,7 +216,7 @@ public class SysRoleController extends BaseController {
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/cancelAll")
-    public R<Void> cancelAuthUserAll(@RequestBody @Validated AuthUserAllBody body) {
+    public R<Void> cancelAuthUserAll(@RequestBody @Validated AuthUserAllBo body) {
         return toAjax(roleService.deleteAuthUsers(body.getRoleId(), body.getUserIds()));
     }
 
@@ -241,7 +227,7 @@ public class SysRoleController extends BaseController {
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/selectAll")
-    public R<Void> selectAuthUserAll(@RequestBody @Validated AuthUserAllBody body) {
+    public R<Void> selectAuthUserAll(@RequestBody @Validated AuthUserAllBo body) {
         roleService.checkRoleDataScope(body.getRoleId());
         return toAjax(roleService.insertAuthUsers(body.getRoleId(), body.getUserIds()));
     }
