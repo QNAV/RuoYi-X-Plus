@@ -8,8 +8,10 @@ import com.ruoyi.common.core.domain.bo.UserNameLoginBo;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.bo.SmsLoginBo;
+import com.ruoyi.common.core.domain.vo.SysUserVo;
 import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.core.domain.vo.RouterVo;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.system.service.ISysMenuService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.system.service.SysLoginService;
@@ -117,12 +119,13 @@ public class SysLoginController {
     @GetMapping("/info")
     public R<UserInfoVo> info() {
         UserInfoVo data = new UserInfoVo();
-        SysUser user = userService.selectUserById(LoginHelper.getUserId());
+        SysUserVo userVo = userService.selectUserVoById(LoginHelper.getUserId());
+        SysUser user = BeanCopyUtils.copy(userVo, SysUser.class);
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(user);
         // 权限集合
         Set<String> permissions = permissionService.getMenuPermission(user);
-        data.setUser(user);
+        data.setUser(userVo);
         data.setRoles(roles);
         data.setPermissions(permissions);
         return R.ok(data);

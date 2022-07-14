@@ -93,13 +93,13 @@ public class TableDataInfo<T> implements Serializable {
         /**
          * 总记录数
          */
-        @ApiModelProperty("总记录数")
+        @ApiModelProperty(value = "总记录数", required = true)
         private long total;
 
         /**
          * 列表数据
          */
-        @ApiModelProperty("列表数据")
+        @ApiModelProperty(value = "列表数据", required = true)
         private List<T> rows;
     }
 

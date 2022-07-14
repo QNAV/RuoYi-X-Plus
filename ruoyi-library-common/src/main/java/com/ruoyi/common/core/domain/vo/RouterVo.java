@@ -56,8 +56,8 @@ public class RouterVo {
     /**
      * 当你一个路由下面的 children 声明的路由大于1个时，自动会变成嵌套的模式--如组件页面
      */
-    @ApiModelProperty(value = "当你一个路由下面的 children 声明的路由大于1个时，自动会变成嵌套的模式--如组件页面")
-    private Boolean alwaysShow;
+    @ApiModelProperty(value = "当你一个路由下面的 children 声明的路由大于1个时，自动会变成嵌套的模式--如组件页面", required = true)
+    private Boolean alwaysShow = false;
 
     /**
      * 其他元素
