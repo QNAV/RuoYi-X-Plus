@@ -15,19 +15,19 @@ public class CaptchaImageVo {
     /**
      * 验证码开关
      */
-    @ApiModelProperty("验证码开关")
+    @ApiModelProperty(value = "验证码开关", required = true)
     private boolean captchaOnOff;
 
     /**
      * 验证码唯一标识符
      */
-    @ApiModelProperty("验证码唯一标识符")
+    @ApiModelProperty(value = "验证码唯一标识符", required = true)
     private String uuid;
 
     /**
      * 图片base64
      */
-    @ApiModelProperty("图片base64")
+    @ApiModelProperty(value = "图片base64", required = true)
     private String img;
 
 }
