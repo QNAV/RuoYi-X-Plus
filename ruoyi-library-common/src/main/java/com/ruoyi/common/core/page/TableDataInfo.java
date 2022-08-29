@@ -49,7 +49,7 @@ public class TableDataInfo<T> implements Serializable {
      */
     public TableDataInfo(List<T> list, long total) {
         this.data = new TableData<>();
-        this.data.setRows(list);
+        this.data.setData(list);
         this.data.setTotal(total);
     }
 
@@ -58,7 +58,7 @@ public class TableDataInfo<T> implements Serializable {
         rspData.setCode(HttpStatus.HTTP_OK);
         rspData.setMsg("查询成功");
         TableData<T> tableData = new TableData<>();
-        tableData.setRows(page.getRecords());
+        tableData.setData(page.getRecords());
         tableData.setTotal(page.getTotal());
         rspData.setData(tableData);
         return rspData;
@@ -69,7 +69,7 @@ public class TableDataInfo<T> implements Serializable {
         rspData.setCode(HttpStatus.HTTP_OK);
         rspData.setMsg("查询成功");
         TableData<T> tableData = new TableData<>();
-        tableData.setRows(list);
+        tableData.setData(list);
         tableData.setTotal(list.size());
         rspData.setData(tableData);
         return rspData;
@@ -100,7 +100,7 @@ public class TableDataInfo<T> implements Serializable {
          * 列表数据
          */
         @ApiModelProperty(value = "列表数据", required = true)
-        private List<T> rows;
+        private List<T> data;
     }
 
 }
