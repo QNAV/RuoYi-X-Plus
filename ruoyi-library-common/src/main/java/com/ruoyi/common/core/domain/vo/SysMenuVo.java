@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysMenu", description = "菜单权限视图对象")
+@ApiModel(value = "SysMenu", description = "菜单权限视图对象", parent = TreeVo.class)
 public class SysMenuVo extends TreeVo<SysMenuVo> {
 
     /**

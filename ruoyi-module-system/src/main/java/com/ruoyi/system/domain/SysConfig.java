@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_config")
 @ExcelIgnoreUnannotated
-@ApiModel(value = "SysConfig", description = "参数配置业务对象")
+@ApiModel(value = "SysConfig", description = "参数配置业务对象", parent = BaseEntity.class)
 public class SysConfig extends BaseEntity {
 
     /**

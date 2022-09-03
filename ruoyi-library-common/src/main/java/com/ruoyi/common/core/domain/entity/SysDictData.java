@@ -8,6 +8,7 @@ import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.convert.ExcelDictConvert;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.core.domain.TreeEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -26,7 +27,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_dict_data")
 @ExcelIgnoreUnannotated
-@ApiModel(value = "SysDictData", description = "字典数据业务对象")
+@ApiModel(value = "SysDictData", description = "字典数据业务对象", parent = BaseEntity.class)
 public class SysDictData extends BaseEntity {
 
     /**

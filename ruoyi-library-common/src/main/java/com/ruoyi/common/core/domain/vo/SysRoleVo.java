@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysRoleVo", description = "角色视图对象")
+@ApiModel(value = "SysRoleVo", description = "角色视图对象", parent = BaseVo.class)
 public class SysRoleVo extends BaseVo {
 
     /**

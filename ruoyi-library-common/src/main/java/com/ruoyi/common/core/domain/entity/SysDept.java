@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_dept")
-@ApiModel(value = "SysDept", description = "部门业务对象")
+@ApiModel(value = "SysDept", description = "部门业务对象", parent = TreeEntity.class)
 public class SysDept extends TreeEntity<SysDept> {
     private static final long serialVersionUID = 1L;
 

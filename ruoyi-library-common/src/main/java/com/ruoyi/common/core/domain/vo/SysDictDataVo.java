@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysDictDataVo", description = "字典数据视图对象")
+@ApiModel(value = "SysDictDataVo", description = "字典数据视图对象", parent = BaseVo.class)
 public class SysDictDataVo extends BaseVo {
 
     /**

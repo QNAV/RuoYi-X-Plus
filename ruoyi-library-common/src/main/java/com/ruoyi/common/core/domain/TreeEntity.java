@@ -1,6 +1,7 @@
 package com.ruoyi.common.core.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ApiModel(description = "Tree基类", parent = BaseEntity.class)
 public class TreeEntity<T> extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

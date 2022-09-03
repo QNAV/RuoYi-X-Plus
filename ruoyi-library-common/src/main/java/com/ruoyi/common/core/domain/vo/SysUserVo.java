@@ -22,7 +22,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysUserVo", description = "用户信息视图对象")
+@ApiModel(value = "SysUserVo", description = "用户信息视图对象", parent = BaseVo.class)
 public class SysUserVo extends BaseVo {
 
     /**

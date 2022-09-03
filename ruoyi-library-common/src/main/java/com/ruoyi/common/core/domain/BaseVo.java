@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ import java.util.Date;
  */
 
 @Data
+@ApiModel(description = "Vo基类")
 public class BaseVo implements Serializable {
 
     private static final long serialVersionUID = 1L;

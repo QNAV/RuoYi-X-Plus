@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ApiModel(description = "TreeVo基类", parent = BaseVo.class)
 public class TreeVo<T> extends BaseVo {
 
     private static final long serialVersionUID = 1L;

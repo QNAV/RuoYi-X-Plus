@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_notice")
-@ApiModel(value = "SysNotice", description = "通知公告实体对象")
+@ApiModel(value = "SysNotice", description = "通知公告实体对象", parent = BaseEntity.class)
 public class SysNotice extends BaseEntity {
 
     /**
