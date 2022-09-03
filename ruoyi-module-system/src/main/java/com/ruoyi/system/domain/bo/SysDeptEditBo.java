@@ -93,9 +93,10 @@ public class SysDeptEditBo {
     private String parentName;
 
     /**
-     * 父菜单ID
+     * 父菜单ID, 无父级则传0
      */
-    @ApiModelProperty(value = "父菜单ID")
+    @ApiModelProperty(value = "父菜单ID, 无父级则传0", required = true)
+    @NotNull
     private Long parentId;
 
     /**
