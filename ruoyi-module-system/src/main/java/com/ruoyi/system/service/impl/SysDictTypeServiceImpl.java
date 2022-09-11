@@ -13,6 +13,7 @@ import com.ruoyi.common.core.domain.entity.SysDictType;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.service.DictService;
 import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
 import com.ruoyi.system.domain.bo.SysDictTypeQueryBo;
@@ -86,14 +87,16 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
      */
     @Override
     public List<SysDictDataVo> selectDictDataByType(String dictType) {
-        List<SysDictDataVo> dictDatas = RedisUtils.getCacheObject(getCacheKey(dictType));
+        List<SysDictData> dictDatas = RedisUtils.getCacheObject(getCacheKey(dictType));
+        List<SysDictDataVo> dictDataVos = new ArrayList<>();
         if (CollUtil.isNotEmpty(dictDatas)) {
-            return dictDatas;
+            BeanCopyUtils.copyList(dictDatas, SysDictDataVo.class);
+            return dictDataVos;
         }
-        dictDatas = dictDataMapper.selectDictDataByType(dictType);
+        dictDataVos = dictDataMapper.selectDictDataByType(dictType);
         if (CollUtil.isNotEmpty(dictDatas)) {
             RedisUtils.setCacheObject(getCacheKey(dictType), dictDatas);
-            return dictDatas;
+            return dictDataVos;
         }
         return null;
     }
