@@ -90,7 +90,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
         List<SysDictData> dictDatas = RedisUtils.getCacheObject(getCacheKey(dictType));
         List<SysDictDataVo> dictDataVos = new ArrayList<>();
         if (CollUtil.isNotEmpty(dictDatas)) {
-            BeanCopyUtils.copyList(dictDatas, SysDictDataVo.class);
+            dictDataVos = BeanCopyUtils.copyList(dictDatas, SysDictDataVo.class);
             return dictDataVos;
         }
         dictDataVos = dictDataMapper.selectDictDataByType(dictType);
