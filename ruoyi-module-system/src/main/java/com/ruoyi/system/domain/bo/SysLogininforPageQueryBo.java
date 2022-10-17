@@ -11,7 +11,7 @@ import java.util.Date;
  * 系统访问记录分页查询对象
  * @author weibocy
  */
-@ApiModel(value = "SysLogininforPageQueryBo", description = "系统访问记录分页查询对象")
+@ApiModel(value = "SysLogininforPageQueryBo", description = "系统访问记录分页查询对象", parent = PageQuery.class)
 @Data
 public class SysLogininforPageQueryBo extends PageQuery {
 

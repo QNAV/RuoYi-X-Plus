@@ -9,7 +9,7 @@ import lombok.Data;
  * 对象存储配置分页查询对象
  * @author weibocy
  */
-@ApiModel(value = "SysOssConfigPageQueryBo", description = "对象存储配置分页查询对象")
+@ApiModel(value = "SysOssConfigPageQueryBo", description = "对象存储配置分页查询对象", parent = PageQuery.class)
 @Data
 public class SysOssConfigPageQueryBo extends PageQuery {
 

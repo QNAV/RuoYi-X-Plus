@@ -11,7 +11,7 @@ import java.util.Date;
  * 参数配置分页查询对象
  * @author weibocy
  */
-@ApiModel(value = "SysConfigPageQueryBo", description = "参数配置分页查询对象")
+@ApiModel(value = "SysConfigPageQueryBo", description = "参数配置分页查询对象", parent = PageQuery.class)
 @Data
 public class SysConfigPageQueryBo extends PageQuery {
 

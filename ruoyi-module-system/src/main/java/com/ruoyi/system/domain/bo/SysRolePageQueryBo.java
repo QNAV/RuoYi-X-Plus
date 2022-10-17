@@ -11,7 +11,7 @@ import java.util.Date;
  * 角色查询对象
  * @author weibocy
  */
-@ApiModel(value = "SysRoleQueryBo", description = "角色查询对象")
+@ApiModel(value = "SysRoleQueryBo", description = "角色查询对象", parent = PageQuery.class)
 @Data
 public class SysRolePageQueryBo extends PageQuery {
 

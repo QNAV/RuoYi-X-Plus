@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_menu")
-@ApiModel(value = "SysMenu", description = "菜单权限业务对象", parent = TreeEntity.class)
+@ApiModel(value = "SysMenu", description = "菜单权限业务对象")
 public class SysMenu extends TreeEntity<SysMenu> {
 
     /**

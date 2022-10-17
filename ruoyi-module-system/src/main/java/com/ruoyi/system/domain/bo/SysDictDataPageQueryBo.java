@@ -9,7 +9,7 @@ import lombok.Data;
  * 字典数据分页查询对象
  * @author weibocy
  */
-@ApiModel(value = "SysDictDataPageQueryBo", description = "字典数据分页查询对象")
+@ApiModel(value = "SysDictDataPageQueryBo", description = "字典数据分页查询对象", parent = PageQuery.class)
 @Data
 public class SysDictDataPageQueryBo extends PageQuery {
 

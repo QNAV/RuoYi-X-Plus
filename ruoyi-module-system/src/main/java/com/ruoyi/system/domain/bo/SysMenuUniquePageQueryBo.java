@@ -6,12 +6,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 菜单名称是否唯一查询对象
+ * 菜单名称是否唯一分页查询对象
  * @author weibocy
  */
 @Data
-@ApiModel(value = "SysMenuUniqueQueryBo", description = "菜单名称是否唯一查询对象")
-public class SysMenuUniqueQueryBo extends PageQuery {
+@ApiModel(value = "SysMenuUniquePageQueryBo", description = "菜单名称是否唯一分页查询对象", parent = PageQuery.class)
+public class SysMenuUniquePageQueryBo extends PageQuery {
 
     /**
      * 父菜单ID

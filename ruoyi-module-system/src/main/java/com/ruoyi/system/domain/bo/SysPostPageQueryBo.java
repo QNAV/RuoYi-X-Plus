@@ -9,7 +9,7 @@ import lombok.Data;
  * 岗位信息分页查询对象
  * @author weibocy
  */
-@ApiModel(value = "SysPostPageQueryBo", description = "岗位信息分页查询对象")
+@ApiModel(value = "SysPostPageQueryBo", description = "岗位信息分页查询对象", parent = PageQuery.class)
 @Data
 public class SysPostPageQueryBo extends PageQuery {
 

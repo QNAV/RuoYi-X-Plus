@@ -112,8 +112,8 @@ public class SysUserController extends BaseController {
      */
     @ApiOperation(value = "根据用户编号获取详细信息", nickname = "SysUserGetInfo")
     @SaCheckPermission("system:user:query")
-    @GetMapping(value = {"/info"})
-    public R<UserDetailVo> info(@ApiParam(value = "用户ID",required = true) @RequestParam Long userId) {
+    @GetMapping(value = {"/","/info"})
+    public R<UserDetailVo> info(@ApiParam(value = "用户ID",required = false) @RequestParam(required = false) Long userId) {
         userService.checkUserDataScope(userId);
         UserDetailVo data = new UserDetailVo();
         List<SysRoleVo> roles = roleService.selectRoleVoAll();

@@ -13,7 +13,7 @@ import java.util.Date;
  * @author weibocy
  */
 @Data
-@ApiModel(value = "SysOssVo", description = "OSS对象存储视图对象")
+@ApiModel(value = "SysOssVo", description = "OSS对象存储视图对象", parent = BaseVo.class)
 public class SysOssVo extends BaseVo {
 
     private static final long serialVersionUID = 1L;

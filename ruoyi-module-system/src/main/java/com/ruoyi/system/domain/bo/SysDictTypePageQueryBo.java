@@ -12,7 +12,7 @@ import java.util.Date;
  * 字典类型分页查询对象
  * @author weibocy
  */
-@ApiModel(value = "SysDictTypePageQueryBo", description = "字典类型分页查询对象")
+@ApiModel(value = "SysDictTypePageQueryBo", description = "字典类型分页查询对象", parent = PageQuery.class)
 @Data
 public class SysDictTypePageQueryBo extends PageQuery {
 

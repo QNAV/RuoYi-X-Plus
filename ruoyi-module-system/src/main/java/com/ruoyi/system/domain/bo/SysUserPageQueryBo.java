@@ -12,7 +12,7 @@ import java.util.Date;
  * @author weibocy
  */
 @Data
-@ApiModel(value = "SysUserPageQueryBo", description = "用户信息分页查询对象")
+@ApiModel(value = "SysUserPageQueryBo", description = "用户信息分页查询对象", parent = PageQuery.class)
 public class SysUserPageQueryBo extends PageQuery {
 
     /**

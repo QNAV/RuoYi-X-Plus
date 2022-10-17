@@ -11,7 +11,7 @@ import java.util.Date;
  * 操作日志记录分页查询对象
  * @author weibocy
  */
-@ApiModel(value = "SysOperLogPageQueryBo", description = "操作日志记录分页查询对象")
+@ApiModel(value = "SysOperLogPageQueryBo", description = "操作日志记录分页查询对象", parent = PageQuery.class)
 @Data
 public class SysOperLogPageQueryBo extends PageQuery {
 

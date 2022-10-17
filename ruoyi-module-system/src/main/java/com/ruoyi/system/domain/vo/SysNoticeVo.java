@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysNoticeVo", description = "通知公告视图对象")
+@ApiModel(value = "SysNoticeVo", description = "通知公告视图对象", parent = BaseVo.class)
 public class SysNoticeVo extends BaseVo {
 
     /**

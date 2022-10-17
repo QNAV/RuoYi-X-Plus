@@ -11,7 +11,7 @@ import java.util.Date;
  * OSS对象存储分页查询对象
  * @author weibocy
  */
-@ApiModel(value = "SysOssPageQueryBo", description = "OSS对象存储分页查询对象")
+@ApiModel(value = "SysOssPageQueryBo", description = "OSS对象存储分页查询对象", parent = PageQuery.class)
 @Data
 public class SysOssPageQueryBo extends PageQuery {
 

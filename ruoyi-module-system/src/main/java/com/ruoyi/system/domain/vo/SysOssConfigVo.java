@@ -13,7 +13,7 @@ import lombok.Data;
  * @author weibocy
  */
 @Data
-@ApiModel(value = "SysOssConfigVo", description = "对象存储配置视图对象")
+@ApiModel(value = "SysOssConfigVo", description = "对象存储配置视图对象", parent = BaseVo.class)
 @ExcelIgnoreUnannotated
 public class SysOssConfigVo extends BaseVo {
 

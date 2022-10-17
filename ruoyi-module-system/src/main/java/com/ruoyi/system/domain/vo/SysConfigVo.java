@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysConfigVo", description = "参数配置视图对象")
+@ApiModel(value = "SysConfigVo", description = "参数配置视图对象", parent = BaseVo.class)
 public class SysConfigVo extends BaseVo {
 
     /**

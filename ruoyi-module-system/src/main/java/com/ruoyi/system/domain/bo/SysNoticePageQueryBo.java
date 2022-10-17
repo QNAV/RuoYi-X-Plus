@@ -11,7 +11,7 @@ import lombok.Data;
  * @author weibocy
  */
 @Data
-@ApiModel(value = "SysNoticePageQueryBo", description = "通知公告分页查询对象")
+@ApiModel(value = "SysNoticePageQueryBo", description = "通知公告分页查询对象", parent = PageQuery.class)
 public class SysNoticePageQueryBo extends PageQuery {
 
     /**
