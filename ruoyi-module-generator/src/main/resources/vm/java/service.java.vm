@@ -2,7 +2,10 @@ package ${packageName}.service;
 
 import ${packageName}.domain.${ClassName};
 import ${packageName}.domain.vo.${ClassName}Vo;
-import ${packageName}.domain.bo.${ClassName}Bo;
+import ${packageName}.domain.bo.${ClassName}PageQueryBo;
+import ${packageName}.domain.bo.${ClassName}QueryBo;
+import ${packageName}.domain.bo.${ClassName}AddBo;
+import ${packageName}.domain.bo.${ClassName}EditBo;
 #if($table.crud || $table.sub)
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.bo.PageQuery;
@@ -21,33 +24,41 @@ public interface I${ClassName}Service {
 
     /**
      * 查询${functionName}
+     * @param ${pkColumn.javaField} 主键编号
      */
     ${ClassName}Vo queryById(${pkColumn.javaType} ${pkColumn.javaField});
 
 #if($table.crud || $table.sub)
     /**
-     * 查询${functionName}列表
+     * 查询${functionName}分页列表
+     * @param queryBo ${functionName}业务查询对象
+     * @param pageQuery 通用分页查询对象
      */
-    TableDataInfo<${ClassName}Vo> queryPageList(${ClassName}Bo bo, PageQuery pageQuery);
+    TableDataInfo<${ClassName}Vo> queryPageList(${ClassName}QueryBo queryBo, PageQuery pageQuery);
 #end
 
     /**
      * 查询${functionName}列表
+     * @param queryBo ${functionName}业务查询对象
      */
-    List<${ClassName}Vo> queryList(${ClassName}Bo bo);
+    List<${ClassName}Vo> queryList(${ClassName}QueryBo queryBo);
+
+    /**
+     * 新增${functionName}
+     * @param addBo ${functionName}业务新增对象
+     */
+    Boolean insertByBo(${ClassName}AddBo addBo);
 
     /**
      * 修改${functionName}
+     * @param editBo ${functionName}业务修改对象
      */
-    Boolean insertByBo(${ClassName}Bo bo);
-
-    /**
-     * 修改${functionName}
-     */
-    Boolean updateByBo(${ClassName}Bo bo);
+    Boolean updateByBo(${ClassName}EditBo editBo);
 
     /**
      * 校验并批量删除${functionName}信息
+     * @param ids 主键集合
+     * @param isValid 是否检验?
      */
     Boolean deleteWithValidByIds(Collection<${pkColumn.javaType}> ids, Boolean isValid);
 }

@@ -1,0 +1,50 @@
+package ${packageName}.domain.bo;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import javax.validation.constraints.*;
+
+import java.util.Date;
+
+#foreach ($import in $importList)
+import ${import};
+#end
+
+/**
+ * ${functionName}业务新增对象 ${tableName}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+
+@Data
+@ApiModel(value = "${ClassName}AddBo", description = "${functionName}业务新增对象")
+public class ${ClassName}AddBo {
+
+#foreach ($column in $columns)
+## 只包含新增标记字段和保留主键字段
+#if((!$table.isSuperColumn($column.javaField) && $column.isInsert) || $column.isPk == 1)
+    /**
+     * $column.columnComment
+     */
+## 保留主键字段 但是不在文档中显示
+#if( $column.isPk == 1)
+    @ApiModelProperty(hidden = true)
+## 字段必须&&字段不是主键
+#elseif($column.isRequired == 1 && $column.isPk != 1)
+    @ApiModelProperty(value = "$column.columnComment", required = true)
+    #if($column.javaType == 'String')
+    @NotBlank(message = "$column.columnComment不能为空")
+    #else
+    @NotNull(message = "$column.columnComment不能为空")
+    #end
+#else
+    @ApiModelProperty(value = "$column.columnComment")
+#end
+    private $column.javaType $column.javaField;
+
+#end
+#end
+
+}

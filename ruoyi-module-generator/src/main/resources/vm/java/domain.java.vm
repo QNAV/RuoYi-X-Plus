@@ -1,6 +1,8 @@
 package ${packageName}.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import java.io.Serializable;
@@ -30,6 +32,11 @@ import com.ruoyi.common.core.domain.TreeEntity;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("${tableName}")
+#if($table.crud || $table.sub)
+@ApiModel(value = "${ClassName}", description = "${functionName}实体对象", parent = BaseEntity.class)
+#elseif($table.tree)
+
+#end
 public class ${ClassName} extends ${Entity} {
 
     private static final long serialVersionUID=1L;
@@ -48,7 +55,9 @@ public class ${ClassName} extends ${Entity} {
 #if($column.isPk==1)
     @TableId(value = "$column.columnName")
 #end
+    @ApiModelProperty(value = "$column.columnComment")
     private $column.javaType $column.javaField;
+
 #end
 #end
 

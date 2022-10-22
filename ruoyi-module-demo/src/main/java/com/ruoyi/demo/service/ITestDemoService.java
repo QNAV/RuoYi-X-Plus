@@ -1,72 +1,60 @@
 package com.ruoyi.demo.service;
 
-import com.ruoyi.common.core.domain.bo.PageQuery;
-import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.demo.domain.TestDemo;
-import com.ruoyi.demo.domain.bo.TestDemoBo;
-import com.ruoyi.demo.domain.to.TestDemoQuery;
 import com.ruoyi.demo.domain.vo.TestDemoVo;
+import com.ruoyi.demo.domain.bo.TestDemoPageQueryBo;
+import com.ruoyi.demo.domain.bo.TestDemoQueryBo;
+import com.ruoyi.demo.domain.bo.TestDemoAddBo;
+import com.ruoyi.demo.domain.bo.TestDemoEditBo;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.core.domain.bo.PageQuery;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
- * 测试单表Service接口
+ * 测试单Service接口
  *
- * @author weibocy
- * @date 2021-07-26
+ * @author ruoyi
+ * @date 2022-10-22
  */
 public interface ITestDemoService {
 
     /**
-     * 查询单个
-     *
-     * @return
+     * 查询测试单
+     * @param id 主键编号
      */
     TestDemoVo queryById(Long id);
 
     /**
-     * 查询列表
+     * 查询测试单分页列表
+     * @param queryBo 测试单业务查询对象
+     * @param pageQuery 通用分页查询对象
      */
-    TableDataInfo<TestDemoVo> queryPageList(TestDemoQuery query, PageQuery pageQuery);
+    TableDataInfo<TestDemoVo> queryPageList(TestDemoQueryBo queryBo, PageQuery pageQuery);
 
     /**
-     * 自定义分页查询
+     * 查询测试单列表
+     * @param queryBo 测试单业务查询对象
      */
-    TableDataInfo<TestDemoVo> customPageList(TestDemoQuery query, PageQuery pageQuery);
+    List<TestDemoVo> queryList(TestDemoQueryBo queryBo);
 
     /**
-     * 查询列表
+     * 新增测试单
+     * @param addBo 测试单业务新增对象
      */
-    List<TestDemoVo> queryList(TestDemoQuery query);
+    Boolean insertByBo(TestDemoAddBo addBo);
 
     /**
-     * 根据新增业务对象插入测试单表
-     *
-     * @param bo 测试单表新增业务对象
-     * @return
+     * 修改测试单
+     * @param editBo 测试单业务修改对象
      */
-    Boolean insertByBo(TestDemoBo bo);
+    Boolean updateByBo(TestDemoEditBo editBo);
 
     /**
-     * 根据编辑业务对象修改测试单表
-     *
-     * @param bo 测试单表编辑业务对象
-     * @return
-     */
-    Boolean updateByBo(TestDemoBo bo);
-
-    /**
-     * 校验并删除数据
-     *
-     * @param ids     主键集合
-     * @param isValid 是否校验,true-删除前校验,false-不校验
-     * @return
+     * 校验并批量删除测试单信息
+     * @param ids 主键集合
+     * @param isValid 是否检验?
      */
     Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid);
-
-    /**
-     * 批量保存
-     */
-    Boolean saveBatch(List<TestDemo> list);
 }

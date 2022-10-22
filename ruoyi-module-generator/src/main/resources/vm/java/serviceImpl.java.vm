@@ -4,13 +4,17 @@ import cn.hutool.core.bean.BeanUtil;
     #if($table.crud || $table.sub)
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.bo.PageQuery;
+import com.ruoyi.common.utils.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 #end
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ${packageName}.domain.bo.${ClassName}Bo;
+import ${packageName}.domain.bo.${ClassName}PageQueryBo;
+import ${packageName}.domain.bo.${ClassName}QueryBo;
+import ${packageName}.domain.bo.${ClassName}AddBo;
+import ${packageName}.domain.bo.${ClassName}EditBo;
 import ${packageName}.domain.vo.${ClassName}Vo;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.mapper.${ClassName}Mapper;
@@ -30,10 +34,14 @@ import java.util.Collection;
 @Service
 public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 
+    /**
+    * ${functionName}Mapper接口
+    */
     private final ${ClassName}Mapper baseMapper;
 
     /**
      * 查询${functionName}
+     * @param ${pkColumn.javaField} 主键编号
      */
     @Override
     public ${ClassName}Vo queryById(${pkColumn.javaType} ${pkColumn.javaField}){
@@ -42,11 +50,13 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 
 #if($table.crud || $table.sub)
     /**
-     * 查询${functionName}列表
+     * 查询${functionName}分页列表
+     * @param queryBo ${functionName}业务查询对象
+     * @param pageQuery 通用分页查询对象
      */
     @Override
-    public TableDataInfo<${ClassName}Vo> queryPageList(${ClassName}Bo bo, PageQuery pageQuery) {
-        LambdaQueryWrapper<${ClassName}> lqw = buildQueryWrapper(bo);
+    public TableDataInfo<${ClassName}Vo> queryPageList(${ClassName}QueryBo queryBo, PageQuery pageQuery) {
+        LambdaQueryWrapper<${ClassName}> lqw = buildQueryWrapper(queryBo);
         Page<${ClassName}Vo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
     }
@@ -54,15 +64,19 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 
     /**
      * 查询${functionName}列表
+     * @param queryBo ${functionName}业务查询对象
      */
     @Override
-    public List<${ClassName}Vo> queryList(${ClassName}Bo bo) {
-        LambdaQueryWrapper<${ClassName}> lqw = buildQueryWrapper(bo);
+    public List<${ClassName}Vo> queryList(${ClassName}QueryBo queryBo) {
+        LambdaQueryWrapper<${ClassName}> lqw = buildQueryWrapper(queryBo);
         return baseMapper.selectVoList(lqw);
     }
 
-    private LambdaQueryWrapper<${ClassName}> buildQueryWrapper(${ClassName}Bo bo) {
-        Map<String, Object> params = bo.getParams();
+    /**
+     * 构建${functionName}查询包装器
+     * @param queryBo ${functionName}业务查询对象
+     */
+    private LambdaQueryWrapper<${ClassName}> buildQueryWrapper(${ClassName}QueryBo queryBo) {
         LambdaQueryWrapper<${ClassName}> lqw = Wrappers.lambdaQuery();
 #foreach($column in $columns)
 #if($column.query)
@@ -74,14 +88,14 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 #set($mpMethod=$column.queryType.toLowerCase())
 #if($queryType != 'BETWEEN')
 #if($javaType == 'String')
-#set($condition='StringUtils.isNotBlank(bo.get'+$AttrName+'())')
+#set($condition='StringUtils.isNotBlank(queryBo.get'+$AttrName+'())')
 #else
-#set($condition='bo.get'+$AttrName+'() != null')
+#set($condition='queryBo.get'+$AttrName+'() != null')
 #end
-        lqw.$mpMethod($condition, ${ClassName}::get$AttrName, bo.get$AttrName());
+        lqw.$mpMethod($condition, ${ClassName}::get$AttrName, queryBo.get$AttrName());
 #else
-        lqw.between(params.get("begin$AttrName") != null && params.get("end$AttrName") != null,
-            ${ClassName}::get$AttrName ,params.get("begin$AttrName"), params.get("end$AttrName"));
+        lqw.between(queryBo != null && queryBo.getBeginTime() != null && queryBo.getEndTime() != null,
+            ${ClassName}::getCreateTime, queryBo.getBeginCreateTime(), queryBo.getEndCreateTime());
 #end
 #end
 #end
@@ -90,38 +104,43 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 
     /**
      * 新增${functionName}
+     * @param addBo ${functionName}业务新增对象
      */
     @Override
-    public Boolean insertByBo(${ClassName}Bo bo) {
-        ${ClassName} add = BeanUtil.toBean(bo, ${ClassName}.class);
+    public Boolean insertByBo(${ClassName}AddBo addBo) {
+        ${ClassName} add = BeanUtil.toBean(addBo, ${ClassName}.class);
         validEntityBeforeSave(add);
         boolean flag = baseMapper.insert(add) > 0;
 #set($pk=$pkColumn.javaField.substring(0,1).toUpperCase() + ${pkColumn.javaField.substring(1)})
         if (flag) {
-            bo.set$pk(add.get$pk());
+            addBo.set$pk(add.get$pk());
         }
         return flag;
     }
 
     /**
      * 修改${functionName}
+     * @param editBo ${functionName}业务修改对象
      */
     @Override
-    public Boolean updateByBo(${ClassName}Bo bo) {
-        ${ClassName} update = BeanUtil.toBean(bo, ${ClassName}.class);
+    public Boolean updateByBo(${ClassName}EditBo editBo) {
+        ${ClassName} update = BeanUtil.toBean(editBo, ${ClassName}.class);
         validEntityBeforeSave(update);
         return baseMapper.updateById(update) > 0;
     }
 
     /**
      * 保存前的数据校验
+     * @param entity ${functionName}实体对象
      */
     private void validEntityBeforeSave(${ClassName} entity){
         //TODO 做一些数据校验,如唯一约束
     }
 
     /**
-     * 批量删除${functionName}
+     * 校验并批量删除${functionName}信息
+     * @param ids 主键集合
+     * @param isValid 是否检验?
      */
     @Override
     public Boolean deleteWithValidByIds(Collection<${pkColumn.javaType}> ids, Boolean isValid) {

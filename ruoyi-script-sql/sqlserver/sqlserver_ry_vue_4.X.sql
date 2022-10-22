@@ -161,6 +161,7 @@ CREATE TABLE [gen_table_column]
     [column_name]    nvarchar(200)                NULL,
     [column_comment] nvarchar(500)                NULL,
     [column_type]    nvarchar(100)                NULL,
+    [column_default] nvarchar(200)                NULL,
     [java_type]      nvarchar(500)                NULL,
     [java_field]     nvarchar(200)                NULL,
     [is_pk]          nchar(1)                     NULL,
@@ -214,6 +215,12 @@ EXEC sys.sp_addextendedproperty
     'SCHEMA', N'dbo',
     'TABLE', N'gen_table_column',
     'COLUMN', N'column_type'
+GO
+EXEC sys.sp_addextendedproperty
+'MS_Description', N'列默认值' ,
+'SCHEMA', N'dbo',
+'TABLE', N'gen_table_column',
+'COLUMN', N'column_default'
 GO
 EXEC sys.sp_addextendedproperty
     'MS_Description', N'JAVA类型' ,

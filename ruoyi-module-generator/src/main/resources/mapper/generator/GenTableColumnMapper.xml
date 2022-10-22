@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="columnName"     column="column_name"    />
         <result property="columnComment"  column="column_comment" />
         <result property="columnType"     column="column_type"    />
+        <result property="columnDefault"  column="column_default" />
         <result property="javaType"       column="java_type"      />
         <result property="javaField"      column="java_field"     />
         <result property="isPk"           column="is_pk"          />
@@ -37,7 +38,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                    ordinal_position as sort,
                    column_comment,
                    (case when extra = 'auto_increment' then '1' else '0' end) as is_increment,
-                   column_type
+                   column_type,
+                   column_default
             from information_schema.columns where table_schema = (select database()) and table_name = (#{tableName})
             order by ordinal_position
         </if>

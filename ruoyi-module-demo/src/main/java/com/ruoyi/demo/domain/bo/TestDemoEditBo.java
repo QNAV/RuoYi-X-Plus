@@ -1,70 +1,63 @@
-package com.ruoyi.demo.domain.vo;
+package com.ruoyi.demo.domain.bo;
 
-import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.ruoyi.common.annotation.ExcelDictFormat;
-import com.ruoyi.common.convert.ExcelDictConvert;
-import com.ruoyi.common.core.domain.BaseVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import javax.validation.constraints.*;
+
 import java.util.Date;
 
 
-
 /**
- * 测试单视图对象 test_demo
+ * 测试单业务编辑对象 test_demo
  *
  * @author ruoyi
  * @date 2022-10-21
  */
-@Data
-@ApiModel(value = "TestDemoVo", description = "测试单视图对象", parent = BaseVo.class)
-@ExcelIgnoreUnannotated
-public class TestDemoVo extends BaseVo {
 
-    private static final long serialVersionUID = 1L;
+@Data
+@ApiModel(value = "TestDemoEditBo", description = "测试单业务编辑对象")
+public class TestDemoEditBo {
 
     /**
      * 主键
      */
-    @ExcelProperty(value = "主键")
     @ApiModelProperty(value = "主键", required = true)
+    @NotNull(message = "主键不能为空")
     private Long id;
 
     /**
      * 部门id
      */
-    @ExcelProperty(value = "部门id")
     @ApiModelProperty(value = "部门id", required = true)
+    @NotNull(message = "部门id不能为空")
     private Long deptId;
 
     /**
      * 用户id
      */
-    @ExcelProperty(value = "用户id")
     @ApiModelProperty(value = "用户id", required = true)
+    @NotNull(message = "用户id不能为空")
     private Long userId;
 
     /**
      * 排序号
      */
-    @ExcelProperty(value = "排序号")
     @ApiModelProperty(value = "排序号")
     private Integer orderNum;
 
     /**
      * key键
      */
-    @ExcelProperty(value = "key键")
     @ApiModelProperty(value = "key键", required = true)
+    @NotBlank(message = "key键不能为空")
     private String testKey;
 
     /**
      * 值
      */
-    @ExcelProperty(value = "值")
     @ApiModelProperty(value = "值", required = true)
+    @NotBlank(message = "值不能为空")
     private String value;
 
 

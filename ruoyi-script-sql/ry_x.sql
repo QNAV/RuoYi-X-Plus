@@ -63,6 +63,7 @@ CREATE TABLE `gen_table_column` (
   `column_name` varchar(200) DEFAULT NULL COMMENT '列名称',
   `column_comment` varchar(500) DEFAULT NULL COMMENT '列描述',
   `column_type` varchar(100) DEFAULT NULL COMMENT '列类型',
+  `column_default` varchar(200) DEFAULT NULL COMMENT '列默认值',
   `java_type` varchar(500) DEFAULT NULL COMMENT 'JAVA类型',
   `java_field` varchar(200) DEFAULT NULL COMMENT 'JAVA字段名',
   `is_pk` char(1) DEFAULT NULL COMMENT '是否主键（1是）',

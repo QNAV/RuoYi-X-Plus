@@ -63,7 +63,7 @@ public class GenUtils {
                 column.setJavaType(GenConstants.TYPE_BIGDECIMAL);
             }
             // 如果是整形
-            else if (str != null && str.length == 1 && Integer.parseInt(str[0]) <= 10) {
+            else if ((str != null && str.length == 1 && Integer.parseInt(str[0]) <= 10) || arraysContains(GenConstants.COLUMNTYPE_INTEGER, column.getColumnType())) {
                 column.setJavaType(GenConstants.TYPE_INTEGER);
             }
             // 长整形

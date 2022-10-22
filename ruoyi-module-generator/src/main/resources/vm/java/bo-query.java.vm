@@ -1,0 +1,47 @@
+package ${packageName}.domain.bo;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import javax.validation.constraints.*;
+
+import java.util.Date;
+
+#foreach ($import in $importList)
+import ${import};
+#end
+
+/**
+ * ${functionName}业务查询对象 ${tableName}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+
+@Data
+@ApiModel(value = "${ClassName}QueryBo", description = "${functionName}业务查询对象")
+public class ${ClassName}QueryBo {
+
+#foreach ($column in $columns)
+## 只包含查询标记字段
+#if(!$table.isSuperColumn($column.javaField) && $column.isQuery)
+    /**
+     * $column.columnComment
+     */
+    @ApiModelProperty(value = "$column.columnComment")
+    private $column.javaType $column.javaField;
+
+#end
+#end
+    /**
+     * 创建开始时间
+     */
+    @ApiModelProperty(value = "创建开始时间")
+    private Date createBeginTime;
+
+    /**
+     * 创建结束时间
+     */
+    @ApiModelProperty(value = "创建结束时间")
+    private Date createEndTime;
+}

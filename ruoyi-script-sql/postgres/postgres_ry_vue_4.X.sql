@@ -829,6 +829,7 @@ create table if not exists gen_table_column
     column_name    varchar(200) default null::varchar,
     column_comment varchar(500) default null::varchar,
     column_type    varchar(100) default null::varchar,
+    column_default varchar(200) default null::varchar,
     java_type      varchar(500) default null::varchar,
     java_field     varchar(200) default null::varchar,
     is_pk          char         default null::bpchar,
@@ -855,6 +856,7 @@ comment on column gen_table_column.table_id is '归属表编号';
 comment on column gen_table_column.column_name is '列名称';
 comment on column gen_table_column.column_comment is '列描述';
 comment on column gen_table_column.column_type is '列类型';
+comment on column gen_table_column.column_default is '列默认值';
 comment on column gen_table_column.java_type is 'JAVA类型';
 comment on column gen_table_column.java_field is 'JAVA字段名';
 comment on column gen_table_column.is_pk is '是否主键（1是）';

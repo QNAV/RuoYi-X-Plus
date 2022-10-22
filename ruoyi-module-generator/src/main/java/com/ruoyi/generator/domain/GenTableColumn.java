@@ -59,6 +59,12 @@ public class GenTableColumn extends BaseEntity {
     private String columnType;
 
     /**
+     * 列默认值
+     */
+    @ApiModelProperty("列默认值")
+    private String columnDefault;
+
+    /**
      * JAVA类型
      */
     @ApiModelProperty("JAVA类型")

@@ -133,7 +133,10 @@ public class VelocityUtils {
         List<String> templates = new ArrayList<String>();
         templates.add("vm/java/domain.java.vm");
         templates.add("vm/java/vo.java.vm");
-        templates.add("vm/java/bo.java.vm");
+        templates.add("vm/java/bo-add.java.vm");
+        templates.add("vm/java/bo-edit.java.vm");
+        templates.add("vm/java/bo-page-query.java.vm");
+        templates.add("vm/java/bo-query.java.vm");
         templates.add("vm/java/mapper.java.vm");
         templates.add("vm/java/service.java.vm");
         templates.add("vm/java/serviceImpl.java.vm");
