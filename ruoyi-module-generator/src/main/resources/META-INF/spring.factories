@@ -1,0 +1,4 @@
+# org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+# com.ruoyi.generator.config.GenConfig,\
+# com.ruoyi.generator.controller.GenController,\
+# com.ruoyi.generator.service.GenTableServiceImpl

@@ -1,0 +1,17 @@
+# org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+# com.ruoyi.system.runner.SystemApplicationRunner,\
+# com.ruoyi.system.service.impl.SysConfigServiceImpl,\
+# com.ruoyi.system.service.impl.SysDataScopeServiceImpl,\
+# com.ruoyi.system.service.impl.SysDeptServiceImpl,\
+# com.ruoyi.system.service.impl.SysDictDataServiceImpl,\
+# com.ruoyi.system.service.impl.SysDictTypeServiceImpl,\
+# com.ruoyi.system.service.impl.SysLogininforServiceImpl,\
+# com.ruoyi.system.service.impl.SysMenuServiceImpl,\
+# com.ruoyi.system.service.impl.SysNoticeServiceImpl,\
+# com.ruoyi.system.service.impl.SysOperLogServiceImpl,\
+# com.ruoyi.system.service.impl.SysOssConfigServiceImpl,\
+# com.ruoyi.system.service.impl.SysOssServiceImpl,\
+# com.ruoyi.system.service.impl.SysPostServiceImpl,\
+# com.ruoyi.system.service.impl.SysRoleServiceImpl,\
+# com.ruoyi.system.service.impl.SysSensitiveServiceImpl,\
+# com.ruoyi.system.service.impl.SysUserServiceImpl

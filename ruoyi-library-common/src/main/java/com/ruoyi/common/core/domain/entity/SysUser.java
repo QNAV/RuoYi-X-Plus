@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 用户对象 sys_user
+ * 后台用户实体对象 sys_user
  *
  * @author weibocy
  */
@@ -31,7 +31,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_user")
-@ApiModel(value = "SysUser", description = "用户信息业务对象", parent = BaseEntity.class)
+@ApiModel(value = "SysUser", description = "后台用户实体对象", parent = BaseEntity.class)
 public class SysUser extends BaseEntity {
 
     /**

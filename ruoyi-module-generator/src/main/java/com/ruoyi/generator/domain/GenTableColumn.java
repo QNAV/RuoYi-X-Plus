@@ -16,7 +16,9 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * 代码生成业务字段表 gen_table_column
- *
+ * ??? 暂时还不知道原作者设置updateStrategy的用意
+ * ??? 我这边编辑后发现is_pk、is_increment 被写空
+ * ??? 难道是原来vue版本的前端是对象参数全量传入的关系
  * @author weibocy
  */
 
@@ -49,7 +51,7 @@ public class GenTableColumn extends BaseEntity {
      * 列描述
      */
     @ApiModelProperty("列描述")
-    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String columnComment;
 
     /**
@@ -81,49 +83,49 @@ public class GenTableColumn extends BaseEntity {
      * 是否主键（1是）
      */
     @ApiModelProperty("是否主键（1是）")
-    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isPk;
 
     /**
      * 是否自增（1是）
      */
     @ApiModelProperty("是否自增（1是）")
-    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isIncrement;
 
     /**
      * 是否必填（1是）
      */
     @ApiModelProperty("是否必填（1是）")
-    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isRequired;
 
     /**
      * 是否为插入字段（1是）
      */
     @ApiModelProperty("是否为插入字段（1是）")
-    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isInsert;
 
     /**
      * 是否编辑字段（1是）
      */
     @ApiModelProperty("是否编辑字段（1是）")
-    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isEdit;
 
     /**
      * 是否列表字段（1是）
      */
     @ApiModelProperty("是否列表字段（1是）")
-    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isList;
 
     /**
      * 是否查询字段（1是）
      */
     @ApiModelProperty("是否查询字段（1是）")
-    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isQuery;
 
     /**

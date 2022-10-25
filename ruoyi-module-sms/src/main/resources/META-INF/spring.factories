@@ -1,0 +1,3 @@
+# org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+# com.ruoyi.sms.config.properties.SmsProperties,\
+# com.ruoyi.sms.config.SmsConfig

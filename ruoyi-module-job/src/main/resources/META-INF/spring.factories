@@ -1,0 +1,3 @@
+# org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+# com.ruoyi.job.config.properties.XxlJobProperties,\
+# com.ruoyi.job.service.SampleService
