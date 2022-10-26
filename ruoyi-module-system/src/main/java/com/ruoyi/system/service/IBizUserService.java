@@ -72,4 +72,11 @@ public interface IBizUserService {
      * @return
      */
     BizUser selectUserByPhoneNumber(String phoneNumber);
+
+    /**
+     * 根据openid查询业务用户信息
+     * @param openid openid
+     * @return
+     */
+    BizUser selectUserByOpenid(String openid);
 }

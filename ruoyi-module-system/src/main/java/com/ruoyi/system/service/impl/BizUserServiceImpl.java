@@ -159,7 +159,6 @@ public class BizUserServiceImpl implements IBizUserService {
     public BizUser selectUserByUserName(String username) {
         BizUserQueryBo queryBo = new BizUserQueryBo();
         queryBo.setUserName(username);
-        queryBo.setStatus(UserStatus.OK.getCode());
         LambdaQueryWrapper<BizUser> lqw = buildQueryWrapperByBiz(queryBo);
         return baseMapper.selectOne(lqw);
     }
@@ -173,7 +172,19 @@ public class BizUserServiceImpl implements IBizUserService {
     public BizUser selectUserByPhoneNumber(String phoneNumber) {
         BizUserQueryBo queryBo = new BizUserQueryBo();
         queryBo.setPhoneNumber(phoneNumber);
-        queryBo.setStatus(UserStatus.OK.getCode());
+        LambdaQueryWrapper<BizUser> lqw = buildQueryWrapperByBiz(queryBo);
+        return baseMapper.selectOne(lqw);
+    }
+
+    /**
+     * 根据openid查询业务用户信息
+     * @param openid openid
+     * @return
+     */
+    @Override
+    public BizUser selectUserByOpenid(String openid) {
+        BizUserQueryBo queryBo = new BizUserQueryBo();
+        queryBo.setOpenid(openid);
         LambdaQueryWrapper<BizUser> lqw = buildQueryWrapperByBiz(queryBo);
         return baseMapper.selectOne(lqw);
     }
