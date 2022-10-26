@@ -6,14 +6,14 @@
 
     <groupId>com.ruoyi</groupId>
     <artifactId>ruoyi-x-plus</artifactId>
-    <version>22.6.1</version>
+    <version>22.6.2</version>
 
     <name>RuoYi-X-Plus</name>
     <url>https://github.com/QNAV/RuoYi-X-Plus</url>
     <description>RuoYi-X-Plus中后台管理系统</description>
 
     <properties>
-        <ruoyi-x-plus.version>22.6.1</ruoyi-x-plus.version>
+        <ruoyi-x-plus.version>22.6.2</ruoyi-x-plus.version>
         <spring-boot.version>2.6.8</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -48,15 +48,15 @@
         <tencent.sms.version>3.1.530</tencent.sms.version>
 
         <!-- 微信小程序 -->
-        <weixin-java-miniapp.version>4.3.0</weixin-java-miniapp.version>
+        <weixin-java-miniapp.version>4.4.0</weixin-java-miniapp.version>
         <!-- 微信公众号 -->
-        <weixin-java-mp.version>4.3.0</weixin-java-mp.version>
+        <weixin-java-mp.version>4.4.0</weixin-java-mp.version>
         <!-- 企业微信 -->
-        <weixin-java-cp.version>4.3.0</weixin-java-cp.version>
+        <weixin-java-cp.version>4.4.0</weixin-java-cp.version>
         <!-- 微信开放平台 -->
-        <weixin-java-open.version>4.3.0</weixin-java-open.version>
+        <weixin-java-open.version>4.4.0</weixin-java-open.version>
         <!-- 微信支付 -->
-        <weixin-java-pay.version>4.3.0</weixin-java-pay.version>
+        <weixin-java-pay.version>4.4.0</weixin-java-pay.version>
 
         <!-- docker 配置 -->
         <docker.registry.url>localhost</docker.registry.url>
@@ -266,6 +266,35 @@
                 <version>${guava.version}</version>
             </dependency>
 
+
+            <!-- 微信小程序SDK -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-miniapp</artifactId>
+                <version>${weixin-java-miniapp.version}</version>
+            </dependency>
+
+            <!-- 微信公众号SDK -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-mp</artifactId>
+                <version>${weixin-java-mp.version}</version>
+            </dependency>
+
+            <!-- 微信企业微信SDK -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-cp</artifactId>
+                <version>${weixin-java-cp.version}</version>
+            </dependency>
+
+            <!-- 微信支付 -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-pay</artifactId>
+                <version>${weixin-java-pay.version}</version>
+            </dependency>
+
             <!-- 定时任务模块 -->
             <dependency>
                 <groupId>com.ruoyi</groupId>
@@ -315,6 +344,13 @@
                 <version>${ruoyi-x-plus.version}</version>
             </dependency>
 
+            <!-- weixin-miniapp微信小程序模块 -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-module-weixin-miniapp</artifactId>
+                <version>${ruoyi-x-plus.version}</version>
+            </dependency>
+
             <!-- demo模块 -->
             <dependency>
                 <groupId>com.ruoyi</groupId>
@@ -333,6 +369,7 @@
         <module>ruoyi-module-demo</module>
         <module>ruoyi-module-oss</module>
         <module>ruoyi-module-sms</module>
+        <module>ruoyi-module-weixin-miniapp</module>
         <module>ruoyi-module-system</module>
     </modules>
     <packaging>pom</packaging>

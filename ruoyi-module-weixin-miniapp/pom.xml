@@ -9,36 +9,24 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ruoyi-module-system</artifactId>
+    <artifactId>ruoyi-module-weixin-miniapp</artifactId>
 
     <description>
-        system系统模块
+        weixin-miniapp微信小程序模块
     </description>
 
     <dependencies>
 
-        <!-- 通用工具-->
+        <!-- 通用工具依赖库-->
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-library-common</artifactId>
         </dependency>
 
-        <!-- OSS功能模块 -->
+        <!-- 微信小程序SDK -->
         <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-module-oss</artifactId>
-        </dependency>
-
-        <!-- SMS功能模块 -->
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-module-sms</artifactId>
-        </dependency>
-
-        <!-- weixin-miniapp微信小程序模块 -->
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-module-weixin-miniapp</artifactId>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-miniapp</artifactId>
         </dependency>
 
     </dependencies>

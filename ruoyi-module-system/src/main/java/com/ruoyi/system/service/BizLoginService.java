@@ -1,21 +1,19 @@
 package com.ruoyi.system.service;
 
+import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.domain.bo.RoleBo;
 import com.ruoyi.common.core.domain.entity.BizUser;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.model.BizLoginUser;
 import com.ruoyi.common.core.domain.model.LoginUser;
-import com.ruoyi.common.core.domain.model.XcxLoginUser;
-import com.ruoyi.common.core.domain.vo.BizUserVo;
 import com.ruoyi.common.core.service.LogininforService;
 import com.ruoyi.common.enums.DeviceType;
 import com.ruoyi.common.enums.LoginType;
 import com.ruoyi.common.enums.UserStatus;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.exception.user.CaptchaException;
 import com.ruoyi.common.exception.user.CaptchaExpireException;
 import com.ruoyi.common.exception.user.UserException;
@@ -26,8 +24,10 @@ import com.ruoyi.system.domain.bo.BizUserAddBo;
 import com.ruoyi.system.domain.bo.BizUserEditBo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.List;
@@ -38,15 +38,21 @@ import java.util.function.Supplier;
  *
  * @author weibocy
  */
-@RequiredArgsConstructor
 @Slf4j
 @Service
 public class BizLoginService {
 
-    private final IBizUserService userService;
-    private final ISysConfigService configService;
-    private final LogininforService asyncService;
-    private final SysPermissionService permissionService;
+    @Resource
+    private IBizUserService userService;
+    @Resource
+    private ISysConfigService configService;
+
+    @Resource
+    @Qualifier("bizLogininforServiceImpl")
+    private LogininforService asyncService;
+
+//    @Resource
+//    private WeixinMiniappService weixinMiniappService;
 
     /**
      * 登录验证
@@ -77,7 +83,7 @@ public class BizLoginService {
     }
 
     /**
-     * 短信验证码登录登录
+     * 短信验证码登录
      * @param phoneNumber 手机号
      * @param smsCode 验证码
      * @return
@@ -93,7 +99,7 @@ public class BizLoginService {
         // 登录成功后，删除验证码数据，确保只有一次成功可用
         deleteSmsCode(phoneNumber);
         // 此处可根据登录用户的数据不同 自行创建 loginUser
-        LoginUser loginUser = buildLoginUser(user);
+        BizLoginUser loginUser = buildLoginUser(user);
         // 生成token
         LoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
@@ -103,20 +109,27 @@ public class BizLoginService {
     }
 
 
-    public String xcxLogin(String xcxCode) {
+
+
+
+    /**
+     * 小程序登录
+     * @param appid
+     * @param xcxCode
+     * @return
+     */
+    public String xcxLogin(String appid, String xcxCode) {
         HttpServletRequest request = ServletUtils.getRequest();
-        // xcxCode 为 小程序调用 wx.login 授权后获取
-        // todo 以下自行实现
-        // 校验 appid + appsrcret + xcxCode 调用登录凭证校验接口 获取 session_key 与 openid
+//        WxMaJscode2SessionResult result = weixinMiniappService.getWxSession(appid, xcxCode);
+//        if (result == null){
+//            throw  new ServiceException("code无效");
+//        }
+//        String openid = result.getOpenid();
         String openid = "";
-        SysUser user = loadUserByOpenid(openid);
+        BizUser user = loadUserByOpenid(openid);
 
         // 此处可根据登录用户的数据不同 自行创建 loginUser
-        XcxLoginUser loginUser = new XcxLoginUser();
-        loginUser.setUserId(user.getUserId());
-        loginUser.setUsername(user.getUserName());
-        loginUser.setUserType(user.getUserType());
-        loginUser.setOpenid(openid);
+        LoginUser loginUser = buildLoginUser(user);
         // 生成token
         LoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
@@ -145,6 +158,7 @@ public class BizLoginService {
 
     /**
      * 删除短信验证码
+     * 用于登录成功后删除，防止二次利用
      */
     private boolean deleteSmsCode(String phoneNumber) {
 
@@ -172,6 +186,11 @@ public class BizLoginService {
         }
     }
 
+    /**
+     * 根据用户名获取用户信息
+     * @param username 用户名
+     * @return
+     */
     private BizUser loadUserByUsername(String username) {
         BizUser user = userService.selectUserByUserName(username);
         if (ObjectUtil.isNull(user)) {
@@ -187,6 +206,11 @@ public class BizLoginService {
         return user;
     }
 
+    /**
+     * 根据手机号获取用户信息
+     * @param phoneNumber 手机号码
+     * @return
+     */
     private BizUser loadUserByPhonenumber(String phoneNumber) {
         BizUser user = userService.selectUserByPhoneNumber(phoneNumber);
         if (ObjectUtil.isNull(user)) {
@@ -198,8 +222,6 @@ public class BizLoginService {
             log.info("自动注册手机号用户：{} .", phoneNumber);
             // 注册账户后再读取一次
             user = userService.selectUserByPhoneNumber(phoneNumber);
-//            log.info("登录用户：{} 不存在.", phoneNumber);
-//            throw new UserException("user.not.exists", phoneNumber);
         } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
             log.info("登录用户：{} 已被删除.", phoneNumber);
             throw new UserException("user.password.delete", phoneNumber);
@@ -210,19 +232,22 @@ public class BizLoginService {
         return user;
     }
 
-    private SysUser loadUserByOpenid(String openid) {
+    /**
+     * 根据openid获取用户信息
+     * @param openid openid
+     * @return
+     */
+    private BizUser loadUserByOpenid(String openid) {
         // 使用 openid 查询绑定用户 如未绑定用户 则根据业务自行处理 例如 创建默认用户
-        // todo 自行实现 userService.selectUserByOpenid(openid);
-        SysUser user = new SysUser();
+        BizUser user = userService.selectUserByOpenid(openid);
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", openid);
-            // todo 用户不存在 业务逻辑自行实现
         } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
             log.info("登录用户：{} 已被删除.", openid);
-            // todo 用户已被删除 业务逻辑自行实现
+            throw new UserException("user.password.delete", openid);
         } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", openid);
-            // todo 用户已被停用 业务逻辑自行实现
+            throw new UserException("user.blocked", openid);
         }
         return user;
     }
@@ -231,8 +256,7 @@ public class BizLoginService {
      * 构建登录用户
      */
     private BizLoginUser buildLoginUser(BizUser user) {
-        BizLoginUser loginUser = new BizLoginUser();
-        loginUser = BeanCopyUtils.copy(user, BizLoginUser.class);
+        BizLoginUser loginUser = BeanCopyUtils.copy(user, BizLoginUser.class);
         return loginUser;
     }
 

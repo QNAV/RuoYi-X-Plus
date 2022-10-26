@@ -15,8 +15,10 @@ import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -24,13 +26,18 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author weibocy
  */
-@RequiredArgsConstructor
 @Service
 public class SysRegisterService {
 
-    private final ISysUserService userService;
-    private final ISysConfigService configService;
-    private final LogininforService asyncService;
+    @Resource
+    private ISysUserService userService;
+
+    @Resource
+    private ISysConfigService configService;
+
+    @Resource
+    @Qualifier("sysLogininforServiceImpl")
+    private LogininforService asyncService;
 
     /**
      * 注册

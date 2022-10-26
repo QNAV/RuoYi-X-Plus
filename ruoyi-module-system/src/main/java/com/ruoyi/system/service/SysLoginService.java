@@ -24,8 +24,10 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.List;
@@ -36,15 +38,22 @@ import java.util.function.Supplier;
  *
  * @author weibocy
  */
-@RequiredArgsConstructor
 @Slf4j
 @Service
 public class SysLoginService {
 
-    private final ISysUserService userService;
-    private final ISysConfigService configService;
-    private final LogininforService asyncService;
-    private final SysPermissionService permissionService;
+    @Resource
+    private ISysUserService userService;
+
+    @Resource
+    private ISysConfigService configService;
+
+    @Resource
+    @Qualifier("sysLogininforServiceImpl")
+    private LogininforService asyncService;
+
+    @Resource
+    private SysPermissionService permissionService;
 
     /**
      * 登录验证
