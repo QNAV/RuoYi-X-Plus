@@ -1,6 +1,5 @@
 package com.ruoyi.system.service;
 
-import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
@@ -8,21 +7,18 @@ import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.entity.BizUser;
 import com.ruoyi.common.core.domain.model.BizLoginUser;
-import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.core.service.LogininforService;
 import com.ruoyi.common.enums.DeviceType;
 import com.ruoyi.common.enums.LoginType;
 import com.ruoyi.common.enums.UserStatus;
-import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.exception.user.CaptchaException;
 import com.ruoyi.common.exception.user.CaptchaExpireException;
 import com.ruoyi.common.exception.user.UserException;
-import com.ruoyi.common.helper.LoginHelper;
+import com.ruoyi.common.helper.BizLoginHelper;
 import com.ruoyi.common.utils.*;
 import com.ruoyi.common.utils.redis.RedisUtils;
 import com.ruoyi.system.domain.bo.BizUserAddBo;
 import com.ruoyi.system.domain.bo.BizUserEditBo;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -51,8 +47,6 @@ public class BizLoginService {
     @Qualifier("bizLogininforServiceImpl")
     private LogininforService asyncService;
 
-//    @Resource
-//    private WeixinMiniappService weixinMiniappService;
 
     /**
      * 登录验证
@@ -73,9 +67,9 @@ public class BizLoginService {
         BizUser user = loadUserByUsername(username);
         checkLogin(LoginType.PASSWORD, username, () -> !BCrypt.checkpw(password, user.getPassword()));
         // 此处可根据登录用户的数据不同 自行创建 loginUser
-        LoginUser loginUser = buildLoginUser(user);
+        BizLoginUser loginUser = buildLoginUser(user);
         // 生成token
-        LoginHelper.loginByDevice(loginUser, DeviceType.XCX);
+        BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
         asyncService.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
         recordLoginInfo(user.getUserId(), username);
@@ -101,43 +95,12 @@ public class BizLoginService {
         // 此处可根据登录用户的数据不同 自行创建 loginUser
         BizLoginUser loginUser = buildLoginUser(user);
         // 生成token
-        LoginHelper.loginByDevice(loginUser, DeviceType.XCX);
+        BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
         asyncService.recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
-
-
-
-
-
-    /**
-     * 小程序登录
-     * @param appid
-     * @param xcxCode
-     * @return
-     */
-    public String xcxLogin(String appid, String xcxCode) {
-        HttpServletRequest request = ServletUtils.getRequest();
-//        WxMaJscode2SessionResult result = weixinMiniappService.getWxSession(appid, xcxCode);
-//        if (result == null){
-//            throw  new ServiceException("code无效");
-//        }
-//        String openid = result.getOpenid();
-        String openid = "";
-        BizUser user = loadUserByOpenid(openid);
-
-        // 此处可根据登录用户的数据不同 自行创建 loginUser
-        LoginUser loginUser = buildLoginUser(user);
-        // 生成token
-        LoginHelper.loginByDevice(loginUser, DeviceType.XCX);
-
-        asyncService.recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
-        recordLoginInfo(user.getUserId(), user.getUserName());
-        return StpUtil.getTokenValue();
-    }
-
 
     public void logout(String loginName) {
         asyncService.recordLogininfor(loginName, Constants.LOGOUT, MessageUtils.message("user.logout.success"), ServletUtils.getRequest());
@@ -146,7 +109,7 @@ public class BizLoginService {
     /**
      * 校验短信验证码
      */
-    private boolean validateSmsCode(String phoneNumber, String smsCode, HttpServletRequest request) {
+    public boolean validateSmsCode(String phoneNumber, String smsCode, HttpServletRequest request) {
         String code = RedisUtils.getCacheObject(Constants.CAPTCHA_CODE_KEY + phoneNumber);
         if (StringUtils.isBlank(code)) {
             asyncService.recordLogininfor(phoneNumber, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"), request);
@@ -160,7 +123,7 @@ public class BizLoginService {
      * 删除短信验证码
      * 用于登录成功后删除，防止二次利用
      */
-    private boolean deleteSmsCode(String phoneNumber) {
+    public boolean deleteSmsCode(String phoneNumber) {
 
         return RedisUtils.deleteObject(Constants.CAPTCHA_CODE_KEY + phoneNumber);
     }
@@ -191,7 +154,7 @@ public class BizLoginService {
      * @param username 用户名
      * @return
      */
-    private BizUser loadUserByUsername(String username) {
+    public BizUser loadUserByUsername(String username) {
         BizUser user = userService.selectUserByUserName(username);
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", username);
@@ -211,7 +174,7 @@ public class BizLoginService {
      * @param phoneNumber 手机号码
      * @return
      */
-    private BizUser loadUserByPhonenumber(String phoneNumber) {
+    public BizUser loadUserByPhonenumber(String phoneNumber) {
         BizUser user = userService.selectUserByPhoneNumber(phoneNumber);
         if (ObjectUtil.isNull(user)) {
             // 手机号登录，第一次登录则写入新用户
@@ -237,7 +200,7 @@ public class BizLoginService {
      * @param openid openid
      * @return
      */
-    private BizUser loadUserByOpenid(String openid) {
+    public BizUser loadUserByOpenid(String openid) {
         // 使用 openid 查询绑定用户 如未绑定用户 则根据业务自行处理 例如 创建默认用户
         BizUser user = userService.selectUserByOpenid(openid);
         if (ObjectUtil.isNull(user)) {
@@ -255,7 +218,7 @@ public class BizLoginService {
     /**
      * 构建登录用户
      */
-    private BizLoginUser buildLoginUser(BizUser user) {
+    public BizLoginUser buildLoginUser(BizUser user) {
         BizLoginUser loginUser = BeanCopyUtils.copy(user, BizLoginUser.class);
         return loginUser;
     }
@@ -277,7 +240,7 @@ public class BizLoginService {
     /**
      * 登录校验
      */
-    private void checkLogin(LoginType loginType, String username, Supplier<Boolean> supplier) {
+    public void checkLogin(LoginType loginType, String username, Supplier<Boolean> supplier) {
         HttpServletRequest request = ServletUtils.getRequest();
         String errorKey = Constants.LOGIN_ERROR + username;
         Integer errorLimitTime = Constants.LOGIN_ERROR_LIMIT_TIME;
