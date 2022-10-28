@@ -129,7 +129,7 @@ public class ${ClassName}Controller extends BaseController {
     @PostMapping("/remove")
     public R<Void> remove(@ApiParam(value = "主键串", required = true, allowMultiple = true)
                                        @NotEmpty(message = "主键不能为空")
-                                       @RequestParam(name = "公告ID串", required = true) ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
+                                       @RequestParam(required = true) ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
         return toAjax(i${ClassName}Service.deleteWithValidByIds(Arrays.asList(${pkColumn.javaField}s), true) ? 1 : 0);
     }
 }
