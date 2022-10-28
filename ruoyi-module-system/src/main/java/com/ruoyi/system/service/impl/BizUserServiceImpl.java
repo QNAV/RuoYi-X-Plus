@@ -193,13 +193,15 @@ public class BizUserServiceImpl implements IBizUserService {
     /**
      * 绑定微信登录信息
      *
+     * @param appid appid
      * @param userId 用户编号
      * @param openid openid
      * @param unionid unionid
      */
     @Override
-    public Boolean bindWeixin(Long userId, String openid, String unionid) {
+    public Boolean bindWeixin(String appid, Long userId, String openid, String unionid) {
         BizUserEditBo bo = new BizUserEditBo();
+        bo.setAppid(appid);
         bo.setUserId(userId);
         bo.setOpenid(openid);
         bo.setUnionid(unionid);

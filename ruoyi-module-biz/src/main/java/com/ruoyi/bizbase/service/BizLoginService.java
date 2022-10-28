@@ -143,7 +143,7 @@ public class BizLoginService {
         // 登录成功后，删除验证码数据，确保只有一次成功可用
         deleteSmsCode(smsLoginBody.getPhoneNumber());
         // 微信绑定
-        userService.bindWeixin(user.getUserId(), openid, unionid);
+        userService.bindWeixin(smsLoginBody.getAppid(), user.getUserId(), openid, unionid);
         // 绑定微信后重新读取
         user = loadUserByPhonenumber(smsLoginBody.getPhoneNumber());
         // 此处可根据登录用户的数据不同 自行创建 loginUser

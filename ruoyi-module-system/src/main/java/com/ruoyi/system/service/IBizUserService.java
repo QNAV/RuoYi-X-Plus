@@ -84,9 +84,10 @@ public interface IBizUserService {
     /**
      * 绑定微信登录信息
      *
+     * @param appid appid
      * @param userId 用户编号
      * @param openid openid
      * @param unionid unionid
      */
-    Boolean bindWeixin(Long userId,  String openid, String unionid);
+    Boolean bindWeixin(String appid, Long userId,  String openid, String unionid);
 }
