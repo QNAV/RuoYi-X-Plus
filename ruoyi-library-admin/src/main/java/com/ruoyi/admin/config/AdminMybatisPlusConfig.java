@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import com.ruoyi.admin.handler.AdminCreateAndUpdateMetaObjectHandler;
 import com.ruoyi.admin.interceptor.AdminDataPermissionInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement(proxyTargetClass = true)
 @Configuration
 @MapperScan("${mybatis-plus.mapperPackage}")
+@ConditionalOnProperty(prefix = "ruoyi", name = "appType", havingValue = "admin")
 public class AdminMybatisPlusConfig {
 
     @Bean

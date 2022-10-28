@@ -42,6 +42,13 @@ public class RuoYiConfig {
     private boolean cacheLazy;
 
     /**
+     * 应用类型
+     * admin 后台接口
+     * biz 业务接口
+     */
+    private String appType = "admin";
+
+    /**
      * 获取地址开关
      */
     @Getter

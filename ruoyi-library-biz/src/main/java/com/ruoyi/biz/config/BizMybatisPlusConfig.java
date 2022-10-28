@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.ruoyi.biz.handler.BizCreateAndUpdateMetaObjectHandler;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement(proxyTargetClass = true)
 @Configuration
 @MapperScan("${mybatis-plus.mapperPackage}")
+@ConditionalOnProperty(prefix = "ruoyi", name = "appType", havingValue = "biz")
 public class BizMybatisPlusConfig {
 
     @Bean

@@ -12,6 +12,8 @@ ruoyi:
   addressEnabled: true
   # 缓存懒加载
   cacheLazy: false
+  # 应用类型
+  appType: admin
 
 captcha:
   # 页面 <参数设置> 可开启关闭 验证码校验
