@@ -1,7 +1,7 @@
 package com.ruoyi.system.service.impl;
 
+import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.core.service.SensitiveService;
-import com.ruoyi.common.helper.LoginHelper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,7 +19,7 @@ public class SysSensitiveServiceImpl implements SensitiveService {
      */
     @Override
     public boolean isSensitive() {
-        return !LoginHelper.isAdmin();
+        return !AdminLoginHelper.isAdmin();
     }
 
 }

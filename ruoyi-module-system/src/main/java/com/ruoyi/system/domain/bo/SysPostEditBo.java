@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * 岗位信息修改业务对象
@@ -16,7 +17,9 @@ import javax.validation.constraints.Size;
 
 @Data
 @ApiModel(value = "SysPostEditBo", description = "岗位信息修改业务对象")
-public class SysPostEditBo {
+public class SysPostEditBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 岗位序号

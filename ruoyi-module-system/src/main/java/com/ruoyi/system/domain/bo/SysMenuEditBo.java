@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,9 @@ import java.util.List;
 
 @Data
 @ApiModel(value = "SysMenuEditBo", description = "菜单权限编辑业务对象")
-public class SysMenuEditBo {
+public class SysMenuEditBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 菜单ID

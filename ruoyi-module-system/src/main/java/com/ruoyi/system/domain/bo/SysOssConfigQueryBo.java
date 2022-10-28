@@ -4,13 +4,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 对象存储配置查询对象
  * @author weibocy
  */
 @ApiModel(value = "SysOssConfigQueryBo", description = "对象存储配置查询对象")
 @Data
-public class SysOssConfigQueryBo {
+public class SysOssConfigQueryBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 配置key

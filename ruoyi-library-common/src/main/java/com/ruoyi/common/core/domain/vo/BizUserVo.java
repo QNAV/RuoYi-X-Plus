@@ -1,7 +1,6 @@
 package com.ruoyi.common.core.domain.vo;
 
 
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.BaseVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,7 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 业务用户信息视图对象
@@ -23,6 +21,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "BizUserVo", description = "业务用户信息视图对象", parent = BaseVo.class)
 public class BizUserVo extends BaseVo {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 用户ID

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
 import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.validate.AddGroup;
@@ -32,7 +31,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * 测试单 后台管理控制器
- *
+ * !!!不推荐模块内写控制器
  * @author ruoyi
  * @date 2022-10-22
  */
@@ -41,7 +40,7 @@ import io.swagger.annotations.ApiOperation;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/demo/demo")
-public class TestDemoController extends BaseController {
+public class TestDemoController {
 
     /**
      * 测试单服务
@@ -121,5 +120,15 @@ public class TestDemoController extends BaseController {
                           @NotEmpty(message = "主键不能为空")
                           @RequestParam(name = "公告ID串", required = true) Long[] ids) {
         return toAjax(iTestDemoService.deleteWithValidByIds(Arrays.asList(ids), true) ? 1 : 0);
+    }
+
+    /**
+     * 响应返回结果
+     *
+     * @param rows 影响行数
+     * @return 操作结果
+     */
+    protected R<Void> toAjax(int rows) {
+        return rows > 0 ? R.ok() : R.fail();
     }
 }

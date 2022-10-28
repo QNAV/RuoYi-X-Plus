@@ -23,6 +23,11 @@
             <artifactId>ruoyi-library-common</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-library-admin</artifactId>
+        </dependency>
+
         <!-- OSS功能模块 -->
         <dependency>
             <groupId>com.ruoyi</groupId>
@@ -33,12 +38,6 @@
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-module-sms</artifactId>
-        </dependency>
-
-        <!-- weixin-miniapp微信小程序模块 -->
-        <dependency>
-            <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-module-weixin-miniapp</artifactId>
         </dependency>
 
     </dependencies>

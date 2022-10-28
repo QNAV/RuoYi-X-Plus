@@ -18,7 +18,7 @@ import java.time.LocalTime;
 
 /**
  * 测试分布式锁的样例
- *
+ * !!!不推荐模块内写控制器
  * @author shenxinquan
  */
 @Api(value = "测试分布式锁的样例", tags = {"测试分布式锁的样例"})

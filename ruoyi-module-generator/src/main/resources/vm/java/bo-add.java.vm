@@ -20,7 +20,9 @@ import ${import};
 
 @Data
 @ApiModel(value = "${ClassName}AddBo", description = "${functionName}业务新增对象")
-public class ${ClassName}AddBo {
+public class ${ClassName}AddBo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
 ## 只包含新增标记字段和保留主键字段

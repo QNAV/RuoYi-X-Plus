@@ -14,6 +14,8 @@ import lombok.Data;
 @ApiModel(value = "SysNoticePageQueryBo", description = "通知公告分页查询对象", parent = PageQuery.class)
 public class SysNoticePageQueryBo extends PageQuery {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * 公告标题
      */

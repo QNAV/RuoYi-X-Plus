@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,7 +14,9 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "RoleMenuTreeSelectVo", description = "角色菜单列表树返回对象")
-public class RoleMenuTreeSelectVo {
+public class RoleMenuTreeSelectVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 菜单树信息keys

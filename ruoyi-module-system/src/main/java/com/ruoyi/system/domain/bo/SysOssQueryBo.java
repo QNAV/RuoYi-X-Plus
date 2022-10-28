@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,9 @@ import java.util.Date;
  */
 @ApiModel(value = "SysOssQueryBo", description = "OSS对象存储查询对象")
 @Data
-public class SysOssQueryBo {
+public class SysOssQueryBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 文件名

@@ -4,11 +4,11 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
+import com.ruoyi.admin.controller.AdminBaseController;
+import com.ruoyi.admin.domain.bo.AdminUserOnlineBo;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.domain.bo.UserOnlineBo;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StringUtils;
@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/monitor/online")
-public class SysUserOnlineController extends BaseController {
+public class SysUserOnlineController extends AdminBaseController {
 
     @ApiOperation(value = "在线用户列表", nickname = "SysUserOnlineGetList")
     @SaCheckPermission("monitor:online:list")
@@ -42,14 +42,14 @@ public class SysUserOnlineController extends BaseController {
     public TableDataInfo<SysUserOnlineVo> list(@ApiParam(value = "ip地址") @RequestParam(required = false) String ipaddr, @ApiParam(value = "用户名") @RequestParam(required = false) String userName) {
         // 获取所有未过期的 token
         List<String> keys = StpUtil.searchTokenValue("", -1, 0);
-        List<UserOnlineBo> userOnlineBoList = new ArrayList<>();
+        List<AdminUserOnlineBo> userOnlineBoList = new ArrayList<>();
         for (String key : keys) {
             String token = key.replace(Constants.LOGIN_TOKEN_KEY, "");
             // 如果已经过期则踢下线
             if (StpUtil.stpLogic.getTokenActivityTimeoutByToken(token) < 0) {
                 continue;
             }
-            userOnlineBoList.add(RedisUtils.getCacheObject(Constants.ONLINE_TOKEN_KEY + token));
+            userOnlineBoList.add(RedisUtils.getCacheObject(Constants.ONLINE_ADMIN_TOKEN_KEY + token));
         }
         if (StringUtils.isNotEmpty(ipaddr) && StringUtils.isNotEmpty(userName)) {
             userOnlineBoList = userOnlineBoList.stream().filter(userOnline ->

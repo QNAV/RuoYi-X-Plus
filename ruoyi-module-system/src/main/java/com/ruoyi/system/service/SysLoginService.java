@@ -4,11 +4,11 @@ import cn.dev33.satoken.secure.BCrypt;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.admin.domain.model.AdminLoginUser;
+import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.bo.RoleBo;
 import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.core.domain.model.LoginUser;
-import com.ruoyi.common.core.domain.model.XcxLoginUser;
 import com.ruoyi.common.core.service.LogininforService;
 import com.ruoyi.common.enums.DeviceType;
 import com.ruoyi.common.enums.LoginType;
@@ -16,13 +16,11 @@ import com.ruoyi.common.enums.UserStatus;
 import com.ruoyi.common.exception.user.CaptchaException;
 import com.ruoyi.common.exception.user.CaptchaExpireException;
 import com.ruoyi.common.exception.user.UserException;
-import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.MessageUtils;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -48,6 +46,10 @@ public class SysLoginService {
     @Resource
     private ISysConfigService configService;
 
+    /**
+     * 后台用户登录日志服务
+     * 前后台用户分开，暂时用Qualifier区分方案
+     */
     @Resource
     @Qualifier("sysLogininforServiceImpl")
     private LogininforService asyncService;
@@ -74,9 +76,9 @@ public class SysLoginService {
         SysUser user = loadUserByUsername(username);
         checkLogin(LoginType.PASSWORD, username, () -> !BCrypt.checkpw(password, user.getPassword()));
         // 此处可根据登录用户的数据不同 自行创建 loginUser
-        LoginUser loginUser = buildLoginUser(user);
+        AdminLoginUser loginUser = buildLoginUser(user);
         // 生成token
-        LoginHelper.loginByDevice(loginUser, DeviceType.PC);
+        AdminLoginHelper.loginByDevice(loginUser, DeviceType.PC);
 
         asyncService.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
         recordLoginInfo(user.getUserId(), username);
@@ -90,9 +92,9 @@ public class SysLoginService {
         HttpServletRequest request = ServletUtils.getRequest();
         checkLogin(LoginType.SMS, user.getUserName(), () -> !validateSmsCode(phonenumber, smsCode, request));
         // 此处可根据登录用户的数据不同 自行创建 loginUser
-        LoginUser loginUser = buildLoginUser(user);
+        AdminLoginUser loginUser = buildLoginUser(user);
         // 生成token
-        LoginHelper.loginByDevice(loginUser, DeviceType.APP);
+        AdminLoginHelper.loginByDevice(loginUser, DeviceType.APP);
 
         asyncService.recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
         recordLoginInfo(user.getUserId(), user.getUserName());
@@ -109,13 +111,13 @@ public class SysLoginService {
         SysUser user = loadUserByOpenid(openid);
 
         // 此处可根据登录用户的数据不同 自行创建 loginUser
-        XcxLoginUser loginUser = new XcxLoginUser();
+        AdminLoginUser loginUser = new AdminLoginUser();
         loginUser.setUserId(user.getUserId());
         loginUser.setUsername(user.getUserName());
         loginUser.setUserType(user.getUserType());
-        loginUser.setOpenid(openid);
+//        loginUser.setOpenid(openid);
         // 生成token
-        LoginHelper.loginByDevice(loginUser, DeviceType.XCX);
+        AdminLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
         asyncService.recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
         recordLoginInfo(user.getUserId(), user.getUserName());
@@ -210,8 +212,8 @@ public class SysLoginService {
     /**
      * 构建登录用户
      */
-    private LoginUser buildLoginUser(SysUser user) {
-        LoginUser loginUser = new LoginUser();
+    private AdminLoginUser buildLoginUser(SysUser user) {
+        AdminLoginUser loginUser = new AdminLoginUser();
         loginUser.setUserId(user.getUserId());
         loginUser.setDeptId(user.getDeptId());
         loginUser.setUsername(user.getUserName());

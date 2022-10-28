@@ -16,7 +16,6 @@ import com.ruoyi.common.constant.GenConstants;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.exception.ServiceException;
-import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.utils.JsonUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUtils;
@@ -167,11 +166,10 @@ public class GenTableServiceImpl implements IGenTableService {
      */
     @Override
     public void importGenTable(List<GenTable> tableList) {
-        String operName = LoginHelper.getUsername();
         try {
             for (GenTable table : tableList) {
                 String tableName = table.getTableName();
-                GenUtils.initTable(table, operName);
+                GenUtils.initTable(table);
                 int row = baseMapper.insert(table);
                 if (row > 0) {
                     // 保存列信息

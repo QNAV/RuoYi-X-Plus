@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 
 /**
@@ -16,7 +17,9 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @ApiModel(value = "SysDictTypeEditBo", description = "字典类型编辑业务对象")
-public class SysDictTypeEditBo {
+public class SysDictTypeEditBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 字典主键

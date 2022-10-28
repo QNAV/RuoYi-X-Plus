@@ -274,25 +274,40 @@
                 <version>${weixin-java-miniapp.version}</version>
             </dependency>
 
-            <!-- 微信公众号SDK -->
-            <dependency>
-                <groupId>com.github.binarywang</groupId>
-                <artifactId>weixin-java-mp</artifactId>
-                <version>${weixin-java-mp.version}</version>
-            </dependency>
-
-            <!-- 微信企业微信SDK -->
-            <dependency>
-                <groupId>com.github.binarywang</groupId>
-                <artifactId>weixin-java-cp</artifactId>
-                <version>${weixin-java-cp.version}</version>
-            </dependency>
-
             <!-- 微信支付 -->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-pay</artifactId>
                 <version>${weixin-java-pay.version}</version>
+            </dependency>
+
+
+            <!-- 通用工具依赖库-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-library-common</artifactId>
+                <version>${ruoyi-x-plus.version}</version>
+            </dependency>
+
+            <!-- 核心框架依赖库-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-library-framework</artifactId>
+                <version>${ruoyi-x-plus.version}</version>
+            </dependency>
+
+            <!-- 后台应用依赖库-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-library-admin</artifactId>
+                <version>${ruoyi-x-plus.version}</version>
+            </dependency>
+
+            <!-- 业务应用依赖库-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-library-biz</artifactId>
+                <version>${ruoyi-x-plus.version}</version>
             </dependency>
 
             <!-- 定时任务模块 -->
@@ -306,27 +321,6 @@
             <dependency>
                 <groupId>com.ruoyi</groupId>
                 <artifactId>ruoyi-module-generator</artifactId>
-                <version>${ruoyi-x-plus.version}</version>
-            </dependency>
-
-            <!-- 核心框架依赖库-->
-            <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-library-framework</artifactId>
-                <version>${ruoyi-x-plus.version}</version>
-            </dependency>
-
-            <!-- 系统模块-->
-            <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-module-system</artifactId>
-                <version>${ruoyi-x-plus.version}</version>
-            </dependency>
-
-            <!-- 通用工具依赖库-->
-            <dependency>
-                <groupId>com.ruoyi</groupId>
-                <artifactId>ruoyi-library-common</artifactId>
                 <version>${ruoyi-x-plus.version}</version>
             </dependency>
 
@@ -358,12 +352,29 @@
                 <version>${ruoyi-x-plus.version}</version>
             </dependency>
 
+            <!-- 系统模块-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-module-system</artifactId>
+                <version>${ruoyi-x-plus.version}</version>
+            </dependency>
+
+
+            <!-- 业务基础模块-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-module-biz</artifactId>
+                <version>${ruoyi-x-plus.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
     <modules>
         <module>ruoyi-library-common</module>
         <module>ruoyi-library-framework</module>
+        <module>ruoyi-library-admin</module>
+        <module>ruoyi-library-biz</module>
         <module>ruoyi-module-job</module>
         <module>ruoyi-module-generator</module>
         <module>ruoyi-module-demo</module>
@@ -371,6 +382,7 @@
         <module>ruoyi-module-sms</module>
         <module>ruoyi-module-weixin-miniapp</module>
         <module>ruoyi-module-system</module>
+        <module>ruoyi-module-biz</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -412,9 +424,10 @@
                 <directory>src/main/resources</directory>
                 <!-- 引入所有 匹配文件进行过滤 -->
                 <includes>
-                    <include>application*</include>
-                    <include>bootstrap*</include>
-                    <include>banner*</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.txt</include>
                 </includes>
                 <!-- 启用过滤 即该资源中的变量将会被过滤器中的值替换 -->
                 <filtering>true</filtering>

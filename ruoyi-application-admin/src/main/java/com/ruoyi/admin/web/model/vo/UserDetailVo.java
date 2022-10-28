@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,9 @@ import java.util.List;
  */
 @ApiModel(value = "UserDetailVo", description = "用户详情返回对象")
 @Data
-public class UserDetailVo {
+public class UserDetailVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 角色列表

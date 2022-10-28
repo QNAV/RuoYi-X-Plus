@@ -30,6 +30,8 @@ import javax.validation.constraints.Size;
 @ApiModel(value = "SysDictData", description = "字典数据业务对象", parent = BaseEntity.class)
 public class SysDictData extends BaseEntity {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 字典编码
      */

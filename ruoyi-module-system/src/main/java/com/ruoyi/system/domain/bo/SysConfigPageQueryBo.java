@@ -15,6 +15,8 @@ import java.util.Date;
 @Data
 public class SysConfigPageQueryBo extends PageQuery {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * 参数名称
      */

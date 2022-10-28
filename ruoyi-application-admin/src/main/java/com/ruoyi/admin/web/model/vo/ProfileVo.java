@@ -5,13 +5,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 个人信息视图对象
  * @author weibocy
  */
 @Data
 @ApiModel(value = "ProfileVo", description = "个人信息视图对象")
-public class ProfileVo {
+public class ProfileVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 用户对象信息

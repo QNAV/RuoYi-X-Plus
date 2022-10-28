@@ -16,6 +16,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "SysDeptVo", description = "部门视图对象", parent = TreeVo.class)
 public class SysDeptVo extends TreeVo<SysDeptVo> {
+
     private static final long serialVersionUID = 1L;
 
     /**

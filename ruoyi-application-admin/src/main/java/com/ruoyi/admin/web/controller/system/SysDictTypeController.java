@@ -1,9 +1,9 @@
 package com.ruoyi.admin.web.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysDictType;
@@ -37,7 +37,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/dict/type")
-public class SysDictTypeController extends BaseController {
+public class SysDictTypeController extends AdminBaseController {
 
     private final ISysDictTypeService dictTypeService;
 

@@ -20,7 +20,9 @@ import ${import};
 
 @Data
 @ApiModel(value = "${ClassName}QueryBo", description = "${functionName}业务查询对象")
-public class ${ClassName}QueryBo {
+public class ${ClassName}QueryBo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
 ## 只包含查询标记字段

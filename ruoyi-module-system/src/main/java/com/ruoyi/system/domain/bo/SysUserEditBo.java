@@ -12,6 +12,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * 用户信息编辑业务对象
@@ -22,7 +23,9 @@ import javax.validation.constraints.Size;
 @Data
 @NoArgsConstructor
 @ApiModel(value = "SysUserEditBo", description = "用户信息编辑业务对象")
-public class SysUserEditBo {
+public class SysUserEditBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 用户ID

@@ -8,6 +8,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,9 @@ import java.util.List;
 
 @Data
 @ApiModel(value = "SysMenuAddBo", description = "菜单权限新增业务对象")
-public class SysMenuAddBo {
+public class SysMenuAddBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 菜单名称

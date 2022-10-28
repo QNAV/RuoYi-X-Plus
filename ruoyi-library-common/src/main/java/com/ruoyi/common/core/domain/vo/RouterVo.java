@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,9 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @ApiModel(value = "RouterVo", description = "路由配置信息")
-public class RouterVo {
+public class RouterVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 路由名字

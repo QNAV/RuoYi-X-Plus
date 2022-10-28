@@ -4,13 +4,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 岗位信息查询对象
  * @author weibocy
  */
 @ApiModel(value = "SysPostQueryBo", description = "岗位信息查询对象")
 @Data
-public class SysPostQueryBo {
+public class SysPostQueryBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 岗位编码

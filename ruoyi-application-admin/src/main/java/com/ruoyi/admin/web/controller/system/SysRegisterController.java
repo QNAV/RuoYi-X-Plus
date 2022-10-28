@@ -1,7 +1,7 @@
 package com.ruoyi.admin.web.controller.system;
 
+import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.annotation.Anonymous;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.UserNameRegisterBo;
 import com.ruoyi.system.service.ISysConfigService;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "注册验证管理", tags = {"SysRegisterService"})
 @RequiredArgsConstructor
 @RestController
-public class SysRegisterController extends BaseController {
+public class SysRegisterController extends AdminBaseController {
 
     private final SysRegisterService registerService;
     private final ISysConfigService configService;

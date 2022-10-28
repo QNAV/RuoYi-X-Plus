@@ -5,11 +5,11 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
+import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.excel.ExcelListener;
 import com.ruoyi.common.excel.ExcelResult;
 import com.ruoyi.common.exception.ServiceException;
-import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.utils.ValidatorUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.system.domain.vo.SysUserImportVo;
@@ -45,7 +45,7 @@ public class SysUserImportListener extends AnalysisEventListener<SysUserImportVo
         this.userService = SpringUtils.getBean(ISysUserService.class);
         this.password = BCrypt.hashpw(initPassword);
         this.isUpdateSupport = isUpdateSupport;
-        this.operName = LoginHelper.getUsername();
+        this.operName = AdminLoginHelper.getUsername();
     }
 
     @Override

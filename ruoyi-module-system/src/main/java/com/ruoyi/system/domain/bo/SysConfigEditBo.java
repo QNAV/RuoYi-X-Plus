@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * 参数配置修改业务对象
@@ -16,7 +17,9 @@ import javax.validation.constraints.Size;
 
 @Data
 @ApiModel(value = "SysConfigEditBo", description = "参数配置修改业务对象")
-public class SysConfigEditBo {
+public class SysConfigEditBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 参数主键

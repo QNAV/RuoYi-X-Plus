@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * 测试Excel功能
- *
+ * !!!不推荐模块内写控制器
  * @author weibocy
  */
 @Api(value = "测试Excel功能", tags = {"测试Excel功能"})

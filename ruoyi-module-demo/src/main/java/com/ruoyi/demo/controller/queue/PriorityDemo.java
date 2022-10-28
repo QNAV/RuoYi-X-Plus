@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 实体类 注意不允许使用内部类 否则会找不到类
- *
+ * !!!不推荐模块内写控制器
  * @author weibocy
  */
 @Data

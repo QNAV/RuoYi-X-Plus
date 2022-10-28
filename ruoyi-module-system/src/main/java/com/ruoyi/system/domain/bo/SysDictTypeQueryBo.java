@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -13,7 +14,9 @@ import java.util.Date;
  */
 @ApiModel(value = "SysDictTypeQueryBo", description = "字典类型查询对象")
 @Data
-public class SysDictTypeQueryBo {
+public class SysDictTypeQueryBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 字典名称

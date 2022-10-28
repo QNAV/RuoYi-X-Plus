@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * 测试国际化
- *
+ * !!!不推荐模块内写控制器
  * @author weibocy
  */
 @Validated

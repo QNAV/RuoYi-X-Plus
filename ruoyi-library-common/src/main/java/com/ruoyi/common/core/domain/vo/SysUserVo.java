@@ -25,6 +25,8 @@ import java.util.List;
 @ApiModel(value = "SysUserVo", description = "后台用户信息视图对象", parent = BaseVo.class)
 public class SysUserVo extends BaseVo {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 用户ID
      */

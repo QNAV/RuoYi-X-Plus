@@ -23,6 +23,8 @@ import ${import};
 @ApiModel(value = "${ClassName}PageQueryBo", description = "${functionName}业务分页查询对象", parent = PageQuery.class)
 public class ${ClassName}PageQueryBo extends PageQuery {
 
+    private static final long serialVersionUID = 1L;
+
 #foreach ($column in $columns)
 ## 只包含查询标记字段
 #if(!$table.isSuperColumn($column.javaField) && $column.isQuery)

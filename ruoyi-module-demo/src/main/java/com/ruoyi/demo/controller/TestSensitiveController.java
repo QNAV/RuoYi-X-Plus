@@ -1,7 +1,6 @@
 package com.ruoyi.demo.controller;
 
 import com.ruoyi.common.annotation.Sensitive;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.enums.SensitiveStrategy;
 import io.swagger.annotations.Api;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 测试数据脱敏控制器
+ *
+ * !!!不推荐模块内写控制器
  * <p>
  * 默认管理员不过滤
  * 需自行根据业务重写实现
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "测试数据脱敏控制器", tags = {"测试数据脱敏管理"})
 @RestController
 @RequestMapping("/demo/sensitive")
-public class TestSensitiveController extends BaseController {
+public class TestSensitiveController {
 
     /**
      * 测试数据脱敏

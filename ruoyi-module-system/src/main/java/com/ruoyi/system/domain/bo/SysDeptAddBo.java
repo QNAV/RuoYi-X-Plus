@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,8 @@ import java.util.List;
 
 @Data
 @ApiModel(value = "SysDeptAddBo", description = "部门新增业务对象")
-public class SysDeptAddBo {
+public class SysDeptAddBo implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
 

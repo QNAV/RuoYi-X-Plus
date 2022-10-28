@@ -15,6 +15,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class RoleBo implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 角色ID
      */

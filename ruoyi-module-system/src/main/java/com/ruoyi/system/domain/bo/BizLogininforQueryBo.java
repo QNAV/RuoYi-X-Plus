@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import javax.validation.constraints.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import java.util.Date;
@@ -19,7 +20,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Data
 @ApiModel(value = "BizLogininforQueryBo", description = "业务用户登录记录业务查询对象")
-public class BizLogininforQueryBo {
+public class BizLogininforQueryBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 用户名(也可能是手机号等)

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * 已登录用户信息更新业务对象
@@ -21,7 +22,9 @@ import javax.validation.constraints.Size;
 @Data
 @NoArgsConstructor
 @ApiModel(value = "LoginUserUpdateBo", description = "已登录用户信息更新业务对象")
-public class LoginUserUpdateBo {
+public class LoginUserUpdateBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 用户昵称

@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 
 /**
@@ -16,7 +17,9 @@ import javax.validation.constraints.Size;
  */
 @Data
 @ApiModel(value = "SysNoticeEditBo", description = "通知公告编辑业务对象")
-public class SysNoticeEditBo {
+public class SysNoticeEditBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 公告ID

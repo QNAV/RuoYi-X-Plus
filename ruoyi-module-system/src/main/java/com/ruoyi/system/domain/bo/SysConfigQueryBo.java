@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,9 @@ import java.util.Date;
  */
 @ApiModel(value = "SysConfigQueryBo", description = "参数配置查询对象")
 @Data
-public class SysConfigQueryBo {
+public class SysConfigQueryBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 参数名称

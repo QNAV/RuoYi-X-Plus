@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 /**
  * 比较器 注意不允许使用 内部类或匿名类或lambda表达式 会找不到类
- *
+ * !!!不推荐模块内写控制器
  * @author weibocy
  */
 public class PriorityDemoComparator implements Comparator<PriorityDemo> {

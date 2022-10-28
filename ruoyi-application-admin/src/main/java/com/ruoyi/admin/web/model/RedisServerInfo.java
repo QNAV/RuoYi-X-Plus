@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * redis监控详细信息返回对象
  * @author weibocy
@@ -11,7 +13,9 @@ import lombok.Data;
  */
 @Data
 @ApiModel("redis服务器信息对象")
-public class RedisServerInfo {
+public class RedisServerInfo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "由活跃的碎片整理过程执行的值重新分配的数量")
     private String activeDefragHits;

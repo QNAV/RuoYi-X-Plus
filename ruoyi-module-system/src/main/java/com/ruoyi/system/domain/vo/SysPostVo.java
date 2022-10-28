@@ -18,6 +18,8 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value = "SysPostVo", description = "岗位信息视图对象", parent = BaseVo.class)
 public class SysPostVo extends BaseVo {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * 岗位序号
      */

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Redis 发布订阅 演示案例
- *
+ * !!!不推荐模块内写控制器
  * @author weibocy
  */
 @Api(value = "Redis发布订阅 演示案例", tags = {"Redis发布订阅"})

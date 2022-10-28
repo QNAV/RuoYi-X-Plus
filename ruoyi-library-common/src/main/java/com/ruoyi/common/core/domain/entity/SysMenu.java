@@ -25,6 +25,8 @@ import javax.validation.constraints.Size;
 @ApiModel(value = "SysMenu", description = "菜单权限业务对象", parent = TreeEntity.class)
 public class SysMenu extends TreeEntity<SysMenu> {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 菜单ID
      */

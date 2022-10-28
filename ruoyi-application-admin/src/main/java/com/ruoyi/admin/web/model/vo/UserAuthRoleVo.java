@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,9 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "UserAuthRoleVo", description = "用户授权角色返回对象")
-public class UserAuthRoleVo {
+public class UserAuthRoleVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("用户信息业务对象")
     private SysUser user;

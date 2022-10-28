@@ -2,14 +2,14 @@ package com.ruoyi.admin.web.controller.system;
 
 import cn.dev33.satoken.secure.BCrypt;
 import cn.hutool.core.io.FileUtil;
+import com.ruoyi.admin.controller.AdminBaseController;
+import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.UpdatePwdBo;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.MimeTypeUtils;
@@ -42,7 +42,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/user/profile")
-public class SysProfileController extends BaseController {
+public class SysProfileController extends AdminBaseController {
 
     private final ISysUserService userService;
     private final ISysOssService iSysOssService;
@@ -93,7 +93,7 @@ public class SysProfileController extends BaseController {
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PostMapping("/updatePwd")
     public R<Void> updatePwd(@Validated @RequestBody UpdatePwdBo updatePwdBody) {
-        SysUser user = userService.selectUserById(LoginHelper.getUserId());
+        SysUser user = userService.selectUserById(AdminLoginHelper.getUserId());
         String userName = user.getUserName();
         String password = user.getPassword();
         if (!BCrypt.checkpw(updatePwdBody.getOldPassword(), password)) {

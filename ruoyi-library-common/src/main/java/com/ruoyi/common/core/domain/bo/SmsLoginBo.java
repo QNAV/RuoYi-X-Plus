@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * 短信登录对象
@@ -14,7 +15,9 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @ApiModel(value = "SmsLoginBo", description = "短信登录对象")
-public class SmsLoginBo {
+public class SmsLoginBo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 用户名

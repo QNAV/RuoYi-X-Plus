@@ -18,6 +18,8 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value = "SysDictTypeVo", description = "字典类型视图对象", parent = BaseVo.class)
 public class SysDictTypeVo extends BaseVo {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 字典主键
      */

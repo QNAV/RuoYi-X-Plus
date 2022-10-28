@@ -1,8 +1,8 @@
 package com.ruoyi.admin.web.controller.monitor;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -34,7 +34,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/monitor/operlog")
-public class SysOperlogController extends BaseController {
+public class SysOperlogController extends AdminBaseController {
 
     private final ISysOperLogService operLogService;
 

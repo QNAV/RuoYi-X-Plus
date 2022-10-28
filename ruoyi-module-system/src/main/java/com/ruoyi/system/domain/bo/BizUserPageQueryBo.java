@@ -22,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @ApiModel(value = "BizUserPageQueryBo", description = "业务用户信息业务分页查询对象", parent = PageQuery.class)
 public class BizUserPageQueryBo extends PageQuery {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * appid
      */

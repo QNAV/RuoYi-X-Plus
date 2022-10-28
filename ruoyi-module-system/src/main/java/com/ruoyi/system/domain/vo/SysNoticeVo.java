@@ -17,6 +17,8 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value = "SysNoticeVo", description = "通知公告视图对象", parent = BaseVo.class)
 public class SysNoticeVo extends BaseVo {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * 公告ID
      */

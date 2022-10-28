@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 当前在线会话视图对象
  *
@@ -12,7 +14,9 @@ import lombok.Data;
 
 @Data
 @ApiModel(value = "SysUserOnlineVo", description = "当前在线会话视图对象")
-public class SysUserOnlineVo {
+public class SysUserOnlineVo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 会话编号

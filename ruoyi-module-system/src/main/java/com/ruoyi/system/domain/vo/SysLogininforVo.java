@@ -17,6 +17,7 @@ import java.util.Date;
 @Data
 @ApiModel(value = "SysLogininforVo", description = "系统访问记录视图返回对象")
 public class SysLogininforVo implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /**

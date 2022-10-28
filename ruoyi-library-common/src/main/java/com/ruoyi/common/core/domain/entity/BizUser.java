@@ -32,6 +32,8 @@ import java.util.List;
 @ApiModel(value = "BizUser", description = "业务用户实体对象", parent = BaseEntity.class)
 public class BizUser extends BaseEntity {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 用户ID
      */

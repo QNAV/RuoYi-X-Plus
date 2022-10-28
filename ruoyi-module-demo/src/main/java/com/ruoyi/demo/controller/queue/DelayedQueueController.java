@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 延迟队列 演示案例
+ * !!!不推荐模块内写控制器
  * <p>
  * 轻量级队列 重量级数据量 请使用 MQ
  * 例如: 创建订单30分钟后过期处理

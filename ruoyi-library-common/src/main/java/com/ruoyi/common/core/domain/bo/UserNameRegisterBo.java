@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value = "UserNameRegisterBo", description = "用户名账户注册对象")
 public class UserNameRegisterBo extends UserNameLoginBo {
 
-
+    private static final long serialVersionUID = 1L;
 
     /**
      * 用户类型

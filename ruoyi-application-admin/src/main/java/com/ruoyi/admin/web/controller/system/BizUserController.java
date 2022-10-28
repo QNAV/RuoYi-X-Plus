@@ -3,6 +3,7 @@ package com.ruoyi.admin.web.controller.system;
 import java.util.List;
 import java.util.Arrays;
 
+import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.core.domain.vo.BizUserVo;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
 import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.validate.AddGroup;
@@ -41,7 +41,7 @@ import io.swagger.annotations.ApiOperation;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/biz/user")
-public class BizUserController extends BaseController {
+public class BizUserController extends AdminBaseController {
 
     /**
      * 业务用户信息服务

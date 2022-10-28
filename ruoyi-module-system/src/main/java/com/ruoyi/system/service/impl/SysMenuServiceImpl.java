@@ -6,11 +6,11 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.core.domain.entity.SysRole;
-import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.TreeBuildUtils;
@@ -62,7 +62,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     public List<SysMenuVo> selectMenuList(SysMenuQueryBo menuQuery, Long userId) {
         List<SysMenuVo> menuList = null;
         // 管理员显示所有菜单信息
-        if (LoginHelper.isAdmin(userId)) {
+        if (AdminLoginHelper.isAdmin(userId)) {
             menuList = baseMapper.selectVoList(new LambdaQueryWrapper<SysMenu>()
                 .like(menuQuery != null && StringUtils.isNotBlank(menuQuery.getMenuName()), SysMenu::getMenuName, menuQuery.getMenuName())
                 .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getVisible()), SysMenu::getVisible, menuQuery.getVisible())
@@ -109,7 +109,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     public List<SysMenu> selectMenuTreeByUserId(Long userId) {
         List<SysMenu> menus = null;
-        if (LoginHelper.isAdmin(userId)) {
+        if (AdminLoginHelper.isAdmin(userId)) {
             menus = baseMapper.selectMenuTreeAll();
         } else {
             menus = baseMapper.selectMenuTreeByUserId(userId);

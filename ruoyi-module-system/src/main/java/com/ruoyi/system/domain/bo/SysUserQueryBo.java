@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,9 @@ import java.util.Date;
  */
 @Data
 @ApiModel(value = "SysUserQueryBo", description = "用户信息查询对象")
-public class SysUserQueryBo {
+public class SysUserQueryBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 部门ID

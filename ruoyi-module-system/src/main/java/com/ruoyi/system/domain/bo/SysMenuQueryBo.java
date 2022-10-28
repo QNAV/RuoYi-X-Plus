@@ -13,6 +13,8 @@ import lombok.Data;
 @Data
 public class SysMenuQueryBo extends PageQuery {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * 菜单名称
      */

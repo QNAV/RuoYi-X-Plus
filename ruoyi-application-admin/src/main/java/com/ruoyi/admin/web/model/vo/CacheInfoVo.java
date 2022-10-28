@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -14,7 +15,9 @@ import java.util.Properties;
  */
 @Data
 @ApiModel(value = "CacheInfoVo", description = "缓存监控详细信息返回对象")
-public class CacheInfoVo {
+public class CacheInfoVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 缓存服务器原始配置信息

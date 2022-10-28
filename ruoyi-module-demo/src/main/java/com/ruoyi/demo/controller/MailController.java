@@ -16,7 +16,7 @@ import java.io.File;
 
 /**
  * 邮件发送案例
- *
+ * !!!不推荐模块内写控制器
  * @author Michelle.Chung
  */
 @Validated

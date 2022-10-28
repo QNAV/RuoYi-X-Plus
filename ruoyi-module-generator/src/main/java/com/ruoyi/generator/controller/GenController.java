@@ -4,7 +4,6 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.IoUtil;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -28,7 +27,7 @@ import java.util.Map;
 
 /**
  * 代码生成 操作处理
- *
+ * !!!不推荐模块内写控制器
  * @author weibocy
  */
 @Validated
@@ -36,7 +35,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/tool/gen")
-public class GenController extends BaseController {
+public class GenController {
 
     private final IGenTableService genTableService;
 

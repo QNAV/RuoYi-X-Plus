@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * 修改密码表单对象
@@ -12,7 +13,9 @@ import javax.validation.constraints.NotBlank;
  */
 @ApiModel(value = "UpdatePwdBo", description = "修改密码表单对象")
 @Data
-public class UpdatePwdBo {
+public class UpdatePwdBo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 原密码

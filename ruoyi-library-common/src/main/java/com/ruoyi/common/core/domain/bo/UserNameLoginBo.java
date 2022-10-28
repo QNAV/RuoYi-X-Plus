@@ -19,7 +19,7 @@ import java.io.Serializable;
 @ApiModel(value = "UserNameLoginBo", description = "用户密码登录表单对象")
 public class UserNameLoginBo implements Serializable {
 
-
+    private static final long serialVersionUID = 1L;
 
     /**
      * 用户名

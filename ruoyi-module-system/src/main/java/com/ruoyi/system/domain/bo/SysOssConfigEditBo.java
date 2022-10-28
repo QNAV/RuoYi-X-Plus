@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * 对象存储配置修改业务对象
@@ -16,7 +17,9 @@ import javax.validation.constraints.Size;
 
 @Data
 @ApiModel(value = "SysOssConfigEditBo", description = "对象存储配置修改业务对象")
-public class SysOssConfigEditBo {
+public class SysOssConfigEditBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 主建

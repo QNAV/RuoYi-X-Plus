@@ -16,7 +16,7 @@ import java.time.Duration;
 
 /**
  * spring-cache 演示案例
- *
+ * !!!不推荐模块内写控制器
  * @author weibocy
  */
 // 类级别 缓存统一配置

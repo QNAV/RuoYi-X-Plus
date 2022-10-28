@@ -16,6 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ApiModel(value = "Response", description = "请求响应对象")
 public class R<T> implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /**

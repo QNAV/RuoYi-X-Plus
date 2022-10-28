@@ -21,7 +21,7 @@ public enum DeviceType {
     /**
      * app端
      */
-    APP("app"),
+    APP("biz"),
 
     /**
      * 小程序端

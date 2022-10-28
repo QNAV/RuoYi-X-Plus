@@ -21,6 +21,8 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "SysRoleVo", description = "角色视图对象", parent = BaseVo.class)
 public class SysRoleVo extends BaseVo {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 角色ID
      */

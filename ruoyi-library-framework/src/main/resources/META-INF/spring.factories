@@ -29,6 +29,6 @@
 # com.ruoyi.framework.config.ValidatorConfig,\
 # com.ruoyi.framework.listener.UserActionListener,\
 # com.ruoyi.framework.manager.ShutdownManager,\
-# com.ruoyi.framework.satoken.dao.PlusSaTokenDao,\
+# com.ruoyi.framework.satoken.dao.SaTokenDao,\
 # com.ruoyi.framework.satoken.service.SaPermissionImpl,\
 # com.ruoyi.framework.web.exception.GlobalExceptionHandler

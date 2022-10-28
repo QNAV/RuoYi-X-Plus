@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 
 /**
@@ -15,7 +16,9 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @ApiModel(value = "SysDictTypeAddBo", description = "字典类型新增业务对象")
-public class SysDictTypeAddBo {
+public class SysDictTypeAddBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 字典名称

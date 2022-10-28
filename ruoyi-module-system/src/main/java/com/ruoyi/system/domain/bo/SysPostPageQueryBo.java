@@ -13,6 +13,8 @@ import lombok.Data;
 @Data
 public class SysPostPageQueryBo extends PageQuery {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * 岗位编码
      */

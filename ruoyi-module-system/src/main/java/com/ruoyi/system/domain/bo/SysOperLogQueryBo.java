@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,9 @@ import java.util.Date;
  */
 @ApiModel(value = "SysOperLogQueryBo", description = "操作日志记录查询对象")
 @Data
-public class SysOperLogQueryBo {
+public class SysOperLogQueryBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 操作模块

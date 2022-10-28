@@ -1,7 +1,6 @@
 package com.ruoyi.demo.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.demo.domain.TestDemo;
 import com.ruoyi.demo.mapper.TestDemoMapper;
@@ -18,7 +17,7 @@ import java.util.List;
 
 /**
  * 测试批量方法
- *
+ * !!!不推荐模块内写控制器
  * @author weibocy
  * @date 2021-05-30
  */
@@ -26,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/demo/batch")
-public class TestBatchController extends BaseController {
+public class TestBatchController {
 
     /**
      * 为了便于测试 直接引入mapper
@@ -90,6 +89,16 @@ public class TestBatchController extends BaseController {
     public R<Void> remove() {
         return toAjax(testDemoMapper.delete(new LambdaQueryWrapper<TestDemo>()
             .eq(TestDemo::getOrderNum, -1L)));
+    }
+
+    /**
+     * 响应返回结果
+     *
+     * @param rows 影响行数
+     * @return 操作结果
+     */
+    protected R<Void> toAjax(int rows) {
+        return rows > 0 ? R.ok() : R.fail();
     }
 
 }

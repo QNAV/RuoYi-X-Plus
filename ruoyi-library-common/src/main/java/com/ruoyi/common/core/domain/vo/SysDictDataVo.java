@@ -17,6 +17,8 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value = "SysDictDataVo", description = "字典数据视图对象", parent = BaseVo.class)
 public class SysDictDataVo extends BaseVo {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 字典编码
      */

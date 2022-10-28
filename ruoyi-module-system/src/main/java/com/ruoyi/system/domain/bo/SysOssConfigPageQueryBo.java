@@ -13,6 +13,8 @@ import lombok.Data;
 @Data
 public class SysOssConfigPageQueryBo extends PageQuery {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * 配置key
      */

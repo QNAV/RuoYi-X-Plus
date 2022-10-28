@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 测试分布式限流样例
- *
+ * !!!不推荐模块内写控制器
  * @author weibocy
  */
 @Api(value = "测试分布式限流样例", tags = {"测试分布式限流样例"})

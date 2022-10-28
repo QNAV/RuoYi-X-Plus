@@ -17,6 +17,8 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value = "SysConfigVo", description = "参数配置视图对象", parent = BaseVo.class)
 public class SysConfigVo extends BaseVo {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * 参数主键
      */

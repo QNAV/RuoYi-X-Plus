@@ -15,6 +15,8 @@ import java.util.Date;
 @Data
 public class SysOperLogPageQueryBo extends PageQuery {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * 操作模块
      */

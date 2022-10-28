@@ -2,6 +2,7 @@ package com.ruoyi.admin.web.controller.system;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
+import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.UserNameLoginBo;
@@ -9,7 +10,6 @@ import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.bo.SmsLoginBo;
 import com.ruoyi.common.core.domain.vo.SysUserVo;
-import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.core.domain.vo.RouterVo;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.system.service.ISysMenuService;
@@ -102,7 +102,7 @@ public class SysLoginController {
     @PostMapping("/logout")
     public R<Void> logout() {
         try {
-            String username = LoginHelper.getUsername();
+            String username = AdminLoginHelper.getUsername();
             StpUtil.logout();
             loginService.logout(username);
         } catch (NotLoginException e) {
@@ -119,7 +119,7 @@ public class SysLoginController {
     @GetMapping("/info")
     public R<UserInfoVo> info() {
         UserInfoVo data = new UserInfoVo();
-        SysUserVo userVo = userService.selectUserVoById(LoginHelper.getUserId());
+        SysUserVo userVo = userService.selectUserVoById(AdminLoginHelper.getUserId());
         SysUser user = BeanCopyUtils.copy(userVo, SysUser.class);
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(user);
@@ -139,7 +139,7 @@ public class SysLoginController {
     @ApiOperation(value = "获取菜单路由信息", nickname = "SysLoginGetRouters")
     @GetMapping("/routers")
     public R<List<RouterVo>> routers() {
-        Long userId = LoginHelper.getUserId();
+        Long userId = AdminLoginHelper.getUserId();
         List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
         return R.ok(menuService.buildMenus(menus));
     }

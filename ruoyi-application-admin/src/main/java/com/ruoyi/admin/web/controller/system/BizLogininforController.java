@@ -3,6 +3,7 @@ package com.ruoyi.admin.web.controller.system;
 import java.util.List;
 import java.util.Arrays;
 
+import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
 import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.validate.AddGroup;
@@ -41,7 +41,7 @@ import io.swagger.annotations.ApiOperation;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/logininfor")
-public class BizLogininforController extends BaseController {
+public class BizLogininforController extends AdminBaseController {
 
     /**
      * 业务用户登录记录服务

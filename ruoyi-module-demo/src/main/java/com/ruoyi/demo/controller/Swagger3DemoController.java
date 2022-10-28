@@ -15,7 +15,7 @@ import java.io.File;
 
 /**
  * swagger3 用法示例
- *
+ * !!!不推荐模块内写控制器
  * @author weibocy
  */
 @Api(value = "演示swagger3控制器", tags = {"演示swagger3接口"})

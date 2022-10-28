@@ -18,6 +18,8 @@ import lombok.EqualsAndHashCode;
 @ApiModel(value = "SysMenuVo", description = "菜单权限视图对象", parent = TreeVo.class)
 public class SysMenuVo extends TreeVo<SysMenuVo> {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 菜单ID
      */

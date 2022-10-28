@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,7 +14,9 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "RoleDeptTreeSelectVo", description = "角色部门列表树视图对象")
-public class RoleDeptTreeSelectVo {
+public class RoleDeptTreeSelectVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 选中部门ID列表

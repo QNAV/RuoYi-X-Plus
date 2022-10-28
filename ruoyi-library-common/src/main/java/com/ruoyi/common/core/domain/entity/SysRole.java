@@ -35,6 +35,8 @@ import javax.validation.constraints.Size;
 @ApiModel(value = "SysRole", description = "角色实体对象", parent = BaseEntity.class)
 public class SysRole extends BaseEntity {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * 角色ID
      */

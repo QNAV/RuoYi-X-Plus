@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 路由显示信息视图对象
  *
@@ -13,7 +15,9 @@ import lombok.Data;
 
 @Data
 @ApiModel(value = "MetaVo", description = "路由显示信息视图对象")
-public class MetaVo {
+public class MetaVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 设置该路由在侧边栏和面包屑中展示的名字

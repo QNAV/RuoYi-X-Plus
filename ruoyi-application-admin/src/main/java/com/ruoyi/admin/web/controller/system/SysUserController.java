@@ -5,9 +5,10 @@ import cn.dev33.satoken.secure.BCrypt;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.ruoyi.admin.controller.AdminBaseController;
+import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysDept;
@@ -18,7 +19,6 @@ import com.ruoyi.common.core.domain.vo.SysUserVo;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.excel.ExcelResult;
-import com.ruoyi.common.helper.LoginHelper;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -51,7 +51,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/user")
-public class SysUserController extends BaseController {
+public class SysUserController extends AdminBaseController {
 
     private final ISysUserService userService;
     private final ISysRoleService roleService;
@@ -117,7 +117,7 @@ public class SysUserController extends BaseController {
         userService.checkUserDataScope(userId);
         UserDetailVo data = new UserDetailVo();
         List<SysRoleVo> roles = roleService.selectRoleVoAll();
-        data.setRoles(LoginHelper.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        data.setRoles(AdminLoginHelper.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         data.setPosts(BeanCopyUtils.copyList(postService.selectPostAll(), SysPostVo.class));
         if (ObjectUtil.isNotNull(userId)) {
             SysUserVo sysUser = userService.selectUserVoById(userId);
@@ -223,7 +223,7 @@ public class SysUserController extends BaseController {
         List<SysRole> roles = roleService.selectRolesByUserId(userId);
         UserAuthRoleVo data = new UserAuthRoleVo();
         data.setUser(user);
-        data.setRoles(LoginHelper.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        data.setRoles(AdminLoginHelper.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         return R.ok(data);
     }
 

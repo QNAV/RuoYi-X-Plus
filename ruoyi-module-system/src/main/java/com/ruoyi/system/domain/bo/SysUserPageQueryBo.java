@@ -15,6 +15,8 @@ import java.util.Date;
 @ApiModel(value = "SysUserPageQueryBo", description = "用户信息分页查询对象", parent = PageQuery.class)
 public class SysUserPageQueryBo extends PageQuery {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * 部门ID
      */

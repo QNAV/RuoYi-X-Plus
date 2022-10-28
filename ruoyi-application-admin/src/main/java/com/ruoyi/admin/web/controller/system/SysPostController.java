@@ -1,9 +1,9 @@
 package com.ruoyi.admin.web.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -37,7 +37,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/post")
-public class SysPostController extends BaseController {
+public class SysPostController extends AdminBaseController {
 
     private final ISysPostService postService;
 

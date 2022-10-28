@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 /**
  * 字典数据新增业务对象
@@ -15,7 +16,9 @@ import javax.validation.constraints.Size;
 
 @Data
 @ApiModel(value = "SysDictDataAddBo", description = "字典数据新增业务对象")
-public class SysDictDataAddBo {
+public class SysDictDataAddBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 字典排序

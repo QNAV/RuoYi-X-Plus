@@ -13,6 +13,8 @@ import lombok.Data;
 @ApiModel(value = "SysMenuUniquePageQueryBo", description = "菜单名称是否唯一分页查询对象", parent = PageQuery.class)
 public class SysMenuUniquePageQueryBo extends PageQuery {
 
+    private static final long serialVersionUID=1L;
+
     /**
      * 父菜单ID
      */

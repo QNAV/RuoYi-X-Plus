@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 优先队列 演示案例
+ * !!!不推荐模块内写控制器
  * <p>
  * 轻量级队列 重量级数据量 请使用 MQ
  * <p>

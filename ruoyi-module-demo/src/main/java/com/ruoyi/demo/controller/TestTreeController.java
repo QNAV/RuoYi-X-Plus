@@ -3,7 +3,6 @@ package com.ruoyi.demo.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.annotation.RepeatSubmit;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.validate.AddGroup;
 import com.ruoyi.common.core.validate.EditGroup;
@@ -29,7 +28,7 @@ import java.util.List;
 
 /**
  * 测试树表Controller
- *
+ * !!!不推荐模块内写控制器
  * @author weibocy
  * @date 2021-07-26
  */
@@ -38,7 +37,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/demo/tree")
-public class TestTreeController extends BaseController {
+public class TestTreeController {
 
     private final ITestTreeService iTestTreeService;
 
@@ -112,5 +111,15 @@ public class TestTreeController extends BaseController {
                                    @NotEmpty(message = "主键不能为空")
                                    @PathVariable Long[] ids) {
         return toAjax(iTestTreeService.deleteWithValidByIds(Arrays.asList(ids), true) ? 1 : 0);
+    }
+
+    /**
+     * 响应返回结果
+     *
+     * @param rows 影响行数
+     * @return 操作结果
+     */
+    protected R<Void> toAjax(int rows) {
+        return rows > 0 ? R.ok() : R.fail();
     }
 }

@@ -18,6 +18,7 @@ import java.util.Map;
 
 /**
  * 短信演示案例
+ * !!!不推荐模块内写控制器
  * 请先阅读文档 否则无法使用
  *
  * @author weibocy

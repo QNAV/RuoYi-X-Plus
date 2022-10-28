@@ -4,13 +4,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 字典数据查询对象
  * @author weibocy
  */
 @ApiModel(value = "SysDictDataQueryBo", description = "字典数据查询对象")
 @Data
-public class SysDictDataQueryBo {
+public class SysDictDataQueryBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 字典标签

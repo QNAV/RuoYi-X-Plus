@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 
 /**
  * 通知公告查询对象
@@ -11,7 +13,9 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "SysNoticeQueryBo", description = "通知公告查询对象")
-public class SysNoticeQueryBo {
+public class SysNoticeQueryBo implements Serializable {
+
+    private static final long serialVersionUID=1L;
 
     /**
      * 公告标题

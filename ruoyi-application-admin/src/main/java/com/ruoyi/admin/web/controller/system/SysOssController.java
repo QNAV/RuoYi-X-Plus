@@ -6,8 +6,8 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpUtil;
+import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -45,7 +45,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/oss")
-public class SysOssController extends BaseController {
+public class SysOssController extends AdminBaseController {
 
     private final ISysOssService iSysOssService;
 
