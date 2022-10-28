@@ -109,6 +109,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @Override
     public Boolean insertByBo(${ClassName}AddBo addBo) {
         ${ClassName} add = BeanUtil.toBean(addBo, ${ClassName}.class);
+        validEntityBeforeAdd(update);
         validEntityBeforeSave(add);
         boolean flag = baseMapper.insert(add) > 0;
 #set($pk=$pkColumn.javaField.substring(0,1).toUpperCase() + ${pkColumn.javaField.substring(1)})
@@ -125,6 +126,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @Override
     public Boolean updateByBo(${ClassName}EditBo editBo) {
         ${ClassName} update = BeanUtil.toBean(editBo, ${ClassName}.class);
+        validEntityBeforeUpdate(update);
         validEntityBeforeSave(update);
         return baseMapper.updateById(update) > 0;
     }
@@ -134,6 +136,23 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      * @param entity ${functionName}实体对象
      */
     private void validEntityBeforeSave(${ClassName} entity){
+        //TODO 做一些数据校验,如唯一约束
+    }
+
+
+    /**
+     * 新增前的数据校验
+     * @param entity ${functionName}实体对象
+     */
+    private void validEntityBeforeAdd(${ClassName} entity){
+        //TODO 做一些数据校验,如唯一约束
+    }
+
+    /**
+     * 更新前的数据校验
+     * @param entity ${functionName}实体对象
+     */
+    private void validEntityBeforeUpdate(${ClassName} entity){
         //TODO 做一些数据校验,如唯一约束
     }
 
