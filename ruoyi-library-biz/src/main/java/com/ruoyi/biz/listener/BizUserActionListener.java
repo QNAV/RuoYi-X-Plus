@@ -15,6 +15,7 @@ import com.ruoyi.common.utils.ip.AddressUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -27,6 +28,7 @@ import java.time.Duration;
 @RequiredArgsConstructor
 @Component
 @Slf4j
+@ConditionalOnProperty(prefix = "ruoyi", name = "appType", havingValue = "biz")
 public class BizUserActionListener implements SaTokenListener {
 
     private final SaTokenConfig tokenConfig;

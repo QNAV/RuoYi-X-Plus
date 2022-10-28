@@ -16,6 +16,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,7 @@ import java.util.Map;
 @Slf4j
 @Aspect
 @Component
+@ConditionalOnProperty(prefix = "ruoyi", name = "appType", havingValue = "biz")
 public class BizLogAspect {
 
     /**
