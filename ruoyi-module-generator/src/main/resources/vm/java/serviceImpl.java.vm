@@ -94,8 +94,8 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 #end
         lqw.$mpMethod($condition, ${ClassName}::get$AttrName, queryBo.get$AttrName());
 #else
-        lqw.between(queryBo != null && queryBo.getBeginTime() != null && queryBo.getEndTime() != null,
-            ${ClassName}::getCreateTime, queryBo.getBeginCreateTime(), queryBo.getEndCreateTime());
+        lqw.between(queryBo != null && queryBo.getCreateBeginTime() != null && queryBo.getCreateEndTime() != null,
+            ${ClassName}::getCreateTime, queryBo.getCreateBeginTime(), queryBo.getCreateEndTime());
 #end
 #end
 #end
