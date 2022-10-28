@@ -292,6 +292,7 @@ public class BizLoginService {
         BizUser user = userService.selectUserByOpenid(openid);
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", openid);
+            throw new UserException("user.not.exists", openid);
         } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
             log.info("登录用户：{} 已被删除.", openid);
             throw new UserException("user.password.delete", openid);
