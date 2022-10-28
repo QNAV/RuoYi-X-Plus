@@ -8,6 +8,7 @@ import cn.hutool.http.HttpStatus;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.exception.DemoModeException;
 import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.common.exception.user.UserException;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -168,6 +169,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DemoModeException.class)
     public R<Void> handleDemoModeException(DemoModeException e) {
         return R.fail("演示模式，不允许操作");
+    }
+
+
+    /**
+     * 用户信息异常
+     */
+    @ExceptionHandler(UserException.class)
+    public R<Void> handleUserException(UserException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        if (e.getMessage().contains("不存在")){
+            return R.fail(HttpStatus.HTTP_UNAUTHORIZED, e.getMessage());
+        };
+        return R.fail(HttpStatus.HTTP_FORBIDDEN, e.getMessage());
     }
 
 }
