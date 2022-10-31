@@ -6,15 +6,15 @@
 
     <groupId>com.ruoyi</groupId>
     <artifactId>ruoyi-x-plus</artifactId>
-    <version>22.6.7</version>
+    <version>22.6.8</version>
 
     <name>RuoYi-X-Plus</name>
     <url>https://github.com/QNAV/RuoYi-X-Plus</url>
     <description>RuoYi-X-Plus中后台管理系统</description>
 
     <properties>
-        <ruoyi-x-plus.version>22.6.7</ruoyi-x-plus.version>
-        <spring-boot.version>2.6.8</spring-boot.version>
+        <ruoyi-x-plus.version>22.6.8</ruoyi-x-plus.version>
+        <spring-boot.version>2.6.13</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
