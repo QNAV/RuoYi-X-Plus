@@ -56,7 +56,7 @@ public class SysNoticeController extends AdminBaseController {
     @ApiOperation(value = "根据通知公告编号获取详细信息", nickname = "SysNoticeGetInfo")
     @SaCheckPermission("system:notice:query")
     @GetMapping(value = "/info")
-    public R<SysNoticeVo> info(@ApiParam(value = "公告ID", required = true) @RequestParam(name = "公告ID", required = true) Long noticeId) {
+    public R<SysNoticeVo> info(@ApiParam(value = "公告ID", required = true) @RequestParam(required = true) Long noticeId) {
         return R.ok(noticeService.selectNoticeById(noticeId));
     }
 
@@ -91,7 +91,7 @@ public class SysNoticeController extends AdminBaseController {
     @SaCheckPermission("system:notice:remove")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "公告ID串", required = true, allowMultiple = true) @RequestParam(name = "公告ID串", required = true) Long[] noticeIds) {
+    public R<Void> remove(@ApiParam(value = "公告ID串", required = true, allowMultiple = true) @RequestParam(required = true) Long[] noticeIds) {
         return toAjax(noticeService.deleteNoticeByIds(noticeIds));
     }
 }

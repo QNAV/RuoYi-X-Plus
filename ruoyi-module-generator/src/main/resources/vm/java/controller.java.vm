@@ -92,7 +92,7 @@ public class ${ClassName}Controller extends BaseController {
     @GetMapping(value = "/info")
     public R<${ClassName}Vo> getInfo(@ApiParam(value = "主键", required = true)
                                      @NotNull(message = "主键不能为空")
-                                     @RequestParam(value = "主键", required = true) ${pkColumn.javaType} ${pkColumn.javaField}) {
+                                     @RequestParam(required = true) ${pkColumn.javaType} ${pkColumn.javaField}) {
         return R.ok(i${ClassName}Service.queryById(${pkColumn.javaField}));
     }
 
