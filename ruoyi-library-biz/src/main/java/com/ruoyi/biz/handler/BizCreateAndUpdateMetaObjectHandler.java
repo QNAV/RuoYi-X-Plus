@@ -22,6 +22,11 @@ import java.util.Date;
 @Slf4j
 public class BizCreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
 
+
+    /**
+     * 数据插入填充处理
+     * @param metaObject 元对象
+     */
     @Override
     public void insertFill(MetaObject metaObject) {
         try {
@@ -39,10 +44,15 @@ public class BizCreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
                 baseEntity.setUpdateBy(username);
             }
         } catch (Exception e) {
-            throw new ServiceException("自动注入异常 => " + e.getMessage(), HttpStatus.HTTP_UNAUTHORIZED);
+            throw new ServiceException("MP注入处理器-数据插入填充处理 自动注入异常 => " + e.getMessage(), HttpStatus.HTTP_UNAUTHORIZED);
         }
     }
 
+
+    /**
+     * mybatis-plus数据更新填充处理
+     * @param metaObject 元对象
+     */
     @Override
     public void updateFill(MetaObject metaObject) {
         try {
@@ -58,7 +68,7 @@ public class BizCreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
                 }
             }
         } catch (Exception e) {
-            throw new ServiceException("自动注入异常 => " + e.getMessage(), HttpStatus.HTTP_UNAUTHORIZED);
+            throw new ServiceException("MP注入处理器-数据更新填充处理 自动注入异常 => " + e.getMessage(), HttpStatus.HTTP_UNAUTHORIZED);
         }
     }
 
@@ -70,8 +80,8 @@ public class BizCreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
         try {
             loginUser = BizLoginHelper.getLoginUser();
         } catch (Exception e) {
-            log.warn("自动注入警告 => 用户未登录");
-            return null;
+            log.warn("MP注入处理器-获取登录用户名 自动注入警告 => 用户未登录");
+            return "匿名用户";
         }
         return loginUser.getUsername();
     }
