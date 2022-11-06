@@ -74,6 +74,14 @@ public interface IBizUserService {
     BizUser selectUserByPhoneNumber(String phoneNumber);
 
     /**
+     * 根据手机号和appid查询业务用户信息
+     * @param phoneNumber 手机号
+     * @param appid appid
+     * @return
+     */
+    BizUser selectUserByPhoneNumberAndAppid(String phoneNumber, String appid);
+
+    /**
      * 根据openid查询业务用户信息
      * @param openid openid
      * @return

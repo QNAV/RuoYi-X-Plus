@@ -105,7 +105,7 @@ public class BizLoginService {
         checkLogin(LoginType.SMS, phoneNumber, () -> !validateSmsCode(phoneNumber, smsCode, request));
 
         // 通过手机号查找用户(不存在会自动注册)
-        BizUser user = loadUserByPhonenumber(phoneNumber);
+        BizUser user = loadUserByPhoneNumber(phoneNumber);
         // 登录成功后，删除验证码数据，确保只有一次成功可用
         deleteSmsCode(phoneNumber);
         // 此处可根据登录用户的数据不同 自行创建 loginUser
@@ -138,14 +138,14 @@ public class BizLoginService {
         String openid = result.getOpenid();
         String unionid = result.getUnionid();
 
-        // 通过手机号查找用户(不存在会自动注册)
-        BizUser user = loadUserByPhonenumber(smsLoginBody.getPhoneNumber());
+        // 通过手机号和appid查找用户(不存在会自动注册)
+        BizUser user = loadUserByPhoneNumberAndAppid(smsLoginBody.getPhoneNumber(), smsLoginBody.getAppid());
         // 登录成功后，删除验证码数据，确保只有一次成功可用
         deleteSmsCode(smsLoginBody.getPhoneNumber());
         // 微信绑定
         userService.bindWeixin(smsLoginBody.getAppid(), user.getUserId(), openid, unionid);
         // 绑定微信后重新读取
-        user = loadUserByPhonenumber(smsLoginBody.getPhoneNumber());
+        user = loadUserByPhoneNumberAndAppid(smsLoginBody.getPhoneNumber(), smsLoginBody.getAppid());
         // 此处可根据登录用户的数据不同 自行创建 loginUser
         BizLoginUser loginUser = buildLoginUser(user);
         // 设置关联登录账号信息
@@ -261,7 +261,7 @@ public class BizLoginService {
      * @param phoneNumber 手机号码
      * @return
      */
-    public BizUser loadUserByPhonenumber(String phoneNumber) {
+    public BizUser loadUserByPhoneNumber(String phoneNumber) {
         BizUser user = userService.selectUserByPhoneNumber(phoneNumber);
         if (ObjectUtil.isNull(user)) {
             // 手机号登录，第一次登录则写入新用户
@@ -272,6 +272,34 @@ public class BizLoginService {
             log.info("自动注册手机号用户：{} .", phoneNumber);
             // 注册账户后再读取一次
             user = userService.selectUserByPhoneNumber(phoneNumber);
+        } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
+            log.info("登录用户：{} 已被删除.", phoneNumber);
+            throw new UserException("user.password.delete", phoneNumber);
+        } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
+            log.info("登录用户：{} 已被停用.", phoneNumber);
+            throw new UserException("user.blocked", phoneNumber);
+        }
+        return user;
+    }
+
+    /**
+     * 根据手机号获取用户信息
+     * @param phoneNumber 手机号码
+     * @param appid appid
+     * @return
+     */
+    public BizUser loadUserByPhoneNumberAndAppid(String phoneNumber, String appid) {
+        BizUser user = userService.selectUserByPhoneNumberAndAppid(phoneNumber, appid);
+        if (ObjectUtil.isNull(user)) {
+            // 手机号登录，第一次登录则写入新用户
+            BizUserAddBo addBo = new BizUserAddBo();
+            addBo.setAppid(appid);
+            addBo.setUserName(phoneNumber);
+            addBo.setPhoneNumber(phoneNumber);
+            userService.insertByBo(addBo);
+            log.info("自动注册手机号用户：{} .", phoneNumber);
+            // 注册账户后再读取一次
+            user = userService.selectUserByPhoneNumberAndAppid(phoneNumber, appid);
         } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
             log.info("登录用户：{} 已被删除.", phoneNumber);
             throw new UserException("user.password.delete", phoneNumber);

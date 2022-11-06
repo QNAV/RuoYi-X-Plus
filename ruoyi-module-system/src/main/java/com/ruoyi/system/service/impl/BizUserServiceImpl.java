@@ -173,8 +173,26 @@ public class BizUserServiceImpl implements IBizUserService {
         BizUserQueryBo queryBo = new BizUserQueryBo();
         queryBo.setPhoneNumber(phoneNumber);
         LambdaQueryWrapper<BizUser> lqw = buildQueryWrapperByBiz(queryBo);
+        // 兼容特殊情况(一个用户多个app一起用)
+        lqw.last("limit 1");
         return baseMapper.selectOne(lqw);
     }
+
+    /**
+     * 根据手机号和appid查询业务用户信息
+     * @param phoneNumber 手机号
+     * @param appid appid
+     * @return
+     */
+    @Override
+    public BizUser selectUserByPhoneNumberAndAppid(String phoneNumber, String appid) {
+        BizUserQueryBo queryBo = new BizUserQueryBo();
+        queryBo.setPhoneNumber(phoneNumber);
+        queryBo.setAppid(appid);
+        LambdaQueryWrapper<BizUser> lqw = buildQueryWrapperByBiz(queryBo);
+        return baseMapper.selectOne(lqw);
+    }
+
 
     /**
      * 根据openid查询业务用户信息
