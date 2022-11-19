@@ -82,7 +82,7 @@ public class BizUserController extends AdminBaseController {
     @GetMapping(value = "/info")
     public R<BizUserVo> getInfo(@ApiParam(value = "主键", required = true)
                                 @NotNull(message = "主键不能为空")
-                                @RequestParam(value = "主键", required = true) Long userId) {
+                                @RequestParam(required = true) Long userId) {
         return R.ok(iBizUserService.queryById(userId));
     }
 
@@ -119,7 +119,7 @@ public class BizUserController extends AdminBaseController {
     @PostMapping("/remove")
     public R<Void> remove(@ApiParam(value = "主键串", required = true, allowMultiple = true)
                           @NotEmpty(message = "主键不能为空")
-                          @RequestParam(name = "公告ID串", required = true) Long[] userIds) {
+                          @RequestParam(required = true) Long[] userIds) {
         return toAjax(iBizUserService.deleteWithValidByIds(Arrays.asList(userIds), true) ? 1 : 0);
     }
 }
