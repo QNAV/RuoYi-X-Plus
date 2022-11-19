@@ -18,10 +18,12 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.helper.DataBaseHelper;
+import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.domain.SysUserPost;
 import com.ruoyi.system.domain.SysUserRole;
+import com.ruoyi.system.domain.bo.SysUserEditBo;
 import com.ruoyi.system.domain.bo.SysUserQueryBo;
 import com.ruoyi.common.core.domain.vo.SysUserVo;
 import com.ruoyi.system.mapper.*;
@@ -297,11 +299,11 @@ public class SysUserServiceImpl implements ISysUserService {
     /**
      * 校验用户是否允许操作
      *
-     * @param user 用户信息
+     * @param userBo 用户信息
      */
     @Override
-    public void checkUserAllowed(SysUser user) {
-        if (ObjectUtil.isNotNull(user.getUserId()) && user.isAdmin()) {
+    public void checkUserAllowed(SysUserEditBo userBo) {
+        if (ObjectUtil.isNotNull(userBo.getUserId()) && userBo.isAdmin()) {
             throw new ServiceException("不允许操作超级管理员用户");
         }
     }
@@ -392,11 +394,12 @@ public class SysUserServiceImpl implements ISysUserService {
     /**
      * 修改用户状态
      *
-     * @param user 用户信息
+     * @param userBo 用户信息
      * @return 结果
      */
     @Override
-    public int updateUserStatus(SysUser user) {
+    public int updateUserStatus(SysUserEditBo userBo) {
+        SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
         return baseMapper.updateById(user);
     }
 
@@ -429,11 +432,12 @@ public class SysUserServiceImpl implements ISysUserService {
     /**
      * 重置用户密码
      *
-     * @param user 用户信息
+     * @param userBo 用户信息
      * @return 结果
      */
     @Override
-    public int resetPwd(SysUser user) {
+    public int resetPwd(SysUserEditBo userBo) {
+        SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
         return baseMapper.updateById(user);
     }
 
@@ -527,7 +531,9 @@ public class SysUserServiceImpl implements ISysUserService {
     @Transactional(rollbackFor = Exception.class)
     public int deleteUserByIds(Long[] userIds) {
         for (Long userId : userIds) {
-            checkUserAllowed(new SysUser(userId));
+            SysUserEditBo editBo = new SysUserEditBo();
+            editBo.setUserId(userId);
+            checkUserAllowed(editBo);
             checkUserDataScope(userId);
         }
         List<Long> ids = Arrays.asList(userIds);

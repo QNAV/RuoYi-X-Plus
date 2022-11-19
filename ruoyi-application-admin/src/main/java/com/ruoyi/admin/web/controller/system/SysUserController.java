@@ -159,7 +159,7 @@ public class SysUserController extends AdminBaseController {
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysUserEditBo userBo) {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
-        userService.checkUserAllowed(user);
+        userService.checkUserAllowed(userBo);
         userService.checkUserDataScope(user.getUserId());
         if (StringUtils.isNotEmpty(user.getPhoneNumber())
             && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
@@ -192,11 +192,11 @@ public class SysUserController extends AdminBaseController {
     @SaCheckPermission("system:user:resetPwd")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/resetPwd")
-    public R<Void> resetPwd(@RequestBody SysUser user) {
-        userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
-        user.setPassword(BCrypt.hashpw(user.getPassword()));
-        return toAjax(userService.resetPwd(user));
+    public R<Void> resetPwd(@RequestBody SysUserEditBo userBo) {
+        userService.checkUserAllowed(userBo);
+        userService.checkUserDataScope(userBo.getUserId());
+        userBo.setPassword(BCrypt.hashpw(userBo.getPassword()));
+        return toAjax(userService.resetPwd(userBo));
     }
 
     /**
@@ -206,10 +206,10 @@ public class SysUserController extends AdminBaseController {
     @SaCheckPermission("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/changeStatus")
-    public R<Void> changeStatus(@RequestBody SysUser user) {
-        userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
-        return toAjax(userService.updateUserStatus(user));
+    public R<Void> changeStatus(@RequestBody SysUserEditBo userBo) {
+        userService.checkUserAllowed(userBo);
+        userService.checkUserDataScope(userBo.getUserId());
+        return toAjax(userService.updateUserStatus(userBo));
     }
 
     /**

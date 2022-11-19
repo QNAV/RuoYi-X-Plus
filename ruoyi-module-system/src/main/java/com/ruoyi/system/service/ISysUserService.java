@@ -3,6 +3,7 @@ package com.ruoyi.system.service;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.system.domain.bo.SysUserEditBo;
 import com.ruoyi.system.domain.bo.SysUserQueryBo;
 import com.ruoyi.common.core.domain.vo.SysUserVo;
 
@@ -136,9 +137,9 @@ public interface ISysUserService {
     /**
      * 校验用户是否允许操作
      *
-     * @param user 用户信息
+     * @param userBo 用户信息
      */
-    void checkUserAllowed(SysUser user);
+    void checkUserAllowed(SysUserEditBo userBo);
 
     /**
      * 校验用户是否有数据权限
@@ -182,10 +183,10 @@ public interface ISysUserService {
     /**
      * 修改用户状态
      *
-     * @param user 用户信息
+     * @param userBo 用户信息
      * @return 结果
      */
-    int updateUserStatus(SysUser user);
+    int updateUserStatus(SysUserEditBo userBo);
 
     /**
      * 修改用户基本信息
@@ -207,10 +208,10 @@ public interface ISysUserService {
     /**
      * 重置用户密码
      *
-     * @param user 用户信息
+     * @param userBo 用户信息
      * @return 结果
      */
-    int resetPwd(SysUser user);
+    int resetPwd(SysUserEditBo userBo);
 
     /**
      * 重置用户密码

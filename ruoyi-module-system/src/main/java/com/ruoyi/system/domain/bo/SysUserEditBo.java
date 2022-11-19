@@ -1,6 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.annotation.Sensitive;
+import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.enums.SensitiveStrategy;
 import com.ruoyi.common.xss.Xss;
 import io.swagger.annotations.ApiModel;
@@ -121,5 +122,9 @@ public class SysUserEditBo implements Serializable {
     @ApiModelProperty(value = "岗位组", required = true)
     @NotNull(message = "岗位组不能为空")
     private Long[] postIds;
+
+    public boolean isAdmin() {
+        return UserConstants.ADMIN_ID.equals(this.userId);
+    }
 
 }
