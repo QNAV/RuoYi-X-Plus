@@ -105,9 +105,6 @@ public class BizLogininforServiceImpl implements IBizLogininforService, Logininf
         BizLogininfor add = BeanUtil.toBean(addBo, BizLogininfor.class);
         validEntityBeforeSave(add);
         boolean flag = baseMapper.insert(add) > 0;
-        if (flag) {
-            addBo.setInfoId(add.getInfoId());
-        }
         return flag;
     }
 

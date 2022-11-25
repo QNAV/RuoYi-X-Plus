@@ -20,13 +20,6 @@ import java.util.Date;
 public class TestDemoAddBo {
 
     /**
-     * 主键(兼容新增后回写，新增时无用)
-     */
-    @ApiModelProperty(hidden = true)
-    private Long id;
-
-
-    /**
      * 部门id
      */
     @ApiModelProperty(value = "部门id", required = true)

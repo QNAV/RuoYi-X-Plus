@@ -93,7 +93,7 @@ public class TestDemoController {
     @Log(title = "测试单", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping("/add")
-    public R<Void> add(@Validated(AddGroup.class) @RequestBody TestDemoAddBo bo) {
+    public R<Void> add(@Validated @RequestBody TestDemoAddBo bo) {
         return toAjax(iTestDemoService.insertByBo(bo) ? 1 : 0);
     }
 
@@ -105,7 +105,7 @@ public class TestDemoController {
     @Log(title = "测试单", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PostMapping("/edit")
-    public R<Void> edit(@Validated(EditGroup.class) @RequestBody TestDemoEditBo bo) {
+    public R<Void> edit(@Validated @RequestBody TestDemoEditBo bo) {
         return toAjax(iTestDemoService.updateByBo(bo) ? 1 : 0);
     }
 

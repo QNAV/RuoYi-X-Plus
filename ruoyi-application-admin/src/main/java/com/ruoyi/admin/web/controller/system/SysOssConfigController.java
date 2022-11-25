@@ -47,7 +47,7 @@ public class SysOssConfigController extends AdminBaseController {
     @ApiOperation(value = "查询对象存储配置列表", nickname = "SysOssConfigPostList")
     @SaCheckPermission("system:oss:list")
     @PostMapping("/list")
-    public TableDataInfo<SysOssConfigVo> list(@RequestBody(required = false) @Validated(QueryGroup.class) SysOssConfigPageQueryBo ossConfigPageQuery) {
+    public TableDataInfo<SysOssConfigVo> list(@RequestBody(required = false) @Validated SysOssConfigPageQueryBo ossConfigPageQuery) {
         // 分页参数组装
         PageQuery pageQuery = BeanCopyUtils.copy(ossConfigPageQuery, PageQuery.class);
         // 查询参数组装
@@ -73,7 +73,7 @@ public class SysOssConfigController extends AdminBaseController {
     @Log(title = "对象存储配置", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping("/add")
-    public R<Void> add(@Validated(AddGroup.class) @RequestBody SysOssConfigAddBo addBo) {
+    public R<Void> add(@Validated @RequestBody SysOssConfigAddBo addBo) {
         SysOssConfigEditBo bo = BeanCopyUtils.copy(addBo, SysOssConfigEditBo.class);
         return toAjax(iSysOssConfigService.insertByBo(bo) ? 1 : 0);
     }
@@ -86,7 +86,7 @@ public class SysOssConfigController extends AdminBaseController {
     @Log(title = "对象存储配置", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PostMapping("/edit")
-    public R<Void> edit(@Validated(EditGroup.class) @RequestBody SysOssConfigEditBo bo) {
+    public R<Void> edit(@Validated @RequestBody SysOssConfigEditBo bo) {
         return toAjax(iSysOssConfigService.updateByBo(bo) ? 1 : 0);
     }
 

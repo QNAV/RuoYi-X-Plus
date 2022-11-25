@@ -55,7 +55,7 @@ public class SysOssController extends AdminBaseController {
     @ApiOperation(value = "查询OSS对象存储列表", nickname = "SysOssPostList")
     @SaCheckPermission("system:oss:list")
     @PostMapping("/list")
-    public TableDataInfo<SysOssVo> list(@RequestBody(required = false) @Validated(QueryGroup.class) SysOssPageQueryBo ossPageQuery) {
+    public TableDataInfo<SysOssVo> list(@RequestBody(required = false) @Validated SysOssPageQueryBo ossPageQuery) {
         // 分页参数组装
         PageQuery pageQuery = BeanCopyUtils.copy(ossPageQuery, PageQuery.class);
         // 查询参数组装

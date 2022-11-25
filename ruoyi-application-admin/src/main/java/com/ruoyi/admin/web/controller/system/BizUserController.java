@@ -94,7 +94,7 @@ public class BizUserController extends AdminBaseController {
     @Log(title = "业务用户信息", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping("/add")
-    public R<Void> add(@Validated(AddGroup.class) @RequestBody BizUserAddBo bo) {
+    public R<Void> add(@Validated @RequestBody BizUserAddBo bo) {
         return toAjax(iBizUserService.insertByBo(bo) ? 1 : 0);
     }
 
@@ -106,7 +106,7 @@ public class BizUserController extends AdminBaseController {
     @Log(title = "业务用户信息", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PostMapping("/edit")
-    public R<Void> edit(@Validated(EditGroup.class) @RequestBody BizUserEditBo bo) {
+    public R<Void> edit(@Validated @RequestBody BizUserEditBo bo) {
         return toAjax(iBizUserService.updateByBo(bo) ? 1 : 0);
     }
 

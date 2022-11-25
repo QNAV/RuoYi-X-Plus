@@ -112,9 +112,6 @@ public class BizUserServiceImpl implements IBizUserService {
         BizUser add = BeanUtil.toBean(addBo, BizUser.class);
         validEntityBeforeSave(add);
         boolean flag = baseMapper.insert(add) > 0;
-        if (flag) {
-            addBo.setUserId(add.getUserId());
-        }
         return flag;
     }
 

@@ -47,7 +47,7 @@ public class TestTreeController {
     @ApiOperation("查询测试树表列表")
     @SaCheckPermission("demo:tree:list")
     @GetMapping("/list")
-    public R<List<TestTreeVo>> list(@Validated(QueryGroup.class) TestTreeQuery query) {
+    public R<List<TestTreeVo>> list(@Validated TestTreeQuery query) {
         List<TestTreeVo> list = iTestTreeService.queryList(query);
         return R.ok(list);
     }
@@ -84,7 +84,7 @@ public class TestTreeController {
     @Log(title = "测试树表", businessType = BusinessType.INSERT)
     @RepeatSubmit
     @PostMapping()
-    public R<Void> add(@Validated(AddGroup.class) @RequestBody TestTreeBo bo) {
+    public R<Void> add(@Validated @RequestBody TestTreeBo bo) {
         return toAjax(iTestTreeService.insertByBo(bo) ? 1 : 0);
     }
 
@@ -96,7 +96,7 @@ public class TestTreeController {
     @Log(title = "测试树表", businessType = BusinessType.UPDATE)
     @RepeatSubmit
     @PutMapping()
-    public R<Void> edit(@Validated(EditGroup.class) @RequestBody TestTreeBo bo) {
+    public R<Void> edit(@Validated @RequestBody TestTreeBo bo) {
         return toAjax(iTestTreeService.updateByBo(bo) ? 1 : 0);
     }
 

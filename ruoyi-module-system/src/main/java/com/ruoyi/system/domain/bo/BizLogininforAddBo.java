@@ -25,12 +25,6 @@ public class BizLogininforAddBo implements Serializable {
     private static final long serialVersionUID=1L;
 
     /**
-     * 访问ID
-     */
-    @ApiModelProperty(hidden = true)
-    private Long infoId;
-
-    /**
      * 用户名(也可能是手机号等)
      */
     @ApiModelProperty(value = "用户名(也可能是手机号等)", required = true)

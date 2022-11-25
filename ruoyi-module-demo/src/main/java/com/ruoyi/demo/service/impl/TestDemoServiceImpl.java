@@ -91,9 +91,6 @@ public class TestDemoServiceImpl implements ITestDemoService {
         TestDemo add = BeanUtil.toBean(addBo, TestDemo.class);
         validEntityBeforeSave(add);
         boolean flag = baseMapper.insert(add) > 0;
-        if (flag) {
-            addBo.setId(add.getId());
-        }
         return flag;
     }
 

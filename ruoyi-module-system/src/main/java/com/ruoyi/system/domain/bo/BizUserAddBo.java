@@ -25,12 +25,6 @@ public class BizUserAddBo implements Serializable {
     private static final long serialVersionUID=1L;
 
     /**
-     * 用户ID
-     */
-    @ApiModelProperty(hidden = true)
-    private Long userId;
-
-    /**
      * appid
      */
     @ApiModelProperty(value = "appid")

@@ -104,7 +104,7 @@ public class ${ClassName}Controller extends BaseController {
     @Log(title = "${functionName}", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping("/add")
-    public R<Void> add(@Validated(AddGroup.class) @RequestBody ${ClassName}AddBo bo) {
+    public R<Void> add(@Validated @RequestBody ${ClassName}AddBo bo) {
         return toAjax(i${ClassName}Service.insertByBo(bo) ? 1 : 0);
     }
 
@@ -116,7 +116,7 @@ public class ${ClassName}Controller extends BaseController {
     @Log(title = "${functionName}", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PostMapping("/edit")
-    public R<Void> edit(@Validated(EditGroup.class) @RequestBody ${ClassName}EditBo bo) {
+    public R<Void> edit(@Validated @RequestBody ${ClassName}EditBo bo) {
         return toAjax(i${ClassName}Service.updateByBo(bo) ? 1 : 0);
     }
 
