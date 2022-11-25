@@ -71,6 +71,11 @@ public class GenUtils {
             }
         }
 
+        // 主键改成long
+        if (column.isPk()){
+            column.setJavaType(GenConstants.TYPE_LONG);
+        }
+
         // BO对象 默认插入勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_ADD, columnName) && !column.isPk()) {
             column.setIsInsert(GenConstants.REQUIRE);
