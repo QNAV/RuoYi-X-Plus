@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
@@ -22,12 +23,12 @@ public class R<T> implements Serializable {
     /**
      * 成功
      */
-    public static final int SUCCESS = 200;
+    public static final int SUCCESS = HttpStatus.OK.value();;
 
     /**
      * 失败
      */
-    public static final int FAIL = 500;
+    public static final int FAIL = HttpStatus.INTERNAL_SERVER_ERROR.value();
 
     @ApiModelProperty(value = "消息状态码", required = true)
     private int code;
