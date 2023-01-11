@@ -30,7 +30,8 @@ import java.util.List;
 /**
  * 岗位信息操作处理
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "岗位信息管理", tags = {"SysPostService"})

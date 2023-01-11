@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 首页
  *
- * @author weibocy
+ * @author ruoyi
  */
 @Api(value = "首页管理", tags = {"SysIndexService"})
 @RequiredArgsConstructor

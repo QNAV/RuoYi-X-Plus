@@ -28,7 +28,8 @@ import java.util.stream.Collectors;
 /**
  * 在线用户监控
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Api(value = "在线用户监控管理", tags = {"SysUserOnlineService"})
 @RequiredArgsConstructor

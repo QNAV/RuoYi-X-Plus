@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * 防止重复提交(参考美团GTIS防重系统)
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Slf4j
 @RequiredArgsConstructor

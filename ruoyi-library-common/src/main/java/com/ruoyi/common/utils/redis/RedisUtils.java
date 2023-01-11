@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 /**
  * redis 工具类
  *
- * @author weibocy
+ * @author Lion Li
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings(value = {"unchecked", "rawtypes"})

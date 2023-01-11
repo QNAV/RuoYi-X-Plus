@@ -9,7 +9,7 @@ import com.ruoyi.common.utils.StringUtils;
 /**
  * 无符号计算生成器
  *
- * @author weibocy
+ * @author Lion Li
  */
 public class UnsignedMathGenerator implements CodeGenerator {
 

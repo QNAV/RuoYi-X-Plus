@@ -24,7 +24,8 @@ import java.util.List;
 /**
  * 后台用户实体对象 sys_user
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 
 @Data

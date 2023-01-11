@@ -32,7 +32,8 @@ import java.util.List;
 /**
  * 数据字典信息
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "数据字典信息管理", tags = {"SysDictDataService"})

@@ -12,7 +12,8 @@ import java.nio.charset.StandardCharsets;
 /**
  * 文件处理工具类
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileUtils extends FileUtil {

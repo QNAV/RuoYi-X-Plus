@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Swagger 文档配置
  *
- * @author weibocy
+ * @author Lion Li
  */
 @RequiredArgsConstructor
 @Configuration

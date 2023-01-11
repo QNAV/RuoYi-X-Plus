@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * druid 配置多数据源
  *
- * @author weibocy
+ * @author ruoyi
  */
 @Configuration
 public class DruidConfig {

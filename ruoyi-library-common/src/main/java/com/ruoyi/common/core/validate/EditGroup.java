@@ -3,7 +3,7 @@ package com.ruoyi.common.core.validate;
 /**
  * 校验分组 edit
  *
- * @author weibocy
+ * @author Lion Li
  */
 public interface EditGroup {
 }

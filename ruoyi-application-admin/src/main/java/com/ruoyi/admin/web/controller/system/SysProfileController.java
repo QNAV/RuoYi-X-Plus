@@ -35,7 +35,8 @@ import java.util.Arrays;
 /**
  * 个人信息 业务处理
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "个人信息管理", tags = {"SysProfileService"})

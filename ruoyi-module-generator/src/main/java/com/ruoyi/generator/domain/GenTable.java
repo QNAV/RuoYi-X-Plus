@@ -19,7 +19,8 @@ import java.util.Map;
 /**
  * 业务表 gen_table
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 
 @Data

@@ -14,7 +14,7 @@ import java.util.function.Consumer;
  * 轻量级队列 重量级数据量 请使用 MQ
  * 要求 redis 5.X 以上
  *
- * @author weibocy
+ * @author Lion Li
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class QueueUtils {

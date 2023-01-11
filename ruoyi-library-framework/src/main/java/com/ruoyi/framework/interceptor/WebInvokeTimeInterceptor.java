@@ -22,7 +22,7 @@ import java.util.Map;
  * web的调用时间统计拦截器
  * dev环境有效
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Slf4j
 public class WebInvokeTimeInterceptor implements HandlerInterceptor {

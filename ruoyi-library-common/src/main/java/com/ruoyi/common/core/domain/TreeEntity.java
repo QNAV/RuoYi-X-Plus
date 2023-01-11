@@ -12,7 +12,8 @@ import java.util.List;
 /**
  * Tree基类
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 
 @Data

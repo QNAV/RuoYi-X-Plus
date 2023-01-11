@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 整合 TLog 框架配置
  *
- * @author weibocy
+ * @author Lion Li
  * @since 3.3.0
  */
 @Configuration

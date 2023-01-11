@@ -32,7 +32,8 @@ import java.util.Set;
 /**
  * 登录验证
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "登录验证管理", tags = {"SysLoginService"})

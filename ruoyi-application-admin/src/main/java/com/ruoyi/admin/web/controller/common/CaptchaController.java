@@ -36,7 +36,8 @@ import java.util.Map;
 /**
  * 验证码操作处理
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Anonymous
 @Slf4j

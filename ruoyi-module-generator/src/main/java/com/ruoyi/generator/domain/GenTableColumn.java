@@ -19,6 +19,8 @@ import javax.validation.constraints.NotBlank;
  * ??? 暂时还不知道原作者设置updateStrategy的用意
  * ??? 我这边编辑后发现is_pk、is_increment 被写空
  * ??? 难道是原来vue版本的前端是对象参数全量传入的关系
+ * @author ruoyi
+ * @author Lion Li
  * @author weibocy
  */
 

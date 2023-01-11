@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Async;
 /**
  * 通用 操作日志
  *
- * @author weibocy
+ * @author Lion Li
  */
 public interface OperLogService {
 

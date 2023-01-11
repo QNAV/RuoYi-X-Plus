@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 通用 系统访问日志
  *
- * @author weibocy
+ * @author Lion Li
  */
 public interface LogininforService {
 

@@ -38,7 +38,8 @@ import java.util.List;
 /**
  * 文件上传 控制层
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "对象存储管理", tags = {"SysOssService"})

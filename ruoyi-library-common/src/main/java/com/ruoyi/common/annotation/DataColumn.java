@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * 数据权限
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

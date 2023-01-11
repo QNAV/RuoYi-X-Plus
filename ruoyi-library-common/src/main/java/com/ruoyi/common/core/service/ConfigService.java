@@ -3,7 +3,7 @@ package com.ruoyi.common.core.service;
 /**
  * 通用 参数配置服务
  *
- * @author weibocy
+ * @author Lion Li
  */
 public interface ConfigService {
 

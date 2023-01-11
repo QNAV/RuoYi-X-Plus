@@ -29,7 +29,7 @@ import java.util.Objects;
  * @param <M> mapper 泛型
  * @param <T> table 泛型
  * @param <V> bo 泛型
- * @author weibocy
+ * @author Lion Li
  * @since 2021-05-13
  */
 @SuppressWarnings("unchecked")

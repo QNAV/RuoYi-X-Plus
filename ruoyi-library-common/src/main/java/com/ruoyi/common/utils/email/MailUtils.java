@@ -22,6 +22,7 @@ import java.util.Map;
 
 /**
  * 邮件工具类
+ * @author ruoyi
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MailUtils {

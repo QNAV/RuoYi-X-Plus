@@ -20,7 +20,8 @@ import javax.validation.constraints.Size;
 /**
  * 字典数据表 sys_dict_data
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 
 @Data

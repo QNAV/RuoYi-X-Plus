@@ -28,7 +28,8 @@ import java.util.List;
 /**
  * 菜单信息
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "菜单信息管理", tags = {"SysMenuService"})

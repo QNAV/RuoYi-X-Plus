@@ -44,7 +44,8 @@ import java.util.stream.Collectors;
 /**
  * 用户信息
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "用户信息管理", tags = {"SysUserService"})

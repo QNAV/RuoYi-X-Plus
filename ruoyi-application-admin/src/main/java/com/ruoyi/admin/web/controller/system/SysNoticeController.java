@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 公告 信息操作处理
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "公告信息管理", tags = {"SysNoticeService"})

@@ -27,7 +27,8 @@ import java.util.List;
 /**
  * 操作日志记录
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "操作日志记录管理", tags = {"SysOperlogService"})

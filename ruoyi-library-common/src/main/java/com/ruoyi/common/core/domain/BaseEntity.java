@@ -12,7 +12,8 @@ import java.util.Date;
 /**
  * Entity基类
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 
 @Data

@@ -30,7 +30,8 @@ import java.util.List;
 /**
  * 参数配置 信息操作处理
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "参数配置管理", tags = {"SysConfigService"})

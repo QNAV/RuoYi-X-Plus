@@ -30,7 +30,10 @@ import java.util.Arrays;
 /**
  * 对象存储配置Controller
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
+ * @author 孤舟烟雨
+ * @date 2021-08-13
  */
 @Validated
 @Api(value = "对象存储配置管理", tags = {"SysOssConfigService"})

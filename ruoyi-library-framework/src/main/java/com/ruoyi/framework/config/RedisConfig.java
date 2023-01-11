@@ -24,7 +24,8 @@ import java.util.Map;
 /**
  * redis配置
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Slf4j
 @Configuration

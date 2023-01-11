@@ -23,6 +23,7 @@ import java.util.List;
  * 业务用户实体对象 biz_user
  *
  * @author weibocy
+ * @version 22.6.0
  */
 
 @Data

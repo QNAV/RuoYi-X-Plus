@@ -3,7 +3,7 @@ package com.ruoyi.common.core.validate;
 /**
  * 校验分组 query
  *
- * @author weibocy
+ * @author Lion Li
  */
 public interface QueryGroup {
 }

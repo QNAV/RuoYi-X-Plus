@@ -6,6 +6,7 @@ import lombok.Getter;
 
 /**
  * 关联账号类型
+ * @author weibocy
  */
 @Getter
 @AllArgsConstructor

@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * 例如: 源对象 拷贝到 目标(链式对象)
  * 请区分好`浅拷贝`和`深拷贝`再做使用
  *
- * @author weibocy
+ * @author Lion Li
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BeanCopyUtils {

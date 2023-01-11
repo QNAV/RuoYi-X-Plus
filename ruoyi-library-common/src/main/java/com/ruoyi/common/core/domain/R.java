@@ -11,7 +11,8 @@ import java.io.Serializable;
 /**
  * 响应信息主体
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Data
 @NoArgsConstructor

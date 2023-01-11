@@ -33,7 +33,8 @@ import java.util.List;
 /**
  * 角色信息
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "角色信息管理", tags = {"SysRoleService"})

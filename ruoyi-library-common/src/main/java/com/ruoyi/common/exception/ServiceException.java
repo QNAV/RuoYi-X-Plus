@@ -3,7 +3,7 @@ package com.ruoyi.common.exception;
 /**
  * 业务异常
  *
- * @author weibocy
+ * @author ruoyi
  */
 public final class ServiceException extends RuntimeException {
     private static final long serialVersionUID = 1L;

@@ -3,7 +3,7 @@ package com.ruoyi.common.core.service;
 /**
  * 通用 字典服务
  *
- * @author weibocy
+ * @author Lion Li
  */
 public interface DictService {
 

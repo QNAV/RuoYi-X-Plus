@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 注册验证
  *
- * @author weibocy
+ * @author ruoyi
  */
 @Validated
 @Api(value = "注册验证管理", tags = {"SysRegisterService"})

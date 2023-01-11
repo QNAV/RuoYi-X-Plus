@@ -19,7 +19,7 @@ import java.util.TimeZone;
 /**
  * jackson 配置
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Slf4j
 @Configuration

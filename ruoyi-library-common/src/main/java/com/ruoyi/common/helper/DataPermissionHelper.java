@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * 数据权限助手
  *
- * @author weibocy
+ * @author Lion Li
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @SuppressWarnings("unchecked cast")

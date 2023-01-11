@@ -29,7 +29,8 @@ import java.util.List;
 /**
  * 部门信息
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "部门管理", tags = {"SysDeptService"})

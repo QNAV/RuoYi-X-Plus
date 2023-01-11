@@ -27,7 +27,8 @@ import java.util.List;
 /**
  * 系统访问记录
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Validated
 @Api(value = "系统访问记录管理", tags = {"SysLoginService"})
