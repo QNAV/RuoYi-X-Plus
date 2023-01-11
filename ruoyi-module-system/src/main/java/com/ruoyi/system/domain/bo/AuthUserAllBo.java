@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * 批量授权用户表单对象
- * @author weibocy
+ * @author ruoyi
  */
 @ApiModel(value = "AuthUserAllBo", description = "批量授权用户表单对象")
 @Data

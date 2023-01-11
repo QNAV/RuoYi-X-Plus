@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 注册校验方法
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Service
 public class SysRegisterService {

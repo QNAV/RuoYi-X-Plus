@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * xxl-job config
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Slf4j
 @Configuration

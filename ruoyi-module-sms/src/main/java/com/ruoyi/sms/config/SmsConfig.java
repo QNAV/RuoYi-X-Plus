@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 短信配置类
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Configuration
 public class SmsConfig {

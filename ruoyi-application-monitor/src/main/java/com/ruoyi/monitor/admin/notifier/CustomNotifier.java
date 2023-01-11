@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 /**
  * 自定义事件通知处理
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Slf4j
 @Component

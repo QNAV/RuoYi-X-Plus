@@ -3,7 +3,7 @@ package com.ruoyi.system.service;
 /**
  * 通用 数据权限 服务
  *
- * @author weibocy
+ * @author Lion Li
  */
 public interface ISysDataScopeService {
 

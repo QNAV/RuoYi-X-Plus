@@ -10,7 +10,8 @@ import java.util.Set;
 /**
  * 用户权限处理
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @RequiredArgsConstructor
 @Service

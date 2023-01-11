@@ -19,7 +19,8 @@ import java.util.Map;
 /**
  * 操作日志记录表 oper_log
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 
 @Data

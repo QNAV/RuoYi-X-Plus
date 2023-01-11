@@ -10,7 +10,8 @@ import lombok.Data;
 /**
  * 用户和岗位关联 sys_user_post
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 
 @Data

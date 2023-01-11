@@ -34,7 +34,7 @@ import java.util.function.Supplier;
 /**
  * 登录校验方法
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Slf4j
 @Service

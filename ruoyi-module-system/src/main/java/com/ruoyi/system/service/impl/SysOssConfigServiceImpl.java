@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * 对象存储配置Service业务层处理
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Slf4j
 @RequiredArgsConstructor

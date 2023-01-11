@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 /**
  * Tencent 短信模板
  *
- * @author weibocy
+ * @author Lion Li
  */
 public class TencentSmsTemplate implements SmsTemplate {
 

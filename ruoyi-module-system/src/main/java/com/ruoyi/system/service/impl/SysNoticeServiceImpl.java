@@ -19,7 +19,8 @@ import java.util.List;
 /**
  * 公告 服务层实现
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @RequiredArgsConstructor
 @Service

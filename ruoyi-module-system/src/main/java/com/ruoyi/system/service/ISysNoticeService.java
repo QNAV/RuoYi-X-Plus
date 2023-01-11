@@ -11,7 +11,8 @@ import java.util.List;
 /**
  * 公告 服务层
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 public interface ISysNoticeService {
 

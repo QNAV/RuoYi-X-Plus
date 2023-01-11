@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.vo.SysOssConfigVo;
 /**
  * 对象存储配置Mapper接口
  *
- * @author weibocy
+ * @author Lion Li
  * @author 孤舟烟雨
  * @date 2021-08-13
  */

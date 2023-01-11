@@ -7,7 +7,8 @@ import lombok.Data;
 /**
  * 当前在线会话
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 
 @Data

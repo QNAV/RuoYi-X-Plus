@@ -12,7 +12,8 @@ import java.util.List;
 /**
  * 字典 业务层
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 public interface ISysDictTypeService {
 

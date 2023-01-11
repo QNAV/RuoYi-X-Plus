@@ -13,7 +13,8 @@ import java.util.Set;
 /**
  * 角色业务层
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 public interface ISysRoleService {
 

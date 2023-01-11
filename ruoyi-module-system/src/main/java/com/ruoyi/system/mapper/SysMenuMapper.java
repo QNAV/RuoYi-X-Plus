@@ -13,7 +13,8 @@ import java.util.List;
 /**
  * 菜单表 数据层
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 public interface SysMenuMapper extends BaseMapperPlus<SysMenuMapper, SysMenu, SysMenu> {
 

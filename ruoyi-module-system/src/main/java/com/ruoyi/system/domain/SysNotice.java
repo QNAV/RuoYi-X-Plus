@@ -16,7 +16,8 @@ import javax.validation.constraints.Size;
 /**
  * 通知公告表 sys_notice
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

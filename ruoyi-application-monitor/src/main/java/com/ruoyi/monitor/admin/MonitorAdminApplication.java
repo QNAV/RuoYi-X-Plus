@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Admin 监控启动程序
  *
- * @author weibocy
+ * @author Lion Li
  */
 @SpringBootApplication
 public class MonitorAdminApplication {

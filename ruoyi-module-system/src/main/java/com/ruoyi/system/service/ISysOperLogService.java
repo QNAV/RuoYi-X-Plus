@@ -11,7 +11,8 @@ import java.util.List;
 /**
  * 操作日志 服务层
  *
- * @author weibocy
+ * @author ruoyi
+ * @author Lion Li
  */
 public interface ISysOperLogService {
 

@@ -3,7 +3,7 @@ package com.ruoyi.sms.exception;
 /**
  * Sms异常类
  *
- * @author weibocy
+ * @author Lion Li
  */
 public class SmsException extends RuntimeException {
 

@@ -11,7 +11,8 @@ import java.util.Collection;
 /**
  * 对象存储配置Service接口
  *
- * @author weibocy
+ * @author Lion Li
+ * @author 孤舟烟雨
  */
 public interface ISysOssConfigService {
 

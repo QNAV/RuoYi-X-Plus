@@ -16,7 +16,7 @@ import java.io.Serializable;
 /**
  * 已登录用户信息更新业务对象
  *
- * @author weibocy
+ * @author ruoyi
  */
 
 @Data

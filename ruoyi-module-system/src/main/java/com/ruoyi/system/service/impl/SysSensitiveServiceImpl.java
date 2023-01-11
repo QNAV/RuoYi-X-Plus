@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  * 默认管理员不过滤
  * 需自行根据业务重写实现
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Service
 public class SysSensitiveServiceImpl implements SensitiveService {

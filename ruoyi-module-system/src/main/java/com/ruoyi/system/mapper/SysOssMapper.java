@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.vo.SysOssVo;
 /**
  * 文件上传 数据层
  *
- * @author weibocy
+ * @author Lion Li
  */
 public interface SysOssMapper extends BaseMapperPlus<SysOssMapper, SysOss, SysOssVo> {
 }

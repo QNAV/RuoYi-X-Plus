@@ -29,7 +29,7 @@ import java.io.InputStream;
  * S3 存储协议 所有兼容S3协议的云厂商均支持
  * 阿里云 腾讯云 七牛云 minio
  *
- * @author weibocy
+ * @author Lion Li
  */
 public class OssClient {
 
