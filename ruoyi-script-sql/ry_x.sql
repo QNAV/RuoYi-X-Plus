@@ -90,7 +90,7 @@ CREATE TABLE `gen_table_column` (
 --
 
 CREATE TABLE `sys_config` (
-  `config_id` int(5) NOT NULL COMMENT '参数主键',
+  `config_id` bigint(20) NOT NULL COMMENT '参数主键',
   `config_name` varchar(100) NOT NULL DEFAULT '' COMMENT '参数名称',
   `config_key` varchar(100) NOT NULL DEFAULT '' COMMENT '参数键名',
   `config_value` varchar(500) NOT NULL DEFAULT '' COMMENT '参数键值',
@@ -401,7 +401,7 @@ INSERT INTO `sys_menu` (`menu_id`, `menu_name`, `parent_id`, `order_num`, `path`
 --
 
 CREATE TABLE `sys_notice` (
-  `notice_id` int(4) NOT NULL COMMENT '公告ID',
+  `notice_id` bigint(20) NOT NULL COMMENT '公告ID',
   `notice_title` varchar(50) NOT NULL COMMENT '公告标题',
   `notice_type` char(1) NOT NULL COMMENT '公告类型（1通知 2公告）',
   `notice_content` longblob NOT NULL COMMENT '公告内容',
@@ -1029,7 +1029,7 @@ ALTER TABLE `sys_menu`
 -- 使用表AUTO_INCREMENT `sys_notice`
 --
 ALTER TABLE `sys_notice`
-  MODIFY `notice_id` int(4) NOT NULL AUTO_INCREMENT COMMENT '公告ID', AUTO_INCREMENT=3;
+  MODIFY `notice_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '公告ID', AUTO_INCREMENT=3;
 
 --
 -- 使用表AUTO_INCREMENT `sys_oper_log`
