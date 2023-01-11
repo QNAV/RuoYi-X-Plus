@@ -102,12 +102,7 @@ public class SysLoginController {
     @ApiOperation(value = "登出方法", nickname = "SysLoginPostLogout")
     @PostMapping("/logout")
     public R<Void> logout() {
-        try {
-            String username = AdminLoginHelper.getUsername();
-            StpUtil.logout();
-            loginService.logout(username);
-        } catch (NotLoginException e) {
-        }
+        loginService.logout();
         return R.ok("退出成功");
     }
 
