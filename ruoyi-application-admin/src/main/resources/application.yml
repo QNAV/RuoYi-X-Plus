@@ -4,6 +4,10 @@ ruoyi:
   name: ${project.artifactId}
   # 版本
   version: ${ruoyi-x-plus.version}
+  # 若依版本 https://gitee.com/y_project/RuoYi-Vue
+  ryVersion: 3.8.3
+  # 若依plus 疯狂的狮子Li大佬修改版本 https://gitee.com/JavaLionLi/RuoYi-Vue-Plus
+  plusVersion: 4.2.0
   # 版权年份
   copyrightYear: 2022
   # 实例演示开关
