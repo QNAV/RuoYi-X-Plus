@@ -7,10 +7,12 @@ import cn.hutool.core.bean.BeanUtil;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.domain.bo.AdminUserOnlineBo;
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
 import com.ruoyi.system.domain.vo.SysUserOnlineVo;
@@ -45,26 +47,26 @@ public class SysUserOnlineController extends AdminBaseController {
         List<String> keys = StpUtil.searchTokenValue("", -1, 0);
         List<AdminUserOnlineBo> userOnlineBoList = new ArrayList<>();
         for (String key : keys) {
-            String token = key.replace(Constants.LOGIN_TOKEN_KEY, "");
+            String token = key.replace(CacheConstants.ADMIN_LOGIN_TOKEN_KEY, "");
             // 如果已经过期则踢下线
             if (StpUtil.stpLogic.getTokenActivityTimeoutByToken(token) < 0) {
                 continue;
             }
-            userOnlineBoList.add(RedisUtils.getCacheObject(Constants.ONLINE_ADMIN_TOKEN_KEY + token));
+            userOnlineBoList.add(RedisUtils.getCacheObject(CacheConstants.ONLINE_ADMIN_TOKEN_KEY + token));
         }
         if (StringUtils.isNotEmpty(ipaddr) && StringUtils.isNotEmpty(userName)) {
-            userOnlineBoList = userOnlineBoList.stream().filter(userOnline ->
-                StringUtils.equals(ipaddr, userOnline.getIpaddr()) &&
-                    StringUtils.equals(userName, userOnline.getUserName())
-            ).collect(Collectors.toList());
+            userOnlineBoList = StreamUtils.filter(userOnlineBoList, userOnline ->
+                    StringUtils.equals(ipaddr, userOnline.getIpaddr()) &&
+                            StringUtils.equals(userName, userOnline.getUserName())
+            );
         } else if (StringUtils.isNotEmpty(ipaddr)) {
-            userOnlineBoList = userOnlineBoList.stream().filter(userOnline ->
-                    StringUtils.equals(ipaddr, userOnline.getIpaddr()))
-                .collect(Collectors.toList());
+            userOnlineBoList = StreamUtils.filter(userOnlineBoList, userOnline ->
+                    StringUtils.equals(ipaddr, userOnline.getIpaddr())
+            );
         } else if (StringUtils.isNotEmpty(userName)) {
-            userOnlineBoList = userOnlineBoList.stream().filter(userOnline ->
-                StringUtils.equals(userName, userOnline.getUserName())
-            ).collect(Collectors.toList());
+            userOnlineBoList = StreamUtils.filter(userOnlineBoList, userOnline ->
+                    StringUtils.equals(userName, userOnline.getUserName())
+            );
         }
         Collections.reverse(userOnlineBoList);
         userOnlineBoList.removeAll(Collections.singleton(null));

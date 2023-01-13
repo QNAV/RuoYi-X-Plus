@@ -27,11 +27,13 @@ import java.util.Map;
 @Slf4j
 public class WebInvokeTimeInterceptor implements HandlerInterceptor {
 
+    private static final String prodProfile = "prod";
+
     private final TransmittableThreadLocal<StopWatch> invokeTimeTL = new TransmittableThreadLocal<>();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (!"prod".equals(SpringUtils.getActiveProfile())) {
+        if (!prodProfile.equals(SpringUtils.getActiveProfile())) {
             String url = request.getMethod() + " " + request.getRequestURI();
 
             // 打印请求参数
@@ -66,7 +68,7 @@ public class WebInvokeTimeInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        if (!"prod".equals(SpringUtils.getActiveProfile())) {
+        if (!prodProfile.equals(SpringUtils.getActiveProfile())) {
             StopWatch stopWatch = invokeTimeTL.get();
             stopWatch.stop();
             log.debug("结束请求 => URL[{}],耗时:[{}]毫秒", request.getMethod() + " " + request.getRequestURI(), stopWatch.getTime());

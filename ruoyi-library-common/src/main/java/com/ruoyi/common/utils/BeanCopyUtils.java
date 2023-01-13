@@ -79,11 +79,11 @@ public class BeanCopyUtils {
         if (CollUtil.isEmpty(sourceList)) {
             return CollUtil.newArrayList();
         }
-        return sourceList.stream().map(source -> {
+        return StreamUtils.toList(sourceList, source -> {
             V target = ReflectUtil.newInstanceIfPossible(desc);
             copy(source, target);
             return target;
-        }).collect(Collectors.toList());
+        });
     }
 
     /**

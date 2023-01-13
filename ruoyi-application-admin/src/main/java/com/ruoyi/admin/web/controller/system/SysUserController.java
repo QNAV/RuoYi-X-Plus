@@ -20,6 +20,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.excel.ExcelResult;
 import com.ruoyi.common.utils.BeanCopyUtils;
+import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.bo.*;
@@ -118,13 +119,13 @@ public class SysUserController extends AdminBaseController {
         userService.checkUserDataScope(userId);
         UserDetailVo data = new UserDetailVo();
         List<SysRoleVo> roles = roleService.selectRoleVoAll();
-        data.setRoles(AdminLoginHelper.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        data.setRoles(AdminLoginHelper.isAdmin(userId) ? roles : StreamUtils.filter(roles, r -> !r.isAdmin()));
         data.setPosts(BeanCopyUtils.copyList(postService.selectPostAll(), SysPostVo.class));
         if (ObjectUtil.isNotNull(userId)) {
             SysUserVo sysUser = userService.selectUserVoById(userId);
             data.setUser(sysUser);
             data.setPostIds(postService.selectPostListByUserId(userId));
-            data.setRoleIds(sysUser.getRoles().stream().map(SysRoleVo::getRoleId).collect(Collectors.toList()));
+            data.setRoleIds(StreamUtils.toList(sysUser.getRoles(), SysRoleVo::getRoleId));
         }
         return R.ok(data);
     }
@@ -224,7 +225,7 @@ public class SysUserController extends AdminBaseController {
         List<SysRole> roles = roleService.selectRolesByUserId(userId);
         UserAuthRoleVo data = new UserAuthRoleVo();
         data.setUser(user);
-        data.setRoles(AdminLoginHelper.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        data.setRoles(AdminLoginHelper.isAdmin(userId) ? roles : StreamUtils.filter(roles, r -> !r.isAdmin()));
         return R.ok(data);
     }
 

@@ -6,6 +6,7 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.ruoyi.common.annotation.Anonymous;
+import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.enums.CaptchaType;
@@ -62,9 +63,9 @@ public class CaptchaController {
         if (smsProperties.getEnabled()) {
             R.fail("当前系统没有开启短信功能！");
         }
-        String key = Constants.CAPTCHA_CODE_KEY + phoneNumber;
+        String key = CacheConstants.SMS_CAPTCHA_CODE_KEY + phoneNumber;
         String code = RandomUtil.randomNumbers(4);
-        RedisUtils.setCacheObject(key, code, Duration.ofMinutes(Constants.CAPTCHA_EXPIRATION));
+        RedisUtils.setCacheObject(key, code, Duration.ofMinutes(CacheConstants.CAPTCHA_EXPIRATION));
         // 验证码模板id 自行处理 (查数据库或写死均可)
         String templateId = "";
         Map<String, String> map = new HashMap<>(1);
@@ -92,7 +93,7 @@ public class CaptchaController {
         }
         // 保存验证码信息
         String uuid = IdUtil.simpleUUID();
-        String verifyKey = Constants.CAPTCHA_CODE_KEY + uuid;
+        String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + uuid;
         // 生成验证码
         CaptchaType captchaType = captchaProperties.getType();
         boolean isMath = CaptchaType.MATH == captchaType;
@@ -102,7 +103,7 @@ public class CaptchaController {
         captcha.setGenerator(codeGenerator);
         captcha.createCode();
         String code = isMath ? getCodeResult(captcha.getCode()) : captcha.getCode();
-        RedisUtils.setCacheObject(verifyKey, code, Duration.ofMinutes(Constants.CAPTCHA_EXPIRATION));
+        RedisUtils.setCacheObject(verifyKey, code, Duration.ofMinutes(CacheConstants.CAPTCHA_EXPIRATION));
         data.setUuid(uuid);
         data.setImg(captcha.getImageBase64());
         return R.ok(data);

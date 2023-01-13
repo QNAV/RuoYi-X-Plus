@@ -7,6 +7,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.biz.domain.model.BizLoginUser;
 import com.ruoyi.biz.helper.BizLoginHelper;
 import com.ruoyi.bizbase.model.bo.SmsLoginBindWeixinBo;
+import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.entity.BizUser;
 import com.ruoyi.common.core.service.LogininforService;
@@ -197,7 +198,7 @@ public class BizLoginService {
      * 校验短信验证码
      */
     public boolean validateSmsCode(String phoneNumber, String smsCode, HttpServletRequest request) {
-        String code = RedisUtils.getCacheObject(Constants.CAPTCHA_CODE_KEY + phoneNumber);
+        String code = RedisUtils.getCacheObject(CacheConstants.CAPTCHA_CODE_KEY + phoneNumber);
         if (StringUtils.isBlank(code)) {
             asyncService.recordLogininfor(phoneNumber, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"), request);
             throw new CaptchaExpireException();
@@ -212,7 +213,7 @@ public class BizLoginService {
      */
     public boolean deleteSmsCode(String phoneNumber) {
 
-        return RedisUtils.deleteObject(Constants.CAPTCHA_CODE_KEY + phoneNumber);
+        return RedisUtils.deleteObject(CacheConstants.CAPTCHA_CODE_KEY + phoneNumber);
     }
 
     /**
@@ -223,7 +224,7 @@ public class BizLoginService {
      * @param uuid     唯一标识
      */
     public void validateCaptcha(String username, String code, String uuid, HttpServletRequest request) {
-        String verifyKey = Constants.CAPTCHA_CODE_KEY + StringUtils.defaultString(uuid, "");
+        String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.defaultString(uuid, "");
         String captcha = RedisUtils.getCacheObject(verifyKey);
         RedisUtils.deleteObject(verifyKey);
         if (captcha == null) {
@@ -358,7 +359,7 @@ public class BizLoginService {
      */
     public void checkLogin(LoginType loginType, String username, Supplier<Boolean> supplier) {
         HttpServletRequest request = ServletUtils.getRequest();
-        String errorKey = Constants.LOGIN_ERROR + username;
+        String errorKey = CacheConstants.LOGIN_ERROR + username;
         Integer errorLimitTime = Constants.LOGIN_ERROR_LIMIT_TIME;
         Integer setErrorNumber = Constants.LOGIN_ERROR_NUMBER;
         String loginFail = Constants.LOGIN_FAIL;

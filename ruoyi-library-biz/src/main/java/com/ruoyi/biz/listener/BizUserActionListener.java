@@ -8,6 +8,7 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import com.ruoyi.biz.domain.bo.BizUserOnlineBo;
 import com.ruoyi.biz.domain.model.BizLoginUser;
 import com.ruoyi.biz.helper.BizLoginHelper;
+import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.enums.UserType;
 import com.ruoyi.common.utils.ServletUtils;
@@ -51,7 +52,7 @@ public class BizUserActionListener implements SaTokenListener {
         dto.setLoginTime(System.currentTimeMillis());
         dto.setTokenId(tokenValue);
         dto.setUserName(user.getUsername());
-        RedisUtils.setCacheObject(Constants.ONLINE_BIZ_TOKEN_KEY + tokenValue, dto, Duration.ofSeconds(tokenConfig.getTimeout()));
+        RedisUtils.setCacheObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue, dto, Duration.ofSeconds(tokenConfig.getTimeout()));
         log.info("user doLogin, userId:{}, token:{}", loginId, tokenValue);
     }
 
@@ -60,7 +61,7 @@ public class BizUserActionListener implements SaTokenListener {
      */
     @Override
     public void doLogout(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(Constants.ONLINE_BIZ_TOKEN_KEY + tokenValue);
+        RedisUtils.deleteObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue);
         log.info("user doLogout, userId:{}, token:{}", loginId, tokenValue);
     }
 
@@ -69,7 +70,7 @@ public class BizUserActionListener implements SaTokenListener {
      */
     @Override
     public void doKickout(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(Constants.ONLINE_BIZ_TOKEN_KEY + tokenValue);
+        RedisUtils.deleteObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue);
         log.info("user doLogoutByLoginId, userId:{}, token:{}", loginId, tokenValue);
     }
 
@@ -78,7 +79,7 @@ public class BizUserActionListener implements SaTokenListener {
      */
     @Override
     public void doReplaced(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(Constants.ONLINE_BIZ_TOKEN_KEY + tokenValue);
+        RedisUtils.deleteObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue);
         log.info("user doReplaced, userId:{}, token:{}", loginId, tokenValue);
     }
 
