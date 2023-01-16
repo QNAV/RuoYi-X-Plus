@@ -8,7 +8,6 @@ import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.domain.bo.AdminUserOnlineBo;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
@@ -16,16 +15,15 @@ import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
 import com.ruoyi.system.domain.vo.SysUserOnlineVo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 在线用户监控
@@ -33,16 +31,16 @@ import java.util.stream.Collectors;
  * @author ruoyi
  * @author Lion Li
  */
-@Api(value = "在线用户监控管理", tags = {"SysUserOnlineService"})
+@Tag(description = "在线用户监控管理", name = "SysUserOnlineService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/monitor/online")
 public class SysUserOnlineController extends AdminBaseController {
 
-    @ApiOperation(value = "在线用户列表", nickname = "SysUserOnlineGetList")
+    @Operation(description = "在线用户列表", summary = "SysUserOnlineGetList")
     @SaCheckPermission("monitor:online:list")
     @GetMapping("/list")
-    public TableDataInfo<SysUserOnlineVo> list(@ApiParam(value = "ip地址") @RequestParam(required = false) String ipaddr, @ApiParam(value = "用户名") @RequestParam(required = false) String userName) {
+    public TableDataInfo<SysUserOnlineVo> list(@Parameter(description = "ip地址") @RequestParam(required = false) String ipaddr, @Parameter(description = "用户名") @RequestParam(required = false) String userName) {
         // 获取所有未过期的 token
         List<String> keys = StpUtil.searchTokenValue("", -1, 0);
         List<AdminUserOnlineBo> userOnlineBoList = new ArrayList<>();
@@ -77,11 +75,11 @@ public class SysUserOnlineController extends AdminBaseController {
     /**
      * 强退用户
      */
-    @ApiOperation(value = "强退用户", nickname = "SysUserOnlinePostForceLogout")
+    @Operation(description = "强退用户", summary = "SysUserOnlinePostForceLogout")
     @SaCheckPermission("monitor:online:forceLogout")
     @Log(title = "在线用户", businessType = BusinessType.FORCE)
     @PostMapping("/forceLogout")
-    public R<Void> forceLogout(@ApiParam(value = "tokenId", required = true) @RequestParam String tokenId) {
+    public R<Void> forceLogout(@Parameter(description = "tokenId", required = true) @RequestParam String tokenId) {
         try {
             StpUtil.kickoutByTokenValue(tokenId);
         } catch (NotLoginException e) {

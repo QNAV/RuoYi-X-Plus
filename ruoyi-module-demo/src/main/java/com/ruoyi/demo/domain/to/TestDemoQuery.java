@@ -1,9 +1,6 @@
 package com.ruoyi.demo.domain.to;
 
-import com.ruoyi.common.core.validate.AddGroup;
-import com.ruoyi.common.core.validate.EditGroup;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +9,7 @@ import java.util.Date;
  * 测试单表查询对象
  * @author weibocy
  */
-@ApiModel("测试单表查询对象")
+@Schema(description = "测试单表查询对象")
 @Data
 public class TestDemoQuery {
 
@@ -20,26 +17,26 @@ public class TestDemoQuery {
     /**
      * key键
      */
-    @ApiModelProperty("key键")
+    @Schema(description = "key键")
     private String testKey;
 
     /**
      * 值
      */
-    @ApiModelProperty("值")
+    @Schema(description = "值")
     private String value;
 
 
     /**
      * 开始创建时间
      */
-    @ApiModelProperty(value = "开始创建时间")
+    @Schema(description = "开始创建时间")
     private Date beginCreateTime;
 
     /**
      * 结束创建时间
      */
-    @ApiModelProperty(value = "结束创建时间")
+    @Schema(description = "结束创建时间")
     private Date endCreateTime;
 
 }

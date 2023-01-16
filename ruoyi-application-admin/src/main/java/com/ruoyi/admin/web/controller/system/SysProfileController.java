@@ -20,10 +20,11 @@ import com.ruoyi.system.service.ISysOssService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.admin.web.model.vo.AvatarUploadVo;
 import com.ruoyi.admin.web.model.vo.ProfileVo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ import java.util.Arrays;
  * @author Lion Li
  */
 @Validated
-@Api(value = "个人信息管理", tags = {"SysProfileService"})
+@Tag(description = "个人信息管理", name = "SysProfileService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/user/profile")
@@ -51,7 +52,7 @@ public class SysProfileController extends AdminBaseController {
     /**
      * 个人信息
      */
-    @ApiOperation(value = "个人信息", nickname = "SysProfileGetProfile")
+    @Operation(description = "个人信息", summary = "SysProfileGetProfile")
     @GetMapping
     public R<ProfileVo> profile() {
         SysUserVo user = userService.selectUserVoById(getUserId());
@@ -65,7 +66,7 @@ public class SysProfileController extends AdminBaseController {
     /**
      * 修改用户
      */
-    @ApiOperation(value = "修改用户", nickname = "SysProfilePostUpdateProfile")
+    @Operation(description = "修改用户", summary = "SysProfilePostUpdateProfile")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PostMapping
     public R<Void> updateProfile(@RequestBody LoginUserUpdateBo userBo) {
@@ -90,7 +91,7 @@ public class SysProfileController extends AdminBaseController {
     /**
      * 重置密码
      */
-    @ApiOperation(value = "重置密码", nickname = "SysProfilePostUpdatePwd")
+    @Operation(description = "重置密码", summary = "SysProfilePostUpdatePwd")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PostMapping("/updatePwd")
     public R<Void> updatePwd(@Validated @RequestBody UpdatePwdBo updatePwdBody) {
@@ -113,9 +114,9 @@ public class SysProfileController extends AdminBaseController {
     /**
      * 头像上传
      */
-    @ApiOperation(value = "头像上传", nickname = "SysProfilePostAvatar")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "avatarfile", value = "用户头像", paramType = "query", dataTypeClass = File.class, required = true)
+    @Operation(description = "头像上传", summary = "SysProfilePostAvatar")
+    @Parameters({
+        @Parameter(name = "avatarfile", description = "用户头像", in = ParameterIn.QUERY, required = true)
     })
     @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")

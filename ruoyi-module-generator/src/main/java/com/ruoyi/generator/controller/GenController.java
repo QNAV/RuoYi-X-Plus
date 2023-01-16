@@ -15,7 +15,8 @@ import com.ruoyi.generator.domain.to.GenTablePageQuery;
 import com.ruoyi.generator.domain.vo.GenInfoVo;
 import com.ruoyi.generator.domain.to.GenTableQuery;
 import com.ruoyi.generator.service.IGenTableService;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ import java.util.Map;
  * @author weibocy
  */
 @Validated
-@Api(value = "代码生成管理", tags = {"GenService"})
+@Tag(description = "代码生成管理", name = "GenService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/tool/gen")
@@ -48,7 +49,7 @@ public class GenController {
      *         @ApiImplicitParam(name = "datasource", value = "数据源", paramType = "header", dataType = "string", example = "master", required = true)
      *     })
      */
-    @ApiOperation(value = "查询代码生成列表", nickname = "GenPostList")
+    @Operation(description = "查询代码生成列表", summary = "GenPostList")
     @SaCheckPermission("tool:gen:list")
     @PostMapping("/list")
     public TableDataInfo<GenTable> genList(@RequestBody(required = false) GenTablePageQuery genTablePageQuery) {

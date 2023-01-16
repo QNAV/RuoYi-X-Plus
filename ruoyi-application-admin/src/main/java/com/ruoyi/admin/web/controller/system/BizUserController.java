@@ -6,6 +6,9 @@ import java.util.Arrays;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.core.domain.vo.BizUserVo;
 import com.ruoyi.common.utils.BeanCopyUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.*;
@@ -16,8 +19,6 @@ import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.validate.AddGroup;
-import com.ruoyi.common.core.validate.EditGroup;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.bo.BizUserPageQueryBo;
@@ -26,9 +27,6 @@ import com.ruoyi.system.domain.bo.BizUserAddBo;
 import com.ruoyi.system.domain.bo.BizUserEditBo;
 import com.ruoyi.system.service.IBizUserService;
 import com.ruoyi.common.core.page.TableDataInfo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * 业务用户信息 后台管理控制器
@@ -37,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
  * @date 2022-10-25
  */
 @Validated
-@Api(value = "业务用户信息管理", tags = {"BizUserService"})
+@Tag(description = "业务用户信息管理", name = "BizUserService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/biz/user")
@@ -51,7 +49,7 @@ public class BizUserController extends AdminBaseController {
     /**
      * 查询业务用户信息列表
      */
-    @ApiOperation(value = "查询业务用户信息列表", nickname = "BizUserPostList")
+    @Operation(description = "查询业务用户信息列表", summary = "BizUserPostList")
     @SaCheckPermission("system:user:list")
     @PostMapping("/list")
     public TableDataInfo<BizUserVo> list(@RequestBody(required = false) BizUserPageQueryBo bo) {
@@ -65,11 +63,11 @@ public class BizUserController extends AdminBaseController {
     /**
      * 导出业务用户信息列表
      */
-    @ApiOperation(value = "导出业务用户信息列表", nickname = "BizUserPostExport")
+    @Operation(description = "导出业务用户信息列表", summary = "BizUserPostExport")
     @SaCheckPermission("system:user:export")
     @Log(title = "业务用户信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) BizUserQueryBo bo, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) BizUserQueryBo bo, @Parameter(hidden = true) HttpServletResponse response) {
         List<BizUserVo> list = iBizUserService.queryList(bo);
         ExcelUtil.exportExcel(list, "业务用户信息", BizUserVo.class, response);
     }
@@ -77,10 +75,10 @@ public class BizUserController extends AdminBaseController {
     /**
      * 获取业务用户信息详细信息
      */
-    @ApiOperation(value = "获取业务用户信息详细信息", nickname = "BizUserGetInfo")
+    @Operation(description = "获取业务用户信息详细信息", summary = "BizUserGetInfo")
     @SaCheckPermission("system:user:query")
     @GetMapping(value = "/info")
-    public R<BizUserVo> getInfo(@ApiParam(value = "主键", required = true)
+    public R<BizUserVo> getInfo(@Parameter(description = "主键", required = true)
                                 @NotNull(message = "主键不能为空")
                                 @RequestParam(required = true) Long userId) {
         return R.ok(iBizUserService.queryById(userId));
@@ -89,7 +87,7 @@ public class BizUserController extends AdminBaseController {
     /**
      * 新增业务用户信息
      */
-    @ApiOperation(value = "新增业务用户信息", nickname = "BizUserPostAdd")
+    @Operation(description = "新增业务用户信息", summary = "BizUserPostAdd")
     @SaCheckPermission("system:user:add")
     @Log(title = "业务用户信息", businessType = BusinessType.INSERT)
     @RepeatSubmit()
@@ -101,7 +99,7 @@ public class BizUserController extends AdminBaseController {
     /**
      * 修改业务用户信息
      */
-    @ApiOperation(value = "修改业务用户信息", nickname = "BizUserPostEdit")
+    @Operation(description = "修改业务用户信息", summary = "BizUserPostEdit")
     @SaCheckPermission("system:user:edit")
     @Log(title = "业务用户信息", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
@@ -113,11 +111,11 @@ public class BizUserController extends AdminBaseController {
     /**
      * 删除业务用户信息
      */
-    @ApiOperation(value = "删除业务用户信息", nickname = "BizUserPostRemove")
+    @Operation(description = "删除业务用户信息", summary = "BizUserPostRemove")
     @SaCheckPermission("system:user:remove")
     @Log(title = "业务用户信息", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "主键串", required = true, allowMultiple = true)
+    public R<Void> remove(@Parameter(description = "主键串", required = true)
                           @NotEmpty(message = "主键不能为空")
                           @RequestParam(required = true) Long[] userIds) {
         return toAjax(iBizUserService.deleteWithValidByIds(Arrays.asList(userIds), true) ? 1 : 0);

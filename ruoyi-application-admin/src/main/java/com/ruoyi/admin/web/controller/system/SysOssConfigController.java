@@ -7,9 +7,6 @@ import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.core.validate.AddGroup;
-import com.ruoyi.common.core.validate.EditGroup;
-import com.ruoyi.common.core.validate.QueryGroup;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.system.domain.bo.SysOssConfigAddBo;
@@ -18,9 +15,9 @@ import com.ruoyi.system.domain.bo.SysOssConfigPageQueryBo;
 import com.ruoyi.system.domain.bo.SysOssConfigQueryBo;
 import com.ruoyi.system.domain.vo.SysOssConfigVo;
 import com.ruoyi.system.service.ISysOssConfigService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +33,7 @@ import java.util.Arrays;
  * @date 2021-08-13
  */
 @Validated
-@Api(value = "对象存储配置管理", tags = {"SysOssConfigService"})
+@Tag(description = "对象存储配置管理", name = "SysOssConfigService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/oss/config")
@@ -47,7 +44,7 @@ public class SysOssConfigController extends AdminBaseController {
     /**
      * 查询对象存储配置列表
      */
-    @ApiOperation(value = "查询对象存储配置列表", nickname = "SysOssConfigPostList")
+    @Operation(description = "查询对象存储配置列表", summary = "SysOssConfigPostList")
     @SaCheckPermission("system:oss:list")
     @PostMapping("/list")
     public TableDataInfo<SysOssConfigVo> list(@RequestBody(required = false) @Validated SysOssConfigPageQueryBo ossConfigPageQuery) {
@@ -61,17 +58,17 @@ public class SysOssConfigController extends AdminBaseController {
     /**
      * 获取对象存储配置详细信息
      */
-    @ApiOperation(value = "获取对象存储配置详细信息", nickname = "SysOssConfigGetInfo")
+    @Operation(description = "获取对象存储配置详细信息", summary = "SysOssConfigGetInfo")
     @SaCheckPermission("system:oss:query")
     @GetMapping("/info")
-    public R<SysOssConfigVo> info(@ApiParam(value = "OSS配置ID", required = true) @RequestParam Long ossConfigId) {
+    public R<SysOssConfigVo> info(@Parameter(description = "OSS配置ID", required = true) @RequestParam Long ossConfigId) {
         return R.ok(iSysOssConfigService.queryById(ossConfigId));
     }
 
     /**
      * 新增对象存储配置
      */
-    @ApiOperation(value = "新增对象存储配置", nickname = "SysOssConfigPostAdd")
+    @Operation(description = "新增对象存储配置", summary = "SysOssConfigPostAdd")
     @SaCheckPermission("system:oss:add")
     @Log(title = "对象存储配置", businessType = BusinessType.INSERT)
     @RepeatSubmit()
@@ -84,7 +81,7 @@ public class SysOssConfigController extends AdminBaseController {
     /**
      * 修改对象存储配置
      */
-    @ApiOperation(value = "修改对象存储配置", nickname = "SysOssConfigPostEdit")
+    @Operation(description = "修改对象存储配置", summary = "SysOssConfigPostEdit")
     @SaCheckPermission("system:oss:edit")
     @Log(title = "对象存储配置", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
@@ -96,18 +93,18 @@ public class SysOssConfigController extends AdminBaseController {
     /**
      * 删除对象存储配置
      */
-    @ApiOperation(value = "删除对象存储配置", nickname = "SysOssConfigPostRemove")
+    @Operation(description = "删除对象存储配置", summary = "SysOssConfigPostRemove")
     @SaCheckPermission("system:oss:remove")
     @Log(title = "对象存储配置", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "OSS配置ID组", required = true, allowMultiple = true) @RequestParam Long[] ossConfigIds) {
+    public R<Void> remove(@Parameter(description = "OSS配置ID组", required = true) @RequestParam Long[] ossConfigIds) {
         return toAjax(iSysOssConfigService.deleteWithValidByIds(Arrays.asList(ossConfigIds), true) ? 1 : 0);
     }
 
     /**
      * 状态修改
      */
-    @ApiOperation(value = "状态修改", nickname = "SysOssConfigPostChangeStatus")
+    @Operation(description = "状态修改", summary = "SysOssConfigPostChangeStatus")
     @SaCheckPermission("system:oss:edit")
     @Log(title = "对象存储状态修改", businessType = BusinessType.UPDATE)
     @PostMapping("/changeStatus")

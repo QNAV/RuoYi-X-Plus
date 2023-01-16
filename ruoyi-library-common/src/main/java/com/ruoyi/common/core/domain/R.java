@@ -1,7 +1,6 @@
 package com.ruoyi.common.core.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-@ApiModel(value = "Response", description = "请求响应对象")
+@Schema(name = "Response", description = "请求响应对象")
 public class R<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,13 +30,13 @@ public class R<T> implements Serializable {
      */
     public static final int FAIL = HttpStatus.INTERNAL_SERVER_ERROR.value();
 
-    @ApiModelProperty(value = "消息状态码", required = true)
+    @Schema(description = "消息状态码", required = true)
     private int code;
 
-    @ApiModelProperty(value = "消息内容", required = true)
+    @Schema(description = "消息内容", required = true)
     private String msg;
 
-    @ApiModelProperty(value = "数据对象", required = true)
+    @Schema(description = "数据对象", required = true)
     private T data;
 
     public static <T> R<T> ok() {

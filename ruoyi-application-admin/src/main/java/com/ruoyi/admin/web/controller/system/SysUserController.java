@@ -31,7 +31,11 @@ import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.admin.web.model.vo.UserAuthRoleVo;
 import com.ruoyi.admin.web.model.vo.UserDetailVo;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +44,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 /**
  * 用户信息
@@ -49,7 +53,7 @@ import java.util.stream.Collectors;
  * @author Lion Li
  */
 @Validated
-@Api(value = "用户信息管理", tags = {"SysUserService"})
+@Tag(description = "用户信息管理", name = "SysUserService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/user")
@@ -62,7 +66,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 获取用户列表
      */
-    @ApiOperation(value = "获取用户列表", nickname = "SysUserPostList")
+    @Operation(description = "获取用户列表", summary = "SysUserPostList")
     @SaCheckPermission("system:user:list")
     @PostMapping("/list")
     public TableDataInfo<SysUserVo> list(@RequestBody(required = false) SysUserPageQueryBo userPageQuery) {
@@ -73,11 +77,11 @@ public class SysUserController extends AdminBaseController {
         return userService.selectPageUserVoList(userQuery, pageQuery);
     }
 
-    @ApiOperation(value = "导出用户列表", nickname = "SysUserPostExport")
+    @Operation(description = "导出用户列表", summary = "SysUserPostExport")
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:user:export")
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) SysUserQueryBo userQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysUserQueryBo userQuery, @Parameter(hidden = true) HttpServletResponse response) {
         List<SysUser> list = userService.selectUserList(userQuery);
         List<SysUserExportVo> listVo = BeanUtil.copyToList(list, SysUserExportVo.class);
         for (int i = 0; i < list.size(); i++) {
@@ -91,9 +95,9 @@ public class SysUserController extends AdminBaseController {
         ExcelUtil.exportExcel(listVo, "用户数据", SysUserExportVo.class, response);
     }
 
-    @ApiOperation(value = "导入用户列表", nickname = "SysUserPostImportData")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "file", value = "导入文件", dataType = "java.io.File", required = true),
+    @Operation(description = "导入用户列表", summary = "SysUserPostImportData")
+    @Parameters({
+        @Parameter(name = "file", description = "导入文件", in = ParameterIn.QUERY, required = true),
     })
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
     @SaCheckPermission("system:user:import")
@@ -103,19 +107,19 @@ public class SysUserController extends AdminBaseController {
         return R.ok(result.getAnalysis());
     }
 
-    @ApiOperation(value = "下载导入模板", nickname = "SysUserPostImportTemplate")
+    @Operation(description = "下载导入模板", summary = "SysUserPostImportTemplate")
     @PostMapping("/importTemplate")
-    public void importTemplate(@ApiParam(hidden = true) HttpServletResponse response) {
+    public void importTemplate(@Parameter(hidden = true) HttpServletResponse response) {
         ExcelUtil.exportExcel(new ArrayList<>(), "用户数据", SysUserImportVo.class, response);
     }
 
     /**
      * 根据用户编号获取详细信息
      */
-    @ApiOperation(value = "根据用户编号获取详细信息", nickname = "SysUserGetInfo")
+    @Operation(description = "根据用户编号获取详细信息", summary = "SysUserGetInfo")
     @SaCheckPermission("system:user:query")
     @GetMapping(value = {"/","/info"})
-    public R<UserDetailVo> info(@ApiParam(value = "用户ID",required = false) @RequestParam(required = false) Long userId) {
+    public R<UserDetailVo> info(@Parameter(description = "用户ID",required = false) @RequestParam(required = false) Long userId) {
         userService.checkUserDataScope(userId);
         UserDetailVo data = new UserDetailVo();
         List<SysRoleVo> roles = roleService.selectRoleVoAll();
@@ -133,7 +137,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 新增用户
      */
-    @ApiOperation(value = "新增用户", nickname = "SysUserPostAdd")
+    @Operation(description = "新增用户", summary = "SysUserPostAdd")
     @SaCheckPermission("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -155,7 +159,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 修改用户
      */
-    @ApiOperation(value = "修改用户", nickname = "SysUserPostEdit")
+    @Operation(description = "修改用户", summary = "SysUserPostEdit")
     @SaCheckPermission("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -176,11 +180,11 @@ public class SysUserController extends AdminBaseController {
     /**
      * 删除用户
      */
-    @ApiOperation(value = "删除用户", nickname = "SysUserPostRemove")
+    @Operation(description = "删除用户", summary = "SysUserPostRemove")
     @SaCheckPermission("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "角色ID串", required = true, allowMultiple = true) @RequestParam Long[] userIds) {
+    public R<Void> remove(@Parameter(description = "角色ID串", required = true) @RequestParam Long[] userIds) {
         if (ArrayUtil.contains(userIds, getUserId())) {
             return R.fail("当前用户不能删除");
         }
@@ -190,7 +194,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 重置密码
      */
-    @ApiOperation(value = "重置密码", nickname = "SysUserPostResetPwd")
+    @Operation(description = "重置密码", summary = "SysUserPostResetPwd")
     @SaCheckPermission("system:user:resetPwd")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/resetPwd")
@@ -204,7 +208,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 状态修改
      */
-    @ApiOperation(value = "状态修改", nickname = "SysUserPostChangeStatus")
+    @Operation(description = "状态修改", summary = "SysUserPostChangeStatus")
     @SaCheckPermission("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/changeStatus")
@@ -217,10 +221,10 @@ public class SysUserController extends AdminBaseController {
     /**
      * 根据用户编号获取授权角色
      */
-    @ApiOperation(value = "根据用户编号获取授权角色", nickname = "SysUserGetAuthRole")
+    @Operation(description = "根据用户编号获取授权角色", summary = "SysUserGetAuthRole")
     @SaCheckPermission("system:user:query")
     @GetMapping("/authRole")
-    public R<UserAuthRoleVo> authRole(@ApiParam(value = "用户ID", required = true) @RequestParam Long userId) {
+    public R<UserAuthRoleVo> authRole(@Parameter(description = "用户ID", required = true) @RequestParam Long userId) {
         SysUser user = userService.selectUserById(userId);
         List<SysRole> roles = roleService.selectRolesByUserId(userId);
         UserAuthRoleVo data = new UserAuthRoleVo();
@@ -232,7 +236,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 用户授权角色
      */
-    @ApiOperation(value = "用户授权角色", nickname = "SysUserPostInsertAuthRole")
+    @Operation(description = "用户授权角色", summary = "SysUserPostInsertAuthRole")
     @SaCheckPermission("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.GRANT)
     @PostMapping("/insertAuthRole")

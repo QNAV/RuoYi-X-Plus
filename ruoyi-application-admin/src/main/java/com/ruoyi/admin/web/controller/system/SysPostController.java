@@ -17,9 +17,9 @@ import com.ruoyi.system.domain.bo.SysPostPageQueryBo;
 import com.ruoyi.system.domain.bo.SysPostQueryBo;
 import com.ruoyi.system.domain.vo.SysPostVo;
 import com.ruoyi.system.service.ISysPostService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +34,7 @@ import java.util.List;
  * @author Lion Li
  */
 @Validated
-@Api(value = "岗位信息管理", tags = {"SysPostService"})
+@Tag(description = "岗位信息管理", name = "SysPostService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/post")
@@ -45,7 +45,7 @@ public class SysPostController extends AdminBaseController {
     /**
      * 获取岗位列表
      */
-    @ApiOperation(value = "获取岗位列表", nickname = "SysPostPostList")
+    @Operation(description = "获取岗位列表", summary = "SysPostPostList")
     @SaCheckPermission("system:post:list")
     @PostMapping("/list")
     public TableDataInfo<SysPostVo> list(@RequestBody(required = false) SysPostPageQueryBo postPageQuery) {
@@ -56,11 +56,11 @@ public class SysPostController extends AdminBaseController {
         return postService.selectPagePostList(postQuery, pageQuery);
     }
 
-    @ApiOperation(value = "导出岗位列表", nickname = "SysPostPostExport")
+    @Operation(description = "导出岗位列表", summary = "SysPostPostExport")
     @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:post:export")
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) SysPostQueryBo postQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysPostQueryBo postQuery, @Parameter(hidden = true) HttpServletResponse response) {
         List<SysPost> list = postService.selectPostList(postQuery);
         ExcelUtil.exportExcel(list, "岗位数据", SysPost.class, response);
     }
@@ -68,17 +68,17 @@ public class SysPostController extends AdminBaseController {
     /**
      * 根据岗位编号获取详细信息
      */
-    @ApiOperation(value = "根据岗位编号获取详细信息", nickname = "SysPostGetInfo")
+    @Operation(description = "根据岗位编号获取详细信息", summary = "SysPostGetInfo")
     @SaCheckPermission("system:post:query")
     @GetMapping(value = "/info")
-    public R<SysPostVo> info(@ApiParam(value = "岗位ID", required = true) @RequestParam Long postId) {
+    public R<SysPostVo> info(@Parameter(description = "岗位ID", required = true) @RequestParam Long postId) {
         return R.ok(postService.selectPostById(postId));
     }
 
     /**
      * 新增岗位
      */
-    @ApiOperation(value = "新增岗位", nickname = "SysPostPostAdd")
+    @Operation(description = "新增岗位", summary = "SysPostPostAdd")
     @SaCheckPermission("system:post:add")
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -95,7 +95,7 @@ public class SysPostController extends AdminBaseController {
     /**
      * 修改岗位
      */
-    @ApiOperation(value = "修改岗位", nickname = "SysPostPostEdit")
+    @Operation(description = "修改岗位", summary = "SysPostPostEdit")
     @SaCheckPermission("system:post:edit")
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -112,18 +112,18 @@ public class SysPostController extends AdminBaseController {
     /**
      * 删除岗位
      */
-    @ApiOperation(value = "删除岗位", nickname = "SysPostPostRemove")
+    @Operation(description = "删除岗位", summary = "SysPostPostRemove")
     @SaCheckPermission("system:post:remove")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "岗位ID串", required = true, allowMultiple = true) @RequestParam Long[] postIds) {
+    public R<Void> remove(@Parameter(description = "岗位ID串", required = true) @RequestParam Long[] postIds) {
         return toAjax(postService.deletePostByIds(postIds));
     }
 
     /**
      * 获取岗位选择框列表
      */
-    @ApiOperation(value = "获取岗位选择框列表", nickname = "SysPostGetOptionSelect")
+    @Operation(description = "获取岗位选择框列表", summary = "SysPostGetOptionSelect")
     @GetMapping("/optionSelect")
     public R<List<SysPostVo>> optionSelect() {
         List<SysPost> posts = postService.selectPostAll();

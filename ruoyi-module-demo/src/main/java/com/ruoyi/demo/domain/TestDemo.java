@@ -1,13 +1,9 @@
 package com.ruoyi.demo.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import java.io.Serializable;
-import java.util.Date;
-import java.math.BigDecimal;
 
 import com.ruoyi.common.core.domain.BaseEntity;
 
@@ -20,7 +16,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("test_demo")
-@ApiModel(value = "TestDemo", description = "测试单对象", parent = BaseEntity.class)
+@Schema(description = "测试单对象")
 public class TestDemo extends BaseEntity {
 
     private static final long serialVersionUID=1L;
@@ -29,51 +25,51 @@ public class TestDemo extends BaseEntity {
      * 主键
      */
     @TableId(value = "id")
-    @ApiModelProperty(value = "主键")
+    @Schema(description = "主键")
     private Long id;
 
     /**
      * 部门id
      */
-    @ApiModelProperty(value = "部门id")
+    @Schema(description = "部门id")
     private Long deptId;
 
     /**
      * 用户id
      */
-    @ApiModelProperty(value = "用户id")
+    @Schema(description = "用户id")
     private Long userId;
 
     /**
      * 排序号
      */
-    @ApiModelProperty(value = "排序号")
+    @Schema(description = "排序号")
     private Integer orderNum;
 
     /**
      * key键
      */
-    @ApiModelProperty(value = "key键")
+    @Schema(description = "key键")
     private String testKey;
 
     /**
      * 值
      */
-    @ApiModelProperty(value = "值")
+    @Schema(description = "值")
     private String value;
 
     /**
      * 版本
      */
     @Version
-    @ApiModelProperty(value = "版本")
+    @Schema(description = "版本")
     private Integer version;
 
     /**
      * 删除标志
      */
     @TableLogic
-    @ApiModelProperty(value = "删除标志")
+    @Schema(description = "删除标志")
     private Integer delFlag;
 
 

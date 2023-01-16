@@ -14,9 +14,9 @@ import com.ruoyi.system.domain.bo.SysLogininforPageQueryBo;
 import com.ruoyi.system.domain.bo.SysLogininforQueryBo;
 import com.ruoyi.system.domain.vo.SysLogininforVo;
 import com.ruoyi.system.service.ISysLogininforService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +31,7 @@ import java.util.List;
  * @author Lion Li
  */
 @Validated
-@Api(value = "系统访问记录管理", tags = {"SysLoginService"})
+@Tag(description = "系统访问记录管理", name = "SysLoginService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/monitor/logininfor")
@@ -39,7 +39,7 @@ public class SysLogininforController extends AdminBaseController {
 
     private final ISysLogininforService logininforService;
 
-    @ApiOperation(value = "查询系统访问记录列表", nickname = "SysLogininforPostList")
+    @Operation(description = "查询系统访问记录列表", summary = "SysLogininforPostList")
     @SaCheckPermission("monitor:logininfor:list")
     @PostMapping("/list")
     public TableDataInfo<SysLogininforVo> list(@RequestBody(required = false) SysLogininforPageQueryBo logininforPageQuery) {
@@ -50,24 +50,24 @@ public class SysLogininforController extends AdminBaseController {
         return logininforService.selectPageLogininforList(logininforQuery, pageQuery);
     }
 
-    @ApiOperation(value = "导出系统访问记录列表", nickname = "SysLogininforPostExport")
+    @Operation(description = "导出系统访问记录列表", summary = "SysLogininforPostExport")
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:logininfor:export")
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) SysLogininforQueryBo logininforQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysLogininforQueryBo logininforQuery, @Parameter(hidden = true) HttpServletResponse response) {
         List<SysLogininfor> list = logininforService.selectLogininforList(logininforQuery);
         ExcelUtil.exportExcel(list, "登录日志", SysLogininfor.class, response);
     }
 
-    @ApiOperation(value = "删除系统访问记录", nickname = "SysLogininforPostRemove")
+    @Operation(description = "删除系统访问记录", summary = "SysLogininforPostRemove")
     @SaCheckPermission("monitor:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "登录日志ID组", required = true, allowMultiple = true) @RequestParam Long[] infoIds) {
+    public R<Void> remove(@Parameter(description = "登录日志ID组", required = true) @RequestParam Long[] infoIds) {
         return toAjax(logininforService.deleteLogininforByIds(infoIds));
     }
 
-    @ApiOperation(value = "清空系统访问记录", nickname = "SysLogininforPostClean")
+    @Operation(description = "清空系统访问记录", summary = "SysLogininforPostClean")
     @SaCheckPermission("monitor:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.CLEAN)
     @PostMapping("/clean")

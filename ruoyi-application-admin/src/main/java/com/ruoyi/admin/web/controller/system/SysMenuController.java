@@ -16,9 +16,9 @@ import com.ruoyi.system.domain.bo.SysMenuQueryBo;
 import com.ruoyi.common.core.domain.vo.SysMenuVo;
 import com.ruoyi.system.service.ISysMenuService;
 import com.ruoyi.admin.web.model.vo.RoleMenuTreeSelectVo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +32,7 @@ import java.util.List;
  * @author Lion Li
  */
 @Validated
-@Api(value = "菜单信息管理", tags = {"SysMenuService"})
+@Tag(description = "菜单信息管理", name = "SysMenuService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/menu")
@@ -43,7 +43,7 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 获取菜单列表
      */
-    @ApiOperation(value = "获取菜单列表", nickname = "SysMenuPostList")
+    @Operation(description = "获取菜单列表", summary = "SysMenuPostList")
     @SaCheckPermission("system:menu:list")
     @PostMapping("/list")
     public R<List<SysMenuVo>> list(@RequestBody(required = false) SysMenuQueryBo menuQuery) {
@@ -54,17 +54,17 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 根据菜单编号获取详细信息
      */
-    @ApiOperation(value = "根据菜单编号获取详细信息", nickname = "SysMenuGetInfo")
+    @Operation(description = "根据菜单编号获取详细信息", summary = "SysMenuGetInfo")
     @SaCheckPermission("system:menu:query")
     @GetMapping(value = "/info")
-    public R<SysMenuVo> info(@ApiParam(value = "菜单ID", required = true) @RequestParam Long menuId) {
+    public R<SysMenuVo> info(@Parameter(description = "菜单ID", required = true) @RequestParam Long menuId) {
         return R.ok(menuService.selectMenuById(menuId));
     }
 
     /**
      * 获取菜单下拉树列表
      */
-    @ApiOperation(value = "获取菜单下拉树列表", nickname = "SysMenuPostTreeSelect")
+    @Operation(description = "获取菜单下拉树列表", summary = "SysMenuPostTreeSelect")
     @PostMapping("/treeSelect")
     public R<List<Tree<Long>>> treeSelect(@RequestBody(required = false) SysMenuQueryBo menuQuery) {
         List<SysMenuVo> menus = menuService.selectMenuList(menuQuery, getUserId());
@@ -74,9 +74,9 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 加载对应角色菜单列表树
      */
-    @ApiOperation(value = "加载对应角色菜单列表树", nickname = "SysMenuGetRoleMenuTreeSelect")
+    @Operation(description = "加载对应角色菜单列表树", summary = "SysMenuGetRoleMenuTreeSelect")
     @GetMapping(value = "/roleMenuTreeSelect")
-    public R<RoleMenuTreeSelectVo> roleMenuTreeSelect(@ApiParam(value = "角色ID", required = true) @RequestParam Long roleId) {
+    public R<RoleMenuTreeSelectVo> roleMenuTreeSelect(@Parameter(description = "角色ID", required = true) @RequestParam Long roleId) {
         List<SysMenuVo> menus = menuService.selectMenuList(getUserId());
         RoleMenuTreeSelectVo data = new RoleMenuTreeSelectVo();
         data.setCheckedKeys(menuService.selectMenuListByRoleId(roleId));
@@ -87,7 +87,7 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 新增菜单
      */
-    @ApiOperation(value = "新增菜单", nickname = "SysMenuPostAdd")
+    @Operation(description = "新增菜单", summary = "SysMenuPostAdd")
     @SaCheckPermission("system:menu:add")
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -104,7 +104,7 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 修改菜单
      */
-    @ApiOperation(value = "修改菜单", nickname = "SysMenuPostEdit")
+    @Operation(description = "修改菜单", summary = "SysMenuPostEdit")
     @SaCheckPermission("system:menu:edit")
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -123,11 +123,11 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 删除菜单
      */
-    @ApiOperation(value = "删除菜单", nickname = "SysMenuPostRemove")
+    @Operation(description = "删除菜单", summary = "SysMenuPostRemove")
     @SaCheckPermission("system:menu:remove")
     @Log(title = "菜单管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "菜单ID", required = true) @RequestParam Long menuId) {
+    public R<Void> remove(@Parameter(description = "菜单ID", required = true) @RequestParam Long menuId) {
         if (menuService.hasChildByMenuId(menuId)) {
             return R.fail("存在子菜单,不允许删除");
         }

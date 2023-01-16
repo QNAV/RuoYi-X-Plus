@@ -18,9 +18,9 @@ import com.ruoyi.system.domain.bo.SysDictDataQueryBo;
 import com.ruoyi.common.core.domain.vo.SysDictDataVo;
 import com.ruoyi.system.service.ISysDictDataService;
 import com.ruoyi.system.service.ISysDictTypeService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +36,7 @@ import java.util.List;
  * @author Lion Li
  */
 @Validated
-@Api(value = "数据字典信息管理", tags = {"SysDictDataService"})
+@Tag(description = "数据字典信息管理", name = "SysDictDataService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/dict/data")
@@ -45,7 +45,7 @@ public class SysDictDataController extends AdminBaseController {
     private final ISysDictDataService dictDataService;
     private final ISysDictTypeService dictTypeService;
 
-    @ApiOperation(value = "查询字典数据列表", nickname = "SysDictDataPostList")
+    @Operation(description = "查询字典数据列表", summary = "SysDictDataPostList")
     @SaCheckPermission("system:dict:list")
     @PostMapping("/list")
     public TableDataInfo<SysDictDataVo> list(@RequestBody(required = false) SysDictDataPageQueryBo dictDataPageQuery) {
@@ -56,11 +56,11 @@ public class SysDictDataController extends AdminBaseController {
         return dictDataService.selectPageDictDataList(dictDataQuery, pageQuery);
     }
 
-    @ApiOperation(value = "导出字典数据列表", nickname = "SysDictDataPostExport")
+    @Operation(description = "导出字典数据列表", summary = "SysDictDataPostExport")
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:dict:export")
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) SysDictDataQueryBo dictDataQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysDictDataQueryBo dictDataQuery, @Parameter(hidden = true) HttpServletResponse response) {
         List<SysDictData> list = dictDataService.selectDictDataList(dictDataQuery);
         ExcelUtil.exportExcel(list, "字典数据", SysDictData.class, response);
     }
@@ -68,19 +68,19 @@ public class SysDictDataController extends AdminBaseController {
     /**
      * 查询字典数据详细
      */
-    @ApiOperation(value = "查询字典数据详细", nickname = "SysDictDataGetInfo")
+    @Operation(description = "查询字典数据详细", summary = "SysDictDataGetInfo")
     @SaCheckPermission("system:dict:query")
     @GetMapping(value = "/info")
-    public R<SysDictDataVo> info(@ApiParam(value = "字典code", required = true) @RequestParam Long dictCode) {
+    public R<SysDictDataVo> info(@Parameter(description = "字典code", required = true) @RequestParam Long dictCode) {
         return R.ok(dictDataService.selectDictDataById(dictCode));
     }
 
     /**
      * 根据字典类型查询字典数据信息
      */
-    @ApiOperation(value = "根据字典类型查询字典数据信息", nickname = "SysDictDataGetType")
+    @Operation(description = "根据字典类型查询字典数据信息", summary = "SysDictDataGetType")
     @GetMapping(value = "/type")
-    public R<List<SysDictDataVo>> dictType(@ApiParam(value = "字典类型",required = true) @RequestParam String dictType) {
+    public R<List<SysDictDataVo>> dictType(@Parameter(description = "字典类型",required = true) @RequestParam String dictType) {
         List<SysDictDataVo> data = dictTypeService.selectDictDataByType(dictType);
         if (ObjectUtil.isNull(data)) {
             data = new ArrayList<>();
@@ -91,7 +91,7 @@ public class SysDictDataController extends AdminBaseController {
     /**
      * 新增字典类型
      */
-    @ApiOperation(value = "新增字典类型", nickname = "SysDictDataPostAdd")
+    @Operation(description = "新增字典类型", summary = "SysDictDataPostAdd")
     @SaCheckPermission("system:dict:add")
     @Log(title = "字典数据", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -103,7 +103,7 @@ public class SysDictDataController extends AdminBaseController {
     /**
      * 修改保存字典类型
      */
-    @ApiOperation(value = "修改保存字典类型", nickname = "SysDictDataPostEdit")
+    @Operation(description = "修改保存字典类型", summary = "SysDictDataPostEdit")
     @SaCheckPermission("system:dict:edit")
     @Log(title = "字典数据", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -115,11 +115,11 @@ public class SysDictDataController extends AdminBaseController {
     /**
      * 删除字典类型
      */
-    @ApiOperation(value = "删除字典类型", nickname = "SysDictDataPostRemove")
+    @Operation(description = "删除字典类型", summary = "SysDictDataPostRemove")
     @SaCheckPermission("system:dict:remove")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "字典code串", required = true, allowMultiple = true) @RequestParam Long[] dictCodes) {
+    public R<Void> remove(@Parameter(description = "字典code串", required = true) @RequestParam Long[] dictCodes) {
         dictDataService.deleteDictDataByIds(dictCodes);
         return R.ok();
     }

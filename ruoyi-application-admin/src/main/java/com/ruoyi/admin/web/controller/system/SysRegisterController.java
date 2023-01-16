@@ -6,8 +6,8 @@ import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.UserNameRegisterBo;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.SysRegisterService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ruoyi
  */
 @Validated
-@Api(value = "注册验证管理", tags = {"SysRegisterService"})
+@Tag(description = "注册验证管理", name = "SysRegisterService")
 @RequiredArgsConstructor
 @RestController
 public class SysRegisterController extends AdminBaseController {
@@ -29,7 +29,7 @@ public class SysRegisterController extends AdminBaseController {
     private final ISysConfigService configService;
 
     @Anonymous
-    @ApiOperation(value = "用户注册", nickname = "SysRegisterPostRegister")
+    @Operation(description = "用户注册", summary = "SysRegisterPostRegister")
     @PostMapping("/register")
     public R<Void> register(@Validated @RequestBody UserNameRegisterBo user) {
         if (!("true".equals(configService.selectConfigByKey("sys.account.registerUser")))) {

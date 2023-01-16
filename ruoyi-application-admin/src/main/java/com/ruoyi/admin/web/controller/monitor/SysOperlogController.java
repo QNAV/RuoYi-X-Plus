@@ -14,9 +14,9 @@ import com.ruoyi.system.domain.bo.SysOperLogPageQueryBo;
 import com.ruoyi.system.domain.bo.SysOperLogQueryBo;
 import com.ruoyi.system.domain.vo.SysOperLogVo;
 import com.ruoyi.system.service.ISysOperLogService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +31,7 @@ import java.util.List;
  * @author Lion Li
  */
 @Validated
-@Api(value = "操作日志记录管理", tags = {"SysOperlogService"})
+@Tag(description = "操作日志记录管理", name = "SysOperlogService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/monitor/operlog")
@@ -39,7 +39,7 @@ public class SysOperlogController extends AdminBaseController {
 
     private final ISysOperLogService operLogService;
 
-    @ApiOperation(value = "查询操作日志记录列表", nickname = "SysOperLogPostList")
+    @Operation(description = "查询操作日志记录列表", summary = "SysOperLogPostList")
     @SaCheckPermission("monitor:operlog:list")
     @PostMapping("/list")
     public TableDataInfo<SysOperLogVo> list(@RequestBody(required = false) SysOperLogPageQueryBo operLogPageQuery) {
@@ -50,24 +50,24 @@ public class SysOperlogController extends AdminBaseController {
         return operLogService.selectPageOperLogList(operLogQuery, pageQuery);
     }
 
-    @ApiOperation(value = "导出操作日志记录列表", nickname = "SysOperLogPostExport")
+    @Operation(description = "导出操作日志记录列表", summary = "SysOperLogPostExport")
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:operlog:export")
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) SysOperLogQueryBo operLogQuery, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) SysOperLogQueryBo operLogQuery, @Parameter(hidden = true) HttpServletResponse response) {
         List<SysOperLog> list = operLogService.selectOperLogList(operLogQuery);
         ExcelUtil.exportExcel(list, "操作日志", SysOperLog.class, response);
     }
 
-    @ApiOperation(value = "删除操作日志记录", nickname = "SysOperLogPostRemove")
+    @Operation(description = "删除操作日志记录", summary = "SysOperLogPostRemove")
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @SaCheckPermission("monitor:operlog:remove")
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "操作日志ID组", required = true, allowMultiple = true) @RequestParam Long[] operIds) {
+    public R<Void> remove(@Parameter(description = "操作日志ID组", required = true) @RequestParam Long[] operIds) {
         return toAjax(operLogService.deleteOperLogByIds(operIds));
     }
 
-    @ApiOperation(value = "清空操作日志记录", nickname = "SysOperLogPostClean")
+    @Operation(description = "清空操作日志记录", summary = "SysOperLogPostClean")
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
     @SaCheckPermission("monitor:operlog:remove")
     @PostMapping("/clean")

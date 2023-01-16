@@ -1,7 +1,6 @@
 package com.ruoyi.common.core.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,7 +13,7 @@ import java.util.Date;
  */
 
 @Data
-@ApiModel(description = "Vo基类")
+@Schema(description = "Vo基类")
 public class BaseVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,24 +21,24 @@ public class BaseVo implements Serializable {
     /**
      * 创建者
      */
-    @ApiModelProperty(value = "创建者", required = true)
+    @Schema(description = "创建者", required = true)
     private String createBy;
 
     /**
      * 创建时间
      */
-    @ApiModelProperty(value = "创建时间", required = true)
+    @Schema(description = "创建时间", required = true)
     private Date createTime;
 
     /**
      * 更新者
      */
-    @ApiModelProperty(value = "更新者")
+    @Schema(description = "更新者")
     private String updateBy;
 
     /**
      * 更新时间
      */
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     private Date updateTime;
 }

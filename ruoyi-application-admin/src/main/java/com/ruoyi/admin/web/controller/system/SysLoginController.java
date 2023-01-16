@@ -1,7 +1,6 @@
 package com.ruoyi.admin.web.controller.system;
 
-import cn.dev33.satoken.exception.NotLoginException;
-import cn.dev33.satoken.stp.StpUtil;
+
 import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.domain.R;
@@ -18,9 +17,9 @@ import com.ruoyi.system.service.SysLoginService;
 import com.ruoyi.system.service.SysPermissionService;
 import com.ruoyi.admin.web.model.vo.LoginVo;
 import com.ruoyi.admin.web.model.vo.UserInfoVo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +35,7 @@ import java.util.Set;
  * @author Lion Li
  */
 @Validated
-@Api(value = "登录验证管理", tags = {"SysLoginService"})
+@Tag(description = "登录验证管理", name = "SysLoginService")
 @RequiredArgsConstructor
 @RestController
 public class SysLoginController {
@@ -53,7 +52,7 @@ public class SysLoginController {
      * @return 结果
      */
     @Anonymous
-    @ApiOperation(value = "用户名登录方法", nickname = "SysLoginPostLogin")
+    @Operation(description = "用户名登录方法", summary = "SysLoginPostLogin")
     @PostMapping("/login")
     public R<LoginVo> login(@Validated @RequestBody UserNameLoginBo userNameLoginBody) {
         LoginVo result = new LoginVo();
@@ -71,7 +70,7 @@ public class SysLoginController {
      * @return 结果
      */
     @Anonymous
-    @ApiOperation(value = "短信登录(示例)", nickname = "SysLoginPostSmsLogin")
+    @Operation(description = "短信登录(示例)", summary = "SysLoginPostSmsLogin")
     @PostMapping("/smsLogin")
     public R<LoginVo> smsLogin(@Validated @RequestBody SmsLoginBo smsLoginBody) {
         LoginVo result = new LoginVo();
@@ -88,9 +87,9 @@ public class SysLoginController {
      * @return 结果
      */
     @Anonymous
-    @ApiOperation(value = "小程序登录(示例)", nickname = "SysLoginGetXcxLogin")
+    @Operation(description = "小程序登录(示例)", summary = "SysLoginGetXcxLogin")
     @GetMapping("/xcxLogin")
-    public R<LoginVo> xcxLogin(@NotBlank(message = "{xcx.code.not.blank}") @ApiParam(value = "小程序code", required = true) @RequestParam String xcxCode) {
+    public R<LoginVo> xcxLogin(@NotBlank(message = "{xcx.code.not.blank}") @Parameter(description = "小程序code", required = true) @RequestParam String xcxCode) {
         LoginVo result = new LoginVo();
         // 生成令牌
         String token = loginService.xcxLogin(xcxCode);
@@ -99,7 +98,7 @@ public class SysLoginController {
     }
 
     @Anonymous
-    @ApiOperation(value = "登出方法", nickname = "SysLoginPostLogout")
+    @Operation(description = "登出方法", summary = "SysLoginPostLogout")
     @PostMapping("/logout")
     public R<Void> logout() {
         loginService.logout();
@@ -111,7 +110,7 @@ public class SysLoginController {
      *
      * @return 用户信息
      */
-    @ApiOperation(value = "获取已登录用户信息", nickname = "SysLoginGetInfo")
+    @Operation(description = "获取已登录用户信息", summary = "SysLoginGetInfo")
     @GetMapping("/info")
     public R<UserInfoVo> info() {
         UserInfoVo data = new UserInfoVo();
@@ -132,7 +131,7 @@ public class SysLoginController {
      *
      * @return 路由信息
      */
-    @ApiOperation(value = "获取菜单路由信息", nickname = "SysLoginGetRouters")
+    @Operation(description = "获取菜单路由信息", summary = "SysLoginGetRouters")
     @GetMapping("/routers")
     public R<List<RouterVo>> routers() {
         Long userId = AdminLoginHelper.getUserId();

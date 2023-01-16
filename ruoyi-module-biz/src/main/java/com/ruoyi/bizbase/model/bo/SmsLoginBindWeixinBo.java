@@ -1,7 +1,6 @@
 package com.ruoyi.bizbase.model.bo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -13,20 +12,20 @@ import javax.validation.constraints.NotBlank;
  */
 
 @Data
-@ApiModel(value = "SmsLoginBindWeixinBo", description = "短信登录并绑定微信对象")
+@Schema(description = "短信登录并绑定微信对象")
 public class SmsLoginBindWeixinBo {
     /**
      * 用户名
      */
     @NotBlank(message = "{user.phoneNumber.not.blank}")
-    @ApiModelProperty(value = "用户手机号")
+    @Schema(description = "用户手机号")
     private String phoneNumber;
 
     /**
      * 用户密码
      */
     @NotBlank(message = "{sms.code.not.blank}")
-    @ApiModelProperty(value = "短信验证码")
+    @Schema(description = "短信验证码")
     private String smsCode;
 
 
@@ -34,7 +33,7 @@ public class SmsLoginBindWeixinBo {
      * 小程序应用id
      */
     @NotBlank(message = "小程序应用id不能为空")
-    @ApiModelProperty(value = "小程序应用id")
+    @Schema(description = "小程序应用id")
     private String appid;
 
 
@@ -42,6 +41,6 @@ public class SmsLoginBindWeixinBo {
      * 小程序code
      */
     @NotBlank(message = "小程序code不能为空")
-    @ApiModelProperty(value = "小程序code")
+    @Schema(description = "小程序code")
     private String xcxCode;
 }

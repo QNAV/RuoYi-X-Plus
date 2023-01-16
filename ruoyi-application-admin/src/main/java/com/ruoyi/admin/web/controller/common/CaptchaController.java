@@ -7,7 +7,6 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.enums.CaptchaType;
 import com.ruoyi.common.utils.StringUtils;
@@ -20,9 +19,9 @@ import com.ruoyi.sms.core.SmsTemplate;
 import com.ruoyi.sms.entity.SmsResult;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.admin.web.model.vo.CaptchaImageVo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -43,7 +42,7 @@ import java.util.Map;
 @Anonymous
 @Slf4j
 @Validated
-@Api(value = "验证码管理", tags = {"CaptchaService"})
+@Tag( description= "验证码管理", name = "CaptchaService")
 @RequiredArgsConstructor
 @RestController
 public class CaptchaController {
@@ -55,9 +54,9 @@ public class CaptchaController {
     /**
      * 短信验证码
      */
-    @ApiOperation(value = "短信验证码", nickname = "CaptchaGetSmsCaptcha")
+    @Operation(description = "短信验证码", summary = "CaptchaGetSmsCaptcha")
     @GetMapping("/captchaSms")
-    public R<Void> smsCaptcha(@ApiParam("用户手机号")
+    public R<Void> smsCaptcha(@Parameter(name = "用户手机号")
                               @NotBlank(message = "{user.phonenumber.not.blank}")
                               String phoneNumber) {
         if (smsProperties.getEnabled()) {
@@ -82,7 +81,7 @@ public class CaptchaController {
     /**
      * 生成验证码
      */
-    @ApiOperation(value = "生成验证码", nickname = "CaptchaGetGetCode")
+    @Operation(description = "生成验证码", summary = "CaptchaGetGetCode")
     @GetMapping("/captchaImage")
     public R<CaptchaImageVo> getCode() {
         CaptchaImageVo data = new CaptchaImageVo();

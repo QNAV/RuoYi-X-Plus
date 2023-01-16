@@ -1,7 +1,6 @@
 package com.ruoyi.common.core.domain.bo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -11,7 +10,7 @@ import java.io.Serializable;
  * 修改密码表单对象
  * @author weibocy
  */
-@ApiModel(value = "UpdatePwdBo", description = "修改密码表单对象")
+@Schema(description = "修改密码表单对象")
 @Data
 public class UpdatePwdBo implements Serializable {
 
@@ -20,14 +19,14 @@ public class UpdatePwdBo implements Serializable {
     /**
      * 原密码
      */
-    @ApiModelProperty(value = "原密码", required = true)
+    @Schema(description = "原密码", required = true)
     @NotBlank(message = "原密码不能为空")
     private String oldPassword;
 
     /**
      * 新密码
      */
-    @ApiModelProperty(value = "新密码", required = true)
+    @Schema(description = "新密码", required = true)
     @NotBlank(message = "新密码不能为空")
     private String newPassword;
 

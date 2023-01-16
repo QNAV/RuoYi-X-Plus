@@ -15,9 +15,9 @@ import com.ruoyi.system.domain.bo.SysNoticePageQueryBo;
 import com.ruoyi.system.domain.bo.SysNoticeQueryBo;
 import com.ruoyi.system.domain.vo.SysNoticeVo;
 import com.ruoyi.system.service.ISysNoticeService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Lion Li
  */
 @Validated
-@Api(value = "公告信息管理", tags = {"SysNoticeService"})
+@Tag(description = "公告信息管理", name = "SysNoticeService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/notice")
@@ -40,7 +40,7 @@ public class SysNoticeController extends AdminBaseController {
     /**
      * 获取通知公告列表
      */
-    @ApiOperation(value = "获取通知公告列表", nickname = "SysNoticePostList")
+    @Operation(description = "获取通知公告列表", summary = "SysNoticePostList")
     @SaCheckPermission("system:notice:list")
     @PostMapping("/list")
     public TableDataInfo<SysNoticeVo> list(@RequestBody(required = false) SysNoticePageQueryBo noticePageQuery) {
@@ -54,17 +54,17 @@ public class SysNoticeController extends AdminBaseController {
     /**
      * 根据通知公告编号获取详细信息
      */
-    @ApiOperation(value = "根据通知公告编号获取详细信息", nickname = "SysNoticeGetInfo")
+    @Operation(description = "根据通知公告编号获取详细信息", summary = "SysNoticeGetInfo")
     @SaCheckPermission("system:notice:query")
     @GetMapping(value = "/info")
-    public R<SysNoticeVo> info(@ApiParam(value = "公告ID", required = true) @RequestParam(required = true) Long noticeId) {
+    public R<SysNoticeVo> info(@Parameter(description = "公告ID", required = true) @RequestParam(required = true) Long noticeId) {
         return R.ok(noticeService.selectNoticeById(noticeId));
     }
 
     /**
      * 新增通知公告
      */
-    @ApiOperation(value = "新增通知公告", nickname = "SysNoticePostAdd")
+    @Operation(description = "新增通知公告", summary = "SysNoticePostAdd")
     @SaCheckPermission("system:notice:add")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -76,7 +76,7 @@ public class SysNoticeController extends AdminBaseController {
     /**
      * 修改通知公告
      */
-    @ApiOperation(value = "修改通知公告", nickname = "SysNoticePostEdit")
+    @Operation(description = "修改通知公告", summary = "SysNoticePostEdit")
     @SaCheckPermission("system:notice:edit")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -88,11 +88,11 @@ public class SysNoticeController extends AdminBaseController {
     /**
      * 删除通知公告
      */
-    @ApiOperation(value = "删除通知公告", nickname = "SysNoticePostRemove")
+    @Operation(description = "删除通知公告", summary = "SysNoticePostRemove")
     @SaCheckPermission("system:notice:remove")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "公告ID串", required = true, allowMultiple = true) @RequestParam(required = true) Long[] noticeIds) {
+    public R<Void> remove(@Parameter(description = "公告ID串", required = true) @RequestParam(required = true) Long[] noticeIds) {
         return toAjax(noticeService.deleteNoticeByIds(noticeIds));
     }
 }

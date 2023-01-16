@@ -11,7 +11,6 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.core.validate.QueryGroup;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.BeanCopyUtils;
@@ -22,7 +21,11 @@ import com.ruoyi.system.domain.bo.SysOssQueryBo;
 import com.ruoyi.system.domain.vo.SysOssVo;
 import com.ruoyi.system.service.ISysOssService;
 import com.ruoyi.admin.web.model.vo.OssUploadVo;
-import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +33,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +44,7 @@ import java.util.List;
  * @author Lion Li
  */
 @Validated
-@Api(value = "对象存储管理", tags = {"SysOssService"})
+@Tag(description = "对象存储管理", name = "SysOssService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/system/oss")
@@ -53,7 +55,7 @@ public class SysOssController extends AdminBaseController {
     /**
      * 查询OSS对象存储列表
      */
-    @ApiOperation(value = "查询OSS对象存储列表", nickname = "SysOssPostList")
+    @Operation(description = "查询OSS对象存储列表", summary = "SysOssPostList")
     @SaCheckPermission("system:oss:list")
     @PostMapping("/list")
     public TableDataInfo<SysOssVo> list(@RequestBody(required = false) @Validated SysOssPageQueryBo ossPageQuery) {
@@ -67,10 +69,10 @@ public class SysOssController extends AdminBaseController {
     /**
      * 查询OSS对象基于id串
      */
-    @ApiOperation(value = "查询OSS对象基于ID", nickname = "SysOssGetListByIds")
+    @Operation(description = "查询OSS对象基于ID", summary = "SysOssGetListByIds")
     @SaCheckPermission("system:oss:list")
     @GetMapping("/listByIds")
-    public R<List<SysOssVo>> listByIds(@ApiParam(value = "OSS对象ID串", required = true) @RequestParam Long[] ossIds) {
+    public R<List<SysOssVo>> listByIds(@Parameter(description = "OSS对象ID串", required = true) @RequestParam Long[] ossIds) {
         List<SysOssVo> list = iSysOssService.listByIds(Arrays.asList(ossIds));
         return R.ok(list);
     }
@@ -78,9 +80,9 @@ public class SysOssController extends AdminBaseController {
     /**
      * 上传OSS对象存储
      */
-    @ApiOperation(value = "上传OSS对象存储", nickname = "SysOssPostUpload")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "file", value = "文件", paramType = "query", dataTypeClass = File.class, required = true)
+    @Operation(description = "上传OSS对象存储", summary = "SysOssPostUpload")
+    @Parameters({
+        @Parameter(name = "file", description = "文件", in = ParameterIn.QUERY, required = true)
     })
     @SaCheckPermission("system:oss:upload")
     @Log(title = "OSS对象存储", businessType = BusinessType.INSERT)
@@ -97,10 +99,10 @@ public class SysOssController extends AdminBaseController {
         return R.ok(data);
     }
 
-    @ApiOperation(value = "下载OSS对象存储", nickname = "SysOssGetDownload")
+    @Operation(description = "下载OSS对象存储", summary = "SysOssGetDownload")
     @SaCheckPermission("system:oss:download")
     @GetMapping("/download")
-    public void download(@ApiParam(value = "OSS对象ID", required = true) @RequestParam Long ossId, @ApiParam(hidden = true) HttpServletResponse response) throws IOException {
+    public void download(@Parameter(description = "OSS对象ID", required = true) @RequestParam Long ossId, @Parameter(hidden = true) HttpServletResponse response) throws IOException {
         SysOss sysOss = iSysOssService.getById(ossId);
         if (ObjectUtil.isNull(sysOss)) {
             throw new ServiceException("文件数据不存在!");
@@ -124,11 +126,11 @@ public class SysOssController extends AdminBaseController {
     /**
      * 删除OSS对象存储
      */
-    @ApiOperation(value = "删除OSS对象存储", nickname = "SysOssPostRemove")
+    @Operation(description = "删除OSS对象存储", summary = "SysOssPostRemove")
     @SaCheckPermission("system:oss:remove")
     @Log(title = "OSS对象存储", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "OSS对象ID组", required = true, allowMultiple = true) @RequestParam Long[] ossIds) {
+    public R<Void> remove(@Parameter(description = "OSS对象ID组", required = true) @RequestParam Long[] ossIds) {
         return toAjax(iSysOssService.deleteWithValidByIds(Arrays.asList(ossIds), true) ? 1 : 0);
     }
 

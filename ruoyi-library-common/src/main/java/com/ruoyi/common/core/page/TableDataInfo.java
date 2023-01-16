@@ -2,8 +2,7 @@ package com.ruoyi.common.core.page;
 
 import cn.hutool.http.HttpStatus;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -20,26 +19,26 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@ApiModel(value = "TableDataInfo", description = "分页响应对象")
+@Schema(name = "TableDataInfo", description = "分页响应对象")
 public class TableDataInfo<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
      * 消息状态码
      */
-    @ApiModelProperty(value = "消息状态码", required = true)
+    @Schema(description = "消息状态码", required = true)
     private int code;
 
     /**
      * 消息内容
      */
-    @ApiModelProperty(value = "消息内容", required = true)
+    @Schema(description = "消息内容", required = true)
     private String msg;
 
     /**
      * 数据对象
      */
-    @ApiModelProperty(value = "数据对象", required = true)
+    @Schema(description = "数据对象", required = true)
     private TableData<T> data;
 
     /**
@@ -88,19 +87,19 @@ public class TableDataInfo<T> implements Serializable {
      * 分页数据对象
      */
     @Data
-    @ApiModel(value = "TableData", description = "分页数据对象")
+    @Schema(name = "TableData", description = "分页数据对象")
     @NoArgsConstructor
     public static class TableData<T> {
         /**
          * 总记录数
          */
-        @ApiModelProperty(value = "总记录数", required = true)
+        @Schema(description = "总记录数", required = true)
         private long total;
 
         /**
          * 列表数据
          */
-        @ApiModelProperty(value = "列表数据", required = true)
+        @Schema(description = "列表数据", required = true)
         private List<T> data;
     }
 

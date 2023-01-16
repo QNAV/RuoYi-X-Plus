@@ -1,7 +1,6 @@
 package com.ruoyi.common.core.domain.bo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "UserNameRegisterBo", description = "用户名账户注册对象")
+@Schema(description = "用户名账户注册对象")
 public class UserNameRegisterBo extends UserNameLoginBo {
 
     private static final long serialVersionUID = 1L;
@@ -20,7 +19,7 @@ public class UserNameRegisterBo extends UserNameLoginBo {
     /**
      * 用户类型
      */
-    @ApiModelProperty(value = "用户类型")
+    @Schema(description = "用户类型")
     private String userType;
 
 }
