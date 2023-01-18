@@ -1,7 +1,6 @@
 package ${packageName}.domain.bo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import javax.validation.constraints.*;
 
@@ -19,7 +18,7 @@ import ${import};
  */
 
 @Data
-@ApiModel(value = "${ClassName}QueryBo", description = "${functionName}业务查询对象")
+@Schema(description = "${functionName}业务查询对象")
 public class ${ClassName}QueryBo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +29,7 @@ public class ${ClassName}QueryBo implements Serializable {
     /**
      * $column.columnComment
      */
-    @ApiModelProperty(value = "$column.columnComment")
+    @Schema(description = "$column.columnComment")
     private $column.javaType $column.javaField;
 
 #end
@@ -38,12 +37,12 @@ public class ${ClassName}QueryBo implements Serializable {
     /**
      * 创建开始时间
      */
-    @ApiModelProperty(value = "创建开始时间")
+    @Schema(description = "创建开始时间")
     private Date createBeginTime;
 
     /**
      * 创建结束时间
      */
-    @ApiModelProperty(value = "创建结束时间")
+    @Schema(description = "创建结束时间")
     private Date createEndTime;
 }

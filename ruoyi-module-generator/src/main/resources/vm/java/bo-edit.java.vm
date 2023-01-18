@@ -1,7 +1,6 @@
 package ${packageName}.domain.bo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import javax.validation.constraints.*;
 
@@ -19,7 +18,7 @@ import ${import};
  */
 
 @Data
-@ApiModel(value = "${ClassName}EditBo", description = "${functionName}业务编辑对象")
+@Schema(description = "${functionName}业务编辑对象")
 public class ${ClassName}EditBo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,14 +29,14 @@ public class ${ClassName}EditBo implements Serializable {
      * $column.columnComment
      */
 #if($column.isRequired == 1 || $column.isPk == 1)
-    @ApiModelProperty(value = "$column.columnComment", required = true)
+    @Schema(description = "$column.columnComment", required = true)
 #if($column.javaType == 'String')
     @NotBlank(message = "$column.columnComment不能为空")
 #else
     @NotNull(message = "$column.columnComment不能为空")
 #end
 #else
-    @ApiModelProperty(value = "$column.columnComment")
+    @Schema(description = "$column.columnComment")
 #end
     private $column.javaType $column.javaField;
 

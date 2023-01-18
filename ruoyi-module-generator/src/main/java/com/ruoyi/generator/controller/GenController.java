@@ -16,6 +16,7 @@ import com.ruoyi.generator.domain.vo.GenInfoVo;
 import com.ruoyi.generator.domain.to.GenTableQuery;
 import com.ruoyi.generator.service.IGenTableService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -63,10 +64,10 @@ public class GenController {
     /**
      * 获取代码生成业务信息
      */
-    @ApiOperation(value = "获取代码生成业务信息", nickname = "GenGetInfo")
+    @Operation(description = "获取代码生成业务信息", summary = "GenGetInfo")
     @SaCheckPermission("tool:gen:query")
     @GetMapping(value = "/info")
-    public R<GenInfoVo> info(@ApiParam(value = "生成表编号", required = true) @RequestParam Long tableId) {
+    public R<GenInfoVo> info(@Parameter(description = "生成表编号", required = true) @RequestParam Long tableId) {
         GenTable table = genTableService.selectGenTableById(tableId);
         List<GenTable> tables = genTableService.selectGenTableAll();
         List<GenTableColumn> list = genTableService.selectGenTableColumnListByTableId(tableId);
@@ -80,7 +81,7 @@ public class GenController {
     /**
      * 查询数据库列表
      */
-    @ApiOperation(value = "查询数据库列表", nickname = "GenPostDbList")
+    @Operation(description = "查询数据库列表", summary = "GenPostDbList")
     @SaCheckPermission("tool:gen:list")
     @PostMapping("/db/list")
     public TableDataInfo<GenTable> dbList(@RequestBody(required = false) GenTablePageQuery genTablePageQuery) {
@@ -94,10 +95,10 @@ public class GenController {
     /**
      * 查询数据表字段列表
      */
-    @ApiOperation(value = "查询数据表字段列表", nickname = "GenGetColumnList")
+    @Operation(description = "查询数据表字段列表", summary = "GenGetColumnList")
     @SaCheckPermission("tool:gen:list")
     @GetMapping(value = "/column/list")
-    public TableDataInfo<GenTableColumn> columnList(@ApiParam(value = "生成业务表编号", required = true) @RequestParam Long tableId) {
+    public TableDataInfo<GenTableColumn> columnList(@Parameter(description = "生成业务表编号", required = true) @RequestParam Long tableId) {
         List<GenTableColumn> list = genTableService.selectGenTableColumnListByTableId(tableId);
         return TableDataInfo.build(list);
     }
@@ -105,11 +106,11 @@ public class GenController {
     /**
      * 导入表结构（保存）
      */
-    @ApiOperation(value = "导入表结构（保存）", nickname = "GenPostImportTable")
+    @Operation(description = "导入表结构（保存）", summary = "GenPostImportTable")
     @SaCheckPermission("tool:gen:import")
     @Log(title = "代码生成", businessType = BusinessType.IMPORT)
     @PostMapping("/importTable")
-    public R<Void> importTable(@ApiParam(value = "业务生成表名称组", required = true, allowMultiple = true) @RequestParam String[] tables) {
+    public R<Void> importTable(@Parameter(description = "业务生成表名称组", required = true) @RequestParam String[] tables) {
         String[] tableNames = Convert.toStrArray(tables);
         // 查询表信息
         List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
@@ -120,7 +121,7 @@ public class GenController {
     /**
      * 修改保存代码生成业务
      */
-    @ApiOperation(value = "修改保存代码生成业务", nickname = "GenPostEdit")
+    @Operation(description = "修改保存代码生成业务", summary = "GenPostEdit")
     @SaCheckPermission("tool:gen:edit")
     @Log(title = "代码生成", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -133,11 +134,11 @@ public class GenController {
     /**
      * 删除代码生成
      */
-    @ApiOperation(value = "删除代码生成", nickname = "GenPostRemove")
+    @Operation(description = "删除代码生成", summary = "GenPostRemove")
     @SaCheckPermission("tool:gen:remove")
     @Log(title = "代码生成", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "代码生成表编号组", required = true, allowMultiple = true) @RequestParam Long[] tableIds) {
+    public R<Void> remove(@Parameter(description = "代码生成表编号组", required = true) @RequestParam Long[] tableIds) {
         genTableService.deleteGenTableByIds(tableIds);
         return R.ok();
     }
@@ -145,10 +146,10 @@ public class GenController {
     /**
      * 预览代码
      */
-    @ApiOperation(value = "预览代码", nickname = "GenGetPreview")
+    @Operation(description = "预览代码", summary = "GenGetPreview")
     @SaCheckPermission("tool:gen:preview")
     @GetMapping("/preview")
-    public R<Map<String, String>> preview(@ApiParam(value = "代码生成表编号", required = true) @RequestParam Long tableId) throws IOException {
+    public R<Map<String, String>> preview(@Parameter(description = "代码生成表编号", required = true) @RequestParam Long tableId) {
         Map<String, String> dataMap = genTableService.previewCode(tableId);
         return R.ok(dataMap);
     }
@@ -156,11 +157,11 @@ public class GenController {
     /**
      * 生成代码（下载方式）
      */
-    @ApiOperation(value = "生成代码（下载方式）", nickname = "GenGetDownload")
+    @Operation(description = "生成代码（下载方式）", summary = "GenGetDownload")
     @SaCheckPermission("tool:gen:code")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/download")
-    public void download(@ApiParam(hidden = true) HttpServletResponse response, @ApiParam(value = "业务生成表名称", required = true) @RequestParam String tableName) throws IOException {
+    public void download(@Parameter(hidden = true) HttpServletResponse response, @Parameter(description = "业务生成表名称", required = true) @RequestParam String tableName) throws IOException {
         byte[] data = genTableService.downloadCode(tableName);
         genCode(response, data);
     }
@@ -168,11 +169,11 @@ public class GenController {
     /**
      * 生成代码（自定义路径）
      */
-    @ApiOperation(value = "生成代码（自定义路径）", nickname = "GenGetGenCode")
+    @Operation(description = "生成代码（自定义路径）", summary = "GenGetGenCode")
     @SaCheckPermission("tool:gen:code")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/genCode")
-    public R<Void> genCode(@ApiParam(value = "业务生成表名称", required = true) @RequestParam String tableName) {
+    public R<Void> genCode(@Parameter(description = "业务生成表名称", required = true) @RequestParam String tableName) {
         genTableService.generatorCode(tableName);
         return R.ok();
     }
@@ -180,11 +181,11 @@ public class GenController {
     /**
      * 同步数据库
      */
-    @ApiOperation(value = "同步数据库", nickname = "GenGetSynchDb")
+    @Operation(description = "同步数据库", summary = "GenGetSynchDb")
     @SaCheckPermission("tool:gen:edit")
     @Log(title = "代码生成", businessType = BusinessType.UPDATE)
     @GetMapping("/synchDb")
-    public R<Void> synchDb(@ApiParam(value = "业务生成表名称", required = true) @RequestParam String tableName) {
+    public R<Void> synchDb(@Parameter(description = "业务生成表名称", required = true) @RequestParam String tableName) {
         genTableService.synchDb(tableName);
         return R.ok();
     }
@@ -192,11 +193,11 @@ public class GenController {
     /**
      * 批量生成代码
      */
-    @ApiOperation(value = "批量生成代码", nickname = "GenGetBatchGenCode")
+    @Operation(description = "批量生成代码", summary = "GenGetBatchGenCode")
     @SaCheckPermission("tool:gen:code")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/batchGenCode")
-    public void batchGenCode(@ApiParam(hidden = true) HttpServletResponse response, @ApiParam(value = "业务生成表名称，多个表用,分隔", required = true) @RequestParam  String tables) throws IOException {
+    public void batchGenCode(@Parameter(hidden = true) HttpServletResponse response, @Parameter(description = "业务生成表名称，多个表用,分隔", required = true) @RequestParam  String tables) throws IOException {
         String[] tableNames = Convert.toStrArray(tables);
         byte[] data = genTableService.downloadCode(tableNames);
         genCode(response, data);

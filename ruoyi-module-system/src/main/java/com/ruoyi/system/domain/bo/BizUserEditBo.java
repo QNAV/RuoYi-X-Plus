@@ -1,8 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import javax.validation.constraints.*;
 
@@ -20,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 
 @Data
-@ApiModel(value = "BizUserEditBo", description = "业务用户信息业务编辑对象")
+@Schema(description = "业务用户信息业务编辑对象")
 public class BizUserEditBo implements Serializable {
 
     private static final long serialVersionUID=1L;
@@ -28,131 +27,131 @@ public class BizUserEditBo implements Serializable {
     /**
      * 用户ID
      */
-    @ApiModelProperty(value = "用户ID", required = true)
+    @Schema(description = "用户ID", required = true)
     @NotNull(message = "用户ID不能为空")
     private Long userId;
 
     /**
      * appid
      */
-    @ApiModelProperty(value = "appid")
+    @Schema(description = "appid")
     private String appid;
 
     /**
      * unionid
      */
-    @ApiModelProperty(value = "unionid")
+    @Schema(description = "unionid")
     private String unionid;
 
     /**
      * openid
      */
-    @ApiModelProperty(value = "openid")
+    @Schema(description = "openid")
     private String openid;
 
     /**
      * 用户账号
      */
-    @ApiModelProperty(value = "用户账号", required = true)
+    @Schema(description = "用户账号", required = true)
     @NotBlank(message = "用户账号不能为空")
     private String userName;
 
     /**
      * 用户昵称
      */
-    @ApiModelProperty(value = "用户昵称")
+    @Schema(description = "用户昵称")
     private String nickName;
 
     /**
      * 用户类型（app_userAPP用户，wxapp_user微信小程序）
      */
-    @ApiModelProperty(value = "用户类型（app_userAPP用户，wxapp_user微信小程序）")
+    @Schema(description = "用户类型（app_userAPP用户，wxapp_user微信小程序）")
     private String userType;
 
     /**
      * 用户邮箱
      */
-    @ApiModelProperty(value = "用户邮箱")
+    @Schema(description = "用户邮箱")
     private String email;
 
     /**
      * 手机号码
      */
-    @ApiModelProperty(value = "手机号码", required = true)
+    @Schema(description = "手机号码", required = true)
     @NotBlank(message = "手机号码不能为空")
     private String phoneNumber;
 
     /**
      * 用户性别（1男 2女 0未知）
      */
-    @ApiModelProperty(value = "用户性别（1男 2女 0未知）")
+    @Schema(description = "用户性别（1男 2女 0未知）")
     private String sex;
 
     /**
      * 头像地址
      */
-    @ApiModelProperty(value = "头像地址")
+    @Schema(description = "头像地址")
     private String avatar;
 
     /**
      * 密码
      */
-    @ApiModelProperty(value = "密码")
+    @Schema(description = "密码")
     private String password;
 
     /**
      * 帐号状态（0正常 1停用）
      */
-    @ApiModelProperty(value = "帐号状态（0正常 1停用）")
+    @Schema(description = "帐号状态（0正常 1停用）")
     private String status;
 
     /**
      * 国家
      */
-    @ApiModelProperty(value = "国家")
+    @Schema(description = "国家")
     private String country;
 
     /**
      * 省份
      */
-    @ApiModelProperty(value = "省份")
+    @Schema(description = "省份")
     private String province;
 
     /**
      * 城市
      */
-    @ApiModelProperty(value = "城市")
+    @Schema(description = "城市")
     private String city;
 
     /**
      * 删除标志（0代表存在 2代表删除）
      */
-    @ApiModelProperty(value = "删除标志（0代表存在 2代表删除）")
+    @Schema(description = "删除标志（0代表存在 2代表删除）")
     private String delFlag;
 
     /**
      * 最后登录IP
      */
-    @ApiModelProperty(value = "最后登录IP")
+    @Schema(description = "最后登录IP")
     private String loginIp;
 
     /**
      * 最后登录时间
      */
-    @ApiModelProperty(value = "最后登录时间")
+    @Schema(description = "最后登录时间")
     private Date loginDate;
 
 
     /**
      * 更新者
      */
-    @ApiModelProperty(value = "更新者")
+    @Schema(description = "更新者")
     private String updateBy;
 
     /**
      * 备注
      */
-    @ApiModelProperty(value = "备注")
+    @Schema(description = "备注")
     private String remark;
 
 

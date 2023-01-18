@@ -3,8 +3,7 @@ package com.ruoyi.system.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -16,20 +15,20 @@ import lombok.Data;
 
 @Data
 @TableName("sys_role_menu")
-@ApiModel(value = "SysRoleMenu", description = "角色和菜单关联")
+@Schema(description = "角色和菜单关联")
 public class SysRoleMenu {
 
     /**
      * 角色ID
      */
     @TableId(type = IdType.INPUT)
-    @ApiModelProperty(value = "角色ID")
+    @Schema(description = "角色ID")
     private Long roleId;
 
     /**
      * 菜单ID
      */
-    @ApiModelProperty(value = "角色ID")
+    @Schema(description = "角色ID")
     private Long menuId;
 
 }

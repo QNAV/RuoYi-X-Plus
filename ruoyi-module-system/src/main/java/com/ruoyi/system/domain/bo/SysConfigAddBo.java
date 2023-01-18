@@ -1,7 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -15,7 +14,7 @@ import java.io.Serializable;
  */
 
 @Data
-@ApiModel(value = "SysConfigAddBo", description = "参数配置新增业务对象")
+@Schema(description = "参数配置新增业务对象")
 public class SysConfigAddBo implements Serializable {
 
     private static final long serialVersionUID=1L;
@@ -24,7 +23,7 @@ public class SysConfigAddBo implements Serializable {
     /**
      * 参数名称
      */
-    @ApiModelProperty(value = "参数名称", required = true)
+    @Schema(description = "参数名称", required = true)
     @NotBlank(message = "参数名称不能为空")
     @Size(min = 1, max = 100, message = "参数名称不能超过100个字符")
     private String configName;
@@ -32,7 +31,7 @@ public class SysConfigAddBo implements Serializable {
     /**
      * 参数键名
      */
-    @ApiModelProperty(value = "参数键名", required = true)
+    @Schema(description = "参数键名", required = true)
     @NotBlank(message = "参数键名长度不能为空")
     @Size(min = 1, max = 100, message = "参数键名长度不能超过100个字符")
     private String configKey;
@@ -40,7 +39,7 @@ public class SysConfigAddBo implements Serializable {
     /**
      * 参数键值
      */
-    @ApiModelProperty(value = "参数键值", required = true)
+    @Schema(description = "参数键值", required = true)
     @NotBlank(message = "参数键值不能为空")
     @Size(min = 1, max = 500, message = "参数键值长度不能超过500个字符")
     private String configValue;
@@ -48,13 +47,13 @@ public class SysConfigAddBo implements Serializable {
     /**
      * 系统内置（Y是 N否）
      */
-    @ApiModelProperty(value = "系统内置（Y是 N否）")
+    @Schema(description = "系统内置（Y是 N否）")
     private String configType;
 
     /**
      * 备注
      */
-    @ApiModelProperty(value = "备注")
+    @Schema(description = "备注")
     private String remark;
 
 }

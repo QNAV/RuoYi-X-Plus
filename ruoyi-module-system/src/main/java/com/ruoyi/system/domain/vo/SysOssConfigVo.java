@@ -2,8 +2,7 @@ package com.ruoyi.system.domain.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.ruoyi.common.core.domain.BaseVo;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 
@@ -13,7 +12,7 @@ import lombok.Data;
  * @author weibocy
  */
 @Data
-@ApiModel(value = "SysOssConfigVo", description = "对象存储配置视图对象", parent = BaseVo.class)
+@Schema(description = "对象存储配置视图对象")
 @ExcelIgnoreUnannotated
 public class SysOssConfigVo extends BaseVo {
 
@@ -22,79 +21,79 @@ public class SysOssConfigVo extends BaseVo {
     /**
      * 主建
      */
-    @ApiModelProperty(value = "主建", required = true)
+    @Schema(description = "主建", required = true)
     private Long ossConfigId;
 
     /**
      * 配置key
      */
-    @ApiModelProperty(value = "配置key", required = true)
+    @Schema(description = "配置key", required = true)
     private String configKey;
 
     /**
      * accessKey
      */
-    @ApiModelProperty(value = "accessKey", required = true)
+    @Schema(description = "accessKey", required = true)
     private String accessKey;
 
     /**
      * 秘钥
      */
-    @ApiModelProperty(value = "secretKey", required = true)
+    @Schema(description = "secretKey", required = true)
     private String secretKey;
 
     /**
      * 桶名称
      */
-    @ApiModelProperty(value = "桶名称", required = true)
+    @Schema(description = "桶名称", required = true)
     private String bucketName;
 
     /**
      * 前缀
      */
-    @ApiModelProperty("前缀")
+    @Schema(description = "前缀")
     private String prefix;
 
     /**
      * 访问站点
      */
-    @ApiModelProperty("访问站点")
+    @Schema(description = "访问站点")
     private String endpoint;
 
     /**
      * 自定义域名
      */
-    @ApiModelProperty("自定义域名")
+    @Schema(description = "自定义域名")
     private String domain;
 
     /**
      * 是否https（Y=是,N=否）
      */
-    @ApiModelProperty(value = "是否https（Y=是,N=否）", required = true)
+    @Schema(description = "是否https（Y=是,N=否）", required = true)
     private String isHttps;
 
     /**
      * 域
      */
-    @ApiModelProperty("域")
+    @Schema(description = "域")
     private String region;
 
     /**
      * 状态（0=正常,1=停用）
      */
-    @ApiModelProperty(value = "状态（0=正常,1=停用）", required = true)
+    @Schema(description = "状态（0=正常,1=停用）", required = true)
     private String status;
 
     /**
      * 扩展字段
      */
-    @ApiModelProperty("扩展字段")
+    @Schema(description = "扩展字段")
     private String ext1;
 
     /**
      * 备注
      */
-    @ApiModelProperty("备注")
+    @Schema(description = "备注")
     private String remark;
 
 }

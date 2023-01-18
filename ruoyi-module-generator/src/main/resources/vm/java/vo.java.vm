@@ -8,8 +8,7 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
 import com.ruoyi.common.core.domain.BaseVo;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import java.util.Date;
 
@@ -22,7 +21,7 @@ import java.util.Date;
  * @date ${datetime}
  */
 @Data
-@ApiModel(value = "${ClassName}Vo", description = "${functionName}视图对象", parent = BaseVo.class)
+@Schema(description = "${functionName}视图对象")
 @ExcelIgnoreUnannotated
 public class ${ClassName}Vo extends BaseVo {
 
@@ -50,9 +49,9 @@ public class ${ClassName}Vo extends BaseVo {
 #end
 ## 视图对象，如果是主键、必填、有默认值 则标记必须 让前端知道这个字段必须有值返回
 #if($column.isPk==1 || $column.isRequired==1 || ($column.columnDefault && $column.columnDefault != '' && $column.columnDefault != 'null' && $column.columnDefault != 'NULL'))
-    @ApiModelProperty(value = "$column.columnComment", required = true)
+    @Schema(description = "$column.columnComment", required = true)
 #else
-    @ApiModelProperty(value = "$column.columnComment")
+    @Schema(description = "$column.columnComment")
 #end
     private $column.javaType $column.javaField;
 

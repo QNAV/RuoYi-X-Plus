@@ -1,8 +1,7 @@
 package ${packageName}.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import java.io.Serializable;
@@ -33,7 +32,7 @@ import com.ruoyi.common.core.domain.TreeEntity;
 @EqualsAndHashCode(callSuper = true)
 @TableName("${tableName}")
 #if($table.crud || $table.sub)
-@ApiModel(value = "${ClassName}", description = "${functionName}实体对象", parent = BaseEntity.class)
+@Schema(description = "${functionName}实体对象")
 #elseif($table.tree)
 
 #end
@@ -55,7 +54,7 @@ public class ${ClassName} extends ${Entity} {
 #if($column.isPk==1)
     @TableId(value = "$column.columnName")
 #end
-    @ApiModelProperty(value = "$column.columnComment")
+    @Schema(description = "$column.columnComment")
     private $column.javaType $column.javaField;
 
 #end

@@ -1,16 +1,13 @@
 package com.ruoyi.generator.domain;
 
-import com.baomidou.mybatisplus.annotation.FieldStrategy;
-import com.baomidou.mybatisplus.annotation.TableField;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.utils.StringUtils;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.apache.ibatis.type.JdbcType;
 
 import javax.validation.constraints.NotBlank;
 
@@ -27,131 +24,131 @@ import javax.validation.constraints.NotBlank;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("gen_table_column")
-@ApiModel(value = "GenTableColumn", description = "代码生成业务字段实体对象")
+@Schema(description = "代码生成业务字段实体对象")
 public class GenTableColumn extends BaseEntity {
 
     /**
      * 编号
      */
     @TableId(value = "column_id")
-    @ApiModelProperty("编号")
+    @Schema(description = "编号")
     private Long columnId;
 
     /**
      * 归属表编号
      */
-    @ApiModelProperty("归属表编号")
+    @Schema(description = "归属表编号")
     private Long tableId;
 
     /**
      * 列名称
      */
-    @ApiModelProperty("列名称")
+    @Schema(description = "列名称")
     private String columnName;
 
     /**
      * 列描述
      */
-    @ApiModelProperty("列描述")
+    @Schema(description = "列描述")
 //    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String columnComment;
 
     /**
      * 列类型
      */
-    @ApiModelProperty("列类型")
+    @Schema(description = "列类型")
     private String columnType;
 
     /**
      * 列默认值
      */
-    @ApiModelProperty("列默认值")
+    @Schema(description = "列默认值")
     private String columnDefault;
 
     /**
      * JAVA类型
      */
-    @ApiModelProperty("JAVA类型")
+    @Schema(description = "JAVA类型")
     private String javaType;
 
     /**
      * JAVA字段名
      */
-    @ApiModelProperty("JAVA字段名")
+    @Schema(description = "JAVA字段名")
     @NotBlank(message = "Java属性不能为空")
     private String javaField;
 
     /**
      * 是否主键（1是）
      */
-    @ApiModelProperty("是否主键（1是）")
+    @Schema(description = "是否主键（1是）")
 //    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isPk;
 
     /**
      * 是否自增（1是）
      */
-    @ApiModelProperty("是否自增（1是）")
+    @Schema(description = "是否自增（1是）")
 //    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isIncrement;
 
     /**
      * 是否必填（1是）
      */
-    @ApiModelProperty("是否必填（1是）")
+    @Schema(description = "是否必填（1是）")
 //    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isRequired;
 
     /**
      * 是否为插入字段（1是）
      */
-    @ApiModelProperty("是否为插入字段（1是）")
+    @Schema(description = "是否为插入字段（1是）")
 //    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isInsert;
 
     /**
      * 是否编辑字段（1是）
      */
-    @ApiModelProperty("是否编辑字段（1是）")
+    @Schema(description = "是否编辑字段（1是）")
 //    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isEdit;
 
     /**
      * 是否列表字段（1是）
      */
-    @ApiModelProperty("是否列表字段（1是）")
+    @Schema(description = "是否列表字段（1是）")
 //    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isList;
 
     /**
      * 是否查询字段（1是）
      */
-    @ApiModelProperty("是否查询字段（1是）")
+    @Schema(description = "是否查询字段（1是）")
 //    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String isQuery;
 
     /**
      * 查询方式（EQ等于、NE不等于、GT大于、LT小于、LIKE模糊、BETWEEN范围）
      */
-    @ApiModelProperty("查询方式（EQ等于、NE不等于、GT大于、LT小于、LIKE模糊、BETWEEN范围）")
+    @Schema(description = "查询方式（EQ等于、NE不等于、GT大于、LT小于、LIKE模糊、BETWEEN范围）")
     private String queryType;
 
     /**
      * 显示类型（input文本框、textarea文本域、select下拉框、checkbox复选框、radio单选框、datetime日期控件、image图片上传控件、upload文件上传控件、editor富文本控件）
      */
-    @ApiModelProperty("显示类型（input文本框、textarea文本域、select下拉框、checkbox复选框、radio单选框、datetime日期控件、image图片上传控件、upload文件上传控件、editor富文本控件）")
+    @Schema(description = "显示类型（input文本框、textarea文本域、select下拉框、checkbox复选框、radio单选框、datetime日期控件、image图片上传控件、upload文件上传控件、editor富文本控件）")
     private String htmlType;
 
     /**
      * 字典类型
      */
-    @ApiModelProperty("字典类型")
+    @Schema(description = "字典类型")
     private String dictType;
 
     /**
      * 排序
      */
-    @ApiModelProperty("排序")
+    @Schema(description = "排序")
     private Integer sort;
 
     public String getCapJavaField() {

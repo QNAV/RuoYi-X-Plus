@@ -1,7 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,7 +10,7 @@ import java.util.Date;
  * 角色查询对象
  * @author weibocy
  */
-@ApiModel(value = "SysRoleQueryBo", description = "角色查询对象")
+@Schema(description = "角色查询对象")
 @Data
 public class SysRoleQueryBo implements Serializable {
 
@@ -20,38 +19,38 @@ public class SysRoleQueryBo implements Serializable {
     /**
      * 角色ID
      */
-    @ApiModelProperty(value = "角色ID")
+    @Schema(description = "角色ID")
     private Long roleId;
 
     /**
      * 角色名称
      */
-    @ApiModelProperty(value = "角色名称")
+    @Schema(description = "角色名称")
     private String roleName;
 
     /**
      * 角色权限
      */
-    @ApiModelProperty(value = "角色权限")
+    @Schema(description = "角色权限")
     private String roleKey;
 
     /**
      * 角色状态（0正常 1停用）
      */
-    @ApiModelProperty(value = "角色状态（0正常 1停用）")
+    @Schema(description = "角色状态（0正常 1停用）")
     private String status;
 
 
     /**
      * 开始创建时间
      */
-    @ApiModelProperty(value = "开始创建时间")
+    @Schema(description = "开始创建时间")
     private Date beginCreateTime;
 
     /**
      * 结束创建时间
      */
-    @ApiModelProperty(value = "结束创建时间")
+    @Schema(description = "结束创建时间")
     private Date endCreateTime;
 
 }

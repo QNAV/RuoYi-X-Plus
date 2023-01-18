@@ -1,7 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,7 +9,7 @@ import java.io.Serializable;
  * 字典数据查询对象
  * @author weibocy
  */
-@ApiModel(value = "SysDictDataQueryBo", description = "字典数据查询对象")
+@Schema(description = "字典数据查询对象")
 @Data
 public class SysDictDataQueryBo implements Serializable {
 
@@ -19,21 +18,21 @@ public class SysDictDataQueryBo implements Serializable {
     /**
      * 字典标签
      */
-    @ApiModelProperty(value = "字典标签")
+    @Schema(description = "字典标签")
     private String dictLabel;
 
 
     /**
      * 字典类型
      */
-    @ApiModelProperty(value = "字典类型")
+    @Schema(description = "字典类型")
     private String dictType;
 
 
     /**
      * 状态（0正常 1停用）
      */
-    @ApiModelProperty(value = "状态（0正常 1停用）")
+    @Schema(description = "状态（0正常 1停用）")
     private String status;
 
 }

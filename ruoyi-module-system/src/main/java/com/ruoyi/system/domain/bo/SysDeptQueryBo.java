@@ -1,7 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,7 +10,7 @@ import java.io.Serializable;
  * @author weibocy
  */
 @Data
-@ApiModel(value = "SysDeptQueryBo", description = "部门查询对象")
+@Schema(description = "部门查询对象")
 public class SysDeptQueryBo implements Serializable {
 
     private static final long serialVersionUID=1L;
@@ -19,27 +18,27 @@ public class SysDeptQueryBo implements Serializable {
     /**
      * 部门ID
      */
-    @ApiModelProperty(value = "部门id")
+    @Schema(description = "部门id")
     private Long deptId;
 
     /**
      * 部门名称
      */
-    @ApiModelProperty(value = "部门名称")
+    @Schema(description = "部门名称")
     private String deptName;
 
 
     /**
      * 父菜单ID
      */
-    @ApiModelProperty(value = "父菜单ID")
+    @Schema(description = "父菜单ID")
     private Long parentId;
 
 
     /**
      * 部门状态:0正常,1停用
      */
-    @ApiModelProperty(value = "部门状态:0正常,1停用")
+    @Schema(description = "部门状态:0正常,1停用")
     private String status;
 
 
