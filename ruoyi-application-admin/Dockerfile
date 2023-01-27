@@ -28,7 +28,8 @@ ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:InitialRAMPercentage=50.0 -XX:MinRAM
 ENV RUN_ENV="dev"
 
 # 导出端口
-EXPOSE 8080
+ENV SERVER_PORT=8080
+EXPOSE ${SERVER_PORT}
 
 # 启动命令
-CMD java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/logs/ -jar /app.jar --spring.profiles.active=$RUN_ENV
+CMD java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/logs/ -Dserver.port=${SERVER_PORT} -jar /app.jar --spring.profiles.active=$RUN_ENV

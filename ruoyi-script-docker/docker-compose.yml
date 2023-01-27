@@ -27,9 +27,7 @@ services:
       --lower_case_table_names=1
     privileged: true
     restart: always
-    networks:
-      ruoyi_net:
-        ipv4_address: 172.30.0.36
+    network_mode: "host"
 
   nginx-web:
     image: nginx:1.21.6
@@ -70,9 +68,7 @@ services:
     command: "redis-server /redis/config/redis.conf"
     privileged: true
     restart: always
-    networks:
-      ruoyi_net:
-        ipv4_address: 172.30.0.48
+    network_mode: "host"
 
   minio:
     image: minio/minio:RELEASE.2022-05-26T05-48-41Z
@@ -105,9 +101,7 @@ services:
     command: server --address ':9000' --console-address ':9001' /data  # 指定容器中的目录 /data
     privileged: true
     restart: always
-    networks:
-      ruoyi_net:
-        ipv4_address: 172.30.0.54
+    network_mode: "host"
 
   ruoyi-server1:
     image: ruoyi/ruoyi-server:4.2.0-beta1
@@ -120,9 +114,7 @@ services:
       - /docker/server1/logs/:/ruoyi/server/logs/
     privileged: true
     restart: always
-    networks:
-      ruoyi_net:
-        ipv4_address: 172.30.0.60
+    network_mode: "host"
 
   ruoyi-server2:
     image: "ruoyi/ruoyi-server:4.2.0-beta1"
@@ -135,9 +127,7 @@ services:
       - /docker/server2/logs/:/ruoyi/server/logs/
     privileged: true
     restart: always
-    networks:
-      ruoyi_net:
-        ipv4_address: 172.30.0.61
+    network_mode: "host"
 
   ruoyi-monitor-admin:
     image: ruoyi/ruoyi-monitor-admin:4.2.0-beta1
@@ -150,9 +140,7 @@ services:
       - /docker/monitor/logs/:/ruoyi/monitor/logs
     privileged: true
     restart: always
-    networks:
-      ruoyi_net:
-        ipv4_address: 172.30.0.90
+    network_mode: "host"
 
   ruoyi-xxl-job-admin:
     image: ruoyi/ruoyi-xxl-job-admin:4.2.0-beta1
@@ -165,13 +153,4 @@ services:
       - /docker/xxljob/logs/:/ruoyi/xxljob/logs
     privileged: true
     restart: always
-    networks:
-      ruoyi_net:
-        ipv4_address: 172.30.0.92
-
-networks:
-  ruoyi_net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.30.0.0/16
+    network_mode: "host"
