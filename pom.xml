@@ -36,6 +36,7 @@
         <tlog.version>1.4.3</tlog.version>
         <xxl-job.version>2.3.1</xxl-job.version>
         <springdoc.version>1.6.9</springdoc.version>
+        <lombok.version>1.18.24</lombok.version>
 
         <!-- 统一 guava 版本 解决隐式漏洞问题 -->
         <guava.version>30.0-jre</guava.version>
@@ -103,6 +104,12 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-javadoc</artifactId>
                 <version>${springdoc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
 
             <dependency>
@@ -397,7 +404,7 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.24</version>
+                            <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
