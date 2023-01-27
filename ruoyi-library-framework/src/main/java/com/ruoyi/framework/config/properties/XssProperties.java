@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * xss过滤 配置属性
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Data
 @Component
