@@ -5,6 +5,7 @@ import com.ruoyi.common.utils.spring.SpringUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.redisson.api.*;
+import org.redisson.config.Config;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * redis 工具类
@@ -23,6 +26,14 @@ import java.util.function.Consumer;
 public class RedisUtils {
 
     private static final RedissonClient CLIENT = SpringUtils.getBean(RedissonClient.class);
+
+    public static NameMapper getNameMapper() {
+        Config config = CLIENT.getConfig();
+        if (config.isClusterConfig()) {
+            return config.useClusterServers().getNameMapper();
+        }
+        return config.useSingleServer().getNameMapper();
+    }
 
     /**
      * 限流
@@ -414,8 +425,18 @@ public class RedisUtils {
      * @return 对象列表
      */
     public static Collection<String> keys(final String pattern) {
-        Iterable<String> iterable = CLIENT.getKeys().getKeysByPattern(pattern);
-        return IterUtil.toList(iterable);
+        Stream<String> stream = CLIENT.getKeys().getKeysStreamByPattern(getNameMapper().map(pattern));
+        return stream.map(key -> getNameMapper().unmap(key)).collect(Collectors.toList());
+    }
+
+
+    /**
+     * 删除缓存的基本对象列表
+     *
+     * @param pattern 字符串前缀
+     */
+    public static void deleteKeys(final String pattern) {
+        CLIENT.getKeys().deleteByPattern(getNameMapper().map(pattern));
     }
 
     /**

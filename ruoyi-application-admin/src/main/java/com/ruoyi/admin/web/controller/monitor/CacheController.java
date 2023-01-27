@@ -8,6 +8,7 @@ import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.utils.JsonUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
+import com.ruoyi.oss.constant.OssConstant;
 import com.ruoyi.system.domain.SysCache;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,6 +44,7 @@ public class CacheController {
         CACHES.add(new SysCache(CacheConstants.CAPTCHA_CODE_KEY, "验证码"));
         CACHES.add(new SysCache(CacheConstants.REPEAT_SUBMIT_KEY, "防重提交"));
         CACHES.add(new SysCache(CacheConstants.RATE_LIMIT_KEY, "限流处理"));
+        CACHES.add(new SysCache(OssConstant.SYS_OSS_KEY, "OSS配置"));
     }
 
 
@@ -85,9 +87,8 @@ public class CacheController {
     @SaCheckPermission("monitor:cache:list")
     @GetMapping("/cacheKeys/{cacheName}")
     public R<Collection<String>> cacheKeys(@PathVariable String cacheName) {
-        Iterable<String> iterable = RedisUtils.getClient().getKeys().getKeysByPattern(cacheName + "*");
-        Collection<String> cacheKyes = CollUtil.toCollection(iterable);
-        return R.ok(cacheKyes);
+        Collection<String> cacheKeys = RedisUtils.keys(cacheName + "*");
+        return R.ok(cacheKeys);
     }
 
     @Operation(description = "获取值基于缓存名与KEY", summary = "CacheGetCacheValue")
@@ -103,7 +104,7 @@ public class CacheController {
     @SaCheckPermission("monitor:cache:list")
     @DeleteMapping("/clearCacheName/{cacheName}")
     public R<Void> clearCacheName(@PathVariable String cacheName) {
-        RedisUtils.getClient().getKeys().deleteByPattern(cacheName + "*");
+        RedisUtils.deleteKeys(cacheName + "*");
         return R.ok();
     }
 
@@ -119,7 +120,7 @@ public class CacheController {
     @SaCheckPermission("monitor:cache:list")
     @DeleteMapping("/clearCacheAll")
     public R<Void> clearCacheAll() {
-        RedisUtils.getClient().getKeys().deleteByPattern("*");
+        RedisUtils.deleteKeys("*");
         return R.ok();
     }
 
