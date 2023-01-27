@@ -85,9 +85,9 @@ public class CaptchaController {
     @GetMapping("/captchaImage")
     public R<CaptchaImageVo> getCode() {
         CaptchaImageVo data = new CaptchaImageVo();
-        boolean captchaOnOff = configService.selectCaptchaOnOff();
-        data.setCaptchaOnOff(captchaOnOff);
-        if (!captchaOnOff) {
+        boolean captchaEnabled = configService.selectCaptchaEnabled();
+        data.setCaptchaEnabled(captchaEnabled);
+        if (!captchaEnabled) {
             return R.ok(data);
         }
         // 保存验证码信息

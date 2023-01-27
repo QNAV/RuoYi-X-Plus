@@ -19,7 +19,7 @@ public class CaptchaImageVo implements Serializable {
      * 验证码开关
      */
     @Schema(description = "验证码开关", required = true)
-    private boolean captchaOnOff;
+    private boolean captchaEnabled;
 
     /**
      * 验证码唯一标识符

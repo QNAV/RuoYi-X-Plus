@@ -76,9 +76,9 @@ public class BizLoginService {
      */
     public String login(String username, String password, String code, String uuid) {
         HttpServletRequest request = ServletUtils.getRequest();
-        boolean captchaOnOff = configService.selectCaptchaOnOff();
+        boolean captchaEnabled = configService.selectCaptchaEnabled();
         // 验证码开关
-        if (captchaOnOff) {
+        if (captchaEnabled) {
             validateCaptcha(username, code, uuid, request);
         }
         BizUser user = loadUserByUsername(username);
