@@ -1,5 +1,6 @@
 package com.ruoyi.admin.web.controller.system;
 
+import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.config.RuoYiConfig;
 import com.ruoyi.common.utils.StringUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,7 @@ public class SysIndexController {
     /**
      * 访问首页，提示语
      */
+    @Anonymous
     @Operation(description = "访问首页，提示语", summary = "SysIndexGetIndex")
     @GetMapping("/")
     public String index() {
