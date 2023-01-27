@@ -23,3 +23,4 @@ VALUES(
   NULL,
   '缓存列表菜单'
 );
+UPDATE `sys_config` SET `config_key` = 'sys.account.captchaEnabled' WHERE `sys_config`.`config_id` = 4;
