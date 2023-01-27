@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Arrays;
 
 import com.ruoyi.common.utils.BeanCopyUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.*;
@@ -14,8 +17,6 @@ import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.validate.AddGroup;
-import com.ruoyi.common.core.validate.EditGroup;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.demo.domain.vo.TestDemoVo;
@@ -25,9 +26,6 @@ import com.ruoyi.demo.domain.bo.TestDemoPageQueryBo;
 import com.ruoyi.demo.domain.bo.TestDemoQueryBo;
 import com.ruoyi.demo.service.ITestDemoService;
 import com.ruoyi.common.core.page.TableDataInfo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * 测试单 后台管理控制器
@@ -36,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
  * @date 2022-10-22
  */
 @Validated
-@Api(value = "测试单管理", tags = {"TestDemoService"})
+@Tag(description = "测试单管理", name = "TestDemoService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/demo/demo")
@@ -50,7 +48,7 @@ public class TestDemoController {
     /**
      * 查询测试单列表
      */
-    @ApiOperation(value = "查询测试单列表", nickname = "TestDemoPostList")
+    @Operation(description = "查询测试单列表", summary = "TestDemoServicePostList")
     @SaCheckPermission("demo:demo:list")
     @PostMapping("/list")
     public TableDataInfo<TestDemoVo> list(@RequestBody(required = false) TestDemoPageQueryBo bo) {
@@ -64,11 +62,11 @@ public class TestDemoController {
     /**
      * 导出测试单列表
      */
-    @ApiOperation(value = "导出测试单列表", nickname = "TestDemoPostExport")
+    @Operation(description = "导出测试单列表", summary = "TestDemoServicePostExport")
     @SaCheckPermission("demo:demo:export")
     @Log(title = "测试单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) TestDemoQueryBo bo, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) TestDemoQueryBo bo, @Parameter(hidden = true) HttpServletResponse response) {
         List<TestDemoVo> list = iTestDemoService.queryList(bo);
         ExcelUtil.exportExcel(list, "测试单", TestDemoVo.class, response);
     }
@@ -76,10 +74,10 @@ public class TestDemoController {
     /**
      * 获取测试单详细信息
      */
-    @ApiOperation(value = "获取测试单详细信息", nickname = "TestDemoGetInfo")
+    @Operation(description = "获取测试单详细信息", summary = "TestDemoServiceGetInfo")
     @SaCheckPermission("demo:demo:query")
     @GetMapping(value = "/info")
-    public R<TestDemoVo> getInfo(@ApiParam(value = "主键", required = true)
+    public R<TestDemoVo> getInfo(@Parameter(description = "主键", required = true)
                                  @NotNull(message = "主键不能为空")
                                  @RequestParam(value = "主键", required = true) Long id) {
         return R.ok(iTestDemoService.queryById(id));
@@ -88,7 +86,7 @@ public class TestDemoController {
     /**
      * 新增测试单
      */
-    @ApiOperation(value = "新增测试单", nickname = "TestDemoPostAdd")
+    @Operation(description = "新增测试单", summary = "TestDemoServicePostAdd")
     @SaCheckPermission("demo:demo:add")
     @Log(title = "测试单", businessType = BusinessType.INSERT)
     @RepeatSubmit()
@@ -100,7 +98,7 @@ public class TestDemoController {
     /**
      * 修改测试单
      */
-    @ApiOperation(value = "修改测试单", nickname = "TestDemoPostEdit")
+    @Operation(description = "修改测试单", summary = "TestDemoServicePostEdit")
     @SaCheckPermission("demo:demo:edit")
     @Log(title = "测试单", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
@@ -112,11 +110,11 @@ public class TestDemoController {
     /**
      * 删除测试单
      */
-    @ApiOperation(value = "删除测试单", nickname = "TestDemoPostRemove")
+    @Operation(description = "删除测试单", summary = "TestDemoServicePostRemove")
     @SaCheckPermission("demo:demo:remove")
     @Log(title = "测试单", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
-    public R<Void> remove(@ApiParam(value = "主键串", required = true, allowMultiple = true)
+    public R<Void> remove(@Parameter(description = "主键串", required = true)
                           @NotEmpty(message = "主键不能为空")
                           @RequestParam(name = "公告ID串", required = true) Long[] ids) {
         return toAjax(iTestDemoService.deleteWithValidByIds(Arrays.asList(ids), true) ? 1 : 0);

@@ -4,9 +4,9 @@ import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.sms.config.properties.SmsProperties;
 import com.ruoyi.sms.core.SmsTemplate;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +21,10 @@ import java.util.Map;
  * !!!不推荐模块内写控制器
  * 请先阅读文档 否则无法使用
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Validated
-@Api(value = "短信演示案例", tags = {"短信演示案例"})
+@Tag(description = "短信演示案例", name = "SmsDemoService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/demo/sms")
@@ -34,10 +34,10 @@ public class SmsController {
 //    private final SmsTemplate smsTemplate; // 可以使用spring注入
 //    private final AliyunSmsTemplate smsTemplate; // 也可以注入某个厂家的模板工具
 
-    @ApiOperation("发送短信Aliyun")
+    @Operation(description = "发送短信Aliyun", summary = "SmsDemoServiceGetSendAliyun")
     @GetMapping("/sendAliyun")
-    public R<Object> sendAliyun(@ApiParam("电话号") String phones,
-                                     @ApiParam("模板ID") String templateId) {
+    public R<Object> sendAliyun(@Parameter(description = "电话号") String phones,
+                                     @Parameter(description = "模板ID") String templateId) {
         if (!smsProperties.getEnabled()) {
             return R.fail("当前系统没有开启短信功能！");
         }
@@ -51,10 +51,10 @@ public class SmsController {
         return R.ok(send);
     }
 
-    @ApiOperation("发送短信Tencent")
+    @Operation(description = "发送短信Tencent", summary = "SmsDemoServiceGetSendTencent")
     @GetMapping("/sendTencent")
-    public R<Object> sendTencent(@ApiParam("电话号") String phones,
-                                             @ApiParam("模板ID") String templateId) {
+    public R<Object> sendTencent(@Parameter(description = "电话号") String phones,
+                                             @Parameter(description = "模板ID") String templateId) {
         if (!smsProperties.getEnabled()) {
             return R.fail("当前系统没有开启短信功能！");
         }

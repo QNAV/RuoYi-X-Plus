@@ -6,14 +6,14 @@
 
     <groupId>com.ruoyi</groupId>
     <artifactId>ruoyi-x-plus</artifactId>
-    <version>22.6.9</version>
+    <version>23.1.0</version>
 
     <name>RuoYi-X-Plus</name>
     <url>https://github.com/QNAV/RuoYi-X-Plus</url>
     <description>RuoYi-X-Plus中后台管理系统</description>
 
     <properties>
-        <ruoyi-x-plus.version>22.6.9</ruoyi-x-plus.version>
+        <ruoyi-x-plus.version>23.1.0</ruoyi-x-plus.version>
         <spring-boot.version>2.6.13</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -21,8 +21,6 @@
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         <spring-boot.mybatis>2.2.2</spring-boot.mybatis>
         <druid.version>1.2.11</druid.version>
-        <knife4j.version>3.0.3</knife4j.version>
-        <swagger-annotations.version>1.5.22</swagger-annotations.version>
         <poi.version>5.2.2</poi.version>
         <easyexcel.version>3.1.1</easyexcel.version>
         <velocity.version>2.3</velocity.version>
@@ -37,6 +35,7 @@
         <dynamic-ds.version>3.5.1</dynamic-ds.version>
         <tlog.version>1.4.3</tlog.version>
         <xxl-job.version>2.3.1</xxl-job.version>
+        <springdoc.version>1.6.9</springdoc.version>
 
         <!-- 统一 guava 版本 解决隐式漏洞问题 -->
         <guava.version>30.0-jre</guava.version>
@@ -98,13 +97,12 @@
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
-                <version>1.6.9</version>
+                <version>${springdoc.version}</version>
             </dependency>
-
             <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger-annotations.version}</version>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-javadoc</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
 
             <dependency>
@@ -390,6 +388,18 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.github.therapi</groupId>
+                            <artifactId>therapi-runtime-javadoc-scribe</artifactId>
+                            <version>0.13.0</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.24</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <!-- 源码发布插件 -->

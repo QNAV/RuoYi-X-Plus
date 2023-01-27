@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.demo.domain.TestDemo;
 import com.ruoyi.demo.mapper.TestDemoMapper;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,10 +18,10 @@ import java.util.List;
 /**
  * 测试批量方法
  * !!!不推荐模块内写控制器
- * @author weibocy
+ * @author Lion Li
  * @date 2021-05-30
  */
-@Api(value = "测试批量方法", tags = {"测试批量方法"})
+@Tag(description = "测试批量方法", name = "TestBatchService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/demo/batch")
@@ -37,7 +37,7 @@ public class TestBatchController {
      * <p>
      * 3.5.0 版本 增加 rewriteBatchedStatements=true 批处理参数 使 MP 原生批处理可以达到同样的速度
      */
-    @ApiOperation(value = "新增批量方法")
+    @Operation(description = "新增批量方法", summary = "TestBatchServicePostAdd")
     @PostMapping("/add")
 //    @DS("slave")
     public R<Void> add() {
@@ -57,7 +57,7 @@ public class TestBatchController {
      * <p>
      * 3.5.0 版本 增加 rewriteBatchedStatements=true 批处理参数 使 MP 原生批处理可以达到同样的速度
      */
-    @ApiOperation(value = "新增或更新批量方法")
+    @Operation(description = "新增或更新批量方法", summary = "TestBatchServicePostAddOrUpdate")
     @PostMapping("/addOrUpdate")
 //    @DS("slave")
     public R<Void> addOrUpdate() {
@@ -83,7 +83,7 @@ public class TestBatchController {
     /**
      * 删除批量方法
      */
-    @ApiOperation(value = "删除批量方法")
+    @Operation(description = "删除批量方法", summary = "TestBatchServiceDeleteRemove")
     @DeleteMapping()
 //    @DS("slave")
     public R<Void> remove() {

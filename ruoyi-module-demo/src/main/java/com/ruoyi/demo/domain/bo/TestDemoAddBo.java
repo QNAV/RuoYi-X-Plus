@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 测试单业务新增对象 test_demo
  *
- * @author ruoyi
+ * @author weibocy
  * @date 2022-10-21
  */
 

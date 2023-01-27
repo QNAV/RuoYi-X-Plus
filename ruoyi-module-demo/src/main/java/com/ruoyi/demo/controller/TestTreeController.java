@@ -4,18 +4,15 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.validate.AddGroup;
-import com.ruoyi.common.core.validate.EditGroup;
-import com.ruoyi.common.core.validate.QueryGroup;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.demo.domain.bo.TestTreeBo;
 import com.ruoyi.demo.domain.to.TestTreeQuery;
 import com.ruoyi.demo.domain.vo.TestTreeVo;
 import com.ruoyi.demo.service.ITestTreeService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,11 +26,11 @@ import java.util.List;
 /**
  * 测试树表Controller
  * !!!不推荐模块内写控制器
- * @author weibocy
+ * @author Lion Li
  * @date 2021-07-26
  */
 @Validated
-@Api(value = "测试树表控制器", tags = {"测试树表管理"})
+@Tag(description = "测试树表控制器", name = "TestTreeService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/demo/tree")
@@ -44,7 +41,7 @@ public class TestTreeController {
     /**
      * 查询测试树表列表
      */
-    @ApiOperation("查询测试树表列表")
+    @Operation(description = "查询测试树表列表", summary = "TestTreeServiceGetList")
     @SaCheckPermission("demo:tree:list")
     @GetMapping("/list")
     public R<List<TestTreeVo>> list(@Validated TestTreeQuery query) {
@@ -55,7 +52,7 @@ public class TestTreeController {
     /**
      * 导出测试树表列表
      */
-    @ApiOperation("导出测试树表列表")
+    @Operation(description = "导出测试树表列表", summary = "TestTreeServiceGetExport")
     @SaCheckPermission("demo:tree:export")
     @Log(title = "测试树表", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
@@ -67,10 +64,10 @@ public class TestTreeController {
     /**
      * 获取测试树表详细信息
      */
-    @ApiOperation("获取测试树表详细信息")
+    @Operation(description = "获取测试树表详细信息", summary = "TestTreeServiceGetGetInfo")
     @SaCheckPermission("demo:tree:query")
     @GetMapping("/{id}")
-    public R<TestTreeVo> getInfo(@ApiParam("测试树ID")
+    public R<TestTreeVo> getInfo(@Parameter(description = "测试树ID")
                                           @NotNull(message = "主键不能为空")
                                           @PathVariable("id") Long id) {
         return R.ok(iTestTreeService.queryById(id));
@@ -79,7 +76,7 @@ public class TestTreeController {
     /**
      * 新增测试树表
      */
-    @ApiOperation("新增测试树表")
+    @Operation(description = "新增测试树表", summary = "TestTreeServicePostAdd")
     @SaCheckPermission("demo:tree:add")
     @Log(title = "测试树表", businessType = BusinessType.INSERT)
     @RepeatSubmit
@@ -91,7 +88,7 @@ public class TestTreeController {
     /**
      * 修改测试树表
      */
-    @ApiOperation("修改测试树表")
+    @Operation(description = "修改测试树表", summary = "TestTreeServicePutEdit")
     @SaCheckPermission("demo:tree:edit")
     @Log(title = "测试树表", businessType = BusinessType.UPDATE)
     @RepeatSubmit
@@ -103,11 +100,11 @@ public class TestTreeController {
     /**
      * 删除测试树表
      */
-    @ApiOperation("删除测试树表")
+    @Operation(description = "删除测试树表", summary = "TestTreeServiceDeleteRemove")
     @SaCheckPermission("demo:tree:remove")
     @Log(title = "测试树表", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public R<Void> remove(@ApiParam("测试树ID串")
+    public R<Void> remove(@Parameter(description = "测试树ID串")
                                    @NotEmpty(message = "主键不能为空")
                                    @PathVariable Long[] ids) {
         return toAjax(iTestTreeService.deleteWithValidByIds(Arrays.asList(ids), true) ? 1 : 0);
