@@ -39,6 +39,11 @@ public class SysOperlogController extends AdminBaseController {
 
     private final ISysOperLogService operLogService;
 
+    /**
+     * 获取操作日志记录列表
+     * @param operLogPageQuery 查询对象
+     * @return
+     */
     @Operation(description = "查询操作日志记录列表", summary = "SysOperLogPostList")
     @SaCheckPermission("monitor:operlog:list")
     @PostMapping("/list")
@@ -50,6 +55,10 @@ public class SysOperlogController extends AdminBaseController {
         return operLogService.selectPageOperLogList(operLogQuery, pageQuery);
     }
 
+    /**
+     * 导出操作日志记录列表
+     * @param operLogQuery 查询对象
+     */
     @Operation(description = "导出操作日志记录列表", summary = "SysOperLogPostExport")
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:operlog:export")
@@ -59,6 +68,11 @@ public class SysOperlogController extends AdminBaseController {
         ExcelUtil.exportExcel(list, "操作日志", SysOperLog.class, response);
     }
 
+    /**
+     * 批量删除操作日志记录
+     * @param operIds 日志ids
+     * @return
+     */
     @Operation(description = "删除操作日志记录", summary = "SysOperLogPostRemove")
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @SaCheckPermission("monitor:operlog:remove")
@@ -67,6 +81,10 @@ public class SysOperlogController extends AdminBaseController {
         return toAjax(operLogService.deleteOperLogByIds(operIds));
     }
 
+    /**
+     * 清理操作日志记录
+     * @return
+     */
     @Operation(description = "清空操作日志记录", summary = "SysOperLogPostClean")
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
     @SaCheckPermission("monitor:operlog:remove")

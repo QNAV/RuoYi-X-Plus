@@ -19,11 +19,6 @@ public interface CacheConstants
     String BIZ_LOGIN_TOKEN_KEY = "biz_login_tokens:";
 
     /**
-     * 登陆错误 redis key
-     */
-    String LOGIN_ERROR = "login_error:";
-
-    /**
      * 验证码 redis key
      */
     String CAPTCHA_CODE_KEY = "captcha_codes:";
@@ -67,5 +62,10 @@ public interface CacheConstants
      * 在线后台用户 redis key
      */
     String ONLINE_ADMIN_TOKEN_KEY = "online_admin_tokens:";
+
+    /**
+     * 登录账户密码错误次数 redis key
+     */
+    public static final String PWD_ERR_CNT_KEY = "pwd_err_cnt:";
 
 }

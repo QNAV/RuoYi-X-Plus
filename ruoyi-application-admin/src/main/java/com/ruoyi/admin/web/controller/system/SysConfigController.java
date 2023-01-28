@@ -56,6 +56,11 @@ public class SysConfigController extends AdminBaseController {
         return configService.selectPageConfigList(configQuery, pageQuery);
     }
 
+    /**
+     * 导出参数配置列表
+     * @param configQuery 查询对象
+     * @param response
+     */
     @Operation(description = "导出参数配置列表", summary = "SysConfigPostExport")
     @Log(title = "参数管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:config:export")
@@ -67,6 +72,8 @@ public class SysConfigController extends AdminBaseController {
 
     /**
      * 根据参数编号获取详细信息
+     *
+     * @param configId 参数ID
      */
     @Operation(description = "根据参数编号获取详细信息", summary = "SysConfigGetInfo")
     @SaCheckPermission("system:config:query")
@@ -77,6 +84,8 @@ public class SysConfigController extends AdminBaseController {
 
     /**
      * 根据参数键名查询参数值
+     *
+     * @param configKey 参数Key
      */
     @Operation(description = "根据参数键名查询参数值", summary = "SysConfigGetConfigKey")
     @GetMapping(value = "/configKey")
@@ -128,6 +137,8 @@ public class SysConfigController extends AdminBaseController {
 
     /**
      * 删除参数配置
+     *
+     * @param configIds 参数ID串
      */
     @Operation(description = "删除参数配置", summary = "SysConfigPostRemove")
     @SaCheckPermission("system:config:remove")

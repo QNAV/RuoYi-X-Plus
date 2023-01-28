@@ -38,16 +38,21 @@ public class CacheController {
     static {
         CACHES.add(new SysCache(CacheConstants.ADMIN_LOGIN_TOKEN_KEY, "用户信息"));
         CACHES.add(new SysCache(CacheConstants.ONLINE_ADMIN_TOKEN_KEY, "在线后台用户"));
-        CACHES.add(new SysCache(CacheConstants.LOGIN_ERROR, "登陆错误"));
         CACHES.add(new SysCache(CacheConstants.SYS_CONFIG_KEY, "配置信息"));
         CACHES.add(new SysCache(CacheConstants.SYS_DICT_KEY, "数据字典"));
         CACHES.add(new SysCache(CacheConstants.CAPTCHA_CODE_KEY, "验证码"));
         CACHES.add(new SysCache(CacheConstants.REPEAT_SUBMIT_KEY, "防重提交"));
         CACHES.add(new SysCache(CacheConstants.RATE_LIMIT_KEY, "限流处理"));
         CACHES.add(new SysCache(OssConstant.SYS_OSS_KEY, "OSS配置"));
+        CACHES.add(new SysCache(CacheConstants.PWD_ERR_CNT_KEY, "密码错误次数"));
     }
 
 
+    /**
+     * 获取缓存监控列表
+     * @return
+     * @throws Exception
+     */
     @Operation(description = "获取缓存监控详细信息", summary = "CacheGetInfo")
     @SaCheckPermission("monitor:cache:list")
     @GetMapping("/info")
@@ -76,6 +81,10 @@ public class CacheController {
     }
 
 
+    /**
+     * 获取缓存监控缓存名列表
+     * @return
+     */
     @Operation(description = "获取缓存名称列表", summary = "CacheGetCacheNames")
     @SaCheckPermission("monitor:cache:list")
     @GetMapping("/cacheNames")
@@ -83,6 +92,11 @@ public class CacheController {
         return R.ok(CACHES);
     }
 
+    /**
+     * 获取缓存监控Key列表
+     * @param cacheName 缓存名
+     * @return
+     */
     @Operation(description = "获取KEYS基于缓存名", summary = "CacheGetCacheKeys")
     @SaCheckPermission("monitor:cache:list")
     @GetMapping("/cacheKeys/{cacheName}")
@@ -91,6 +105,12 @@ public class CacheController {
         return R.ok(cacheKeys);
     }
 
+    /**
+     * 获取缓存监控缓存值详情
+     * @param cacheName 缓存名
+     * @param cacheKey 缓存key
+     * @return
+     */
     @Operation(description = "获取值基于缓存名与KEY", summary = "CacheGetCacheValue")
     @SaCheckPermission("monitor:cache:list")
     @GetMapping("/cacheValue/{cacheName}/{cacheKey}")
@@ -100,6 +120,11 @@ public class CacheController {
         return R.ok(sysCache);
     }
 
+    /**
+     * 清理缓存监控缓存名
+     * @param cacheName 缓存名
+     * @return
+     */
     @Operation(description = "清空缓存名", summary = "CacheDeleteClearCacheName")
     @SaCheckPermission("monitor:cache:list")
     @DeleteMapping("/clearCacheName/{cacheName}")
@@ -108,6 +133,11 @@ public class CacheController {
         return R.ok();
     }
 
+    /**
+     * 清理缓存监控Key
+     * @param cacheKey key名
+     * @return
+     */
     @Operation(description = "清空缓存KEY", summary = "CacheDeleteClearCacheKey")
     @SaCheckPermission("monitor:cache:list")
     @DeleteMapping("/clearCacheKey/{cacheKey}")
@@ -116,6 +146,10 @@ public class CacheController {
         return R.ok();
     }
 
+    /**
+     * 清理全部缓存监控
+     * @return
+     */
     @Operation(description = "清空所有缓存", summary = "CacheDeleteClearCacheAll")
     @SaCheckPermission("monitor:cache:list")
     @DeleteMapping("/clearCacheAll")

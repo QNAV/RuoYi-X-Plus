@@ -37,6 +37,12 @@ import java.util.List;
 @RequestMapping("/monitor/online")
 public class SysUserOnlineController extends AdminBaseController {
 
+    /**
+     * 获取在线用户监控列表
+     * @param ipaddr IP地址
+     * @param userName 用户名
+     * @return
+     */
     @Operation(description = "在线用户列表", summary = "SysUserOnlineGetList")
     @SaCheckPermission("monitor:online:list")
     @GetMapping("/list")
@@ -74,6 +80,8 @@ public class SysUserOnlineController extends AdminBaseController {
 
     /**
      * 强退用户
+     *
+     * @param tokenId token值
      */
     @Operation(description = "强退用户", summary = "SysUserOnlinePostForceLogout")
     @SaCheckPermission("monitor:online:forceLogout")

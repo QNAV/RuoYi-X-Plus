@@ -53,6 +53,8 @@ public class CaptchaController {
 
     /**
      * 短信验证码
+     *
+     * @param phoneNumber 用户手机号
      */
     @Operation(description = "短信验证码", summary = "CaptchaGetSmsCaptcha")
     @GetMapping("/captchaSms")

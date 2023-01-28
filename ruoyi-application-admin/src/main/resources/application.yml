@@ -102,6 +102,14 @@ spring:
       # 允许对象忽略json中不存在的属性
       fail_on_unknown_properties: false
 
+# 用户配置
+user:
+  password:
+    # 密码最大错误次数
+    maxRetryCount: 5
+    # 密码锁定时间（默认10分钟）
+    lockTime: 10
+
 # Sa-Token配置
 sa-token:
   # token名称 (同时也是cookie名称)

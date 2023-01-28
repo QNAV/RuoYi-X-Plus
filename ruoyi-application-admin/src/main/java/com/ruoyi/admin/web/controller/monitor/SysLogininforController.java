@@ -3,12 +3,14 @@ package com.ruoyi.admin.web.controller.monitor;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.common.utils.redis.RedisUtils;
 import com.ruoyi.system.domain.SysLogininfor;
 import com.ruoyi.system.domain.bo.SysLogininforPageQueryBo;
 import com.ruoyi.system.domain.bo.SysLogininforQueryBo;
@@ -39,6 +41,11 @@ public class SysLogininforController extends AdminBaseController {
 
     private final ISysLogininforService logininforService;
 
+    /**
+     * 获取系统访问记录列表
+     * @param logininforPageQuery 查询对象
+     * @return
+     */
     @Operation(description = "查询系统访问记录列表", summary = "SysLogininforPostList")
     @SaCheckPermission("monitor:logininfor:list")
     @PostMapping("/list")
@@ -50,6 +57,11 @@ public class SysLogininforController extends AdminBaseController {
         return logininforService.selectPageLogininforList(logininforQuery, pageQuery);
     }
 
+    /**
+     * 导出系统访问记录列表
+     * @param logininforQuery 查询对象
+     * @param response
+     */
     @Operation(description = "导出系统访问记录列表", summary = "SysLogininforPostExport")
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:logininfor:export")
@@ -59,6 +71,11 @@ public class SysLogininforController extends AdminBaseController {
         ExcelUtil.exportExcel(list, "登录日志", SysLogininfor.class, response);
     }
 
+    /**
+     * 批量删除登录日志
+     * @param infoIds 日志ids
+     * @return
+     */
     @Operation(description = "删除系统访问记录", summary = "SysLogininforPostRemove")
     @SaCheckPermission("monitor:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
@@ -67,12 +84,32 @@ public class SysLogininforController extends AdminBaseController {
         return toAjax(logininforService.deleteLogininforByIds(infoIds));
     }
 
+    /**
+     * 清理系统访问记录
+     * @return
+     */
     @Operation(description = "清空系统访问记录", summary = "SysLogininforPostClean")
     @SaCheckPermission("monitor:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.CLEAN)
     @PostMapping("/clean")
     public R<Void> clean() {
         logininforService.cleanLogininfor();
+        return R.ok();
+    }
+
+    /**
+     * 账户解锁
+     * @param userName 用户名
+     * @return
+     */
+    @SaCheckPermission("monitor:logininfor:unlock")
+    @Log(title = "账户解锁", businessType = BusinessType.OTHER)
+    @GetMapping("/unlock/{userName}")
+    public R<Void> unlock(@PathVariable("userName") String userName) {
+        String loginName = CacheConstants.PWD_ERR_CNT_KEY + userName;
+        if (RedisUtils.hasKey(loginName)) {
+            RedisUtils.deleteObject(loginName);
+        }
         return R.ok();
     }
 }
