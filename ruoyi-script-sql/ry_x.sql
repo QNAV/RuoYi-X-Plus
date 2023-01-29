@@ -281,7 +281,7 @@ CREATE TABLE `sys_menu` (
   `is_frame` int(1) DEFAULT '1' COMMENT '是否为外链（0是 1否）',
   `is_cache` int(1) DEFAULT '0' COMMENT '是否缓存（0缓存 1不缓存）',
   `menu_type` char(1) NOT NULL DEFAULT '' COMMENT '菜单类型（M目录 C菜单 F按钮）',
-  `visible` char(1) DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
+  `visible` char(1) DEFAULT '0' COMMENT '显示状态（0显示 1隐藏）',
   `status` char(1) DEFAULT '0' COMMENT '菜单状态（0正常 1停用）',
   `perms` varchar(100) DEFAULT NULL COMMENT '权限标识',
   `icon` varchar(100) DEFAULT '#' COMMENT '菜单图标',

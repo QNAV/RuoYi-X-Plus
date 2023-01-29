@@ -56,3 +56,4 @@ VALUES(
   NULL,
   '其他操作'
 );
+ALTER TABLE `sys_menu` CHANGE `visible` `visible` CHAR(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '显示状态（0显示 1隐藏）';
