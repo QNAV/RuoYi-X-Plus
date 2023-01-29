@@ -1,5 +1,7 @@
 package com.ruoyi.admin.aspectj;
 
+import cn.hutool.core.lang.Dict;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.annotation.Log;
@@ -150,7 +152,13 @@ public class AdminLogAspect {
             for (Object o : paramsArray) {
                 if (ObjectUtil.isNotNull(o) && !isFilterObject(o)) {
                     try {
-                        params.append(JsonUtils.toJsonString(o)).append(" ");
+                        String str = JsonUtils.toJsonString(o);
+                        Dict dict = JsonUtils.parseMap(str);
+                        if (MapUtil.isNotEmpty(dict)) {
+                            MapUtil.removeAny(dict, EXCLUDE_PROPERTIES);
+                            str = JsonUtils.toJsonString(dict);
+                        }
+                        params.append(str).append(" ");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
