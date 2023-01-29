@@ -1,6 +1,7 @@
 package com.ruoyi.system.service;
 
 import com.ruoyi.common.core.domain.bo.PageQuery;
+import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.domain.entity.SysDictType;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.domain.bo.SysDictTypeQueryBo;
@@ -87,7 +88,7 @@ public interface ISysDictTypeService {
      * @param dictType 字典类型信息
      * @return 结果
      */
-    int insertDictType(SysDictType dictType);
+    List<SysDictDataVo> insertDictType(SysDictType dictType);
 
     /**
      * 修改保存字典类型信息
@@ -95,7 +96,7 @@ public interface ISysDictTypeService {
      * @param dictType 字典类型信息
      * @return 结果
      */
-    int updateDictType(SysDictType dictType);
+    List<SysDictDataVo> updateDictType(SysDictType dictType);
 
     /**
      * 校验字典类型称是否唯一

@@ -97,7 +97,8 @@ public class SysDictDataController extends AdminBaseController {
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysDictDataAddBo dictBo) {
         SysDictData dict = BeanCopyUtils.copy(dictBo, SysDictData.class);
-        return toAjax(dictDataService.insertDictData(dict));
+        dictDataService.insertDictData(dict);
+        return R.ok();
     }
 
     /**
@@ -109,7 +110,8 @@ public class SysDictDataController extends AdminBaseController {
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysDictDataEditBo dictBo) {
         SysDictData dict = BeanCopyUtils.copy(dictBo, SysDictData.class);
-        return toAjax(dictDataService.updateDictData(dict));
+        dictDataService.updateDictData(dict);
+        return R.ok();
     }
 
     /**
