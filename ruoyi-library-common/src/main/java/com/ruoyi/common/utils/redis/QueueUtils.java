@@ -121,32 +121,6 @@ public class QueueUtils {
     }
 
     /**
-     * 尝试设置 优先队列比较器 用于排序优先级
-     *
-     * @param queueName  队列名
-     * @param comparator 比较器
-     */
-    public static <T> boolean trySetPriorityQueueComparator(String queueName, Comparator<T> comparator) {
-        RPriorityBlockingQueue<T> priorityBlockingQueue = CLIENT.getPriorityBlockingQueue(queueName);
-        return priorityBlockingQueue.trySetComparator(comparator);
-    }
-
-    /**
-     * 尝试设置 优先队列比较器 用于排序优先级
-     *
-     * @param queueName  队列名
-     * @param comparator 比较器
-     * @param destroy    已存在是否销毁
-     */
-    public static <T> boolean trySetPriorityQueueComparator(String queueName, Comparator<T> comparator, boolean destroy) {
-        RPriorityBlockingQueue<T> priorityBlockingQueue = CLIENT.getPriorityBlockingQueue(queueName);
-        if (priorityBlockingQueue.isExists() && destroy) {
-            destroyQueue(queueName);
-        }
-        return priorityBlockingQueue.trySetComparator(comparator);
-    }
-
-    /**
      * 添加优先队列数据
      *
      * @param queueName 队列名
