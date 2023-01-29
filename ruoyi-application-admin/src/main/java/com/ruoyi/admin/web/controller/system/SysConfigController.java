@@ -105,7 +105,8 @@ public class SysConfigController extends AdminBaseController {
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
             return R.fail("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
-        return R.ok(configService.insertConfig(config));
+        configService.insertConfig(config);
+        return R.ok();
     }
 
     /**
@@ -120,7 +121,8 @@ public class SysConfigController extends AdminBaseController {
         if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
             return R.fail("修改参数'" + configBo.getConfigName() + "'失败，参数键名已存在");
         }
-        return R.ok(configService.updateConfig(config));
+        configService.updateConfig(config);
+        return R.ok();
     }
 
     /**
@@ -132,7 +134,8 @@ public class SysConfigController extends AdminBaseController {
     @PostMapping("/updateByKey")
     public R<Void> updateByKey(@RequestBody SysConfigEditBo configBo) {
         SysConfig config = BeanCopyUtils.copy(configBo, SysConfig.class);
-        return R.ok(configService.updateConfig(config));
+        configService.updateConfig(config);
+        return R.ok();
     }
 
     /**
