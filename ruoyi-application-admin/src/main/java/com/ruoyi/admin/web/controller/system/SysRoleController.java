@@ -246,7 +246,7 @@ public class SysRoleController extends AdminBaseController {
      * @param roleId 角色ID
      */
     @Operation(description = "获取对应角色部门树列表", summary = "SysRoleGetRoleDeptTreeSelect")
-    @SaCheckPermission("system:role:list")
+    @SaCheckPermission("system:role:query")
     @GetMapping(value = "/deptTree/{roleId}")
     public R<Map<String, Object>> roleDeptTreeSelect(@PathVariable("roleId") Long roleId) {
         Map<String, Object> ajax = new HashMap<>();

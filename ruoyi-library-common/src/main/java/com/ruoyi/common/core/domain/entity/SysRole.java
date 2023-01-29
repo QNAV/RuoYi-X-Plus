@@ -139,6 +139,7 @@ public class SysRole extends BaseEntity {
     /**
      * 角色菜单权限
      */
+    @TableField(exist = false)
     @Schema(description = "角色菜单权限")
     private Set<String> permissions;
 

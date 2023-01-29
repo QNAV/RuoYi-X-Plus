@@ -451,7 +451,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return
      */
     public String innerLinkReplaceEach(String path) {
-        return StringUtils.replaceEach(path, new String[]{Constants.HTTP, Constants.HTTPS},
-            new String[]{"", ""});
+        return StringUtils.replaceEach(path, new String[]{Constants.HTTP, Constants.HTTPS, Constants.WWW, "."},
+                new String[] { "", "", "", "/" });
     }
 }
