@@ -8,12 +8,11 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import com.ruoyi.admin.domain.bo.AdminUserOnlineBo;
 import com.ruoyi.admin.domain.model.AdminLoginUser;
 import com.ruoyi.admin.helper.AdminLoginHelper;
-import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.constant.CacheNames;
 import com.ruoyi.common.enums.UserType;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
-import com.ruoyi.common.utils.redis.RedisUtils;
+import com.ruoyi.common.utils.redis.CacheUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -53,7 +52,12 @@ public class AdminUserActionListener implements SaTokenListener {
             dto.setTokenId(tokenValue);
             dto.setUserName(user.getUsername());
             dto.setDeptName(user.getDeptName());
-            RedisUtils.setCacheObject(CacheConstants.ONLINE_ADMIN_TOKEN_KEY + tokenValue, dto, Duration.ofSeconds(tokenConfig.getTimeout()));
+            String cacheNames = CacheNames.ONLINE_ADMIN_TOKEN_KEY;
+            if (tokenConfig.getTimeout() > 0) {
+                // 增加 ttl 过期时间 单位秒
+                cacheNames = CacheNames.ONLINE_ADMIN_TOKEN_KEY + "#" + tokenConfig.getTimeout() + "s";
+            }
+            CacheUtils.put(cacheNames, tokenValue, dto);
             log.info("user doLogin, userId:{}, token:{}", loginId, tokenValue);
         } else if (userType == UserType.APP_USER) {
             // app端 自行根据业务编写
@@ -65,7 +69,7 @@ public class AdminUserActionListener implements SaTokenListener {
      */
     @Override
     public void doLogout(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(CacheConstants.ONLINE_ADMIN_TOKEN_KEY + tokenValue);
+        CacheUtils.evict(CacheNames.ONLINE_ADMIN_TOKEN_KEY, tokenValue);
         log.info("user doLogout, userId:{}, token:{}", loginId, tokenValue);
     }
 
@@ -74,7 +78,7 @@ public class AdminUserActionListener implements SaTokenListener {
      */
     @Override
     public void doKickout(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(CacheConstants.ONLINE_ADMIN_TOKEN_KEY + tokenValue);
+        CacheUtils.evict(CacheNames.ONLINE_ADMIN_TOKEN_KEY, tokenValue);
         log.info("user doLogoutByLoginId, userId:{}, token:{}", loginId, tokenValue);
     }
 
@@ -83,7 +87,7 @@ public class AdminUserActionListener implements SaTokenListener {
      */
     @Override
     public void doReplaced(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(CacheConstants.ONLINE_ADMIN_TOKEN_KEY + tokenValue);
+        CacheUtils.evict(CacheNames.ONLINE_ADMIN_TOKEN_KEY, tokenValue);
         log.info("user doReplaced, userId:{}, token:{}", loginId, tokenValue);
     }
 

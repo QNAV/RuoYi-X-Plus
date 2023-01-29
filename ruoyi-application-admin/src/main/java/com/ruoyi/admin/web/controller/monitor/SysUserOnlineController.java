@@ -8,11 +8,13 @@ import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.domain.bo.AdminUserOnlineBo;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.CacheConstants;
+import com.ruoyi.common.constant.CacheNames;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.redis.CacheUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
 import com.ruoyi.system.domain.vo.SysUserOnlineVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -56,7 +58,8 @@ public class SysUserOnlineController extends AdminBaseController {
             if (StpUtil.stpLogic.getTokenActivityTimeoutByToken(token) < 0) {
                 continue;
             }
-            userOnlineBoList.add(RedisUtils.getCacheObject(CacheConstants.ONLINE_ADMIN_TOKEN_KEY + token));
+            AdminUserOnlineBo onlineBo = CacheUtils.get(CacheNames.ONLINE_ADMIN_TOKEN_KEY, token);
+            userOnlineBoList.add(onlineBo);
         }
         if (StringUtils.isNotEmpty(ipaddr) && StringUtils.isNotEmpty(userName)) {
             userOnlineBoList = StreamUtils.filter(userOnlineBoList, userOnline ->

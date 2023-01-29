@@ -8,12 +8,11 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import com.ruoyi.biz.domain.bo.BizUserOnlineBo;
 import com.ruoyi.biz.domain.model.BizLoginUser;
 import com.ruoyi.biz.helper.BizLoginHelper;
-import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.constant.CacheNames;
 import com.ruoyi.common.enums.UserType;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
-import com.ruoyi.common.utils.redis.RedisUtils;
+import com.ruoyi.common.utils.redis.CacheUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -52,7 +51,12 @@ public class BizUserActionListener implements SaTokenListener {
         dto.setLoginTime(System.currentTimeMillis());
         dto.setTokenId(tokenValue);
         dto.setUserName(user.getUsername());
-        RedisUtils.setCacheObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue, dto, Duration.ofSeconds(tokenConfig.getTimeout()));
+        String cacheNames = CacheNames.ONLINE_BIZ_TOKEN_KEY;
+        if (tokenConfig.getTimeout() > 0) {
+            // 增加 ttl 过期时间 单位秒
+            cacheNames = CacheNames.ONLINE_BIZ_TOKEN_KEY + "#" + tokenConfig.getTimeout() + "s";
+        }
+        CacheUtils.put(cacheNames, tokenValue, dto);
         log.info("user doLogin, userId:{}, token:{}", loginId, tokenValue);
     }
 
@@ -61,7 +65,7 @@ public class BizUserActionListener implements SaTokenListener {
      */
     @Override
     public void doLogout(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue);
+        CacheUtils.evict(CacheNames.ONLINE_BIZ_TOKEN_KEY, tokenValue);
         log.info("user doLogout, userId:{}, token:{}", loginId, tokenValue);
     }
 
@@ -70,7 +74,7 @@ public class BizUserActionListener implements SaTokenListener {
      */
     @Override
     public void doKickout(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue);
+        CacheUtils.evict(CacheNames.ONLINE_BIZ_TOKEN_KEY, tokenValue);
         log.info("user doLogoutByLoginId, userId:{}, token:{}", loginId, tokenValue);
     }
 
@@ -79,7 +83,7 @@ public class BizUserActionListener implements SaTokenListener {
      */
     @Override
     public void doReplaced(String loginType, Object loginId, String tokenValue) {
-        RedisUtils.deleteObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue);
+        CacheUtils.evict(CacheNames.ONLINE_BIZ_TOKEN_KEY, tokenValue);
         log.info("user doReplaced, userId:{}, token:{}", loginId, tokenValue);
     }
 
