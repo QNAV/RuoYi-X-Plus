@@ -83,4 +83,15 @@ public class R<T> implements Serializable {
         return r;
     }
 
+
+    public Boolean isError()
+    {
+        return !isSuccess();
+    }
+
+    public Boolean isSuccess()
+    {
+        return R.SUCCESS == getCode();
+    }
+
 }
