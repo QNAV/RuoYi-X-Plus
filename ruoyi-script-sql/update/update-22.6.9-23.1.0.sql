@@ -24,3 +24,35 @@ VALUES(
   '缓存列表菜单'
 );
 UPDATE `sys_config` SET `config_key` = 'sys.account.captchaEnabled' WHERE `sys_config`.`config_id` = 4;
+INSERT INTO `sys_dict_data`(
+    `dict_code`,
+    `dict_sort`,
+    `dict_label`,
+    `dict_value`,
+    `dict_type`,
+    `css_class`,
+    `list_class`,
+    `is_default`,
+    `status`,
+    `create_by`,
+    `create_time`,
+    `update_by`,
+    `update_time`,
+    `remark`
+)
+VALUES(
+  29,
+  10,
+  '其他',
+  '10',
+  'sys_oper_type',
+  '',
+  'info',
+  'N',
+  '0',
+  'admin',
+  '2022-06-19 06:27:41',
+  '',
+  NULL,
+  '其他操作'
+);

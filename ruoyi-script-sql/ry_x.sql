@@ -197,6 +197,7 @@ INSERT INTO `sys_dict_data` (`dict_code`, `dict_sort`, `dict_label`, `dict_value
 (18, 1, '新增', '1', 'sys_oper_type', '', 'info', 'N', '0', 'admin', '2022-06-19 06:27:41', '', NULL, '新增操作'),
 (19, 2, '修改', '2', 'sys_oper_type', '', 'info', 'N', '0', 'admin', '2022-06-19 06:27:41', '', NULL, '修改操作'),
 (20, 3, '删除', '3', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', '2022-06-19 06:27:41', '', NULL, '删除操作'),
+(29, 10, '其他', '10', 'sys_oper_type', '', 'info', 'N', '0', 'admin', '2022-06-19 06:27:41', '', NULL, '其他操作'),
 (21, 4, '授权', '4', 'sys_oper_type', '', 'primary', 'N', '0', 'admin', '2022-06-19 06:27:41', '', NULL, '授权操作'),
 (22, 5, '导出', '5', 'sys_oper_type', '', 'warning', 'N', '0', 'admin', '2022-06-19 06:27:41', '', NULL, '导出操作'),
 (23, 6, '导入', '6', 'sys_oper_type', '', 'warning', 'N', '0', 'admin', '2022-06-19 06:27:41', '', NULL, '导入操作'),
