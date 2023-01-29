@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.ruoyi.common.annotation.DataColumn;
 import com.ruoyi.common.annotation.DataPermission;
 import com.ruoyi.common.core.domain.entity.SysDept;
+import com.ruoyi.common.core.domain.vo.SysDeptVo;
 import com.ruoyi.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,7 +17,7 @@ import java.util.List;
  * @author ruoyi
  * @author Lion Li
  */
-public interface SysDeptMapper extends BaseMapperPlus<SysDeptMapper, SysDept, SysDept> {
+public interface SysDeptMapper extends BaseMapperPlus<SysDeptMapper, SysDept, SysDeptVo> {
 
     /**
      * 查询部门管理数据
