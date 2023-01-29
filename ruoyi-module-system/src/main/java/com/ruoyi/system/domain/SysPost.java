@@ -69,7 +69,7 @@ public class SysPost extends BaseEntity {
      */
     @Schema(description = "状态（0正常 1停用）", required = true)
     @ExcelProperty(value = "状态", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(dictType = "sys_common_status")
+    @ExcelDictFormat(dictType = "sys_normal_disable")
     @NotBlank(message = "状态不能为空")
     private String status;
 
