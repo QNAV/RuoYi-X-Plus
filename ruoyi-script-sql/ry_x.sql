@@ -476,7 +476,7 @@ CREATE TABLE `sys_oss` (
   `create_by` varchar(64) DEFAULT '' COMMENT '上传人',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `update_by` varchar(64) DEFAULT '' COMMENT '更新人',
-  `service` varchar(10) NOT NULL DEFAULT 'minio' COMMENT '服务商'
+  `service` varchar(20) NOT NULL DEFAULT 'minio' COMMENT '服务商'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='OSS对象存储表';
 
 -- --------------------------------------------------------
@@ -487,7 +487,7 @@ CREATE TABLE `sys_oss` (
 
 CREATE TABLE `sys_oss_config` (
   `oss_config_id` bigint(20) NOT NULL COMMENT '主建',
-  `config_key` varchar(255) NOT NULL DEFAULT '' COMMENT '配置key',
+  `config_key` varchar(20) NOT NULL DEFAULT '' COMMENT '配置key',
   `access_key` varchar(255) NOT NULL DEFAULT '' COMMENT 'accessKey',
   `secret_key` varchar(255) NOT NULL DEFAULT '' COMMENT '秘钥',
   `bucket_name` varchar(255) NOT NULL DEFAULT '' COMMENT '桶名称',

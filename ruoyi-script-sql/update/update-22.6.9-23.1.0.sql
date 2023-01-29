@@ -57,3 +57,5 @@ VALUES(
   '其他操作'
 );
 ALTER TABLE `sys_menu` CHANGE `visible` `visible` CHAR(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '显示状态（0显示 1隐藏）';
+ALTER TABLE `sys_oss` CHANGE `service` `service` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'minio' COMMENT '服务商';
+ALTER TABLE `sys_oss_config` CHANGE `config_key` `config_key` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '配置key';
