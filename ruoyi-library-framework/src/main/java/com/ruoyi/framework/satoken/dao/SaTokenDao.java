@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Sa-Token持久层接口(使用框架自带RedisUtils实现 协议统一)
  *
- * @author weibocy
+ * @author Lion Li
  */
 @Component
 public class SaTokenDao implements cn.dev33.satoken.dao.SaTokenDao {
@@ -169,10 +169,10 @@ public class SaTokenDao implements cn.dev33.satoken.dao.SaTokenDao {
      * 搜索数据
      */
     @Override
-    public List<String> searchData(String prefix, String keyword, int start, int size) {
+    public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
         Collection<String> keys = RedisUtils.keys(prefix + "*" + keyword + "*");
         List<String> list = new ArrayList<>(keys);
-        return SaFoxUtil.searchList(list, start, size);
+        return SaFoxUtil.searchList(list, start, size, sortType);
     }
 
 }
