@@ -103,7 +103,7 @@ public class SysOssController extends AdminBaseController {
     @SaCheckPermission("system:oss:download")
     @GetMapping("/download")
     public void download(@Parameter(description = "OSS对象ID", required = true) @RequestParam Long ossId, @Parameter(hidden = true) HttpServletResponse response) throws IOException {
-        SysOss sysOss = iSysOssService.getById(ossId);
+        SysOssVo sysOss = iSysOssService.getById(ossId);
         if (ObjectUtil.isNull(sysOss)) {
             throw new ServiceException("文件数据不存在!");
         }

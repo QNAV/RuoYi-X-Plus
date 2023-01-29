@@ -15,7 +15,7 @@ import com.ruoyi.common.core.service.DictService;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.cache.CacheUtils;
+import com.ruoyi.common.utils.redis.CacheUtils;
 import com.ruoyi.system.domain.bo.SysDictTypeQueryBo;
 import com.ruoyi.common.core.domain.vo.SysDictDataVo;
 import com.ruoyi.common.core.domain.vo.SysDictTypeVo;
