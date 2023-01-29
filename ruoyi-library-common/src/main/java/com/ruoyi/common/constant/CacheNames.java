@@ -43,11 +43,11 @@ public interface CacheNames {
     /**
      * 在线业务用户 redis key
      */
-    String ONLINE_BIZ_TOKEN_KEY = "online_biz_tokens:";
+    String ONLINE_BIZ_TOKEN = "online_biz_tokens:";
 
     /**
      * 在线后台用户 redis key
      */
-    String ONLINE_ADMIN_TOKEN_KEY = "online_admin_tokens:";
+    String ONLINE_ADMIN_TOKEN = "online_admin_tokens:";
 
 }
