@@ -61,7 +61,7 @@ public class CaptchaController {
     public R<Void> smsCaptcha(@Parameter(name = "用户手机号")
                               @NotBlank(message = "{user.phonenumber.not.blank}")
                               String phoneNumber) {
-        if (smsProperties.getEnabled()) {
+        if (!smsProperties.getEnabled()) {
             R.fail("当前系统没有开启短信功能！");
         }
         String key = CacheConstants.SMS_CAPTCHA_CODE_KEY + phoneNumber;
