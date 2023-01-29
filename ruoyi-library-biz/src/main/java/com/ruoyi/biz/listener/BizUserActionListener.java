@@ -8,11 +8,13 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import com.ruoyi.biz.domain.bo.BizUserOnlineBo;
 import com.ruoyi.biz.domain.model.BizLoginUser;
 import com.ruoyi.biz.helper.BizLoginHelper;
+import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.CacheNames;
 import com.ruoyi.common.enums.UserType;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
 import com.ruoyi.common.utils.redis.CacheUtils;
+import com.ruoyi.common.utils.redis.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -51,12 +53,7 @@ public class BizUserActionListener implements SaTokenListener {
         dto.setLoginTime(System.currentTimeMillis());
         dto.setTokenId(tokenValue);
         dto.setUserName(user.getUsername());
-        String cacheNames = CacheNames.ONLINE_BIZ_TOKEN;
-        if (tokenConfig.getTimeout() > 0) {
-            // 增加 ttl 过期时间 单位秒
-            cacheNames = CacheNames.ONLINE_BIZ_TOKEN + "#" + tokenConfig.getTimeout() + "s";
-        }
-        CacheUtils.put(cacheNames, tokenValue, dto);
+        RedisUtils.setCacheObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue, dto, Duration.ofSeconds(tokenConfig.getTimeout()));
         log.info("user doLogin, userId:{}, token:{}", loginId, tokenValue);
     }
 

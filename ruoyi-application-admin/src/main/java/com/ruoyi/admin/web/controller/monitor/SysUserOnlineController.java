@@ -58,8 +58,7 @@ public class SysUserOnlineController extends AdminBaseController {
             if (StpUtil.stpLogic.getTokenActivityTimeoutByToken(token) < 0) {
                 continue;
             }
-            AdminUserOnlineBo onlineBo = CacheUtils.get(CacheNames.ONLINE_ADMIN_TOKEN, token);
-            userOnlineBoList.add(onlineBo);
+            userOnlineBoList.add(RedisUtils.getCacheObject(CacheConstants.ONLINE_ADMIN_TOKEN_KEY + token));
         }
         if (StringUtils.isNotEmpty(ipaddr) && StringUtils.isNotEmpty(userName)) {
             userOnlineBoList = StreamUtils.filter(userOnlineBoList, userOnline ->
