@@ -9,6 +9,7 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
+import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -19,6 +20,7 @@ import com.ruoyi.system.domain.SysUserRole;
 import com.ruoyi.system.domain.bo.*;
 import com.ruoyi.common.core.domain.vo.SysRoleVo;
 import com.ruoyi.common.core.domain.vo.SysUserVo;
+import com.ruoyi.system.service.ISysDeptService;
 import com.ruoyi.system.service.ISysRoleService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.system.service.SysPermissionService;
@@ -30,7 +32,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 角色信息
@@ -48,6 +52,7 @@ public class SysRoleController extends AdminBaseController {
     private final ISysRoleService roleService;
     private final ISysUserService userService;
     private final SysPermissionService permissionService;
+    private final ISysDeptService deptService;
 
     @Operation(description = "查询角色信息列表", summary = "SysRolePostList")
     @SaCheckPermission("system:role:list")
@@ -215,7 +220,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 批量取消授权用户
      */
-    @Operation(description = "批量取消授权用户", summary = "SysUserPostCancelAuthUserAll")
+    @Operation(description = "批量取消授权用户", summary = "SysRolePostCancelAuthUserAll")
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/cancelAll")
@@ -226,12 +231,27 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 批量选择用户授权
      */
-    @Operation(description = "批量选择用户授权", summary = "SysUserPostSelectAuthUserAll")
+    @Operation(description = "批量选择用户授权", summary = "SysRolePostSelectAuthUserAll")
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/selectAll")
     public R<Void> selectAuthUserAll(@RequestBody @Validated AuthUserAllBo body) {
         roleService.checkRoleDataScope(body.getRoleId());
         return toAjax(roleService.insertAuthUsers(body.getRoleId(), body.getUserIds()));
+    }
+
+    /**
+     * 获取对应角色部门树列表
+     *
+     * @param roleId 角色ID
+     */
+    @Operation(description = "获取对应角色部门树列表", summary = "SysRoleGetRoleDeptTreeSelect")
+    @SaCheckPermission("system:role:list")
+    @GetMapping(value = "/deptTree/{roleId}")
+    public R<Map<String, Object>> roleDeptTreeSelect(@PathVariable("roleId") Long roleId) {
+        Map<String, Object> ajax = new HashMap<>();
+        ajax.put("checkedKeys", deptService.selectDeptListByRoleId(roleId));
+        ajax.put("depts", deptService.selectDeptTreeList(new SysDeptQueryBo()));
+        return R.ok(ajax);
     }
 }

@@ -39,6 +39,12 @@ import java.util.Map;
 public class AdminLogAspect {
 
     /**
+     * 排除敏感属性字段
+     */
+    public static final String[] EXCLUDE_PROPERTIES = { "password", "oldPassword", "newPassword", "confirmPassword" };
+
+
+    /**
      * 处理完请求后执行
      *
      * @param joinPoint 切点

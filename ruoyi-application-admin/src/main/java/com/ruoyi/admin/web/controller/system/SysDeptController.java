@@ -77,29 +77,6 @@ public class SysDeptController extends AdminBaseController {
     }
 
     /**
-     * 获取部门下拉树列表
-     */
-    @Operation(description = "获取部门下拉树列表", summary = "SysDeptPostTreeSelect")
-    @PostMapping("/treeSelect")
-    public R<List<Tree<Long>>> treeSelect(@RequestBody(required = false) SysDeptQueryBo deptQuery) {
-        List<SysDeptVo> depts = deptService.selectDeptList(deptQuery);
-        return R.ok(deptService.buildDeptTreeSelect(depts));
-    }
-
-    /**
-     * 加载对应角色部门列表树
-     */
-    @Operation(description = "加载对应角色部门列表树", summary = "SysDeptGetRoleDeptTreeSelect")
-    @GetMapping(value = "/roleDeptTreeSelect")
-    public R<RoleDeptTreeSelectVo> roleDeptTreeSelect(@Parameter(description = "角色ID", required = true) @RequestParam Long roleId) {
-        List<SysDeptVo> depts = deptService.selectDeptList(new SysDeptQueryBo());
-        RoleDeptTreeSelectVo data =  new RoleDeptTreeSelectVo();
-        data.setCheckedKeys(deptService.selectDeptListByRoleId(roleId));
-        data.setDepts(deptService.buildDeptTreeSelect(depts));
-        return R.ok(data);
-    }
-
-    /**
      * 新增部门
      */
     @Operation(description = "新增部门", summary = "SysDeptPostAdd")
