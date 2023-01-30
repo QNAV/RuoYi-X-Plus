@@ -2,6 +2,7 @@ package com.ruoyi.admin.web.controller.system;
 
 
 import cn.dev33.satoken.annotation.SaIgnore;
+import com.ruoyi.admin.domain.model.AdminLoginUser;
 import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.UserNameLoginBo;
@@ -114,15 +115,13 @@ public class SysLoginController {
     @GetMapping("/info")
     public R<UserInfoVo> info() {
         UserInfoVo data = new UserInfoVo();
-        SysUserVo userVo = userService.selectUserVoById(AdminLoginHelper.getUserId());
-        SysUser user = BeanCopyUtils.copy(userVo, SysUser.class);
-        // 角色集合
-        Set<String> roles = permissionService.getRolePermission(user);
-        // 权限集合
-        Set<String> permissions = permissionService.getMenuPermission(user);
+        AdminLoginUser loginUser = AdminLoginHelper.getLoginUser();
+        SysUserVo userVo = userService.selectUserVoById(loginUser.getUserId());
         data.setUser(userVo);
-        data.setRoles(roles);
-        data.setPermissions(permissions);
+        // 角色集合
+        data.setRoles(loginUser.getRolePermission());
+        // 权限集合
+        data.setPermissions(loginUser.getMenuPermission());
         return R.ok(data);
     }
 
