@@ -159,7 +159,7 @@ public class SysUserController extends AdminBaseController {
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysUserAddBo userBo) {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
-        if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(user.getUserName()))) {
+        if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(user))) {
             return R.fail("新增用户'" + user.getUserName() + "'失败，登录账号已存在");
         } else if (StringUtils.isNotEmpty(user.getPhoneNumber())
             && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
@@ -183,7 +183,7 @@ public class SysUserController extends AdminBaseController {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
         userService.checkUserAllowed(userBo);
         userService.checkUserDataScope(user.getUserId());
-        if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(user.getUserName())))
+        if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(user)))
         {
             return R.fail("修改用户'" + user.getUserName() + "'失败，登录账号已存在");
         }
