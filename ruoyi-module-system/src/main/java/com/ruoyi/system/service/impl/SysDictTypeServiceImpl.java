@@ -16,6 +16,7 @@ import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.CacheUtils;
+import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.system.domain.bo.SysDictTypeQueryBo;
 import com.ruoyi.common.core.domain.vo.SysDictDataVo;
 import com.ruoyi.common.core.domain.vo.SysDictTypeVo;
@@ -235,7 +236,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
     @Override
     public String getDictLabel(String dictType, String dictValue, String separator) {
         StringBuilder propertyString = new StringBuilder();
-        List<SysDictDataVo> datas = selectDictDataByType(dictType);
+        List<SysDictDataVo> datas = SpringUtils.getAopProxy(this).selectDictDataByType(dictType);
 
         if (StringUtils.containsAny(dictValue, separator) && CollUtil.isNotEmpty(datas)) {
             for (SysDictDataVo dict : datas) {
@@ -267,7 +268,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
     @Override
     public String getDictValue(String dictType, String dictLabel, String separator) {
         StringBuilder propertyString = new StringBuilder();
-        List<SysDictDataVo> datas = selectDictDataByType(dictType);
+        List<SysDictDataVo> datas = SpringUtils.getAopProxy(this).selectDictDataByType(dictType);
 
         if (StringUtils.containsAny(dictLabel, separator) && CollUtil.isNotEmpty(datas)) {
             for (SysDictDataVo dict : datas) {
