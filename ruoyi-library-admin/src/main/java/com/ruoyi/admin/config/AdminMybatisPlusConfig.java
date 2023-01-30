@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * 后台应用mybatis-plus配置类(下方注释有插件介绍)
  *
- * @author weibocy
+ * @author Lion Li
  */
 @EnableTransactionManagement(proxyTargetClass = true)
 @Configuration
