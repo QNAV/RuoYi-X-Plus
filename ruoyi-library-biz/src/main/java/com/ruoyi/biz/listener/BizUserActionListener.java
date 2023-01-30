@@ -53,7 +53,11 @@ public class BizUserActionListener implements SaTokenListener {
         dto.setLoginTime(System.currentTimeMillis());
         dto.setTokenId(tokenValue);
         dto.setUserName(user.getUsername());
-        RedisUtils.setCacheObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue, dto, Duration.ofSeconds(tokenConfig.getTimeout()));
+        if(tokenConfig.getTimeout() == -1) {
+            RedisUtils.setCacheObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue, dto);
+        } else {
+            RedisUtils.setCacheObject(CacheConstants.ONLINE_BIZ_TOKEN_KEY + tokenValue, dto, Duration.ofSeconds(tokenConfig.getTimeout()));
+        }
         log.info("user doLogin, userId:{}, token:{}", loginId, tokenValue);
     }
 

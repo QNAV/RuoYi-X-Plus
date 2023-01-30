@@ -54,8 +54,8 @@ public class SysUserOnlineController extends AdminBaseController {
         List<AdminUserOnlineBo> userOnlineBoList = new ArrayList<>();
         for (String key : keys) {
             String token = key.replace(CacheConstants.ADMIN_LOGIN_TOKEN_KEY, "");
-            // 如果已经过期则踢下线
-            if (StpUtil.stpLogic.getTokenActivityTimeoutByToken(token) < 0) {
+            // 如果已经过期则跳过
+            if (StpUtil.stpLogic.getTokenActivityTimeoutByToken(token) < -1) {
                 continue;
             }
             userOnlineBoList.add(RedisUtils.getCacheObject(CacheConstants.ONLINE_ADMIN_TOKEN_KEY + token));

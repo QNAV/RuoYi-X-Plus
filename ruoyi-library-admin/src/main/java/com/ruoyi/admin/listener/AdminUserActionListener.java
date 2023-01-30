@@ -54,7 +54,11 @@ public class AdminUserActionListener implements SaTokenListener {
             dto.setTokenId(tokenValue);
             dto.setUserName(user.getUsername());
             dto.setDeptName(user.getDeptName());
-            RedisUtils.setCacheObject(CacheConstants.ONLINE_ADMIN_TOKEN_KEY + tokenValue, dto, Duration.ofSeconds(tokenConfig.getTimeout()));
+            if(tokenConfig.getTimeout() == -1) {
+                RedisUtils.setCacheObject(CacheConstants.ONLINE_ADMIN_TOKEN_KEY + tokenValue, dto);
+            } else {
+                RedisUtils.setCacheObject(CacheConstants.ONLINE_ADMIN_TOKEN_KEY + tokenValue, dto, Duration.ofSeconds(tokenConfig.getTimeout()));
+            }
             log.info("user doLogin, userId:{}, token:{}", loginId, tokenValue);
         } else if (userType == UserType.APP_USER) {
             // app端 自行根据业务编写
