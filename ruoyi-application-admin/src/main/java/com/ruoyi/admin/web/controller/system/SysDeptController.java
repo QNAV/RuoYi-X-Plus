@@ -122,10 +122,10 @@ public class SysDeptController extends AdminBaseController {
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "部门ID串", required = true) @RequestParam Long deptId) {
         if (deptService.hasChildByDeptId(deptId)) {
-            return R.fail("存在下级部门,不允许删除");
+            return R.warn("存在下级部门,不允许删除");
         }
         if (deptService.checkDeptExistUser(deptId)) {
-            return R.fail("部门存在用户,不允许删除");
+            return R.warn("部门存在用户,不允许删除");
         }
         deptService.checkDeptDataScope(deptId);
         return toAjax(deptService.deleteDeptById(deptId));

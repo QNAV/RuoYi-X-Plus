@@ -129,10 +129,10 @@ public class SysMenuController extends AdminBaseController {
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "菜单ID", required = true) @RequestParam Long menuId) {
         if (menuService.hasChildByMenuId(menuId)) {
-            return R.fail("存在子菜单,不允许删除");
+            return R.warn("存在子菜单,不允许删除");
         }
         if (menuService.checkMenuExistRole(menuId)) {
-            return R.fail("菜单已分配,不允许删除");
+            return R.warn("菜单已分配,不允许删除");
         }
         return toAjax(menuService.deleteMenuById(menuId));
     }
