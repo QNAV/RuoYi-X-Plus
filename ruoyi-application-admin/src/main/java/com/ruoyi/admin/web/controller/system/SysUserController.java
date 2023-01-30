@@ -80,6 +80,9 @@ public class SysUserController extends AdminBaseController {
         return userService.selectPageUserVoList(userQuery, pageQuery);
     }
 
+    /**
+     * 导出用户列表
+     */
     @Operation(description = "导出用户列表", summary = "SysUserPostExport")
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:user:export")
@@ -98,6 +101,13 @@ public class SysUserController extends AdminBaseController {
         ExcelUtil.exportExcel(listVo, "用户数据", SysUserExportVo.class, response);
     }
 
+
+    /**
+     * 导入数据
+     *
+     * @param file          导入文件
+     * @param updateSupport 是否更新已存在数据
+     */
     @Operation(description = "导入用户列表", summary = "SysUserPostImportData")
     @Parameters({
         @Parameter(name = "file", description = "导入文件", in = ParameterIn.QUERY, required = true),
@@ -110,6 +120,9 @@ public class SysUserController extends AdminBaseController {
         return R.ok(result.getAnalysis());
     }
 
+    /**
+     * 获取导入模板
+     */
     @Operation(description = "下载导入模板", summary = "SysUserPostImportTemplate")
     @PostMapping("/importTemplate")
     public void importTemplate(@Parameter(hidden = true) HttpServletResponse response) {
