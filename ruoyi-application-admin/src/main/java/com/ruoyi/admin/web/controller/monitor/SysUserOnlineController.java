@@ -50,7 +50,7 @@ public class SysUserOnlineController extends AdminBaseController {
     @GetMapping("/list")
     public TableDataInfo<SysUserOnlineVo> list(@Parameter(description = "ip地址") @RequestParam(required = false) String ipaddr, @Parameter(description = "用户名") @RequestParam(required = false) String userName) {
         // 获取所有未过期的 token
-        List<String> keys = StpUtil.searchTokenValue("", -1, 0, false);
+        List<String> keys = StpUtil.searchTokenValue("", 0, -1, false);
         List<AdminUserOnlineBo> userOnlineBoList = new ArrayList<>();
         for (String key : keys) {
             String token = key.replace(CacheConstants.ADMIN_LOGIN_TOKEN_KEY, "");
