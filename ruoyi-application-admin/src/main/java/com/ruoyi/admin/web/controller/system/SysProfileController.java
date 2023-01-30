@@ -13,9 +13,9 @@ import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.MimeTypeUtils;
-import com.ruoyi.system.domain.SysOss;
 import com.ruoyi.system.domain.bo.LoginUserUpdateBo;
 import com.ruoyi.common.core.domain.vo.SysUserVo;
+import com.ruoyi.system.domain.vo.SysOssVo;
 import com.ruoyi.system.service.ISysOssService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.admin.web.model.vo.AvatarUploadVo;
@@ -127,7 +127,7 @@ public class SysProfileController extends AdminBaseController {
             if (!StringUtils.equalsAnyIgnoreCase(extension, MimeTypeUtils.IMAGE_EXTENSION)) {
                 return R.fail("文件格式不正确，请上传" + Arrays.toString(MimeTypeUtils.IMAGE_EXTENSION) + "格式");
             }
-            SysOss oss = iSysOssService.upload(file);
+            SysOssVo oss = iSysOssService.upload(file);
             String avatar = oss.getUrl();
             if (userService.updateUserAvatar(getUsername(), avatar)) {
                 data.setImgUrl(avatar);

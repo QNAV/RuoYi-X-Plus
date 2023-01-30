@@ -96,4 +96,10 @@ public class SysOssConfigVo extends BaseVo {
     @Schema(description = "备注")
     private String remark;
 
+    /**
+     * 桶权限类型(0private 1public 2custom)
+     */
+    @Schema(description = "桶权限类型(0private 1public 2custom)")
+    private String accessPolicy;
+
 }

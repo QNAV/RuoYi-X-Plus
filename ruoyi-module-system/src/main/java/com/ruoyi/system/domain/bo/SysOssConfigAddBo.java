@@ -103,4 +103,10 @@ public class SysOssConfigAddBo implements Serializable {
     @Schema(description = "备注")
     private String remark;
 
+    /**
+     * 桶权限类型(0private 1public 2custom)
+     */
+    @NotBlank(message = "桶权限类型不能为空")
+    private String accessPolicy;
+
 }

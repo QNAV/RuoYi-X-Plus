@@ -496,6 +496,7 @@ CREATE TABLE `sys_oss_config` (
   `domain` varchar(255) DEFAULT '' COMMENT '自定义域名',
   `is_https` char(1) DEFAULT 'N' COMMENT '是否https（Y=是,N=否）',
   `region` varchar(255) DEFAULT '' COMMENT '域',
+  `access_policy` char(1) NOT NULL DEFAULT '1' COMMENT '桶权限类型(0=private 1=public 2=custom)',
   `status` char(1) DEFAULT '1' COMMENT '状态（0=正常,1=停用）',
   `ext1` varchar(255) DEFAULT '' COMMENT '扩展字段',
   `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
@@ -509,12 +510,12 @@ CREATE TABLE `sys_oss_config` (
 -- 转存表中的数据 `sys_oss_config`
 --
 
-INSERT INTO `sys_oss_config` (`oss_config_id`, `config_key`, `access_key`, `secret_key`, `bucket_name`, `prefix`, `endpoint`, `domain`, `is_https`, `region`, `status`, `ext1`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES
-(1, 'minio', 'ruoyi', 'ruoyi123', 'ruoyi', '', '127.0.0.1:9000', '', 'N', '', '0', '', 'admin', '2022-06-19 06:27:42', 'admin', '2022-06-19 06:27:42', NULL),
-(2, 'qiniu', 'XXXXXXXXXXXXXXX', 'XXXXXXXXXXXXXXX', 'ruoyi', '', 's3-cn-north-1.qiniucs.com', '', 'N', '', '1', '', 'admin', '2022-06-19 06:27:42', 'admin', '2022-06-19 06:27:42', NULL),
-(3, 'aliyun', 'XXXXXXXXXXXXXXX', 'XXXXXXXXXXXXXXX', 'ruoyi', '', 'oss-cn-beijing.aliyuncs.com', '', 'N', '', '1', '', 'admin', '2022-06-19 06:27:42', 'admin', '2022-06-19 06:27:42', NULL),
-(4, 'qcloud', 'XXXXXXXXXXXXXXX', 'XXXXXXXXXXXXXXX', 'ruoyi-1250000000', '', 'cos.ap-beijing.myqcloud.com', '', 'N', 'ap-beijing', '1', '', 'admin', '2022-06-19 06:27:42', 'admin', '2022-06-19 06:27:42', NULL),
-(5, 'image', 'ruoyi', 'ruoyi123', 'ruoyi', 'image', '127.0.0.1:9000', '', 'N', '', '1', '', 'admin', '2022-06-19 06:27:42', 'admin', '2022-06-19 06:27:42', NULL);
+INSERT INTO `sys_oss_config` (`oss_config_id`, `config_key`, `access_key`, `secret_key`, `bucket_name`, `prefix`, `endpoint`, `domain`, `is_https`, `region`, `access_policy`, `status`, `ext1`, `create_by`, `create_time`, `update_by`, `update_time`, `remark`) VALUES
+(1, 'minio', 'ruoyi', 'ruoyi123', 'ruoyi', '', '127.0.0.1:9000', '', 'N', '', '1', '0', '', 'admin', '2022-06-19 06:27:42', 'admin', '2022-06-19 06:27:42', NULL),
+(2, 'qiniu', 'XXXXXXXXXXXXXXX', 'XXXXXXXXXXXXXXX', 'ruoyi', '', 's3-cn-north-1.qiniucs.com', '', 'N', '', '1', '1', '', 'admin', '2022-06-19 06:27:42', 'admin', '2022-06-19 06:27:42', NULL),
+(3, 'aliyun', 'XXXXXXXXXXXXXXX', 'XXXXXXXXXXXXXXX', 'ruoyi', '', 'oss-cn-beijing.aliyuncs.com', '', 'N', '', '1', '1', '', 'admin', '2022-06-19 06:27:42', 'admin', '2022-06-19 06:27:42', NULL),
+(4, 'qcloud', 'XXXXXXXXXXXXXXX', 'XXXXXXXXXXXXXXX', 'ruoyi-1250000000', '', 'cos.ap-beijing.myqcloud.com', '', 'N', 'ap-beijing', '1', '1', '', 'admin', '2022-06-19 06:27:42', 'admin', '2022-06-19 06:27:42', NULL),
+(5, 'image', 'ruoyi', 'ruoyi123', 'ruoyi', 'image', '127.0.0.1:9000', '', 'N', '', '1', '1', '', 'admin', '2022-06-19 06:27:42', 'admin', '2022-06-19 06:27:42', NULL);
 
 -- --------------------------------------------------------
 

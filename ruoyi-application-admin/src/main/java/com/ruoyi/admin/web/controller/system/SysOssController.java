@@ -2,10 +2,7 @@ package com.ruoyi.admin.web.controller.system;
 
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.http.HttpException;
-import cn.hutool.http.HttpUtil;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.domain.bo.PageQuery;
@@ -14,8 +11,6 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.BeanCopyUtils;
-import com.ruoyi.common.utils.file.FileUtils;
-import com.ruoyi.system.domain.SysOss;
 import com.ruoyi.system.domain.bo.SysOssPageQueryBo;
 import com.ruoyi.system.domain.bo.SysOssQueryBo;
 import com.ruoyi.system.domain.vo.SysOssVo;
@@ -27,7 +22,6 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -91,7 +85,7 @@ public class SysOssController extends AdminBaseController {
         if (ObjectUtil.isNull(file)) {
             throw new ServiceException("上传文件不能为空");
         }
-        SysOss oss = iSysOssService.upload(file);
+        SysOssVo oss = iSysOssService.upload(file);
         OssUploadVo data = new OssUploadVo();
         data.setUrl(oss.getUrl());
         data.setFileName(oss.getOriginalName());
@@ -103,23 +97,7 @@ public class SysOssController extends AdminBaseController {
     @SaCheckPermission("system:oss:download")
     @GetMapping("/download")
     public void download(@Parameter(description = "OSS对象ID", required = true) @RequestParam Long ossId, @Parameter(hidden = true) HttpServletResponse response) throws IOException {
-        SysOssVo sysOss = iSysOssService.getById(ossId);
-        if (ObjectUtil.isNull(sysOss)) {
-            throw new ServiceException("文件数据不存在!");
-        }
-        FileUtils.setAttachmentResponseHeader(response, sysOss.getOriginalName());
-        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE + "; charset=UTF-8");
-        long data;
-        try {
-            data = HttpUtil.download(sysOss.getUrl(), response.getOutputStream(), false);
-        } catch (HttpException e) {
-            if (e.getMessage().contains("403")) {
-                throw new ServiceException("无读取权限, 请在对应的OSS开启'公有读'权限!");
-            } else {
-                throw new ServiceException(e.getMessage());
-            }
-        }
-        response.setContentLength(Convert.toInt(data));
+        iSysOssService.download(ossId,response);
     }
 
     /**
