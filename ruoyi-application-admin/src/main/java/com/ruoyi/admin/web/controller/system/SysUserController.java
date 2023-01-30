@@ -170,7 +170,11 @@ public class SysUserController extends AdminBaseController {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
         userService.checkUserAllowed(userBo);
         userService.checkUserDataScope(user.getUserId());
-        if (StringUtils.isNotEmpty(user.getPhoneNumber())
+        if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(user.getUserName())))
+        {
+            return R.fail("修改用户'" + user.getUserName() + "'失败，登录账号已存在");
+        }
+        else if (StringUtils.isNotEmpty(user.getPhoneNumber())
             && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
         } else if (StringUtils.isNotEmpty(user.getEmail())
