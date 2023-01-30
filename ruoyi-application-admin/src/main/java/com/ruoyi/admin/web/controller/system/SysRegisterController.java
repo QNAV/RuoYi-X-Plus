@@ -1,7 +1,7 @@
 package com.ruoyi.admin.web.controller.system;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.ruoyi.admin.controller.AdminBaseController;
-import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.UserNameRegisterBo;
 import com.ruoyi.system.service.ISysConfigService;
@@ -28,7 +28,7 @@ public class SysRegisterController extends AdminBaseController {
     private final SysRegisterService registerService;
     private final ISysConfigService configService;
 
-    @Anonymous
+    @SaIgnore
     @Operation(description = "用户注册", summary = "SysRegisterPostRegister")
     @PostMapping("/register")
     public R<Void> register(@Validated @RequestBody UserNameRegisterBo user) {

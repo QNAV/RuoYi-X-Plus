@@ -1,8 +1,8 @@
 package com.ruoyi.admin.web.controller.system;
 
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.ruoyi.admin.helper.AdminLoginHelper;
-import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.UserNameLoginBo;
 import com.ruoyi.common.core.domain.entity.SysMenu;
@@ -51,7 +51,7 @@ public class SysLoginController {
      * @param userNameLoginBody 用户名登录信息
      * @return 结果
      */
-    @Anonymous
+    @SaIgnore
     @Operation(description = "用户名登录方法", summary = "SysLoginPostLogin")
     @PostMapping("/login")
     public R<LoginVo> login(@Validated @RequestBody UserNameLoginBo userNameLoginBody) {
@@ -69,7 +69,7 @@ public class SysLoginController {
      * @param smsLoginBody 登录信息
      * @return 结果
      */
-    @Anonymous
+    @SaIgnore
     @Operation(description = "短信登录(示例)", summary = "SysLoginPostSmsLogin")
     @PostMapping("/smsLogin")
     public R<LoginVo> smsLogin(@Validated @RequestBody SmsLoginBo smsLoginBody) {
@@ -86,7 +86,7 @@ public class SysLoginController {
      * @param xcxCode 小程序code
      * @return 结果
      */
-    @Anonymous
+    @SaIgnore
     @Operation(description = "小程序登录(示例)", summary = "SysLoginGetXcxLogin")
     @GetMapping("/xcxLogin")
     public R<LoginVo> xcxLogin(@NotBlank(message = "{xcx.code.not.blank}") @Parameter(description = "小程序code", required = true) @RequestParam String xcxCode) {
@@ -97,7 +97,7 @@ public class SysLoginController {
         return R.ok(result);
     }
 
-    @Anonymous
+    @SaIgnore
     @Operation(description = "登出方法", summary = "SysLoginPostLogout")
     @PostMapping("/logout")
     public R<Void> logout() {

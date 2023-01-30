@@ -1,11 +1,11 @@
 package com.ruoyi.admin.web.controller.common;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.captcha.AbstractCaptcha;
 import cn.hutool.captcha.generator.CodeGenerator;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.ruoyi.common.annotation.Anonymous;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.enums.CaptchaType;
@@ -39,7 +39,7 @@ import java.util.Map;
  * @author ruoyi
  * @author Lion Li
  */
-@Anonymous
+@SaIgnore
 @Slf4j
 @Validated
 @Tag( description= "验证码管理", name = "CaptchaService")
