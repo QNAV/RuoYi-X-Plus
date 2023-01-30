@@ -54,6 +54,8 @@ public class AdminMybatisPlusConfig {
         paginationInnerInterceptor.setMaxLimit(-1L);
         // 分页合理化
         paginationInnerInterceptor.setOverflow(true);
+        // fix issue I5YUMJ 修复sqlserver分页问题 使用sqlserver必须指定
+        // paginationInnerInterceptor.setDbType(DbType.SQL_SERVER);
         return paginationInnerInterceptor;
     }
 
