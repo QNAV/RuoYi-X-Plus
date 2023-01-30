@@ -93,7 +93,7 @@ public class BizUserController extends AdminBaseController {
     @RepeatSubmit()
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody BizUserAddBo bo) {
-        return toAjax(iBizUserService.insertByBo(bo) ? 1 : 0);
+        return toAjax(iBizUserService.insertByBo(bo));
     }
 
     /**
@@ -105,7 +105,7 @@ public class BizUserController extends AdminBaseController {
     @RepeatSubmit()
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody BizUserEditBo bo) {
-        return toAjax(iBizUserService.updateByBo(bo) ? 1 : 0);
+        return toAjax(iBizUserService.updateByBo(bo));
     }
 
     /**
@@ -118,6 +118,6 @@ public class BizUserController extends AdminBaseController {
     public R<Void> remove(@Parameter(description = "主键串", required = true)
                           @NotEmpty(message = "主键不能为空")
                           @RequestParam(required = true) Long[] userIds) {
-        return toAjax(iBizUserService.deleteWithValidByIds(Arrays.asList(userIds), true) ? 1 : 0);
+        return toAjax(iBizUserService.deleteWithValidByIds(Arrays.asList(userIds), true));
     }
 }

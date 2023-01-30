@@ -92,7 +92,7 @@ public class TestDemoController {
     @RepeatSubmit()
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody TestDemoAddBo bo) {
-        return toAjax(iTestDemoService.insertByBo(bo) ? 1 : 0);
+        return toAjax(iTestDemoService.insertByBo(bo));
     }
 
     /**
@@ -104,7 +104,7 @@ public class TestDemoController {
     @RepeatSubmit()
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody TestDemoEditBo bo) {
-        return toAjax(iTestDemoService.updateByBo(bo) ? 1 : 0);
+        return toAjax(iTestDemoService.updateByBo(bo));
     }
 
     /**
@@ -117,7 +117,7 @@ public class TestDemoController {
     public R<Void> remove(@Parameter(description = "主键串", required = true)
                           @NotEmpty(message = "主键不能为空")
                           @RequestParam(name = "公告ID串", required = true) Long[] ids) {
-        return toAjax(iTestDemoService.deleteWithValidByIds(Arrays.asList(ids), true) ? 1 : 0);
+        return toAjax(iTestDemoService.deleteWithValidByIds(Arrays.asList(ids), true));
     }
 
     /**
@@ -128,5 +128,15 @@ public class TestDemoController {
      */
     protected R<Void> toAjax(int rows) {
         return rows > 0 ? R.ok() : R.fail();
+    }
+
+    /**
+     * 响应返回结果
+     *
+     * @param result 结果
+     * @return 操作结果
+     */
+    protected R<Void> toAjax(boolean result) {
+        return result ? R.ok() : R.fail();
     }
 }

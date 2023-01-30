@@ -75,7 +75,7 @@ public class SysOssConfigController extends AdminBaseController {
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysOssConfigAddBo addBo) {
         SysOssConfigEditBo bo = BeanCopyUtils.copy(addBo, SysOssConfigEditBo.class);
-        return toAjax(iSysOssConfigService.insertByBo(bo) ? 1 : 0);
+        return toAjax(iSysOssConfigService.insertByBo(bo));
     }
 
     /**
@@ -87,7 +87,7 @@ public class SysOssConfigController extends AdminBaseController {
     @RepeatSubmit()
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysOssConfigEditBo bo) {
-        return toAjax(iSysOssConfigService.updateByBo(bo) ? 1 : 0);
+        return toAjax(iSysOssConfigService.updateByBo(bo));
     }
 
     /**
@@ -98,7 +98,7 @@ public class SysOssConfigController extends AdminBaseController {
     @Log(title = "对象存储配置", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "OSS配置ID组", required = true) @RequestParam Long[] ossConfigIds) {
-        return toAjax(iSysOssConfigService.deleteWithValidByIds(Arrays.asList(ossConfigIds), true) ? 1 : 0);
+        return toAjax(iSysOssConfigService.deleteWithValidByIds(Arrays.asList(ossConfigIds), true));
     }
 
     /**

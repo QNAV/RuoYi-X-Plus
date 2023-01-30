@@ -49,7 +49,7 @@ public class TestBatchController {
             testDemo.setValue("测试新增");
             list.add(testDemo);
         }
-        return toAjax(testDemoMapper.insertBatch(list) ? 1 : 0);
+        return toAjax(testDemoMapper.insertBatch(list));
     }
 
     /**
@@ -77,7 +77,7 @@ public class TestBatchController {
                 testDemo.setId(null);
             }
         }
-        return toAjax(testDemoMapper.insertOrUpdateBatch(list) ? 1 : 0);
+        return toAjax(testDemoMapper.insertOrUpdateBatch(list));
     }
 
     /**
@@ -99,6 +99,16 @@ public class TestBatchController {
      */
     protected R<Void> toAjax(int rows) {
         return rows > 0 ? R.ok() : R.fail();
+    }
+
+    /**
+     * 响应返回结果
+     *
+     * @param result 结果
+     * @return 操作结果
+     */
+    protected R<Void> toAjax(boolean result) {
+        return result ? R.ok() : R.fail();
     }
 
 }

@@ -82,7 +82,7 @@ public class TestTreeController {
     @RepeatSubmit
     @PostMapping()
     public R<Void> add(@Validated @RequestBody TestTreeBo bo) {
-        return toAjax(iTestTreeService.insertByBo(bo) ? 1 : 0);
+        return toAjax(iTestTreeService.insertByBo(bo));
     }
 
     /**
@@ -94,7 +94,7 @@ public class TestTreeController {
     @RepeatSubmit
     @PutMapping()
     public R<Void> edit(@Validated @RequestBody TestTreeBo bo) {
-        return toAjax(iTestTreeService.updateByBo(bo) ? 1 : 0);
+        return toAjax(iTestTreeService.updateByBo(bo));
     }
 
     /**
@@ -107,7 +107,7 @@ public class TestTreeController {
     public R<Void> remove(@Parameter(description = "测试树ID串")
                                    @NotEmpty(message = "主键不能为空")
                                    @PathVariable Long[] ids) {
-        return toAjax(iTestTreeService.deleteWithValidByIds(Arrays.asList(ids), true) ? 1 : 0);
+        return toAjax(iTestTreeService.deleteWithValidByIds(Arrays.asList(ids), true));
     }
 
     /**
@@ -118,5 +118,15 @@ public class TestTreeController {
      */
     protected R<Void> toAjax(int rows) {
         return rows > 0 ? R.ok() : R.fail();
+    }
+
+    /**
+     * 响应返回结果
+     *
+     * @param result 结果
+     * @return 操作结果
+     */
+    protected R<Void> toAjax(boolean result) {
+        return result ? R.ok() : R.fail();
     }
 }

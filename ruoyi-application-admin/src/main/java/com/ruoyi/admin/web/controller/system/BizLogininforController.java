@@ -93,7 +93,7 @@ public class BizLogininforController extends AdminBaseController {
     @RepeatSubmit()
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody BizLogininforAddBo bo) {
-        return toAjax(iBizLogininforService.insertByBo(bo) ? 1 : 0);
+        return toAjax(iBizLogininforService.insertByBo(bo));
     }
 
     /**
@@ -105,7 +105,7 @@ public class BizLogininforController extends AdminBaseController {
     @RepeatSubmit()
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody BizLogininforEditBo bo) {
-        return toAjax(iBizLogininforService.updateByBo(bo) ? 1 : 0);
+        return toAjax(iBizLogininforService.updateByBo(bo));
     }
 
     /**
@@ -118,6 +118,6 @@ public class BizLogininforController extends AdminBaseController {
     public R<Void> remove(@Parameter(description = "主键串", required = true)
                           @NotEmpty(message = "主键不能为空")
                           @RequestParam(required = true) Long[] infoIds) {
-        return toAjax(iBizLogininforService.deleteWithValidByIds(Arrays.asList(infoIds), true) ? 1 : 0);
+        return toAjax(iBizLogininforService.deleteWithValidByIds(Arrays.asList(infoIds), true));
     }
 }

@@ -130,7 +130,7 @@ public class SysOssController extends AdminBaseController {
     @Log(title = "OSS对象存储", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "OSS对象ID组", required = true) @RequestParam Long[] ossIds) {
-        return toAjax(iSysOssService.deleteWithValidByIds(Arrays.asList(ossIds), true) ? 1 : 0);
+        return toAjax(iSysOssService.deleteWithValidByIds(Arrays.asList(ossIds), true));
     }
 
 }
