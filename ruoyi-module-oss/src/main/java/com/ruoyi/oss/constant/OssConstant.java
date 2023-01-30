@@ -27,8 +27,12 @@ public interface OssConstant {
 
     /**
      * 云服务商
+     * aliyun 阿里云
+     * qcloud 腾讯云
+     * qiniu 七牛云
+     * obs   华为云
      */
-    String[] CLOUD_SERVICE = new String[] {"aliyun", "qcloud", "qiniu"};
+    String[] CLOUD_SERVICE = new String[] {"aliyun", "qcloud", "qiniu", "obs"};
 
     /**
      * https 状态
