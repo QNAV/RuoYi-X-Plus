@@ -4,6 +4,7 @@ import cn.hutool.core.collection.IterUtil;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.poi.ss.formula.functions.T;
 import org.redisson.api.*;
 import org.redisson.config.Config;
 
@@ -326,6 +327,18 @@ public class RedisUtils {
         RMap<String, T> rMap = CLIENT.getMap(key);
         return rMap.getAll(rMap.keySet());
     }
+
+    /**
+     * 获得缓存Map的key列表
+     *
+     * @param key 缓存的键值
+     * @return key列表
+     */
+    public static Set<String> getCacheMapKeySet(final String key) {
+        RMap<String, T> rMap = CLIENT.getMap(key);
+        return rMap.keySet();
+    }
+
 
     /**
      * 往Hash中存入数据
