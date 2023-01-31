@@ -46,7 +46,7 @@
         <aws-java-sdk-s3.version>1.12.324</aws-java-sdk-s3.version>
         <!-- SMS 配置 -->
         <aliyun.sms.version>2.0.22</aliyun.sms.version>
-        <tencent.sms.version>3.1.611</tencent.sms.version>
+        <tencent.sms.version>3.1.635</tencent.sms.version>
 
         <!-- 微信小程序 -->
         <weixin-java-miniapp.version>4.4.0</weixin-java-miniapp.version>
