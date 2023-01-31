@@ -3,6 +3,7 @@ package com.ruoyi.common.utils.spring;
 import cn.hutool.extra.spring.SpringUtil;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -62,5 +63,13 @@ public final class SpringUtils extends SpringUtil {
     public static <T> T getAopProxy(T invoker) {
         return (T) AopContext.currentProxy();
     }
+
+    /**
+     * 获取spring上下文
+     */
+    public static ApplicationContext context() {
+        return getApplicationContext();
+    }
+
 
 }
