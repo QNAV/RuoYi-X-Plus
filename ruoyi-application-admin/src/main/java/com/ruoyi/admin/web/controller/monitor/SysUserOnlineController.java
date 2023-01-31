@@ -92,7 +92,7 @@ public class SysUserOnlineController extends AdminBaseController {
     public R<Void> forceLogout(@Parameter(description = "tokenId", required = true) @RequestParam String tokenId) {
         try {
             StpUtil.kickoutByTokenValue(tokenId);
-        } catch (NotLoginException e) {
+        } catch (NotLoginException ignored) {
         }
         return R.ok();
     }
