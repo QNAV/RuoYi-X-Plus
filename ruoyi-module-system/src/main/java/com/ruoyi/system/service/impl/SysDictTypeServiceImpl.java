@@ -1,10 +1,13 @@
 package com.ruoyi.system.service.impl;
 
+import cn.dev33.satoken.context.SaHolder;
+import cn.hutool.core.collection.CollStreamUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.CacheNames;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.bo.PageQuery;
@@ -30,6 +33,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 字典 业务层处理
@@ -233,28 +237,24 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
      * @param separator 分隔符
      * @return 字典标签
      */
+    @SuppressWarnings("unchecked cast")
     @Override
     public String getDictLabel(String dictType, String dictValue, String separator) {
-        StringBuilder propertyString = new StringBuilder();
-        List<SysDictDataVo> datas = SpringUtils.getAopProxy(this).selectDictDataByType(dictType);
-
-        if (StringUtils.containsAny(dictValue, separator) && CollUtil.isNotEmpty(datas)) {
-            for (SysDictDataVo dict : datas) {
-                for (String value : dictValue.split(separator)) {
-                    if (value.equals(dict.getDictValue())) {
-                        propertyString.append(dict.getDictLabel() + separator);
-                        break;
-                    }
-                }
-            }
-        } else {
-            for (SysDictDataVo dict : datas) {
-                if (dictValue.equals(dict.getDictValue())) {
-                    return dict.getDictLabel();
-                }
-            }
+        // 优先从本地缓存获取
+        List<SysDictDataVo> datas = (List<SysDictDataVo>) SaHolder.getStorage().get(CacheConstants.SYS_DICT_KEY + dictType);
+        if (ObjectUtil.isNull(datas)) {
+            datas = SpringUtils.getAopProxy(this).selectDictDataByType(dictType);
+            SaHolder.getStorage().set(CacheConstants.SYS_DICT_KEY + dictType, datas);
         }
-        return StringUtils.stripEnd(propertyString.toString(), separator);
+
+        Map<String, String> map = CollStreamUtil.toMap(datas, SysDictDataVo::getDictValue, SysDictDataVo::getDictLabel);
+        if (StringUtils.containsAny(dictValue, separator)) {
+            return Arrays.stream(dictValue.split(separator))
+                    .map(v -> map.getOrDefault(v, StringUtils.EMPTY))
+                    .collect(Collectors.joining(separator));
+        } else {
+            return map.getOrDefault(dictValue, StringUtils.EMPTY);
+        }
     }
 
     /**
@@ -265,28 +265,24 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
      * @param separator 分隔符
      * @return 字典值
      */
+    @SuppressWarnings("unchecked cast")
     @Override
     public String getDictValue(String dictType, String dictLabel, String separator) {
-        StringBuilder propertyString = new StringBuilder();
-        List<SysDictDataVo> datas = SpringUtils.getAopProxy(this).selectDictDataByType(dictType);
-
-        if (StringUtils.containsAny(dictLabel, separator) && CollUtil.isNotEmpty(datas)) {
-            for (SysDictDataVo dict : datas) {
-                for (String label : dictLabel.split(separator)) {
-                    if (label.equals(dict.getDictLabel())) {
-                        propertyString.append(dict.getDictValue() + separator);
-                        break;
-                    }
-                }
-            }
-        } else {
-            for (SysDictDataVo dict : datas) {
-                if (dictLabel.equals(dict.getDictLabel())) {
-                    return dict.getDictValue();
-                }
-            }
+        // 优先从本地缓存获取
+        List<SysDictDataVo> datas = (List<SysDictDataVo>) SaHolder.getStorage().get(CacheConstants.SYS_DICT_KEY + dictType);
+        if (ObjectUtil.isNull(datas)) {
+            datas = SpringUtils.getAopProxy(this).selectDictDataByType(dictType);
+            SaHolder.getStorage().set(CacheConstants.SYS_DICT_KEY + dictType, datas);
         }
-        return StringUtils.stripEnd(propertyString.toString(), separator);
+
+        Map<String, String> map = CollStreamUtil.toMap(datas, SysDictDataVo::getDictLabel, SysDictDataVo::getDictValue);
+        if (StringUtils.containsAny(dictLabel, separator)) {
+            return Arrays.stream(dictLabel.split(separator))
+                    .map(l -> map.getOrDefault(l, StringUtils.EMPTY))
+                    .collect(Collectors.joining(separator));
+        } else {
+            return map.getOrDefault(dictLabel, StringUtils.EMPTY);
+        }
     }
 
 }
