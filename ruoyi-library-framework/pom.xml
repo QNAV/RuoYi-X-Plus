@@ -62,15 +62,15 @@
             <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+        </dependency>
+
         <!-- 通用工具依赖库-->
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-library-common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.yomahub</groupId>
-            <artifactId>tlog-web-spring-boot-starter</artifactId>
         </dependency>
 
     </dependencies>

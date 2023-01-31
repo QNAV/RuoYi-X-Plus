@@ -62,11 +62,6 @@
             <artifactId>ruoyi-library-common</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.yomahub</groupId>
-            <artifactId>tlog-web-spring-boot-starter</artifactId>
-        </dependency>
-
     </dependencies>
 
 </project>
