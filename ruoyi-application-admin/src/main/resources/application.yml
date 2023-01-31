@@ -148,8 +148,6 @@ security:
     - /swagger-ui/**
     - /*/api-docs
     - /*/api-docs/**
-    # druid 监控配置
-    - /druid/**
     # actuator 监控配置
     - /actuator
     - /actuator/**

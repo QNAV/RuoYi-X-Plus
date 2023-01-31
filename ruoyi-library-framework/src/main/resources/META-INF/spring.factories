@@ -13,7 +13,6 @@
 # com.ruoyi.framework.config.ApplicationConfig,\
 # com.ruoyi.framework.config.AsyncConfig,\
 # com.ruoyi.framework.config.CaptchaConfig,\
-# com.ruoyi.framework.config.DruidConfig,\
 # com.ruoyi.framework.config.FilterConfig,\
 # com.ruoyi.framework.config.I18nConfig,\
 # com.ruoyi.framework.config.JacksonConfig,\

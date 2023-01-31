@@ -60,3 +60,5 @@ ALTER TABLE `sys_menu` CHANGE `visible` `visible` CHAR(1) CHARACTER SET utf8mb4 
 ALTER TABLE `sys_oss` CHANGE `service` `service` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'minio' COMMENT '服务商';
 ALTER TABLE `sys_oss_config` CHANGE `config_key` `config_key` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '配置key';
 ALTER TABLE `sys_oss_config` ADD `access_policy` CHAR(1) NOT NULL DEFAULT '1' COMMENT '桶权限类型(0=private 1=public 2=custom)' AFTER `region`;
+DELETE FROM sys_menu WHERE `sys_menu`.`menu_id` = 111;
+DELETE FROM sys_role_menu WHERE `sys_role_menu`.`menu_id` = 111;
