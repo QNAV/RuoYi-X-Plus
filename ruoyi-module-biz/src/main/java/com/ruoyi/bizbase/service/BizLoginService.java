@@ -10,7 +10,7 @@ import com.ruoyi.bizbase.model.bo.SmsLoginBindWeixinBo;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.entity.BizUser;
-import com.ruoyi.common.core.service.LogininforService;
+import com.ruoyi.common.core.domain.event.BizLogininforEvent;
 import com.ruoyi.common.enums.DeviceType;
 import com.ruoyi.common.enums.LoginType;
 import com.ruoyi.common.enums.UnionAuthType;
@@ -21,13 +21,13 @@ import com.ruoyi.common.exception.user.CaptchaExpireException;
 import com.ruoyi.common.exception.user.UserException;
 import com.ruoyi.common.utils.*;
 import com.ruoyi.common.utils.redis.RedisUtils;
+import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.system.domain.bo.BizUserAddBo;
 import com.ruoyi.system.domain.bo.BizUserEditBo;
 import com.ruoyi.system.service.IBizUserService;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.weixin.miniapp.WeixinMiniappService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -49,15 +49,6 @@ public class BizLoginService {
     private IBizUserService userService;
     @Resource
     private ISysConfigService configService;
-
-    /**
-     * 业务用户登录日志服务
-     * 前后台用户分开，暂时用Qualifier区分方案，此包暂时无法脱离system模块
-     */
-    @Resource
-    @Qualifier("bizLogininforServiceImpl")
-    private LogininforService asyncService;
-
 
     /**
      * 微信模块
@@ -96,7 +87,7 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        asyncService.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
+        recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), username);
         return StpUtil.getTokenValue();
     }
@@ -122,7 +113,7 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        asyncService.recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
+        recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
@@ -163,7 +154,7 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        asyncService.recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
+        recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
@@ -191,15 +182,36 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        asyncService.recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
+        recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
 
 
 
+    /**
+     * 退出登录
+     */
     public void logout(String loginName) {
-        asyncService.recordLogininfor(loginName, Constants.LOGOUT, MessageUtils.message("user.logout.success"), ServletUtils.getRequest());
+        recordLogininfor(loginName, Constants.LOGOUT, MessageUtils.message("user.logout.success"));
+    }
+
+
+    /**
+     * 记录登录信息
+     *
+     * @param username 用户名
+     * @param status   状态
+     * @param message  消息内容
+     * @return
+     */
+    private void recordLogininfor(String username, String status, String message) {
+        BizLogininforEvent logininfor = new BizLogininforEvent();
+        logininfor.setUsername(username);
+        logininfor.setStatus(status);
+        logininfor.setMessage(message);
+        logininfor.setRequest(ServletUtils.getRequest());
+        SpringUtils.context().publishEvent(logininfor);
     }
 
     /**
@@ -208,7 +220,7 @@ public class BizLoginService {
     public boolean validateSmsCode(String phoneNumber, String smsCode, HttpServletRequest request) {
         String code = RedisUtils.getCacheObject(CacheConstants.CAPTCHA_CODE_KEY + phoneNumber);
         if (StringUtils.isBlank(code)) {
-            asyncService.recordLogininfor(phoneNumber, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"), request);
+            recordLogininfor(phoneNumber, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
         }
         return code.equals(smsCode);
@@ -236,11 +248,11 @@ public class BizLoginService {
         String captcha = RedisUtils.getCacheObject(verifyKey);
         RedisUtils.deleteObject(verifyKey);
         if (captcha == null) {
-            asyncService.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"), request);
+            recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
         }
         if (!code.equalsIgnoreCase(captcha)) {
-            asyncService.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error"), request);
+            recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error"));
             throw new CaptchaException();
         }
     }
@@ -374,7 +386,7 @@ public class BizLoginService {
         Integer errorNumber = RedisUtils.getCacheObject(errorKey);
         // 锁定时间内登录 则踢出
         if (ObjectUtil.isNotNull(errorNumber) && errorNumber.equals(maxRetryCount)) {
-            asyncService.recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime), request);
+            recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
             throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
         }
 
@@ -384,12 +396,12 @@ public class BizLoginService {
             // 达到规定错误次数 则锁定登录
             if (errorNumber.equals(maxRetryCount)) {
                 RedisUtils.setCacheObject(errorKey, errorNumber, Duration.ofMinutes(lockTime));
-                asyncService.recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime), request);
+                recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
                 throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
             } else {
                 // 未达到规定错误次数 则递增
                 RedisUtils.setCacheObject(errorKey, errorNumber);
-                asyncService.recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitCount(), errorNumber), request);
+                recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitCount(), errorNumber));
                 throw new UserException(loginType.getRetryLimitCount(), errorNumber);
             }
         }

@@ -1,4 +1,4 @@
-package com.ruoyi.common.core.domain.bo;
+package com.ruoyi.common.core.domain.event;
 
 import lombok.Data;
 
@@ -6,13 +6,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 通用操作日志实体
+ * 操作日志事件
  *
- * @author weibocy
+ * @author Lion Li
  */
 
 @Data
-public class OperLogBo implements Serializable {
+public class OperLogEvent implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

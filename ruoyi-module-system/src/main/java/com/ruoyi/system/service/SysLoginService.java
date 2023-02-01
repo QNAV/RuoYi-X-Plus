@@ -11,7 +11,7 @@ import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.bo.RoleBo;
 import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.core.service.LogininforService;
+import com.ruoyi.common.core.domain.event.AdminLogininforEvent;
 import com.ruoyi.common.enums.DeviceType;
 import com.ruoyi.common.enums.LoginType;
 import com.ruoyi.common.enums.UserStatus;
@@ -23,8 +23,8 @@ import com.ruoyi.common.utils.MessageUtils;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
+import com.ruoyi.common.utils.spring.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -47,14 +47,6 @@ public class SysLoginService {
 
     @Resource
     private ISysConfigService configService;
-
-    /**
-     * 后台用户登录日志服务
-     * 前后台用户分开，暂时用Qualifier区分方案
-     */
-    @Resource
-    @Qualifier("sysLogininforServiceImpl")
-    private LogininforService asyncService;
 
     @Resource
     private SysPermissionService permissionService;
@@ -144,7 +136,7 @@ public class SysLoginService {
     }
 
     /**
-     * 记录登录信息
+     * 记录后台用户登录信息
      *
      * @param username 用户名
      * @param status   状态
@@ -152,7 +144,12 @@ public class SysLoginService {
      * @return
      */
     private void recordLogininfor(String username, String status, String message) {
-        asyncService.recordLogininfor(username, status, message, ServletUtils.getRequest());
+        AdminLogininforEvent logininfor = new AdminLogininforEvent();
+        logininfor.setUsername(username);
+        logininfor.setStatus(status);
+        logininfor.setMessage(message);
+        logininfor.setRequest(ServletUtils.getRequest());
+        SpringUtils.context().publishEvent(logininfor);
     }
 
 
