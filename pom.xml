@@ -37,8 +37,6 @@
         <springdoc.version>1.6.14</springdoc.version>
         <lombok.version>1.18.24</lombok.version>
 
-        <!-- 统一 guava 版本 解决隐式漏洞问题 -->
-        <guava.version>31.1-jre</guava.version>
         <!-- 临时修复 snakeyaml 漏洞 -->
         <snakeyaml.version>1.33</snakeyaml.version>
 
@@ -232,14 +230,6 @@
                 <version>${alibaba-ttl.version}</version>
             </dependency>
 
-            <!-- 统一 guava 版本 解决隐式漏洞问题 -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-
-
             <!-- 微信小程序SDK -->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
@@ -252,6 +242,13 @@
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-pay</artifactId>
                 <version>${weixin-java-pay.version}</version>
+            </dependency>
+
+            <!-- 临时修复 snakeyaml 漏洞 -->
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
             </dependency>
 
 
