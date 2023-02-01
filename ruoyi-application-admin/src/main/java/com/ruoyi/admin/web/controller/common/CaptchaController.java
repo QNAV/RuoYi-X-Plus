@@ -24,6 +24,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -103,7 +106,12 @@ public class CaptchaController {
         AbstractCaptcha captcha = SpringUtils.getBean(captchaProperties.getCategory().getClazz());
         captcha.setGenerator(codeGenerator);
         captcha.createCode();
-        String code = isMath ? getCodeResult(captcha.getCode()) : captcha.getCode();
+        String code = captcha.getCode();
+        if (isMath) {
+            ExpressionParser parser = new SpelExpressionParser();
+            Expression exp = parser.parseExpression(StringUtils.remove(code, "="));
+            code = exp.getValue(String.class);
+        }
         RedisUtils.setCacheObject(verifyKey, code, Duration.ofMinutes(CacheConstants.CAPTCHA_EXPIRATION));
         data.setUuid(uuid);
         data.setImg(captcha.getImageBase64());
