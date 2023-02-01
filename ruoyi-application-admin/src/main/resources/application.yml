@@ -144,10 +144,12 @@ security:
     - /**/*.js
     # swagger 文档配置
     - /favicon.ico
-    - /doc.html
-    - /swagger-ui/**
     - /*/api-docs
     - /*/api-docs/**
+    - /swagger-ui/**
+    - /webjars/**
+    - /swagger-ui.html
+    - /doc.html
     # actuator 监控配置
     - /actuator
     - /actuator/**
@@ -222,6 +224,8 @@ swagger:
 
 springdoc:
   swagger-ui:
+    # 持久化认证数据
+    persistAuthorization: true
     # 修改Swagger UI路径
     path: /doc.html
     # 开启Swagger UI界面
