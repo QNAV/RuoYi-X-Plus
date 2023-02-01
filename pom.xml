@@ -28,19 +28,19 @@
         <p6spy.version>3.9.1</p6spy.version>
         <hutool.version>5.8.10</hutool.version>
         <okhttp.version>4.10.0</okhttp.version>
-        <spring-boot-admin.version>2.7.7</spring-boot-admin.version>
+        <spring-boot-admin.version>2.7.9</spring-boot-admin.version>
         <redisson.version>3.19.0</redisson.version>
         <lock4j.version>2.2.3</lock4j.version>
         <dynamic-ds.version>3.5.2</dynamic-ds.version>
         <alibaba-ttl.version>2.14.2</alibaba-ttl.version>
         <xxl-job.version>2.3.1</xxl-job.version>
-        <springdoc.version>1.6.13</springdoc.version>
+        <springdoc.version>1.6.14</springdoc.version>
         <lombok.version>1.18.24</lombok.version>
 
         <!-- 统一 guava 版本 解决隐式漏洞问题 -->
         <guava.version>31.1-jre</guava.version>
         <!-- 临时修复 snakeyaml 漏洞 -->
-        <snakeyaml.version>1.32</snakeyaml.version>
+        <snakeyaml.version>1.33</snakeyaml.version>
 
         <!-- OSS 配置 -->
         <aws-java-sdk-s3.version>1.12.349</aws-java-sdk-s3.version>
