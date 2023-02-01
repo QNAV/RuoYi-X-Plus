@@ -25,7 +25,7 @@ public class SysConfigAddBo implements Serializable {
      */
     @Schema(description = "参数名称", required = true)
     @NotBlank(message = "参数名称不能为空")
-    @Size(min = 1, max = 100, message = "参数名称不能超过100个字符")
+    @Size(min = 1, max = 100, message = "参数名称不能超过{max}个字符")
     private String configName;
 
     /**
@@ -33,7 +33,7 @@ public class SysConfigAddBo implements Serializable {
      */
     @Schema(description = "参数键名", required = true)
     @NotBlank(message = "参数键名长度不能为空")
-    @Size(min = 1, max = 100, message = "参数键名长度不能超过100个字符")
+    @Size(min = 1, max = 100, message = "参数键名长度不能超过{max}个字符")
     private String configKey;
 
     /**
@@ -41,7 +41,7 @@ public class SysConfigAddBo implements Serializable {
      */
     @Schema(description = "参数键值", required = true)
     @NotBlank(message = "参数键值不能为空")
-    @Size(min = 1, max = 500, message = "参数键值长度不能超过500个字符")
+    @Size(min = 1, max = 500, message = "参数键值长度不能超过{max}个字符")
     private String configValue;
 
     /**

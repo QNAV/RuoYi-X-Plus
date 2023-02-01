@@ -33,7 +33,7 @@ public class SysMenuEditBo implements Serializable {
      * 菜单名称
      */
     @Schema(description = "菜单名称")
-    @Size(min = 1, max = 50, message = "菜单名称长度不能超过50个字符")
+    @Size(min = 1, max = 50, message = "菜单名称长度不能超过{max}个字符")
     private String menuName;
 
     /**
@@ -46,14 +46,14 @@ public class SysMenuEditBo implements Serializable {
      * 路由地址
      */
     @Schema(description = "路由地址")
-    @Size(min = 0, max = 200, message = "路由地址不能超过200个字符")
+    @Size(min = 0, max = 200, message = "路由地址不能超过{max}个字符")
     private String path;
 
     /**
      * 组件路径
      */
     @Schema(description = "组件路径")
-    @Size(min = 0, max = 200, message = "组件路径不能超过255个字符")
+    @Size(min = 0, max = 200, message = "组件路径不能超过{max}个字符")
     private String component;
 
     /**
@@ -96,7 +96,7 @@ public class SysMenuEditBo implements Serializable {
      * 权限字符串
      */
     @Schema(description = "权限字符串")
-    @Size(min = 1, max = 100, message = "权限标识长度不能超过100个字符")
+    @Size(min = 1, max = 100, message = "权限标识长度不能超过{max}个字符")
     private String perms;
 
     /**

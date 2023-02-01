@@ -30,7 +30,7 @@ public class SysDictDataAddBo implements Serializable {
      */
     @Schema(description = "字典标签", required = true)
     @NotBlank(message = "字典标签不能为空")
-    @Size(min = 0, max = 100, message = "字典标签长度不能超过100个字符")
+    @Size(min = 0, max = 100, message = "字典标签长度不能超过{max}个字符")
     private String dictLabel;
 
     /**
@@ -38,7 +38,7 @@ public class SysDictDataAddBo implements Serializable {
      */
     @Schema(description = "字典键值", required = true)
     @NotBlank(message = "字典键值不能为空")
-    @Size(min = 0, max = 100, message = "字典键值长度不能超过100个字符")
+    @Size(min = 0, max = 100, message = "字典键值长度不能超过{max}个字符")
     private String dictValue;
 
     /**
@@ -46,14 +46,14 @@ public class SysDictDataAddBo implements Serializable {
      */
     @Schema(description = "字典类型", required = true)
     @NotBlank(message = "字典类型不能为空")
-    @Size(min = 0, max = 100, message = "字典类型长度不能超过100个字符")
+    @Size(min = 0, max = 100, message = "字典类型长度不能超过{max}个字符")
     private String dictType;
 
     /**
      * 样式属性（其他样式扩展）
      */
     @Schema(description = "样式属性（其他样式扩展）")
-    @Size(min = 0, max = 100, message = "样式属性长度不能超过100个字符")
+    @Size(min = 0, max = 100, message = "样式属性长度不能超过{max}个字符")
     private String cssClass;
 
     /**

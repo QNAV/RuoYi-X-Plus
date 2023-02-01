@@ -31,21 +31,21 @@ public class SysConfigEditBo implements Serializable {
      * 参数名称
      */
     @Schema(description = "参数名称")
-    @Size(min = 1, max = 100, message = "参数名称不能超过100个字符")
+    @Size(min = 1, max = 100, message = "参数名称不能超过{max}个字符")
     private String configName;
 
     /**
      * 参数键名
      */
     @Schema(description = "参数键名")
-    @Size(min = 1, max = 100, message = "参数键名长度不能超过100个字符")
+    @Size(min = 1, max = 100, message = "参数键名长度不能超过{max}个字符")
     private String configKey;
 
     /**
      * 参数键值
      */
     @Schema(description = "参数键值")
-    @Size(min = 1, max = 500, message = "参数键值长度不能超过500个字符")
+    @Size(min = 1, max = 500, message = "参数键值长度不能超过{max}个字符")
     private String configValue;
 
     /**

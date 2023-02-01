@@ -36,28 +36,28 @@ public class SysDictDataEditBo implements Serializable {
      * 字典标签
      */
     @Schema(description = "字典标签")
-    @Size(min = 0, max = 100, message = "字典标签长度不能超过100个字符")
+    @Size(min = 0, max = 100, message = "字典标签长度不能超过{max}个字符")
     private String dictLabel;
 
     /**
      * 字典键值
      */
     @Schema(description = "字典键值")
-    @Size(min = 0, max = 100, message = "字典键值长度不能超过100个字符")
+    @Size(min = 0, max = 100, message = "字典键值长度不能超过{max}个字符")
     private String dictValue;
 
     /**
      * 字典类型
      */
     @Schema(description = "字典类型")
-    @Size(min = 0, max = 100, message = "字典类型长度不能超过100个字符")
+    @Size(min = 0, max = 100, message = "字典类型长度不能超过{max}个字符")
     private String dictType;
 
     /**
      * 样式属性（其他样式扩展）
      */
     @Schema(description = "样式属性（其他样式扩展）")
-    @Size(min = 0, max = 100, message = "样式属性长度不能超过100个字符")
+    @Size(min = 0, max = 100, message = "样式属性长度不能超过{max}个字符")
     private String cssClass;
 
     /**
