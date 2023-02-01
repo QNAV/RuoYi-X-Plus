@@ -137,16 +137,17 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
     @Override
     public String updateConfig(SysConfig config) {
         // * fix 修复 修改参数键名时 未移除过期缓存配置
-        SysConfig temp = baseMapper.selectById(config.getConfigId());
-        if (!StringUtils.equals(temp.getConfigKey(), config.getConfigKey())) {
-            CacheUtils.evict(CacheNames.SYS_CONFIG, temp.getConfigKey());
-        }
         int row = 0;
         if (config.getConfigId() != null) {
+            // fix 修复 根据key更新参数配置报null问题
+            SysConfig temp = baseMapper.selectById(config.getConfigId());
+            if (!StringUtils.equals(temp.getConfigKey(), config.getConfigKey())) {
+                CacheUtils.evict(CacheNames.SYS_CONFIG, temp.getConfigKey());
+            }
             row = baseMapper.updateById(config);
         } else {
             row = baseMapper.update(config, new LambdaQueryWrapper<SysConfig>()
-                .eq(SysConfig::getConfigKey, config.getConfigKey()));
+                    .eq(SysConfig::getConfigKey, config.getConfigKey()));
         }
         if (row > 0) {
             return config.getConfigValue();
