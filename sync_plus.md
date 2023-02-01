@@ -2,5 +2,8 @@
 
 https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/commits/dev
 
-2023-01-13
-updated: 48cb0a1bb1d3cb3f23a31adcf83173365c86f4f4 update 更新过时配置 WebSecurityConfigurerAdapter 改为 bean 注入 2022-07-06
+同步目标：ruoyi-vue,ruoyi-plus,框架核心
+
+最后同步时间: 2023-02-01
+最后同步版本号: 4.5.0
+最后同步的提交信息: b34c2fd6eef6ee166e9fceb8553055e20e97cb65 update 优化 修改 oss 配置页面开关说明 避免造成误解 2023-01-18
