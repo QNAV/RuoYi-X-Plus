@@ -75,9 +75,10 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     /**
-     * 整合spring-cache
+     * 自定义缓存管理器 整合spring-cache
      */
     @Bean
+    @Override
     public CacheManager cacheManager() {
         return new SpringCacheManager();
     }
