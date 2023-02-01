@@ -7,15 +7,12 @@ import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.UserNameLoginBo;
 import com.ruoyi.common.core.domain.entity.SysMenu;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.bo.SmsLoginBo;
 import com.ruoyi.common.core.domain.vo.SysUserVo;
 import com.ruoyi.common.core.domain.vo.RouterVo;
-import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.system.service.ISysMenuService;
 import com.ruoyi.system.service.ISysUserService;
 import com.ruoyi.system.service.SysLoginService;
-import com.ruoyi.system.service.SysPermissionService;
 import com.ruoyi.admin.web.model.vo.LoginVo;
 import com.ruoyi.admin.web.model.vo.UserInfoVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 登录验证
@@ -44,7 +40,6 @@ public class SysLoginController {
     private final SysLoginService loginService;
     private final ISysMenuService menuService;
     private final ISysUserService userService;
-    private final SysPermissionService permissionService;
 
     /**
      * 用户名登录方法
