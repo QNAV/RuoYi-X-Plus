@@ -26,14 +26,6 @@ public class RedisUtils {
 
     private static final RedissonClient CLIENT = SpringUtils.getBean(RedissonClient.class);
 
-    public static NameMapper getNameMapper() {
-        Config config = CLIENT.getConfig();
-        if (config.isClusterConfig()) {
-            return config.useClusterServers().getNameMapper();
-        }
-        return config.useSingleServer().getNameMapper();
-    }
-
     /**
      * 限流
      *
@@ -437,8 +429,8 @@ public class RedisUtils {
      * @return 对象列表
      */
     public static Collection<String> keys(final String pattern) {
-        Stream<String> stream = CLIENT.getKeys().getKeysStreamByPattern(getNameMapper().map(pattern));
-        return stream.map(key -> getNameMapper().unmap(key)).collect(Collectors.toList());
+        Stream<String> stream = CLIENT.getKeys().getKeysStreamByPattern(pattern);
+        return stream.collect(Collectors.toList());
     }
 
 
@@ -448,7 +440,7 @@ public class RedisUtils {
      * @param pattern 字符串前缀
      */
     public static void deleteKeys(final String pattern) {
-        CLIENT.getKeys().deleteByPattern(getNameMapper().map(pattern));
+        CLIENT.getKeys().deleteByPattern(pattern);
     }
 
     /**
