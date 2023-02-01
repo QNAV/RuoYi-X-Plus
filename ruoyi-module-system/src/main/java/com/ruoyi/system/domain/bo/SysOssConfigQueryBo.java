@@ -30,8 +30,8 @@ public class SysOssConfigQueryBo implements Serializable {
 
 
     /**
-     * 状态（0=正常,1=停用）
+     * 是否默认（0=是,1=否）
      */
-    @Schema(description = "状态（0=正常,1=停用）")
+    @Schema(description = "是否默认（0=是,1=否）")
     private String status;
 }
