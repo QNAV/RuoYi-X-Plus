@@ -14,14 +14,14 @@
 
     <properties>
         <ruoyi-x-plus.version>23.1.0</ruoyi-x-plus.version>
-        <spring-boot.version>2.7.6</spring-boot.version>
+        <spring-boot.version>2.7.7</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         <spring-boot.mybatis>2.2.2</spring-boot.mybatis>
         <poi.version>5.2.3</poi.version>
-        <easyexcel.version>3.1.3</easyexcel.version>
+        <easyexcel.version>3.1.4</easyexcel.version>
         <velocity.version>2.3</velocity.version>
         <satoken.version>1.33.0</satoken.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
