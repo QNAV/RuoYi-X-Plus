@@ -54,7 +54,7 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 查询${functionName}列表
      */
-    @Operation(description = "查询${functionName}列表", summary = "${ClassName}PostList")
+    @Operation(description = "查询${functionName}列表", operationId = "${ClassName}PostList")
     @SaCheckPermission("${permissionPrefix}:list")
     @PostMapping("/list")
 #if($table.crud || $table.sub)

@@ -15,7 +15,6 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Schema(description = "TreeVo基类")
 public class TreeVo<T> extends BaseVo {
 
     private static final long serialVersionUID = 1L;

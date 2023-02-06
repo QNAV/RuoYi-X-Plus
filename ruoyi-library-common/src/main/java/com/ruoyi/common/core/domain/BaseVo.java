@@ -13,7 +13,6 @@ import java.util.Date;
  */
 
 @Data
-@Schema(description = "Vo基类")
 public class BaseVo implements Serializable {
 
     private static final long serialVersionUID = 1L;

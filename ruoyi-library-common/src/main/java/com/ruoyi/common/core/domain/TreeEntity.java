@@ -17,7 +17,6 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Schema(description = "Tree基类")
 public class TreeEntity<T> extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
