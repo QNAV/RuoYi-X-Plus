@@ -44,7 +44,7 @@ public class SysOperlogController extends AdminBaseController {
      * @param operLogPageQuery 查询对象
      * @return
      */
-    @Operation(description = "查询操作日志记录列表", summary = "SysOperLogPostList")
+    @Operation(description = "查询操作日志记录列表", operationId = "SysOperLogPostList")
     @SaCheckPermission("monitor:operlog:list")
     @PostMapping("/list")
     public TableDataInfo<SysOperLogVo> list(@RequestBody(required = false) SysOperLogPageQueryBo operLogPageQuery) {
@@ -59,7 +59,7 @@ public class SysOperlogController extends AdminBaseController {
      * 导出操作日志记录列表
      * @param operLogQuery 查询对象
      */
-    @Operation(description = "导出操作日志记录列表", summary = "SysOperLogPostExport")
+    @Operation(description = "导出操作日志记录列表", operationId = "SysOperLogPostExport")
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:operlog:export")
     @PostMapping("/export")
@@ -73,7 +73,7 @@ public class SysOperlogController extends AdminBaseController {
      * @param operIds 日志ids
      * @return
      */
-    @Operation(description = "删除操作日志记录", summary = "SysOperLogPostRemove")
+    @Operation(description = "删除操作日志记录", operationId = "SysOperLogPostRemove")
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @SaCheckPermission("monitor:operlog:remove")
     @PostMapping("/remove")
@@ -85,7 +85,7 @@ public class SysOperlogController extends AdminBaseController {
      * 清理操作日志记录
      * @return
      */
-    @Operation(description = "清空操作日志记录", summary = "SysOperLogPostClean")
+    @Operation(description = "清空操作日志记录", operationId = "SysOperLogPostClean")
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
     @SaCheckPermission("monitor:operlog:remove")
     @PostMapping("/clean")

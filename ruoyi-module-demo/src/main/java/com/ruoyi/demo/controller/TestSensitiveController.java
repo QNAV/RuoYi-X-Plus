@@ -29,7 +29,7 @@ public class TestSensitiveController {
     /**
      * 测试数据脱敏
      */
-    @Operation(description = "查询测试单表列表", summary = "TestSensitiveServiceGetTest")
+    @Operation(description = "查询测试单表列表", operationId = "TestSensitiveServiceGetTest")
     @GetMapping("/test")
     public R<TestSensitive> test() {
         TestSensitive testSensitive = new TestSensitive();

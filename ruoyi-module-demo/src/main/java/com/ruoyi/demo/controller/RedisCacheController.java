@@ -42,7 +42,7 @@ public class RedisCacheController {
      * <p>
      * cacheNames 命名规则 查看 {@link CacheNames} 注释 支持多参数
      */
-    @Operation(description = "测试 @Cacheable", summary = "RedisCacheServiceGetTest1")
+    @Operation(description = "测试 @Cacheable", operationId = "RedisCacheServiceGetTest1")
     @Cacheable(cacheNames = "demo:cache#60s#10m#20", key = "#key", condition = "#key != null")
     @GetMapping("/test1")
     public R<String> test1(String key, String value) {
@@ -57,7 +57,7 @@ public class RedisCacheController {
      * <p>
      * cacheNames 命名规则 查看 {@link CacheNames} 注释 支持多参数
      */
-    @Operation(description = "测试 @CachePut", summary = "RedisCacheServiceGetTest2")
+    @Operation(description = "测试 @CachePut", operationId = "RedisCacheServiceGetTest2")
     @CachePut(cacheNames = CacheNames.DEMO_CACHE, key = "#key", condition = "#key != null")
     @GetMapping("/test2")
     public R<String> test2(String key, String value) {
@@ -72,7 +72,7 @@ public class RedisCacheController {
      * <p>
      * cacheNames 命名规则 查看 {@link CacheNames} 注释 支持多参数
      */
-    @Operation(description = "测试 @CacheEvict", summary = "RedisCacheServiceGetTest3")
+    @Operation(description = "测试 @CacheEvict", operationId = "RedisCacheServiceGetTest3")
     @CacheEvict(cacheNames = CacheNames.DEMO_CACHE, key = "#key", condition = "#key != null")
     @GetMapping("/test3")
     public R<String> test3(String key, String value) {
@@ -84,7 +84,7 @@ public class RedisCacheController {
      * 手动设置过期时间10秒
      * 11秒后获取 判断是否相等
      */
-    @Operation(description = "测试设置过期时间", summary = "RedisCacheServiceGetTest6")
+    @Operation(description = "测试设置过期时间", operationId = "RedisCacheServiceGetTest6")
     @GetMapping("/test6")
     public R<Boolean> test6(String key, String value) {
         RedisUtils.setCacheObject(key, value);

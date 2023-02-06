@@ -49,7 +49,7 @@ public class BizUserController extends AdminBaseController {
     /**
      * 查询业务用户信息列表
      */
-    @Operation(description = "查询业务用户信息列表", summary = "BizUserPostList")
+    @Operation(description = "查询业务用户信息列表", operationId = "BizUserPostList")
     @SaCheckPermission("system:user:list")
     @PostMapping("/list")
     public TableDataInfo<BizUserVo> list(@RequestBody(required = false) BizUserPageQueryBo bo) {
@@ -63,7 +63,7 @@ public class BizUserController extends AdminBaseController {
     /**
      * 导出业务用户信息列表
      */
-    @Operation(description = "导出业务用户信息列表", summary = "BizUserPostExport")
+    @Operation(description = "导出业务用户信息列表", operationId = "BizUserPostExport")
     @SaCheckPermission("system:user:export")
     @Log(title = "业务用户信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -75,7 +75,7 @@ public class BizUserController extends AdminBaseController {
     /**
      * 获取业务用户信息详细信息
      */
-    @Operation(description = "获取业务用户信息详细信息", summary = "BizUserGetInfo")
+    @Operation(description = "获取业务用户信息详细信息", operationId = "BizUserGetInfo")
     @SaCheckPermission("system:user:query")
     @GetMapping(value = "/info")
     public R<BizUserVo> getInfo(@Parameter(description = "主键", required = true)
@@ -87,7 +87,7 @@ public class BizUserController extends AdminBaseController {
     /**
      * 新增业务用户信息
      */
-    @Operation(description = "新增业务用户信息", summary = "BizUserPostAdd")
+    @Operation(description = "新增业务用户信息", operationId = "BizUserPostAdd")
     @SaCheckPermission("system:user:add")
     @Log(title = "业务用户信息", businessType = BusinessType.INSERT)
     @RepeatSubmit()
@@ -99,7 +99,7 @@ public class BizUserController extends AdminBaseController {
     /**
      * 修改业务用户信息
      */
-    @Operation(description = "修改业务用户信息", summary = "BizUserPostEdit")
+    @Operation(description = "修改业务用户信息", operationId = "BizUserPostEdit")
     @SaCheckPermission("system:user:edit")
     @Log(title = "业务用户信息", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
@@ -111,7 +111,7 @@ public class BizUserController extends AdminBaseController {
     /**
      * 删除业务用户信息
      */
-    @Operation(description = "删除业务用户信息", summary = "BizUserPostRemove")
+    @Operation(description = "删除业务用户信息", operationId = "BizUserPostRemove")
     @SaCheckPermission("system:user:remove")
     @Log(title = "业务用户信息", businessType = BusinessType.DELETE)
     @PostMapping("/remove")

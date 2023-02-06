@@ -56,7 +56,7 @@ public class CacheController {
      * @return
      * @throws Exception
      */
-    @Operation(description = "获取缓存监控详细信息", summary = "CacheGetInfo")
+    @Operation(description = "获取缓存监控详细信息", operationId = "CacheGetInfo")
     @SaCheckPermission("monitor:cache:list")
     @GetMapping("/info")
     public R<CacheInfoVo> info() throws Exception {
@@ -88,7 +88,7 @@ public class CacheController {
      * 获取缓存监控缓存名列表
      * @return
      */
-    @Operation(description = "获取缓存名称列表", summary = "CacheGetCacheNames")
+    @Operation(description = "获取缓存名称列表", operationId = "CacheGetCacheNames")
     @SaCheckPermission("monitor:cache:list")
     @GetMapping("/cacheNames")
     public R<List<SysCache>> CacheNames() {
@@ -100,7 +100,7 @@ public class CacheController {
      * @param cacheName 缓存名
      * @return
      */
-    @Operation(description = "获取KEYS基于缓存名", summary = "CacheGetCacheKeys")
+    @Operation(description = "获取KEYS基于缓存名", operationId = "CacheGetCacheKeys")
     @SaCheckPermission("monitor:cache:list")
     @GetMapping("/cacheKeys/{cacheName}")
     public R<Collection<String>> cacheKeys(@PathVariable String cacheName) {
@@ -122,7 +122,7 @@ public class CacheController {
      * @param cacheKey 缓存key
      * @return
      */
-    @Operation(description = "获取值基于缓存名与KEY", summary = "CacheGetCacheValue")
+    @Operation(description = "获取值基于缓存名与KEY", operationId = "CacheGetCacheValue")
     @SaCheckPermission("monitor:cache:list")
     @GetMapping("/cacheValue/{cacheName}/{cacheKey}")
     public R<SysCache> cacheValue(@PathVariable String cacheName, @PathVariable String cacheKey) {
@@ -141,7 +141,7 @@ public class CacheController {
      * @param cacheName 缓存名
      * @return
      */
-    @Operation(description = "清空缓存名", summary = "CacheDeleteClearCacheName")
+    @Operation(description = "清空缓存名", operationId = "CacheDeleteClearCacheName")
     @SaCheckPermission("monitor:cache:list")
     @DeleteMapping("/clearCacheName/{cacheName}")
     public R<Void> clearCacheName(@PathVariable String cacheName) {
@@ -158,7 +158,7 @@ public class CacheController {
      * @param cacheKey key名
      * @return
      */
-    @Operation(description = "清空缓存KEY", summary = "CacheDeleteClearCacheKey")
+    @Operation(description = "清空缓存KEY", operationId = "CacheDeleteClearCacheKey")
     @SaCheckPermission("monitor:cache:list")
     @DeleteMapping("/clearCacheKey/{cacheName}/{cacheKey}")
     public R<Void> clearCacheKey(@PathVariable String cacheName, @PathVariable String cacheKey) {
@@ -174,7 +174,7 @@ public class CacheController {
      * 清理全部缓存监控
      * @return
      */
-    @Operation(description = "清空所有缓存", summary = "CacheDeleteClearCacheAll")
+    @Operation(description = "清空所有缓存", operationId = "CacheDeleteClearCacheAll")
     @SaCheckPermission("monitor:cache:list")
     @DeleteMapping("/clearCacheAll")
     public R<Void> clearCacheAll() {

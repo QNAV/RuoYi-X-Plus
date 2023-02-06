@@ -37,7 +37,7 @@ public class TestBatchController {
      * <p>
      * 3.5.0 版本 增加 rewriteBatchedStatements=true 批处理参数 使 MP 原生批处理可以达到同样的速度
      */
-    @Operation(description = "新增批量方法", summary = "TestBatchServicePostAdd")
+    @Operation(description = "新增批量方法", operationId = "TestBatchServicePostAdd")
     @PostMapping("/add")
 //    @DS("slave")
     public R<Void> add() {
@@ -57,7 +57,7 @@ public class TestBatchController {
      * <p>
      * 3.5.0 版本 增加 rewriteBatchedStatements=true 批处理参数 使 MP 原生批处理可以达到同样的速度
      */
-    @Operation(description = "新增或更新批量方法", summary = "TestBatchServicePostAddOrUpdate")
+    @Operation(description = "新增或更新批量方法", operationId = "TestBatchServicePostAddOrUpdate")
     @PostMapping("/addOrUpdate")
 //    @DS("slave")
     public R<Void> addOrUpdate() {
@@ -83,7 +83,7 @@ public class TestBatchController {
     /**
      * 删除批量方法
      */
-    @Operation(description = "删除批量方法", summary = "TestBatchServiceDeleteRemove")
+    @Operation(description = "删除批量方法", operationId = "TestBatchServiceDeleteRemove")
     @DeleteMapping()
 //    @DS("slave")
     public R<Void> remove() {

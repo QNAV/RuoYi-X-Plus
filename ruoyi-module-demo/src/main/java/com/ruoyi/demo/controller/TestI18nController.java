@@ -33,7 +33,7 @@ public class TestI18nController {
      * <p>
      * 测试使用 user.register.success
      */
-    @Operation(description = "通过code获取国际化内容", summary = "TestI18nServiceGetGet")
+    @Operation(description = "通过code获取国际化内容", operationId = "TestI18nServiceGetGet")
     @GetMapping()
     public R<Void> get(@Parameter(description = "国际化code") String code) {
         return R.ok(MessageUtils.message(code));
@@ -45,7 +45,7 @@ public class TestI18nController {
      * <p>
      * 测试使用 not.null
      */
-    @Operation(description = "Validator 校验国际化", summary = "TestI18nServiceGetTest1")
+    @Operation(description = "Validator 校验国际化", operationId = "TestI18nServiceGetTest1")
     @GetMapping("/test1")
     public R<Void> test1(@NotBlank(message = "{not.null}") String str) {
         return R.ok(str);
@@ -57,7 +57,7 @@ public class TestI18nController {
      * <p>
      * 测试使用 not.null
      */
-    @Operation(description = "Bean 校验国际化", summary = "TestI18nServiceGetTest2")
+    @Operation(description = "Bean 校验国际化", operationId = "TestI18nServiceGetTest2")
     @GetMapping("/test2")
     public R<TestI18nBo> test2(@Validated TestI18nBo bo) {
         return R.ok(bo);

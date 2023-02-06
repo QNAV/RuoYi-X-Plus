@@ -69,7 +69,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 获取用户列表
      */
-    @Operation(description = "获取用户列表", summary = "SysUserPostList")
+    @Operation(description = "获取用户列表", operationId = "SysUserPostList")
     @SaCheckPermission("system:user:list")
     @PostMapping("/list")
     public TableDataInfo<SysUserVo> list(@RequestBody(required = false) SysUserPageQueryBo userPageQuery) {
@@ -83,7 +83,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 导出用户列表
      */
-    @Operation(description = "导出用户列表", summary = "SysUserPostExport")
+    @Operation(description = "导出用户列表", operationId = "SysUserPostExport")
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:user:export")
     @PostMapping("/export")
@@ -108,7 +108,7 @@ public class SysUserController extends AdminBaseController {
      * @param file          导入文件
      * @param updateSupport 是否更新已存在数据
      */
-    @Operation(description = "导入用户列表", summary = "SysUserPostImportData")
+    @Operation(description = "导入用户列表", operationId = "SysUserPostImportData")
     @Parameters({
         @Parameter(name = "file", description = "导入文件", in = ParameterIn.QUERY, required = true),
     })
@@ -123,7 +123,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 获取导入模板
      */
-    @Operation(description = "下载导入模板", summary = "SysUserPostImportTemplate")
+    @Operation(description = "下载导入模板", operationId = "SysUserPostImportTemplate")
     @PostMapping("/importTemplate")
     public void importTemplate(@Parameter(hidden = true) HttpServletResponse response) {
         ExcelUtil.exportExcel(new ArrayList<>(), "用户数据", SysUserImportVo.class, response);
@@ -132,7 +132,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 根据用户编号获取详细信息
      */
-    @Operation(description = "根据用户编号获取详细信息", summary = "SysUserGetInfo")
+    @Operation(description = "根据用户编号获取详细信息", operationId = "SysUserGetInfo")
     @SaCheckPermission("system:user:query")
     @GetMapping(value = {"/","/info"})
     public R<UserDetailVo> info(@Parameter(description = "用户ID",required = false) @RequestParam(required = false) Long userId) {
@@ -153,7 +153,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 新增用户
      */
-    @Operation(description = "新增用户", summary = "SysUserPostAdd")
+    @Operation(description = "新增用户", operationId = "SysUserPostAdd")
     @SaCheckPermission("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -175,7 +175,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 修改用户
      */
-    @Operation(description = "修改用户", summary = "SysUserPostEdit")
+    @Operation(description = "修改用户", operationId = "SysUserPostEdit")
     @SaCheckPermission("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -200,7 +200,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 删除用户
      */
-    @Operation(description = "删除用户", summary = "SysUserPostRemove")
+    @Operation(description = "删除用户", operationId = "SysUserPostRemove")
     @SaCheckPermission("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
@@ -214,7 +214,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 重置密码
      */
-    @Operation(description = "重置密码", summary = "SysUserPostResetPwd")
+    @Operation(description = "重置密码", operationId = "SysUserPostResetPwd")
     @SaCheckPermission("system:user:resetPwd")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/resetPwd")
@@ -228,7 +228,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 状态修改
      */
-    @Operation(description = "状态修改", summary = "SysUserPostChangeStatus")
+    @Operation(description = "状态修改", operationId = "SysUserPostChangeStatus")
     @SaCheckPermission("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/changeStatus")
@@ -241,7 +241,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 根据用户编号获取授权角色
      */
-    @Operation(description = "根据用户编号获取授权角色", summary = "SysUserGetAuthRole")
+    @Operation(description = "根据用户编号获取授权角色", operationId = "SysUserGetAuthRole")
     @SaCheckPermission("system:user:query")
     @GetMapping("/authRole")
     public R<UserAuthRoleVo> authRole(@Parameter(description = "用户ID", required = true) @RequestParam Long userId) {
@@ -256,7 +256,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 用户授权角色
      */
-    @Operation(description = "用户授权角色", summary = "SysUserPostInsertAuthRole")
+    @Operation(description = "用户授权角色", operationId = "SysUserPostInsertAuthRole")
     @SaCheckPermission("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.GRANT)
     @PostMapping("/insertAuthRole")
@@ -269,7 +269,7 @@ public class SysUserController extends AdminBaseController {
     /**
      * 获取部门树列表
      */
-    @Operation(description = "获取部门树列表", summary = "SysUserGetDeptTree")
+    @Operation(description = "获取部门树列表", operationId = "SysUserGetDeptTree")
     @SaCheckPermission("system:user:list")
     @GetMapping("/deptTree")
     public R<List<Tree<Long>>> deptTree(SysDeptQueryBo deptQuery) {

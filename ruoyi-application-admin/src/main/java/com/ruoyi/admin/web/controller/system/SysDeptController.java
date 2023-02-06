@@ -44,7 +44,7 @@ public class SysDeptController extends AdminBaseController {
     /**
      * 获取部门列表
      */
-    @Operation(description = "获取部门列表", summary = "SysDeptPostList")
+    @Operation(description = "获取部门列表", operationId = "SysDeptPostList")
     @SaCheckPermission("system:dept:list")
     @PostMapping("/list")
     public R<List<SysDeptVo>> list(@RequestBody(required = false) SysDeptQueryBo deptQuery) {
@@ -55,7 +55,7 @@ public class SysDeptController extends AdminBaseController {
     /**
      * 查询部门列表（排除节点）
      */
-    @Operation(description = "查询部门列表（排除节点）", summary = "SysDeptGetExcludeChild")
+    @Operation(description = "查询部门列表（排除节点）", operationId = "SysDeptGetExcludeChild")
     @SaCheckPermission("system:dept:list")
     @GetMapping("/list/exclude")
     public R<List<SysDeptVo>> excludeChild(@Parameter(description = "部门ID", required = true) @RequestParam Long deptId) {
@@ -68,7 +68,7 @@ public class SysDeptController extends AdminBaseController {
     /**
      * 根据部门编号获取详细信息
      */
-    @Operation(description = "根据部门编号获取详细信息", summary = "SysDeptGetInfo")
+    @Operation(description = "根据部门编号获取详细信息", operationId = "SysDeptGetInfo")
     @SaCheckPermission("system:dept:query")
     @GetMapping(value = "/info")
     public R<SysDeptVo> info(@Parameter(description = "部门ID", required = true) @RequestParam Long deptId) {
@@ -79,7 +79,7 @@ public class SysDeptController extends AdminBaseController {
     /**
      * 新增部门
      */
-    @Operation(description = "新增部门", summary = "SysDeptPostAdd")
+    @Operation(description = "新增部门", operationId = "SysDeptPostAdd")
     @SaCheckPermission("system:dept:add")
     @Log(title = "部门管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -94,7 +94,7 @@ public class SysDeptController extends AdminBaseController {
     /**
      * 修改部门
      */
-    @Operation(description = "修改部门", summary = "SysDeptPostEdit")
+    @Operation(description = "修改部门", operationId = "SysDeptPostEdit")
     @SaCheckPermission("system:dept:edit")
     @Log(title = "部门管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -116,7 +116,7 @@ public class SysDeptController extends AdminBaseController {
     /**
      * 删除部门
      */
-    @Operation(description = "删除部门", summary = "SysDeptPostRemove")
+    @Operation(description = "删除部门", operationId = "SysDeptPostRemove")
     @SaCheckPermission("system:dept:remove")
     @Log(title = "部门管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")

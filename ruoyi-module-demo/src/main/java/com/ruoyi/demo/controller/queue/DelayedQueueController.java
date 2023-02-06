@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/demo/queue/delayed")
 public class DelayedQueueController {
 
-    @Operation(description = "订阅队列", summary = "DelayedQueueServiceGetSubscribe")
+    @Operation(description = "订阅队列", operationId = "DelayedQueueServiceGetSubscribe")
     @GetMapping("/subscribe")
     public R<Void> subscribe(@Parameter(description = "队列名") String queueName) {
         log.info("通道: {} 监听中......", queueName);
@@ -44,7 +44,7 @@ public class DelayedQueueController {
         return R.ok("操作成功");
     }
 
-    @Operation(description = "添加队列数据", summary = "DelayedQueueServiceGetAdd")
+    @Operation(description = "添加队列数据", operationId = "DelayedQueueServiceGetAdd")
     @GetMapping("/add")
     public R<Void> add(@Parameter(description = "队列名") String queueName,
                                 @Parameter(description = "订单号") String orderNum,
@@ -55,7 +55,7 @@ public class DelayedQueueController {
         return R.ok("操作成功");
     }
 
-    @Operation(description = "删除队列数据", summary = "DelayedQueueServiceGetRemove")
+    @Operation(description = "删除队列数据", operationId = "DelayedQueueServiceGetRemove")
     @GetMapping("/remove")
     public R<Void> remove(@Parameter(description = "队列名") String queueName,
                                    @Parameter(description = "订单号") String orderNum) {
@@ -67,7 +67,7 @@ public class DelayedQueueController {
         return R.ok("操作成功");
     }
 
-    @Operation(description = "销毁队列", summary = "DelayedQueueServiceGetDestroy")
+    @Operation(description = "销毁队列", operationId = "DelayedQueueServiceGetDestroy")
     @GetMapping("/destroy")
     public R<Void> destroy(@Parameter(description = "队列名") String queueName) {
         // 用完了一定要销毁 否则会一直存在

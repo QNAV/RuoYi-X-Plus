@@ -54,7 +54,7 @@ public class SysRoleController extends AdminBaseController {
     private final SysPermissionService permissionService;
     private final ISysDeptService deptService;
 
-    @Operation(description = "查询角色信息列表", summary = "SysRolePostList")
+    @Operation(description = "查询角色信息列表", operationId = "SysRolePostList")
     @SaCheckPermission("system:role:list")
     @PostMapping("/list")
     public TableDataInfo<SysRoleVo> list(@RequestBody(required = false) SysRolePageQueryBo rolePageQuery) {
@@ -65,7 +65,7 @@ public class SysRoleController extends AdminBaseController {
         return roleService.selectPageRoleVoList(roleQuery, pageQuery);
     }
 
-    @Operation(description = "导出角色信息列表", summary = "SysRolePostExport")
+    @Operation(description = "导出角色信息列表", operationId = "SysRolePostExport")
     @Log(title = "角色管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:role:export")
     @PostMapping("/export")
@@ -77,7 +77,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 根据角色编号获取详细信息
      */
-    @Operation(description = "根据角色编号获取详细信息", summary = "SysRoleGetInfo")
+    @Operation(description = "根据角色编号获取详细信息", operationId = "SysRoleGetInfo")
     @SaCheckPermission("system:role:query")
     @GetMapping(value = "/info")
     public R<SysRoleVo> info(@Parameter(description = "角色ID",required = true) @RequestParam Long roleId) {
@@ -88,7 +88,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 新增角色
      */
-    @Operation(description = "新增角色", summary = "SysRolePostAdd")
+    @Operation(description = "新增角色", operationId = "SysRolePostAdd")
     @SaCheckPermission("system:role:add")
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -105,7 +105,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 修改保存角色
      */
-    @Operation(description = "修改保存角色", summary = "SysRolePostEdit")
+    @Operation(description = "修改保存角色", operationId = "SysRolePostEdit")
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -134,7 +134,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 修改保存数据权限
      */
-    @Operation(description = "修改保存数据权限", summary = "SysRolePostDataScope")
+    @Operation(description = "修改保存数据权限", operationId = "SysRolePostDataScope")
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/dataScope")
@@ -147,7 +147,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 状态修改
      */
-    @Operation(description = "状态修改", summary = "SysRolePostChangeStatus")
+    @Operation(description = "状态修改", operationId = "SysRolePostChangeStatus")
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
     @PostMapping("/changeStatus")
@@ -160,7 +160,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 删除角色
      */
-    @Operation(description = "删除角色", summary = "SysRolePostRemove")
+    @Operation(description = "删除角色", operationId = "SysRolePostRemove")
     @SaCheckPermission("system:role:remove")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
@@ -171,7 +171,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 获取角色选择框列表
      */
-    @Operation(description = "获取角色选择框列表", summary = "SysRoleGetOptionSelect")
+    @Operation(description = "获取角色选择框列表", operationId = "SysRoleGetOptionSelect")
     @SaCheckPermission("system:role:query")
     @GetMapping("/optionSelect")
     public R<List<SysRoleVo>> optionSelect() {
@@ -181,7 +181,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 查询已分配用户角色列表
      */
-    @Operation(description = "查询已分配用户角色列表", summary = "SysRolePostAllocatedList")
+    @Operation(description = "查询已分配用户角色列表", operationId = "SysRolePostAllocatedList")
     @SaCheckPermission("system:role:list")
     @PostMapping("/authUser/allocatedList")
     public TableDataInfo<SysUserVo> allocatedList(@RequestBody(required = false) SysUserPageQueryBo userPageQuery) {
@@ -195,7 +195,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 查询未分配用户角色列表
      */
-    @Operation(description = "查询未分配用户角色列表", summary = "SysRolePostUnallocatedList")
+    @Operation(description = "查询未分配用户角色列表", operationId = "SysRolePostUnallocatedList")
     @SaCheckPermission("system:role:list")
     @PostMapping("/authUser/unallocatedList")
     public TableDataInfo<SysUserVo> unallocatedList(@RequestBody(required = false) SysUserPageQueryBo userPageQuery) {
@@ -209,7 +209,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 取消授权用户
      */
-    @Operation(description = "取消授权用户", summary = "SysRolePostCancelAuthUser")
+    @Operation(description = "取消授权用户", operationId = "SysRolePostCancelAuthUser")
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/cancel")
@@ -220,7 +220,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 批量取消授权用户
      */
-    @Operation(description = "批量取消授权用户", summary = "SysRolePostCancelAuthUserAll")
+    @Operation(description = "批量取消授权用户", operationId = "SysRolePostCancelAuthUserAll")
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/cancelAll")
@@ -231,7 +231,7 @@ public class SysRoleController extends AdminBaseController {
     /**
      * 批量选择用户授权
      */
-    @Operation(description = "批量选择用户授权", summary = "SysRolePostSelectAuthUserAll")
+    @Operation(description = "批量选择用户授权", operationId = "SysRolePostSelectAuthUserAll")
     @SaCheckPermission("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PostMapping("/authUser/selectAll")
@@ -245,7 +245,7 @@ public class SysRoleController extends AdminBaseController {
      *
      * @param roleId 角色ID
      */
-    @Operation(description = "获取对应角色部门树列表", summary = "SysRoleGetRoleDeptTreeSelect")
+    @Operation(description = "获取对应角色部门树列表", operationId = "SysRoleGetRoleDeptTreeSelect")
     @SaCheckPermission("system:role:query")
     @GetMapping(value = "/deptTree/{roleId}")
     public R<Map<String, Object>> roleDeptTreeSelect(@PathVariable("roleId") Long roleId) {

@@ -45,7 +45,7 @@ public class SysUserOnlineController extends AdminBaseController {
      * @param userName 用户名
      * @return
      */
-    @Operation(description = "在线用户列表", summary = "SysUserOnlineGetList")
+    @Operation(description = "在线用户列表", operationId = "SysUserOnlineGetList")
     @SaCheckPermission("monitor:online:list")
     @GetMapping("/list")
     public TableDataInfo<SysUserOnlineVo> list(@Parameter(description = "ip地址") @RequestParam(required = false) String ipaddr, @Parameter(description = "用户名") @RequestParam(required = false) String userName) {
@@ -85,7 +85,7 @@ public class SysUserOnlineController extends AdminBaseController {
      *
      * @param tokenId token值
      */
-    @Operation(description = "强退用户", summary = "SysUserOnlinePostForceLogout")
+    @Operation(description = "强退用户", operationId = "SysUserOnlinePostForceLogout")
     @SaCheckPermission("monitor:online:forceLogout")
     @Log(title = "在线用户", businessType = BusinessType.FORCE)
     @PostMapping("/forceLogout")

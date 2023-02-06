@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BoundedQueueController {
 
 
-    @Operation(description = "添加队列数据", summary = "BoundedQueueServiceGetAdd")
+    @Operation(description = "添加队列数据", operationId = "BoundedQueueServiceGetAdd")
     @GetMapping("/add")
     public R<Void> add(@Parameter(description = "队列名") String queueName,
                                 @Parameter(description = "容量") int capacity) {
@@ -56,7 +56,7 @@ public class BoundedQueueController {
         return R.ok("操作成功");
     }
 
-    @Operation(description = "删除队列数据", summary = "BoundedQueueServiceGetRemove")
+    @Operation(description = "删除队列数据", operationId = "BoundedQueueServiceGetRemove")
     @GetMapping("/remove")
     public R<Void> remove(@Parameter(description = "队列名") String queueName) {
         String data = "data-" + 5;

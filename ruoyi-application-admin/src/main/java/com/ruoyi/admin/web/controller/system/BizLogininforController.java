@@ -49,7 +49,7 @@ public class BizLogininforController extends AdminBaseController {
     /**
      * 查询业务用户登录记录列表
      */
-    @Operation(description = "查询业务用户登录记录列表", summary = "BizLogininforPostList")
+    @Operation(description = "查询业务用户登录记录列表", operationId = "BizLogininforPostList")
     @SaCheckPermission("system:logininfor:list")
     @PostMapping("/list")
     public TableDataInfo<BizLogininforVo> list(@RequestBody(required = false) BizLogininforPageQueryBo bo) {
@@ -63,7 +63,7 @@ public class BizLogininforController extends AdminBaseController {
     /**
      * 导出业务用户登录记录列表
      */
-    @Operation(description = "导出业务用户登录记录列表", summary = "BizLogininforPostExport")
+    @Operation(description = "导出业务用户登录记录列表", operationId = "BizLogininforPostExport")
     @SaCheckPermission("system:logininfor:export")
     @Log(title = "业务用户登录记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -75,7 +75,7 @@ public class BizLogininforController extends AdminBaseController {
     /**
      * 获取业务用户登录记录详细信息
      */
-    @Operation(description = "获取业务用户登录记录详细信息", summary = "BizLogininforGetInfo")
+    @Operation(description = "获取业务用户登录记录详细信息", operationId = "BizLogininforGetInfo")
     @SaCheckPermission("system:logininfor:query")
     @GetMapping(value = "/info")
     public R<BizLogininforVo> getInfo(@Parameter(description = "主键", required = true)
@@ -87,7 +87,7 @@ public class BizLogininforController extends AdminBaseController {
     /**
      * 新增业务用户登录记录
      */
-    @Operation(description = "新增业务用户登录记录", summary = "BizLogininforPostAdd")
+    @Operation(description = "新增业务用户登录记录", operationId = "BizLogininforPostAdd")
     @SaCheckPermission("system:logininfor:add")
     @Log(title = "业务用户登录记录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
@@ -99,7 +99,7 @@ public class BizLogininforController extends AdminBaseController {
     /**
      * 修改业务用户登录记录
      */
-    @Operation(description = "修改业务用户登录记录", summary = "BizLogininforPostEdit")
+    @Operation(description = "修改业务用户登录记录", operationId = "BizLogininforPostEdit")
     @SaCheckPermission("system:logininfor:edit")
     @Log(title = "业务用户登录记录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
@@ -111,7 +111,7 @@ public class BizLogininforController extends AdminBaseController {
     /**
      * 删除业务用户登录记录
      */
-    @Operation(description = "删除业务用户登录记录", summary = "BizLogininforPostRemove")
+    @Operation(description = "删除业务用户登录记录", operationId = "BizLogininforPostRemove")
     @SaCheckPermission("system:logininfor:remove")
     @Log(title = "业务用户登录记录", businessType = BusinessType.DELETE)
     @PostMapping("/remove")

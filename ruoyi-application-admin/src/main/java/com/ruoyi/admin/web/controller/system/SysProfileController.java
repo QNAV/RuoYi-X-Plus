@@ -52,7 +52,7 @@ public class SysProfileController extends AdminBaseController {
     /**
      * 个人信息
      */
-    @Operation(description = "个人信息", summary = "SysProfileGetProfile")
+    @Operation(description = "个人信息", operationId = "SysProfileGetProfile")
     @GetMapping
     public R<ProfileVo> profile() {
         SysUserVo user = userService.selectUserVoById(getUserId());
@@ -66,7 +66,7 @@ public class SysProfileController extends AdminBaseController {
     /**
      * 修改用户
      */
-    @Operation(description = "修改用户", summary = "SysProfilePostUpdateProfile")
+    @Operation(description = "修改用户", operationId = "SysProfilePostUpdateProfile")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PostMapping
     public R<Void> updateProfile(@RequestBody LoginUserUpdateBo userBo) {
@@ -91,7 +91,7 @@ public class SysProfileController extends AdminBaseController {
     /**
      * 重置密码
      */
-    @Operation(description = "重置密码", summary = "SysProfilePostUpdatePwd")
+    @Operation(description = "重置密码", operationId = "SysProfilePostUpdatePwd")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PostMapping("/updatePwd")
     public R<Void> updatePwd(@Validated @RequestBody UpdatePwdBo updatePwdBody) {
@@ -114,7 +114,7 @@ public class SysProfileController extends AdminBaseController {
     /**
      * 头像上传
      */
-    @Operation(description = "头像上传", summary = "SysProfilePostAvatar")
+    @Operation(description = "头像上传", operationId = "SysProfilePostAvatar")
     @Parameters({
         @Parameter(name = "avatarfile", description = "用户头像", in = ParameterIn.QUERY, required = true)
     })

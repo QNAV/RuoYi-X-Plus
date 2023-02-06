@@ -41,7 +41,7 @@ public class TestTreeController {
     /**
      * 查询测试树表列表
      */
-    @Operation(description = "查询测试树表列表", summary = "TestTreeServiceGetList")
+    @Operation(description = "查询测试树表列表", operationId = "TestTreeServiceGetList")
     @SaCheckPermission("demo:tree:list")
     @GetMapping("/list")
     public R<List<TestTreeVo>> list(@Validated TestTreeQuery query) {
@@ -52,7 +52,7 @@ public class TestTreeController {
     /**
      * 导出测试树表列表
      */
-    @Operation(description = "导出测试树表列表", summary = "TestTreeServiceGetExport")
+    @Operation(description = "导出测试树表列表", operationId = "TestTreeServiceGetExport")
     @SaCheckPermission("demo:tree:export")
     @Log(title = "测试树表", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
@@ -64,7 +64,7 @@ public class TestTreeController {
     /**
      * 获取测试树表详细信息
      */
-    @Operation(description = "获取测试树表详细信息", summary = "TestTreeServiceGetGetInfo")
+    @Operation(description = "获取测试树表详细信息", operationId = "TestTreeServiceGetGetInfo")
     @SaCheckPermission("demo:tree:query")
     @GetMapping("/{id}")
     public R<TestTreeVo> getInfo(@Parameter(description = "测试树ID")
@@ -76,7 +76,7 @@ public class TestTreeController {
     /**
      * 新增测试树表
      */
-    @Operation(description = "新增测试树表", summary = "TestTreeServicePostAdd")
+    @Operation(description = "新增测试树表", operationId = "TestTreeServicePostAdd")
     @SaCheckPermission("demo:tree:add")
     @Log(title = "测试树表", businessType = BusinessType.INSERT)
     @RepeatSubmit
@@ -88,7 +88,7 @@ public class TestTreeController {
     /**
      * 修改测试树表
      */
-    @Operation(description = "修改测试树表", summary = "TestTreeServicePutEdit")
+    @Operation(description = "修改测试树表", operationId = "TestTreeServicePutEdit")
     @SaCheckPermission("demo:tree:edit")
     @Log(title = "测试树表", businessType = BusinessType.UPDATE)
     @RepeatSubmit
@@ -100,7 +100,7 @@ public class TestTreeController {
     /**
      * 删除测试树表
      */
-    @Operation(description = "删除测试树表", summary = "TestTreeServiceDeleteRemove")
+    @Operation(description = "删除测试树表", operationId = "TestTreeServiceDeleteRemove")
     @SaCheckPermission("demo:tree:remove")
     @Log(title = "测试树表", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")

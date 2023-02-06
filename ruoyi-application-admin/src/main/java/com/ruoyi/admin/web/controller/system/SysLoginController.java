@@ -48,7 +48,7 @@ public class SysLoginController {
      * @return 结果
      */
     @SaIgnore
-    @Operation(description = "用户名登录方法", summary = "SysLoginPostLogin")
+    @Operation(description = "用户名登录方法", operationId = "SysLoginPostLogin")
     @PostMapping("/login")
     public R<LoginVo> login(@Validated @RequestBody UserNameLoginBo userNameLoginBody) {
         LoginVo result = new LoginVo();
@@ -66,7 +66,7 @@ public class SysLoginController {
      * @return 结果
      */
     @SaIgnore
-    @Operation(description = "短信登录(示例)", summary = "SysLoginPostSmsLogin")
+    @Operation(description = "短信登录(示例)", operationId = "SysLoginPostSmsLogin")
     @PostMapping("/smsLogin")
     public R<LoginVo> smsLogin(@Validated @RequestBody SmsLoginBo smsLoginBody) {
         LoginVo result = new LoginVo();
@@ -83,7 +83,7 @@ public class SysLoginController {
      * @return 结果
      */
     @SaIgnore
-    @Operation(description = "小程序登录(示例)", summary = "SysLoginGetXcxLogin")
+    @Operation(description = "小程序登录(示例)", operationId = "SysLoginGetXcxLogin")
     @GetMapping("/xcxLogin")
     public R<LoginVo> xcxLogin(@NotBlank(message = "{xcx.code.not.blank}") @Parameter(description = "小程序code", required = true) @RequestParam String xcxCode) {
         LoginVo result = new LoginVo();
@@ -94,7 +94,7 @@ public class SysLoginController {
     }
 
     @SaIgnore
-    @Operation(description = "登出方法", summary = "SysLoginPostLogout")
+    @Operation(description = "登出方法", operationId = "SysLoginPostLogout")
     @PostMapping("/logout")
     public R<Void> logout() {
         loginService.logout();
@@ -106,7 +106,7 @@ public class SysLoginController {
      *
      * @return 用户信息
      */
-    @Operation(description = "获取已登录用户信息", summary = "SysLoginGetInfo")
+    @Operation(description = "获取已登录用户信息", operationId = "SysLoginGetInfo")
     @GetMapping("/info")
     public R<UserInfoVo> info() {
         UserInfoVo data = new UserInfoVo();
@@ -125,7 +125,7 @@ public class SysLoginController {
      *
      * @return 路由信息
      */
-    @Operation(description = "获取菜单路由信息", summary = "SysLoginGetRouters")
+    @Operation(description = "获取菜单路由信息", operationId = "SysLoginGetRouters")
     @GetMapping("/routers")
     public R<List<RouterVo>> routers() {
         Long userId = AdminLoginHelper.getUserId();

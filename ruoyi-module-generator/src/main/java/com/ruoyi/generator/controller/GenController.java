@@ -50,7 +50,7 @@ public class GenController {
      *         @ApiImplicitParam(name = "datasource", value = "数据源", paramType = "header", dataType = "string", example = "master", required = true)
      *     })
      */
-    @Operation(description = "查询代码生成列表", summary = "GenPostList")
+    @Operation(description = "查询代码生成列表", operationId = "GenPostList")
     @SaCheckPermission("tool:gen:list")
     @PostMapping("/list")
     public TableDataInfo<GenTable> genList(@RequestBody(required = false) GenTablePageQuery genTablePageQuery) {
@@ -64,7 +64,7 @@ public class GenController {
     /**
      * 获取代码生成业务信息
      */
-    @Operation(description = "获取代码生成业务信息", summary = "GenGetInfo")
+    @Operation(description = "获取代码生成业务信息", operationId = "GenGetInfo")
     @SaCheckPermission("tool:gen:query")
     @GetMapping(value = "/info")
     public R<GenInfoVo> info(@Parameter(description = "生成表编号", required = true) @RequestParam Long tableId) {
@@ -81,7 +81,7 @@ public class GenController {
     /**
      * 查询数据库列表
      */
-    @Operation(description = "查询数据库列表", summary = "GenPostDbList")
+    @Operation(description = "查询数据库列表", operationId = "GenPostDbList")
     @SaCheckPermission("tool:gen:list")
     @PostMapping("/db/list")
     public TableDataInfo<GenTable> dbList(@RequestBody(required = false) GenTablePageQuery genTablePageQuery) {
@@ -95,7 +95,7 @@ public class GenController {
     /**
      * 查询数据表字段列表
      */
-    @Operation(description = "查询数据表字段列表", summary = "GenGetColumnList")
+    @Operation(description = "查询数据表字段列表", operationId = "GenGetColumnList")
     @SaCheckPermission("tool:gen:list")
     @GetMapping(value = "/column/list")
     public TableDataInfo<GenTableColumn> columnList(@Parameter(description = "生成业务表编号", required = true) @RequestParam Long tableId) {
@@ -106,7 +106,7 @@ public class GenController {
     /**
      * 导入表结构（保存）
      */
-    @Operation(description = "导入表结构（保存）", summary = "GenPostImportTable")
+    @Operation(description = "导入表结构（保存）", operationId = "GenPostImportTable")
     @SaCheckPermission("tool:gen:import")
     @Log(title = "代码生成", businessType = BusinessType.IMPORT)
     @PostMapping("/importTable")
@@ -121,7 +121,7 @@ public class GenController {
     /**
      * 修改保存代码生成业务
      */
-    @Operation(description = "修改保存代码生成业务", summary = "GenPostEdit")
+    @Operation(description = "修改保存代码生成业务", operationId = "GenPostEdit")
     @SaCheckPermission("tool:gen:edit")
     @Log(title = "代码生成", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -134,7 +134,7 @@ public class GenController {
     /**
      * 删除代码生成
      */
-    @Operation(description = "删除代码生成", summary = "GenPostRemove")
+    @Operation(description = "删除代码生成", operationId = "GenPostRemove")
     @SaCheckPermission("tool:gen:remove")
     @Log(title = "代码生成", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
@@ -146,7 +146,7 @@ public class GenController {
     /**
      * 预览代码
      */
-    @Operation(description = "预览代码", summary = "GenGetPreview")
+    @Operation(description = "预览代码", operationId = "GenGetPreview")
     @SaCheckPermission("tool:gen:preview")
     @GetMapping("/preview")
     public R<Map<String, String>> preview(@Parameter(description = "代码生成表编号", required = true) @RequestParam Long tableId) {
@@ -157,7 +157,7 @@ public class GenController {
     /**
      * 生成代码（下载方式）
      */
-    @Operation(description = "生成代码（下载方式）", summary = "GenGetDownload")
+    @Operation(description = "生成代码（下载方式）", operationId = "GenGetDownload")
     @SaCheckPermission("tool:gen:code")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/download")
@@ -169,7 +169,7 @@ public class GenController {
     /**
      * 生成代码（自定义路径）
      */
-    @Operation(description = "生成代码（自定义路径）", summary = "GenGetGenCode")
+    @Operation(description = "生成代码（自定义路径）", operationId = "GenGetGenCode")
     @SaCheckPermission("tool:gen:code")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/genCode")
@@ -181,7 +181,7 @@ public class GenController {
     /**
      * 同步数据库
      */
-    @Operation(description = "同步数据库", summary = "GenGetSynchDb")
+    @Operation(description = "同步数据库", operationId = "GenGetSynchDb")
     @SaCheckPermission("tool:gen:edit")
     @Log(title = "代码生成", businessType = BusinessType.UPDATE)
     @GetMapping("/synchDb")
@@ -193,7 +193,7 @@ public class GenController {
     /**
      * 批量生成代码
      */
-    @Operation(description = "批量生成代码", summary = "GenGetBatchGenCode")
+    @Operation(description = "批量生成代码", operationId = "GenGetBatchGenCode")
     @SaCheckPermission("tool:gen:code")
     @Log(title = "代码生成", businessType = BusinessType.GENCODE)
     @GetMapping("/batchGenCode")

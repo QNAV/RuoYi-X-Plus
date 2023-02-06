@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo/queue/priority")
 public class PriorityQueueController {
 
-    @Operation(description = "添加队列数据", summary = "PriorityQueueServiceGetAdd")
+    @Operation(description = "添加队列数据", operationId = "PriorityQueueServiceGetAdd")
     @GetMapping("/add")
     public R<Void> add(@Parameter(description = "队列名") String queueName) {
         // 用完了一定要销毁 否则会一直存在
@@ -50,7 +50,7 @@ public class PriorityQueueController {
         return R.ok("操作成功");
     }
 
-    @Operation(description = "删除队列数据", summary = "PriorityQueueServiceGetRemove")
+    @Operation(description = "删除队列数据", operationId = "PriorityQueueServiceGetRemove")
     @GetMapping("/remove")
     public R<Void> remove(@Parameter(description = "队列名") String queueName,
                                    @Parameter(description = "对象名") String name,
@@ -66,7 +66,7 @@ public class PriorityQueueController {
         return R.ok("操作成功");
     }
 
-    @Operation(description = "获取队列数据", summary = "PriorityQueueServiceGetGet")
+    @Operation(description = "获取队列数据", operationId = "PriorityQueueServiceGetGet")
     @GetMapping("/get")
     public R<Void> get(@Parameter(description = "队列名") String queueName) {
         PriorityDemo data;

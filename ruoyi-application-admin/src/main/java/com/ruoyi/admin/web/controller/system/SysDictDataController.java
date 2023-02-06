@@ -45,7 +45,7 @@ public class SysDictDataController extends AdminBaseController {
     private final ISysDictDataService dictDataService;
     private final ISysDictTypeService dictTypeService;
 
-    @Operation(description = "查询字典数据列表", summary = "SysDictDataPostList")
+    @Operation(description = "查询字典数据列表", operationId = "SysDictDataPostList")
     @SaCheckPermission("system:dict:list")
     @PostMapping("/list")
     public TableDataInfo<SysDictDataVo> list(@RequestBody(required = false) SysDictDataPageQueryBo dictDataPageQuery) {
@@ -56,7 +56,7 @@ public class SysDictDataController extends AdminBaseController {
         return dictDataService.selectPageDictDataList(dictDataQuery, pageQuery);
     }
 
-    @Operation(description = "导出字典数据列表", summary = "SysDictDataPostExport")
+    @Operation(description = "导出字典数据列表", operationId = "SysDictDataPostExport")
     @Log(title = "字典数据", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:dict:export")
     @PostMapping("/export")
@@ -68,7 +68,7 @@ public class SysDictDataController extends AdminBaseController {
     /**
      * 查询字典数据详细
      */
-    @Operation(description = "查询字典数据详细", summary = "SysDictDataGetInfo")
+    @Operation(description = "查询字典数据详细", operationId = "SysDictDataGetInfo")
     @SaCheckPermission("system:dict:query")
     @GetMapping(value = "/info")
     public R<SysDictDataVo> info(@Parameter(description = "字典code", required = true) @RequestParam Long dictCode) {
@@ -78,7 +78,7 @@ public class SysDictDataController extends AdminBaseController {
     /**
      * 根据字典类型查询字典数据信息
      */
-    @Operation(description = "根据字典类型查询字典数据信息", summary = "SysDictDataGetType")
+    @Operation(description = "根据字典类型查询字典数据信息", operationId = "SysDictDataGetType")
     @GetMapping(value = "/type")
     public R<List<SysDictDataVo>> dictType(@Parameter(description = "字典类型",required = true) @RequestParam String dictType) {
         List<SysDictDataVo> data = dictTypeService.selectDictDataByType(dictType);
@@ -91,7 +91,7 @@ public class SysDictDataController extends AdminBaseController {
     /**
      * 新增字典类型
      */
-    @Operation(description = "新增字典类型", summary = "SysDictDataPostAdd")
+    @Operation(description = "新增字典类型", operationId = "SysDictDataPostAdd")
     @SaCheckPermission("system:dict:add")
     @Log(title = "字典数据", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -104,7 +104,7 @@ public class SysDictDataController extends AdminBaseController {
     /**
      * 修改保存字典类型
      */
-    @Operation(description = "修改保存字典类型", summary = "SysDictDataPostEdit")
+    @Operation(description = "修改保存字典类型", operationId = "SysDictDataPostEdit")
     @SaCheckPermission("system:dict:edit")
     @Log(title = "字典数据", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -117,7 +117,7 @@ public class SysDictDataController extends AdminBaseController {
     /**
      * 删除字典类型
      */
-    @Operation(description = "删除字典类型", summary = "SysDictDataPostRemove")
+    @Operation(description = "删除字典类型", operationId = "SysDictDataPostRemove")
     @SaCheckPermission("system:dict:remove")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @PostMapping("/remove")

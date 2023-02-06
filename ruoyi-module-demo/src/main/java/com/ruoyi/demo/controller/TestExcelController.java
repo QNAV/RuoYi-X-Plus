@@ -29,7 +29,7 @@ public class TestExcelController {
     /**
      * 单列表多数据
      */
-    @Operation(description = "单列表多数据", summary = "TestExcelServiceGetExportTemplateOne")
+    @Operation(description = "单列表多数据", operationId = "TestExcelServiceGetExportTemplateOne")
     @GetMapping("/exportTemplateOne")
     public void exportTemplateOne(HttpServletResponse response) {
         Map<String,String> map = new HashMap<>();
@@ -49,7 +49,7 @@ public class TestExcelController {
     /**
      * 多列表多数据
      */
-    @Operation(description = "多列表多数据", summary = "TestExcelServiceGetExportTemplateMuliti")
+    @Operation(description = "多列表多数据", operationId = "TestExcelServiceGetExportTemplateMuliti")
     @GetMapping("/exportTemplateMuliti")
     public void exportTemplateMuliti(HttpServletResponse response) {
         Map<String,String> map = new HashMap<>();

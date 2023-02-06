@@ -29,7 +29,7 @@ public class SysRegisterController extends AdminBaseController {
     private final ISysConfigService configService;
 
     @SaIgnore
-    @Operation(description = "用户注册", summary = "SysRegisterPostRegister")
+    @Operation(description = "用户注册", operationId = "SysRegisterPostRegister")
     @PostMapping("/register")
     public R<Void> register(@Validated @RequestBody UserNameRegisterBo user) {
         if (!("true".equals(configService.selectConfigByKey("sys.account.registerUser")))) {

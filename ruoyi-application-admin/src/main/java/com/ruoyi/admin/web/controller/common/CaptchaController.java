@@ -59,7 +59,7 @@ public class CaptchaController {
      *
      * @param phoneNumber 用户手机号
      */
-    @Operation(description = "短信验证码", summary = "CaptchaGetSmsCaptcha")
+    @Operation(description = "短信验证码", operationId = "CaptchaGetSmsCaptcha")
     @GetMapping("/captchaSms")
     public R<Void> smsCaptcha(@Parameter(name = "用户手机号")
                               @NotBlank(message = "{user.phonenumber.not.blank}")
@@ -86,7 +86,7 @@ public class CaptchaController {
     /**
      * 生成验证码
      */
-    @Operation(description = "生成验证码", summary = "CaptchaGetGetCode")
+    @Operation(description = "生成验证码", operationId = "CaptchaGetGetCode")
     @GetMapping("/captchaImage")
     public R<CaptchaImageVo> getCode() {
         CaptchaImageVo data = new CaptchaImageVo();

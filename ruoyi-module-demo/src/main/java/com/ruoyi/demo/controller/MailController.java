@@ -26,7 +26,7 @@ import java.io.File;
 @RequestMapping("/demo/mail")
 public class MailController {
 
-    @Operation(description = "发送邮件", summary = "MailServiceGetSendSimpleMessage")
+    @Operation(description = "发送邮件", operationId = "MailServiceGetSendSimpleMessage")
     @GetMapping("/sendSimpleMessage")
     public R<Void> sendSimpleMessage(@Parameter(description = "接收人") String to,
                                      @Parameter(description = "标题") String subject,
@@ -35,7 +35,7 @@ public class MailController {
         return R.ok();
     }
 
-    @Operation(description = "发送邮件（带附件）", summary = "MailServiceGetSendMessageWithAttachment")
+    @Operation(description = "发送邮件（带附件）", operationId = "MailServiceGetSendMessageWithAttachment")
     @GetMapping("/sendMessageWithAttachment")
     public R<Void> sendMessageWithAttachment(@Parameter(description = "接收人") String to,
                                              @Parameter(description = "标题") String subject,

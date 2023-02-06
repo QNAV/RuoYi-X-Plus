@@ -42,7 +42,7 @@ public class SysDictTypeController extends AdminBaseController {
 
     private final ISysDictTypeService dictTypeService;
 
-    @Operation(description = "查询字典类型列表", summary = "SysDictTypePostList")
+    @Operation(description = "查询字典类型列表", operationId = "SysDictTypePostList")
     @SaCheckPermission("system:dict:list")
     @PostMapping("/list")
     public TableDataInfo<SysDictTypeVo> list(@RequestBody(required = false) SysDictTypePageQueryBo dictTypePageQuery) {
@@ -53,7 +53,7 @@ public class SysDictTypeController extends AdminBaseController {
         return dictTypeService.selectPageDictTypeList(dictTypeQuery, pageQuery);
     }
 
-    @Operation(description = "导出字典类型列表", summary = "SysDictTypePostExport")
+    @Operation(description = "导出字典类型列表", operationId = "SysDictTypePostExport")
     @Log(title = "字典类型", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:dict:export")
     @PostMapping("/export")
@@ -65,7 +65,7 @@ public class SysDictTypeController extends AdminBaseController {
     /**
      * 查询字典类型详细
      */
-    @Operation(description = "查询字典类型详细", summary = "SysDictTypeGetInfo")
+    @Operation(description = "查询字典类型详细", operationId = "SysDictTypeGetInfo")
     @SaCheckPermission("system:dict:query")
     @GetMapping(value = "/info")
     public R<SysDictTypeVo> info(@Parameter(description = "字典ID", required = true) @RequestParam Long dictId) {
@@ -75,7 +75,7 @@ public class SysDictTypeController extends AdminBaseController {
     /**
      * 新增字典类型
      */
-    @Operation(description = "新增字典类型", summary = "SysDictTypePostAdd")
+    @Operation(description = "新增字典类型", operationId = "SysDictTypePostAdd")
     @SaCheckPermission("system:dict:add")
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -91,7 +91,7 @@ public class SysDictTypeController extends AdminBaseController {
     /**
      * 修改字典类型
      */
-    @Operation(description = "修改字典类型", summary = "SysDictTypePostEdit")
+    @Operation(description = "修改字典类型", operationId = "SysDictTypePostEdit")
     @SaCheckPermission("system:dict:edit")
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -107,7 +107,7 @@ public class SysDictTypeController extends AdminBaseController {
     /**
      * 删除字典类型
      */
-    @Operation(description = "删除字典类型", summary = "SysDictTypePostRemove")
+    @Operation(description = "删除字典类型", operationId = "SysDictTypePostRemove")
     @SaCheckPermission("system:dict:remove")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
@@ -119,7 +119,7 @@ public class SysDictTypeController extends AdminBaseController {
     /**
      * 刷新字典缓存
      */
-    @Operation(description = "刷新字典缓存", summary = "SysDictTypePostRefreshCache")
+    @Operation(description = "刷新字典缓存", operationId = "SysDictTypePostRefreshCache")
     @SaCheckPermission("system:dict:remove")
     @Log(title = "字典类型", businessType = BusinessType.CLEAN)
     @PostMapping("/refreshCache")
@@ -131,7 +131,7 @@ public class SysDictTypeController extends AdminBaseController {
     /**
      * 获取字典选择框列表
      */
-    @Operation(description = "获取字典选择框列表", summary = "SysDictTypeGetOptionSelect")
+    @Operation(description = "获取字典选择框列表", operationId = "SysDictTypeGetOptionSelect")
     @GetMapping("/optionSelect")
     public R<List<SysDictTypeVo>> optionSelect() {
         List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();

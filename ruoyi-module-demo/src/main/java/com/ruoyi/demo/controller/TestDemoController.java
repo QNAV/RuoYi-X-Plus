@@ -48,7 +48,7 @@ public class TestDemoController {
     /**
      * 查询测试单列表
      */
-    @Operation(description = "查询测试单列表", summary = "TestDemoServicePostList")
+    @Operation(description = "查询测试单列表", operationId = "TestDemoServicePostList")
     @SaCheckPermission("demo:demo:list")
     @PostMapping("/list")
     public TableDataInfo<TestDemoVo> list(@RequestBody(required = false) TestDemoPageQueryBo bo) {
@@ -62,7 +62,7 @@ public class TestDemoController {
     /**
      * 导出测试单列表
      */
-    @Operation(description = "导出测试单列表", summary = "TestDemoServicePostExport")
+    @Operation(description = "导出测试单列表", operationId = "TestDemoServicePostExport")
     @SaCheckPermission("demo:demo:export")
     @Log(title = "测试单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -74,7 +74,7 @@ public class TestDemoController {
     /**
      * 获取测试单详细信息
      */
-    @Operation(description = "获取测试单详细信息", summary = "TestDemoServiceGetInfo")
+    @Operation(description = "获取测试单详细信息", operationId = "TestDemoServiceGetInfo")
     @SaCheckPermission("demo:demo:query")
     @GetMapping(value = "/info")
     public R<TestDemoVo> getInfo(@Parameter(description = "主键", required = true)
@@ -86,7 +86,7 @@ public class TestDemoController {
     /**
      * 新增测试单
      */
-    @Operation(description = "新增测试单", summary = "TestDemoServicePostAdd")
+    @Operation(description = "新增测试单", operationId = "TestDemoServicePostAdd")
     @SaCheckPermission("demo:demo:add")
     @Log(title = "测试单", businessType = BusinessType.INSERT)
     @RepeatSubmit()
@@ -98,7 +98,7 @@ public class TestDemoController {
     /**
      * 修改测试单
      */
-    @Operation(description = "修改测试单", summary = "TestDemoServicePostEdit")
+    @Operation(description = "修改测试单", operationId = "TestDemoServicePostEdit")
     @SaCheckPermission("demo:demo:edit")
     @Log(title = "测试单", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
@@ -110,7 +110,7 @@ public class TestDemoController {
     /**
      * 删除测试单
      */
-    @Operation(description = "删除测试单", summary = "TestDemoServicePostRemove")
+    @Operation(description = "删除测试单", operationId = "TestDemoServicePostRemove")
     @SaCheckPermission("demo:demo:remove")
     @Log(title = "测试单", businessType = BusinessType.DELETE)
     @PostMapping("/remove")

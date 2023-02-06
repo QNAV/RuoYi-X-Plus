@@ -44,7 +44,7 @@ public class SysOssConfigController extends AdminBaseController {
     /**
      * 查询对象存储配置列表
      */
-    @Operation(description = "查询对象存储配置列表", summary = "SysOssConfigPostList")
+    @Operation(description = "查询对象存储配置列表", operationId = "SysOssConfigPostList")
     @SaCheckPermission("system:oss:list")
     @PostMapping("/list")
     public TableDataInfo<SysOssConfigVo> list(@RequestBody(required = false) @Validated SysOssConfigPageQueryBo ossConfigPageQuery) {
@@ -58,7 +58,7 @@ public class SysOssConfigController extends AdminBaseController {
     /**
      * 获取对象存储配置详细信息
      */
-    @Operation(description = "获取对象存储配置详细信息", summary = "SysOssConfigGetInfo")
+    @Operation(description = "获取对象存储配置详细信息", operationId = "SysOssConfigGetInfo")
     @SaCheckPermission("system:oss:query")
     @GetMapping("/info")
     public R<SysOssConfigVo> info(@Parameter(description = "OSS配置ID", required = true) @RequestParam Long ossConfigId) {
@@ -68,7 +68,7 @@ public class SysOssConfigController extends AdminBaseController {
     /**
      * 新增对象存储配置
      */
-    @Operation(description = "新增对象存储配置", summary = "SysOssConfigPostAdd")
+    @Operation(description = "新增对象存储配置", operationId = "SysOssConfigPostAdd")
     @SaCheckPermission("system:oss:add")
     @Log(title = "对象存储配置", businessType = BusinessType.INSERT)
     @RepeatSubmit()
@@ -81,7 +81,7 @@ public class SysOssConfigController extends AdminBaseController {
     /**
      * 修改对象存储配置
      */
-    @Operation(description = "修改对象存储配置", summary = "SysOssConfigPostEdit")
+    @Operation(description = "修改对象存储配置", operationId = "SysOssConfigPostEdit")
     @SaCheckPermission("system:oss:edit")
     @Log(title = "对象存储配置", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
@@ -93,7 +93,7 @@ public class SysOssConfigController extends AdminBaseController {
     /**
      * 删除对象存储配置
      */
-    @Operation(description = "删除对象存储配置", summary = "SysOssConfigPostRemove")
+    @Operation(description = "删除对象存储配置", operationId = "SysOssConfigPostRemove")
     @SaCheckPermission("system:oss:remove")
     @Log(title = "对象存储配置", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
@@ -104,7 +104,7 @@ public class SysOssConfigController extends AdminBaseController {
     /**
      * 状态修改
      */
-    @Operation(description = "状态修改", summary = "SysOssConfigPostChangeStatus")
+    @Operation(description = "状态修改", operationId = "SysOssConfigPostChangeStatus")
     @SaCheckPermission("system:oss:edit")
     @Log(title = "对象存储状态修改", businessType = BusinessType.UPDATE)
     @PostMapping("/changeStatus")

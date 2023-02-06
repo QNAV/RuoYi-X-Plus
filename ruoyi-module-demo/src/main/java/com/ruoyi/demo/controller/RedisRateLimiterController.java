@@ -26,7 +26,7 @@ public class RedisRateLimiterController {
      * 测试全局限流
      * 全局影响
      */
-    @Operation(description = "测试全局限流", summary = "RedisRateLimiterServiceGetTest")
+    @Operation(description = "测试全局限流", operationId = "RedisRateLimiterServiceGetTest")
     @RateLimiter(count = 2, time = 10)
     @GetMapping("/test")
     public R<String> test(String value) {
@@ -37,7 +37,7 @@ public class RedisRateLimiterController {
      * 测试请求IP限流
      * 同一IP请求受影响
      */
-    @Operation(description = "测试请求IP限流", summary = "RedisRateLimiterServiceGetTestIp")
+    @Operation(description = "测试请求IP限流", operationId = "RedisRateLimiterServiceGetTestIp")
     @RateLimiter(count = 2, time = 10, limitType = LimitType.IP)
     @GetMapping("/testIp")
     public R<String> testIp(String value) {
@@ -48,7 +48,7 @@ public class RedisRateLimiterController {
      * 测试集群实例限流
      * 启动两个后端服务互不影响
      */
-    @Operation(description = "测试集群实例限流", summary = "RedisRateLimiterServiceGetTestCluster")
+    @Operation(description = "测试集群实例限流", operationId = "RedisRateLimiterServiceGetTestCluster")
     @RateLimiter(count = 2, time = 10, limitType = LimitType.CLUSTER)
     @GetMapping("/testCluster")
     public R<String> testCluster(String value) {

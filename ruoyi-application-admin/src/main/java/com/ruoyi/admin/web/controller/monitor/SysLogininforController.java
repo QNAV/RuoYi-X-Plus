@@ -46,7 +46,7 @@ public class SysLogininforController extends AdminBaseController {
      * @param logininforPageQuery 查询对象
      * @return
      */
-    @Operation(description = "查询系统访问记录列表", summary = "SysLogininforPostList")
+    @Operation(description = "查询系统访问记录列表", operationId = "SysLogininforPostList")
     @SaCheckPermission("monitor:logininfor:list")
     @PostMapping("/list")
     public TableDataInfo<SysLogininforVo> list(@RequestBody(required = false) SysLogininforPageQueryBo logininforPageQuery) {
@@ -62,7 +62,7 @@ public class SysLogininforController extends AdminBaseController {
      * @param logininforQuery 查询对象
      * @param response
      */
-    @Operation(description = "导出系统访问记录列表", summary = "SysLogininforPostExport")
+    @Operation(description = "导出系统访问记录列表", operationId = "SysLogininforPostExport")
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @SaCheckPermission("monitor:logininfor:export")
     @PostMapping("/export")
@@ -76,7 +76,7 @@ public class SysLogininforController extends AdminBaseController {
      * @param infoIds 日志ids
      * @return
      */
-    @Operation(description = "删除系统访问记录", summary = "SysLogininforPostRemove")
+    @Operation(description = "删除系统访问记录", operationId = "SysLogininforPostRemove")
     @SaCheckPermission("monitor:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
@@ -88,7 +88,7 @@ public class SysLogininforController extends AdminBaseController {
      * 清理系统访问记录
      * @return
      */
-    @Operation(description = "清空系统访问记录", summary = "SysLogininforPostClean")
+    @Operation(description = "清空系统访问记录", operationId = "SysLogininforPostClean")
     @SaCheckPermission("monitor:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.CLEAN)
     @PostMapping("/clean")

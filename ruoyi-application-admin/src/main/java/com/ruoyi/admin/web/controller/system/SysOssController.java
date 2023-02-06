@@ -49,7 +49,7 @@ public class SysOssController extends AdminBaseController {
     /**
      * 查询OSS对象存储列表
      */
-    @Operation(description = "查询OSS对象存储列表", summary = "SysOssPostList")
+    @Operation(description = "查询OSS对象存储列表", operationId = "SysOssPostList")
     @SaCheckPermission("system:oss:list")
     @PostMapping("/list")
     public TableDataInfo<SysOssVo> list(@RequestBody(required = false) @Validated SysOssPageQueryBo ossPageQuery) {
@@ -63,7 +63,7 @@ public class SysOssController extends AdminBaseController {
     /**
      * 查询OSS对象基于id串
      */
-    @Operation(description = "查询OSS对象基于ID", summary = "SysOssGetListByIds")
+    @Operation(description = "查询OSS对象基于ID", operationId = "SysOssGetListByIds")
     @SaCheckPermission("system:oss:list")
     @GetMapping("/listByIds")
     public R<List<SysOssVo>> listByIds(@Parameter(description = "OSS对象ID串", required = true) @RequestParam Long[] ossIds) {
@@ -74,7 +74,7 @@ public class SysOssController extends AdminBaseController {
     /**
      * 上传OSS对象存储
      */
-    @Operation(description = "上传OSS对象存储", summary = "SysOssPostUpload")
+    @Operation(description = "上传OSS对象存储", operationId = "SysOssPostUpload")
     @Parameters({
         @Parameter(name = "file", description = "文件", in = ParameterIn.QUERY, required = true)
     })
@@ -93,7 +93,7 @@ public class SysOssController extends AdminBaseController {
         return R.ok(data);
     }
 
-    @Operation(description = "下载OSS对象存储", summary = "SysOssGetDownload")
+    @Operation(description = "下载OSS对象存储", operationId = "SysOssGetDownload")
     @SaCheckPermission("system:oss:download")
     @GetMapping("/download")
     public void download(@Parameter(description = "OSS对象ID", required = true) @RequestParam Long ossId, @Parameter(hidden = true) HttpServletResponse response) throws IOException {
@@ -103,7 +103,7 @@ public class SysOssController extends AdminBaseController {
     /**
      * 删除OSS对象存储
      */
-    @Operation(description = "删除OSS对象存储", summary = "SysOssPostRemove")
+    @Operation(description = "删除OSS对象存储", operationId = "SysOssPostRemove")
     @SaCheckPermission("system:oss:remove")
     @Log(title = "OSS对象存储", businessType = BusinessType.DELETE)
     @PostMapping("/remove")

@@ -26,7 +26,7 @@ public class Swagger3DemoController {
      * 上传请求
      * 必须使用 @RequestPart 注解标注为文件
      */
-    @Operation(description = "通用上传请求", summary = "Swagger3DemoServicePostUpload")
+    @Operation(description = "通用上传请求", operationId = "Swagger3DemoServicePostUpload")
     @Parameters({
             @Parameter(name = "file", description = "文件", in = ParameterIn.QUERY, required = true)
     })

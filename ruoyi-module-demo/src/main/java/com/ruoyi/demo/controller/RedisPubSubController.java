@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo/redis/pubsub")
 public class RedisPubSubController {
 
-    @Operation(description = "发布消息", summary = "RedisPubSubServiceGetPub")
+    @Operation(description = "发布消息", operationId = "RedisPubSubServiceGetPub")
     @GetMapping("/pub")
     public R<Void> pub(@Parameter(description = "通道Key") String key, @Parameter(description = "发送内容") String value) {
         RedisUtils.publish(key, value, consumer -> {
@@ -30,7 +30,7 @@ public class RedisPubSubController {
         return R.ok("操作成功");
     }
 
-    @Operation(description = "订阅消息", summary = "RedisPubSubServiceGetSub")
+    @Operation(description = "订阅消息", operationId = "RedisPubSubServiceGetSub")
     @GetMapping("/sub")
     public R<Void> sub(@Parameter(description = "通道Key") String key) {
         RedisUtils.subscribe(key, String.class, msg -> {

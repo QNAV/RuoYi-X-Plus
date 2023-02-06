@@ -40,7 +40,7 @@ public class SysNoticeController extends AdminBaseController {
     /**
      * 获取通知公告列表
      */
-    @Operation(description = "获取通知公告列表", summary = "SysNoticePostList")
+    @Operation(description = "获取通知公告列表", operationId = "SysNoticePostList")
     @SaCheckPermission("system:notice:list")
     @PostMapping("/list")
     public TableDataInfo<SysNoticeVo> list(@RequestBody(required = false) SysNoticePageQueryBo noticePageQuery) {
@@ -54,7 +54,7 @@ public class SysNoticeController extends AdminBaseController {
     /**
      * 根据通知公告编号获取详细信息
      */
-    @Operation(description = "根据通知公告编号获取详细信息", summary = "SysNoticeGetInfo")
+    @Operation(description = "根据通知公告编号获取详细信息", operationId = "SysNoticeGetInfo")
     @SaCheckPermission("system:notice:query")
     @GetMapping(value = "/info")
     public R<SysNoticeVo> info(@Parameter(description = "公告ID", required = true) @RequestParam(required = true) Long noticeId) {
@@ -64,7 +64,7 @@ public class SysNoticeController extends AdminBaseController {
     /**
      * 新增通知公告
      */
-    @Operation(description = "新增通知公告", summary = "SysNoticePostAdd")
+    @Operation(description = "新增通知公告", operationId = "SysNoticePostAdd")
     @SaCheckPermission("system:notice:add")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -76,7 +76,7 @@ public class SysNoticeController extends AdminBaseController {
     /**
      * 修改通知公告
      */
-    @Operation(description = "修改通知公告", summary = "SysNoticePostEdit")
+    @Operation(description = "修改通知公告", operationId = "SysNoticePostEdit")
     @SaCheckPermission("system:notice:edit")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -88,7 +88,7 @@ public class SysNoticeController extends AdminBaseController {
     /**
      * 删除通知公告
      */
-    @Operation(description = "删除通知公告", summary = "SysNoticePostRemove")
+    @Operation(description = "删除通知公告", operationId = "SysNoticePostRemove")
     @SaCheckPermission("system:notice:remove")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @PostMapping("/remove")

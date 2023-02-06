@@ -33,7 +33,7 @@ public class RedisLockController {
     /**
      * 测试lock4j 注解
      */
-    @Operation(description = "测试lock4j 注解", summary = "RedisLockServiceGetTestLock4j")
+    @Operation(description = "测试lock4j 注解", operationId = "RedisLockServiceGetTestLock4j")
     @Lock4j(keys = {"#key"})
     @GetMapping("/testLock4j")
     public R<String> testLock4j(String key, String value) {
@@ -50,7 +50,7 @@ public class RedisLockController {
     /**
      * 测试lock4j 工具
      */
-    @Operation(description = "测试lock4j 工具", summary = "RedisLockServiceGetTestLock4jLockTemplate")
+    @Operation(description = "测试lock4j 工具", operationId = "RedisLockServiceGetTestLock4jLockTemplate")
     @GetMapping("/testLock4jLockTemplate")
     public R<String> testLock4jLockTemplate(String key, String value) {
         final LockInfo lockInfo = lockTemplate.lock(key, 30000L, 5000L, RedissonLockExecutor.class);

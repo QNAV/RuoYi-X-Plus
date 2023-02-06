@@ -34,7 +34,7 @@ public class SmsController {
 //    private final SmsTemplate smsTemplate; // 可以使用spring注入
 //    private final AliyunSmsTemplate smsTemplate; // 也可以注入某个厂家的模板工具
 
-    @Operation(description = "发送短信Aliyun", summary = "SmsDemoServiceGetSendAliyun")
+    @Operation(description = "发送短信Aliyun", operationId = "SmsDemoServiceGetSendAliyun")
     @GetMapping("/sendAliyun")
     public R<Object> sendAliyun(@Parameter(description = "电话号") String phones,
                                      @Parameter(description = "模板ID") String templateId) {
@@ -51,7 +51,7 @@ public class SmsController {
         return R.ok(send);
     }
 
-    @Operation(description = "发送短信Tencent", summary = "SmsDemoServiceGetSendTencent")
+    @Operation(description = "发送短信Tencent", operationId = "SmsDemoServiceGetSendTencent")
     @GetMapping("/sendTencent")
     public R<Object> sendTencent(@Parameter(description = "电话号") String phones,
                                              @Parameter(description = "模板ID") String templateId) {

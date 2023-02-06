@@ -45,7 +45,7 @@ public class SysPostController extends AdminBaseController {
     /**
      * 获取岗位列表
      */
-    @Operation(description = "获取岗位列表", summary = "SysPostPostList")
+    @Operation(description = "获取岗位列表", operationId = "SysPostPostList")
     @SaCheckPermission("system:post:list")
     @PostMapping("/list")
     public TableDataInfo<SysPostVo> list(@RequestBody(required = false) SysPostPageQueryBo postPageQuery) {
@@ -56,7 +56,7 @@ public class SysPostController extends AdminBaseController {
         return postService.selectPagePostList(postQuery, pageQuery);
     }
 
-    @Operation(description = "导出岗位列表", summary = "SysPostPostExport")
+    @Operation(description = "导出岗位列表", operationId = "SysPostPostExport")
     @Log(title = "岗位管理", businessType = BusinessType.EXPORT)
     @SaCheckPermission("system:post:export")
     @PostMapping("/export")
@@ -68,7 +68,7 @@ public class SysPostController extends AdminBaseController {
     /**
      * 根据岗位编号获取详细信息
      */
-    @Operation(description = "根据岗位编号获取详细信息", summary = "SysPostGetInfo")
+    @Operation(description = "根据岗位编号获取详细信息", operationId = "SysPostGetInfo")
     @SaCheckPermission("system:post:query")
     @GetMapping(value = "/info")
     public R<SysPostVo> info(@Parameter(description = "岗位ID", required = true) @RequestParam Long postId) {
@@ -78,7 +78,7 @@ public class SysPostController extends AdminBaseController {
     /**
      * 新增岗位
      */
-    @Operation(description = "新增岗位", summary = "SysPostPostAdd")
+    @Operation(description = "新增岗位", operationId = "SysPostPostAdd")
     @SaCheckPermission("system:post:add")
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -95,7 +95,7 @@ public class SysPostController extends AdminBaseController {
     /**
      * 修改岗位
      */
-    @Operation(description = "修改岗位", summary = "SysPostPostEdit")
+    @Operation(description = "修改岗位", operationId = "SysPostPostEdit")
     @SaCheckPermission("system:post:edit")
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -112,7 +112,7 @@ public class SysPostController extends AdminBaseController {
     /**
      * 删除岗位
      */
-    @Operation(description = "删除岗位", summary = "SysPostPostRemove")
+    @Operation(description = "删除岗位", operationId = "SysPostPostRemove")
     @SaCheckPermission("system:post:remove")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
@@ -123,7 +123,7 @@ public class SysPostController extends AdminBaseController {
     /**
      * 获取岗位选择框列表
      */
-    @Operation(description = "获取岗位选择框列表", summary = "SysPostGetOptionSelect")
+    @Operation(description = "获取岗位选择框列表", operationId = "SysPostGetOptionSelect")
     @GetMapping("/optionSelect")
     public R<List<SysPostVo>> optionSelect() {
         List<SysPost> posts = postService.selectPostAll();

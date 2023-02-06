@@ -43,7 +43,7 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 获取菜单列表
      */
-    @Operation(description = "获取菜单列表", summary = "SysMenuPostList")
+    @Operation(description = "获取菜单列表", operationId = "SysMenuPostList")
     @SaCheckPermission("system:menu:list")
     @PostMapping("/list")
     public R<List<SysMenuVo>> list(@RequestBody(required = false) SysMenuQueryBo menuQuery) {
@@ -54,7 +54,7 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 根据菜单编号获取详细信息
      */
-    @Operation(description = "根据菜单编号获取详细信息", summary = "SysMenuGetInfo")
+    @Operation(description = "根据菜单编号获取详细信息", operationId = "SysMenuGetInfo")
     @SaCheckPermission("system:menu:query")
     @GetMapping(value = "/info")
     public R<SysMenuVo> info(@Parameter(description = "菜单ID", required = true) @RequestParam Long menuId) {
@@ -64,7 +64,7 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 获取菜单下拉树列表
      */
-    @Operation(description = "获取菜单下拉树列表", summary = "SysMenuPostTreeSelect")
+    @Operation(description = "获取菜单下拉树列表", operationId = "SysMenuPostTreeSelect")
     @PostMapping("/treeSelect")
     public R<List<Tree<Long>>> treeSelect(@RequestBody(required = false) SysMenuQueryBo menuQuery) {
         List<SysMenuVo> menus = menuService.selectMenuList(menuQuery, getUserId());
@@ -74,7 +74,7 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 加载对应角色菜单列表树
      */
-    @Operation(description = "加载对应角色菜单列表树", summary = "SysMenuGetRoleMenuTreeSelect")
+    @Operation(description = "加载对应角色菜单列表树", operationId = "SysMenuGetRoleMenuTreeSelect")
     @GetMapping(value = "/roleMenuTreeSelect")
     public R<RoleMenuTreeSelectVo> roleMenuTreeSelect(@Parameter(description = "角色ID", required = true) @RequestParam Long roleId) {
         List<SysMenuVo> menus = menuService.selectMenuList(getUserId());
@@ -87,7 +87,7 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 新增菜单
      */
-    @Operation(description = "新增菜单", summary = "SysMenuPostAdd")
+    @Operation(description = "新增菜单", operationId = "SysMenuPostAdd")
     @SaCheckPermission("system:menu:add")
     @Log(title = "菜单管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -104,7 +104,7 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 修改菜单
      */
-    @Operation(description = "修改菜单", summary = "SysMenuPostEdit")
+    @Operation(description = "修改菜单", operationId = "SysMenuPostEdit")
     @SaCheckPermission("system:menu:edit")
     @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -123,7 +123,7 @@ public class SysMenuController extends AdminBaseController {
     /**
      * 删除菜单
      */
-    @Operation(description = "删除菜单", summary = "SysMenuPostRemove")
+    @Operation(description = "删除菜单", operationId = "SysMenuPostRemove")
     @SaCheckPermission("system:menu:remove")
     @Log(title = "菜单管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
