@@ -1,4 +1,4 @@
-package com.ruoyi.test;
+package com.ruoyi.admin.test;
 
 import com.ruoyi.common.enums.UserType;
 import org.junit.jupiter.api.AfterEach;
