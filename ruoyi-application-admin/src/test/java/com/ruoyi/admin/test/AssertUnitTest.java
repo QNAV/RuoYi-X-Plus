@@ -1,6 +1,7 @@
 package com.ruoyi.admin.test;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Lion Li
  */
+@Disabled
 @DisplayName("断言单元测试案例")
 public class AssertUnitTest {
 

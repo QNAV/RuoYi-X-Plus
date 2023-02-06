@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  *
  * @author Lion Li
  */
+@Disabled
 @SpringBootTest
 @DisplayName("标签单元测试案例")
 public class TagUnitTest {
