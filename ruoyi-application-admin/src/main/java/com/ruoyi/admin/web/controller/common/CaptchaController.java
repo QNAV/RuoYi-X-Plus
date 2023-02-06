@@ -61,7 +61,7 @@ public class CaptchaController {
      */
     @Operation(description = "短信验证码", operationId = "CaptchaGetSmsCaptcha")
     @GetMapping("/captchaSms")
-    public R<Void> smsCaptcha(@Parameter(name = "用户手机号")
+    public R<Void> smsCaptcha(@Parameter(description = "用户手机号")
                               @NotBlank(message = "{user.phonenumber.not.blank}")
                               String phoneNumber) {
         if (!smsProperties.getEnabled()) {
