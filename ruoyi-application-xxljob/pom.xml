@@ -4,7 +4,7 @@
     <parent>
         <artifactId>ruoyi-x-plus</artifactId>
         <groupId>com.ruoyi</groupId>
-        <version>23.2.0</version>
+        <version>23.2.1</version>
     </parent>
     <artifactId>ruoyi-application-xxljob</artifactId>
     <packaging>jar</packaging>
