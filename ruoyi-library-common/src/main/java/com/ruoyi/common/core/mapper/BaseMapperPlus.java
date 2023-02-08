@@ -20,7 +20,8 @@ import java.util.Map;
 
 /**
  * 自定义 Mapper 接口, 实现 自定义扩展
- *
+ * ?????
+ * todo 发现用SpringUtils.getAopProxy(this)进行自身调用出现了无法自动转换为vo对象的现象，日后再调试修复
  * @param <M> mapper 泛型
  * @param <T> table 泛型
  * @param <V> bo 泛型
