@@ -12,7 +12,6 @@ import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUtils;
-import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.oss.core.OssClient;
 import com.ruoyi.oss.entity.UploadResult;
 import com.ruoyi.oss.enumd.AccessPolicyType;
@@ -60,7 +59,7 @@ public class SysOssServiceImpl implements ISysOssService {
     public List<SysOssVo> listByIds(Collection<Long> ossIds) {
         List<SysOssVo> list = new ArrayList<>();
         for (Long id : ossIds) {
-            SysOssVo vo = SpringUtils.getAopProxy(this).getById(id);
+            SysOssVo vo = getById(id);
             if (ObjectUtil.isNotNull(vo)) {
                 list.add(vo);
             }
@@ -90,7 +89,7 @@ public class SysOssServiceImpl implements ISysOssService {
 
     @Override
     public void download(Long ossId, HttpServletResponse response) throws IOException {
-        SysOssVo sysOss = SpringUtils.getAopProxy(this).getById(ossId);
+        SysOssVo sysOss = getById(ossId);
         if (ObjectUtil.isNull(sysOss)) {
             throw new ServiceException("文件数据不存在!");
         }

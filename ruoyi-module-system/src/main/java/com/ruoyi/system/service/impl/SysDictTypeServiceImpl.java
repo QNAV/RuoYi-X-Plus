@@ -18,7 +18,6 @@ import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.redis.CacheUtils;
-import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.system.domain.bo.SysDictTypeQueryBo;
 import com.ruoyi.common.core.domain.vo.SysDictDataVo;
 import com.ruoyi.common.core.domain.vo.SysDictTypeVo;
@@ -242,7 +241,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
         // 优先从本地缓存获取
         List<SysDictDataVo> datas = (List<SysDictDataVo>) SaHolder.getStorage().get(CacheConstants.SYS_DICT_KEY + dictType);
         if (ObjectUtil.isNull(datas)) {
-            datas = SpringUtils.getAopProxy(this).selectDictDataByType(dictType);
+            datas = selectDictDataByType(dictType);
             SaHolder.getStorage().set(CacheConstants.SYS_DICT_KEY + dictType, datas);
         }
 
@@ -270,7 +269,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
         // 优先从本地缓存获取
         List<SysDictDataVo> datas = (List<SysDictDataVo>) SaHolder.getStorage().get(CacheConstants.SYS_DICT_KEY + dictType);
         if (ObjectUtil.isNull(datas)) {
-            datas = SpringUtils.getAopProxy(this).selectDictDataByType(dictType);
+            datas = selectDictDataByType(dictType);
             SaHolder.getStorage().set(CacheConstants.SYS_DICT_KEY + dictType, datas);
         }
 
