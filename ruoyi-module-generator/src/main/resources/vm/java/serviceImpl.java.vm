@@ -1,4 +1,4 @@
-package ${packageName}.service.impl;
+validEntityBeforeAddpackage ${packageName}.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
     #if($table.crud || $table.sub)
@@ -109,7 +109,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @Override
     public Boolean insertByBo(${ClassName}AddBo addBo) {
         ${ClassName} add = BeanUtil.toBean(addBo, ${ClassName}.class);
-        validEntityBeforeAdd(update);
+        validEntityBeforeAdd(add);
         validEntityBeforeSave(add);
         boolean flag = baseMapper.insert(add) > 0;
 #set($pk=$pkColumn.javaField.substring(0,1).toUpperCase() + ${pkColumn.javaField.substring(1)})
