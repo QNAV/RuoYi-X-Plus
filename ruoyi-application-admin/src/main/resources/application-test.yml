@@ -73,6 +73,8 @@ spring:
         minIdle: 10
         # 配置获取连接等待超时的时间 默认30秒
         connectionTimeout: 30000
+        # 多久检查一次连接的活性 默认30秒
+        keepaliveTime: 30000
         # 校验超时时间 默认5秒
         validationTimeout: 5000
         # 空闲连接存活最大时间，默认10分钟
