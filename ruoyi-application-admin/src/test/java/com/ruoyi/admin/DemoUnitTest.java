@@ -1,4 +1,4 @@
-package com.ruoyi.admin.test;
+package com.ruoyi.admin;
 
 import com.ruoyi.common.config.RuoYiConfig;
 import org.junit.jupiter.api.*;

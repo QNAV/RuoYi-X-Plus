@@ -1,4 +1,4 @@
-package com.ruoyi.admin.test;
+package com.ruoyi.admin;
 
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
