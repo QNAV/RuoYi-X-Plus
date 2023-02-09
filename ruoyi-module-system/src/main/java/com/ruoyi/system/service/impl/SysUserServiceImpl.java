@@ -10,12 +10,14 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.admin.helper.AdminLoginHelper;
+import com.ruoyi.common.constant.CacheNames;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.core.service.UserService;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.helper.DataBaseHelper;
 import com.ruoyi.common.utils.BeanCopyUtils;
@@ -31,6 +33,7 @@ import com.ruoyi.system.mapper.*;
 import com.ruoyi.system.service.ISysUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +49,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class SysUserServiceImpl implements ISysUserService {
+public class SysUserServiceImpl implements ISysUserService, UserService {
 
     private final SysUserMapper baseMapper;
     private final SysDeptMapper deptMapper;
@@ -542,4 +545,11 @@ public class SysUserServiceImpl implements ISysUserService {
         return baseMapper.deleteBatchIds(ids);
     }
 
+    @Cacheable(cacheNames = CacheNames.SYS_USER_NAME, key = "#userId")
+    @Override
+    public String selectUserNameById(Long userId) {
+        SysUser sysUser = baseMapper.selectOne(new LambdaQueryWrapper<SysUser>()
+                .select(SysUser::getUserName).eq(SysUser::getUserId, userId));
+        return ObjectUtil.isNull(sysUser) ? null : sysUser.getUserName();
+    }
 }
