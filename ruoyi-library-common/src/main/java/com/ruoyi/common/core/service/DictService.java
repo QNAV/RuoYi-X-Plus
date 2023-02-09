@@ -1,5 +1,7 @@
 package com.ruoyi.common.core.service;
 
+import com.ruoyi.common.utils.StringUtils;
+
 /**
  * 通用 字典服务
  *
@@ -10,7 +12,7 @@ public interface DictService {
     /**
      * 分隔符
      */
-    String SEPARATOR = ",";
+    String SEPARATOR = StringUtils.SEPARATOR;
 
     /**
      * 根据字典类型和字典值获取字典标签

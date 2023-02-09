@@ -18,6 +18,11 @@ public class SysOssBo extends BaseEntity {
     private static final long serialVersionUID=1L;
 
     /**
+     * ossId
+     */
+    private Long ossId;
+
+    /**
      * 文件名
      */
     @Schema(description = "文件名")

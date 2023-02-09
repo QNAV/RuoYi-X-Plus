@@ -61,7 +61,7 @@ public class SysDeptController extends AdminBaseController {
     public R<List<SysDeptVo>> excludeChild(@Parameter(description = "部门ID", required = true) @RequestParam Long deptId) {
         List<SysDeptVo> depts = deptService.selectDeptList(new SysDeptQueryBo());
         depts.removeIf(d -> d.getDeptId().equals(deptId)
-            || ArrayUtil.contains(StringUtils.split(d.getAncestors(), ","), deptId + ""));
+            || ArrayUtil.contains(StringUtils.split(d.getAncestors(), StringUtils.SEPARATOR), deptId + ""));
         return R.ok(depts);
     }
 
