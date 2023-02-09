@@ -22,12 +22,6 @@ import java.util.List;
 @Component
 @ConfigurationProperties(prefix = "swagger")
 public class SwaggerProperties {
-
-    /**
-     * 是否开启 openApi 文档
-     */
-    private Boolean enabled = true;
-
     /**
      * 文档基本信息
      */
