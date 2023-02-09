@@ -9,7 +9,6 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
-import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -122,7 +121,7 @@ public class SysRoleController extends AdminBaseController {
             // 更新缓存用户权限
             AdminLoginUser loginUser = getLoginUser();
             SysUser sysUser = userService.selectUserById(loginUser.getUserId());
-            if (ObjectUtil.isNotNull(sysUser) && !sysUser.isAdmin()) {
+            if (ObjectUtil.isNotNull(sysUser) && !AdminLoginHelper.isAdmin()) {
                 loginUser.setMenuPermission(permissionService.getMenuPermission(sysUser));
                 AdminLoginHelper.setLoginUser(loginUser);
             }

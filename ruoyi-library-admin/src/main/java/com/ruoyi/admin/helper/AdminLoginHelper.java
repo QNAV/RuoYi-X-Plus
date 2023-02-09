@@ -14,15 +14,15 @@ import lombok.NoArgsConstructor;
 
 /**
  * 后台登录鉴权助手
- *
- * user_type 为 用户类型 同一个用户表 可以有多种用户类型 例如 pc,biz
+ * <p>
+ * user_type 为 用户类型 同一个用户表 可以有多种用户类型 例如 pc,app
  * deivce 为 设备类型 同一个用户类型 可以有 多种设备类型 例如 web,ios
  * 可以组成 用户类型与设备类型多对多的 权限灵活控制
- *
+ * <p>
  * 多用户体系 针对 多种用户类型 但权限控制不一致
  * 可以组成 多用户类型表与多设备类型 分别控制权限
  *
- * @author weibocy
+ * @author Lion Li
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdminLoginHelper {
