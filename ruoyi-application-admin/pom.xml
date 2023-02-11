@@ -45,6 +45,16 @@
             <artifactId>mssql-jdbc</artifactId>
         </dependency>
 
+        <!-- 数据库迁移 -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+        </dependency>
+
         <!-- 核心依赖库-->
         <dependency>
             <groupId>com.ruoyi</groupId>
