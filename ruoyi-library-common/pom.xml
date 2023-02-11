@@ -158,6 +158,16 @@
             <artifactId>bcprov-jdk15to18</artifactId>
         </dependency>
 
+        <!-- mapstruct对象复制工具 -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
