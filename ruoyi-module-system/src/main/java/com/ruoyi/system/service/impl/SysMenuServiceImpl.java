@@ -11,6 +11,7 @@ import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.core.domain.entity.SysRole;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -67,16 +68,16 @@ public class SysMenuServiceImpl implements ISysMenuService {
         if (AdminLoginHelper.isAdmin(userId)) {
             menuList = baseMapper.selectVoList(new LambdaQueryWrapper<SysMenu>()
                 .like(menuQuery != null && StringUtils.isNotBlank(menuQuery.getMenuName()), SysMenu::getMenuName, menuQuery.getMenuName())
-                .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getVisible()), SysMenu::getVisible, menuQuery.getVisible())
-                .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getStatus()), SysMenu::getStatus, menuQuery.getStatus())
+                .eq(menuQuery != null && menuQuery.getVisible() != null, SysMenu::getVisible, menuQuery.getVisible())
+                .eq(menuQuery != null && menuQuery.getStatus() != null, SysMenu::getStatus, menuQuery.getStatus())
                 .orderByAsc(SysMenu::getParentId)
                 .orderByAsc(SysMenu::getOrderNum), SysMenuVo.class);
         } else {
             QueryWrapper<SysMenu> wrapper = Wrappers.query();
             wrapper.eq("sur.user_id", userId)
                 .like(menuQuery != null && StringUtils.isNotBlank(menuQuery.getMenuName()), "m.menu_name", menuQuery.getMenuName())
-                .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getVisible()), "m.visible", menuQuery.getVisible())
-                .eq(menuQuery != null && StringUtils.isNotBlank(menuQuery.getStatus()), "m.status", menuQuery.getStatus())
+                .eq(menuQuery != null && menuQuery.getVisible() != null, "m.visible", menuQuery.getVisible())
+                .eq(menuQuery != null && menuQuery.getStatus() != null, "m.status", menuQuery.getStatus())
                 .orderByAsc("m.parent_id")
                 .orderByAsc("m.order_num");
             menuList = BeanCopyUtils.copyList(baseMapper.selectMenuListByUserId(wrapper), SysMenuVo.class);
@@ -146,7 +147,8 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     public List<Long> selectMenuListByRoleId(Long roleId) {
         SysRole role = roleMapper.selectById(roleId);
-        return baseMapper.selectMenuListByRoleId(roleId, role.getMenuCheckStrictly());
+        boolean menuCheckStrictly = role.getMenuCheckStrictly().equals(CommonYesOrNo.YES);
+        return baseMapper.selectMenuListByRoleId(roleId, menuCheckStrictly);
     }
 
     /**
@@ -165,7 +167,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
             router.setPath(getRouterPath(menu));
             router.setComponent(getComponent(menu));
             router.setQuery(menu.getQueryParam());
-            router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), StringUtils.equals("1", menu.getIsCache()), menu.getPath()));
+            router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getIsCache().equals(CommonYesOrNo.YES), menu.getPath()));
             List<SysMenu> cMenus = menu.getChildren();
             if (!cMenus.isEmpty() && UserConstants.TYPE_DIR.equals(menu.getMenuType())) {
                 router.setAlwaysShow(true);
@@ -178,7 +180,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
                 children.setPath(menu.getPath());
                 children.setComponent(menu.getComponent());
                 children.setName(StringUtils.capitalize(menu.getPath()));
-                children.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), StringUtils.equals("1", menu.getIsCache()), menu.getPath()));
+                children.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getIsCache().equals(CommonYesOrNo.YES), menu.getPath()));
                 children.setQuery(menu.getQueryParam());
                 childrenList.add(children);
                 router.setChildren(childrenList);

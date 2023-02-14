@@ -1,6 +1,9 @@
 package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.core.domain.entity.SysMenu;
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.MenuType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -59,35 +62,35 @@ public class SysMenuAddBo implements Serializable {
     private String queryParam;
 
     /**
-     * 是否为外链（0是 1否）
+     * 是否为外链（Y是 N否）
      */
-    @Schema(description = "是否为外链（0是 1否）")
-    private String isFrame;
+    @Schema(description = "是否为外链（Y是 N否）")
+    private CommonYesOrNo isFrame;
 
     /**
-     * 是否缓存（0缓存 1不缓存）
+     * 是否缓存（Y缓存 N不缓存）
      */
-    @Schema(description = "是否缓存（0缓存 1不缓存）")
-    private String isCache;
+    @Schema(description = "是否缓存（Y缓存 N不缓存）")
+    private CommonYesOrNo isCache;
 
     /**
-     * 类型（M目录 C菜单 F按钮）
+     * 类型（D目录 M菜单 B按钮）
      */
-    @Schema(description = "类型（M目录 C菜单 F按钮）", required = true)
+    @Schema(description = "类型（D目录 M菜单 B按钮）", required = true)
     @NotBlank(message = "菜单类型不能为空")
-    private String menuType;
+    private MenuType menuType;
 
     /**
-     * 显示状态（0显示 1隐藏）
+     * 显示状态（Y显示 N隐藏）
      */
-    @Schema(description = "显示状态（0显示 1隐藏）")
-    private String visible;
+    @Schema(description = "显示状态（Y显示 N隐藏）")
+    private CommonYesOrNo visible;
 
     /**
-     * 菜单状态（0显示 1隐藏）
+     * 菜单状态（N正常 D停用）
      */
-    @Schema(description = "菜单状态（0显示 1隐藏）")
-    private String status;
+    @Schema(description = "菜单状态（N正常 D停用）")
+    private CommonNormalDisable status;
 
     /**
      * 权限字符串

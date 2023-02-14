@@ -1,6 +1,8 @@
 package com.ruoyi.system.domain.bo;
 
+import com.ruoyi.common.enums.CommonNormalDisable;
 import com.ruoyi.common.xss.Xss;
+import com.ruoyi.system.enums.NoticeTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -30,11 +32,11 @@ public class SysNoticeAddBo implements Serializable {
     private String noticeTitle;
 
     /**
-     * 公告类型（1通知 2公告）
+     * 公告类型（NOTICE=通知 BULLETIN=公告）
      */
-    @Schema(description = "公告类型（1通知 2公告）", required = true)
+    @Schema(description = "公告类型（NOTICE=通知 BULLETIN=公告）", required = true)
     @NotBlank(message = "公告类型不能为空")
-    private String noticeType;
+    private NoticeTypeEnum noticeType;
 
     /**
      * 公告内容
@@ -44,11 +46,11 @@ public class SysNoticeAddBo implements Serializable {
     private String noticeContent;
 
     /**
-     * 公告状态（0正常 1关闭）
+     * 公告状态（NORMAL=正常 DISABLE=关闭）
      */
-    @Schema(description = "公告状态（0正常 1关闭）", required = true)
+    @Schema(description = "公告状态（NORMAL=正常 DISABLE=关闭）", required = true)
     @NotBlank(message = "公告状态不能为空")
-    private String status;
+    private CommonNormalDisable status;
 
     /**
      * 备注

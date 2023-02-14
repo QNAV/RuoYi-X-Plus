@@ -1,5 +1,7 @@
 package com.ruoyi.common.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.ruoyi.common.utils.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,28 +25,32 @@ public enum DataScopeType {
     /**
      * 全部数据权限
      */
-    ALL("1", "", ""),
+    ALL("ALL", "", ""),
 
     /**
      * 自定数据权限
      */
-    CUSTOM("2", " #{#deptName} IN ( #{@sdss.getRoleCustom( #user.roleId )} ) ", ""),
+    CUSTOM("CUSTOM", " #{#deptName} IN ( #{@sdss.getRoleCustom( #user.roleId )} ) ", ""),
 
     /**
      * 部门数据权限
      */
-    DEPT("3", " #{#deptName} = #{#user.deptId} ", ""),
+    DEPT("DEPT", " #{#deptName} = #{#user.deptId} ", ""),
 
     /**
      * 部门及以下数据权限
      */
-    DEPT_AND_CHILD("4", " #{#deptName} IN ( #{@sdss.getDeptAndChild( #user.deptId )} )", ""),
+    DEPT_CHILD("DEPT_CHILD", " #{#deptName} IN ( #{@sdss.getDeptAndChild( #user.deptId )} )", ""),
 
     /**
      * 仅本人数据权限
      */
-    SELF("5", " #{#userName} = #{#user.userId} ", " 1 = 0 ");
+    SELF("SELF", " #{#userName} = #{#user.userId} ", " 1 = 0 ");
 
+    // 标记响应mbp值
+    @EnumValue
+    // 标记响应json值
+    @JsonValue
     private final String code;
 
     /**

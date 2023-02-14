@@ -1,6 +1,8 @@
 package com.ruoyi.system.domain.vo;
 
 import com.ruoyi.common.core.domain.BaseVo;
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.system.enums.NoticeTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,10 +33,10 @@ public class SysNoticeVo extends BaseVo {
     private String noticeTitle;
 
     /**
-     * 公告类型（1通知 2公告）
+     * 公告类型（NOTICE=通知 BULLETIN=公告）
      */
-    @Schema(description = "公告类型（1通知 2公告）", required = true)
-    private String noticeType;
+    @Schema(description = "公告类型（NOTICE=通知 BULLETIN=公告）", required = true)
+    private NoticeTypeEnum noticeType;
 
     /**
      * 公告内容
@@ -43,10 +45,10 @@ public class SysNoticeVo extends BaseVo {
     private String noticeContent;
 
     /**
-     * 公告状态（0正常 1关闭）
+     * 公告状态（NORMAL=正常 DISABLE=关闭）
      */
-    @Schema(description = "公告状态（0正常 1关闭）", required = true)
-    private String status;
+    @Schema(description = "公告状态（NORMAL=正常 DISABLE=关闭）", required = true)
+    private CommonNormalDisable status;
 
     /**
      * 备注

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.core.domain.TreeEntity;
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.DeleteStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -71,17 +73,17 @@ public class SysDept extends TreeEntity<SysDept> {
     private String email;
 
     /**
-     * 部门状态:0正常,1停用
+     * 部门状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "部门状态:0正常,1停用")
-    private String status;
+    @Schema(description = "部门状态（NORMAL=正常 DISABLE=停用）")
+    private CommonNormalDisable status;
 
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标志（EXIST=代表存在 DELETED=代表删除）
      */
-    @Schema(description = "删除标志（0代表存在 2代表删除）")
+    @Schema(description = "删除标志（EXIST=代表存在 DELETED=代表删除）")
     @TableLogic
-    private String delFlag;
+    private DeleteStatus delFlag;
 
     /**
      * 祖级列表

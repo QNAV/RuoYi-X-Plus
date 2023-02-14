@@ -1,13 +1,19 @@
 package com.ruoyi.generator.domain;
 
 
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.generator.enums.HtmlTypeEnum;
+import com.ruoyi.generator.enums.QueryTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.apache.ibatis.type.JdbcType;
 
 import javax.validation.constraints.NotBlank;
 
@@ -50,7 +56,7 @@ public class GenTableColumn extends BaseEntity {
      * 列描述
      */
     @Schema(description = "列描述")
-//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
     private String columnComment;
 
     /**
@@ -79,65 +85,65 @@ public class GenTableColumn extends BaseEntity {
     private String javaField;
 
     /**
-     * 是否主键（1是）
+     * 是否主键（YES=是 NO=否）
      */
-    @Schema(description = "是否主键（1是）")
-//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private String isPk;
+    @Schema(description = "是否主键（YES=是 NO=否）")
+    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+    private CommonYesOrNo isPk;
 
     /**
-     * 是否自增（1是）
+     * 是否自增（YES=是 NO=否）
      */
-    @Schema(description = "是否自增（1是）")
-//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private String isIncrement;
+    @Schema(description = "是否自增（YES=是 NO=否）")
+    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+    private CommonYesOrNo isIncrement;
 
     /**
-     * 是否必填（1是）
+     * 是否必填（YES=是 NO=否）
      */
-    @Schema(description = "是否必填（1是）")
-//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private String isRequired;
+    @Schema(description = "是否必填（YES=是 NO=否）")
+    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+    private CommonYesOrNo isRequired;
 
     /**
-     * 是否为插入字段（1是）
+     * 是否为插入字段（YES=是 NO=否）
      */
-    @Schema(description = "是否为插入字段（1是）")
-//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private String isInsert;
+    @Schema(description = "是否为插入字段（YES=是 NO=否）")
+    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+    private CommonYesOrNo isInsert;
 
     /**
-     * 是否编辑字段（1是）
+     * 是否编辑字段（YES=是 NO=否）
      */
-    @Schema(description = "是否编辑字段（1是）")
-//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private String isEdit;
+    @Schema(description = "是否编辑字段（YES=是 NO=否）")
+    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+    private CommonYesOrNo isEdit;
 
     /**
-     * 是否列表字段（1是）
+     * 是否列表字段（YES=是 NO=否）
      */
-    @Schema(description = "是否列表字段（1是）")
-//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private String isList;
+    @Schema(description = "是否列表字段（YES=是 NO=否）")
+    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+    private CommonYesOrNo isList;
 
     /**
-     * 是否查询字段（1是）
+     * 是否查询字段（YES=是 NO=否）
      */
-    @Schema(description = "是否查询字段（1是）")
-//    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private String isQuery;
+    @Schema(description = "是否查询字段（YES=是 NO=否）")
+    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+    private CommonYesOrNo isQuery;
 
     /**
-     * 查询方式（EQ等于、NE不等于、GT大于、LT小于、LIKE模糊、BETWEEN范围）
+     * 查询方式（EQ=等于 NE=不等于 GT=大于 LT=小于 LIKE=模糊 BETWEEN=范围）
      */
-    @Schema(description = "查询方式（EQ等于、NE不等于、GT大于、LT小于、LIKE模糊、BETWEEN范围）")
-    private String queryType;
+    @Schema(description = "查询方式（EQ=等于 NE=不等于 GT=大于 LT=小于 LIKE=模糊 BETWEEN=范围）")
+    private QueryTypeEnum queryType;
 
     /**
-     * 显示类型（input文本框、textarea文本域、select下拉框、checkbox复选框、radio单选框、datetime日期控件、image图片上传控件、upload文件上传控件、editor富文本控件）
+     * 显示类型（INPUT=文本框 TEXTAREA=文本域 SELECT=下拉框 CHECKBOX=复选框 RADIO=单选框 DATETIME=日期控件 IMAGE=图片上传控件 UPLOAD=文件上传控件 EDITOR=富文本控件）
      */
-    @Schema(description = "显示类型（input文本框、textarea文本域、select下拉框、checkbox复选框、radio单选框、datetime日期控件、image图片上传控件、upload文件上传控件、editor富文本控件）")
-    private String htmlType;
+    @Schema(description = "显示类型（INPUT=文本框 TEXTAREA=文本域 SELECT=下拉框 CHECKBOX=复选框 RADIO=单选框 DATETIME=日期控件 IMAGE=图片上传控件 UPLOAD=文件上传控件 EDITOR=富文本控件）")
+    private HtmlTypeEnum htmlType;
 
     /**
      * 字典类型
@@ -159,56 +165,56 @@ public class GenTableColumn extends BaseEntity {
         return isPk(this.isPk);
     }
 
-    public boolean isPk(String isPk) {
-        return isPk != null && StringUtils.equals("1", isPk);
+    public boolean isPk(CommonYesOrNo isPk) {
+        return isPk != null && isPk.equals(CommonYesOrNo.YES);
     }
 
     public boolean isIncrement() {
         return isIncrement(this.isIncrement);
     }
 
-    public boolean isIncrement(String isIncrement) {
-        return isIncrement != null && StringUtils.equals("1", isIncrement);
+    public boolean isIncrement(CommonYesOrNo isIncrement) {
+        return isIncrement != null && isPk.equals(CommonYesOrNo.YES);
     }
 
     public boolean isRequired() {
         return isRequired(this.isRequired);
     }
 
-    public boolean isRequired(String isRequired) {
-        return isRequired != null && StringUtils.equals("1", isRequired);
+    public boolean isRequired(CommonYesOrNo isRequired) {
+        return isRequired != null && isPk.equals(CommonYesOrNo.YES);
     }
 
     public boolean isInsert() {
         return isInsert(this.isInsert);
     }
 
-    public boolean isInsert(String isInsert) {
-        return isInsert != null && StringUtils.equals("1", isInsert);
+    public boolean isInsert(CommonYesOrNo isInsert) {
+        return isInsert != null && isPk.equals(CommonYesOrNo.YES);
     }
 
     public boolean isEdit() {
         return isInsert(this.isEdit);
     }
 
-    public boolean isEdit(String isEdit) {
-        return isEdit != null && StringUtils.equals("1", isEdit);
+    public boolean isEdit(CommonYesOrNo isEdit) {
+        return isEdit != null && isPk.equals(CommonYesOrNo.YES);
     }
 
     public boolean isList() {
         return isList(this.isList);
     }
 
-    public boolean isList(String isList) {
-        return isList != null && StringUtils.equals("1", isList);
+    public boolean isList(CommonYesOrNo isList) {
+        return isList != null && isPk.equals(CommonYesOrNo.YES);
     }
 
     public boolean isQuery() {
         return isQuery(this.isQuery);
     }
 
-    public boolean isQuery(String isQuery) {
-        return isQuery != null && StringUtils.equals("1", isQuery);
+    public boolean isQuery(CommonYesOrNo isQuery) {
+        return isQuery != null && isPk.equals(CommonYesOrNo.YES);
     }
 
     public boolean isSuperColumn() {

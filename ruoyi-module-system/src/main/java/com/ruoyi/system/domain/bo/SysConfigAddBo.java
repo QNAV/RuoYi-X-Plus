@@ -1,5 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
+import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.system.enums.ConfigValueTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -37,6 +39,13 @@ public class SysConfigAddBo implements Serializable {
     private String configKey;
 
     /**
+     * 参数值类型
+     */
+    @Schema(description = "参数值类型", required = true)
+    @NotBlank(message = "参数值类型不能为空")
+    private ConfigValueTypeEnum valueType;
+
+    /**
      * 参数键值
      */
     @Schema(description = "参数键值", required = true)
@@ -45,10 +54,10 @@ public class SysConfigAddBo implements Serializable {
     private String configValue;
 
     /**
-     * 系统内置（Y是 N否）
+     * 系统内置（YES=是 NO=否）
      */
-    @Schema(description = "系统内置（Y是 N否）")
-    private String configType;
+    @Schema(description = "系统内置（YES=是 NO=否）")
+    private CommonYesOrNo configType;
 
     /**
      * 备注

@@ -9,6 +9,7 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.CommonNormalDisable;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.bo.SysDeptAddBo;
@@ -106,7 +107,7 @@ public class SysDeptController extends AdminBaseController {
             return R.fail("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         } else if (dept.getParentId().equals(deptId)) {
             return R.fail("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
-        } else if (StringUtils.equals(UserConstants.DEPT_DISABLE, dept.getStatus())
+        } else if (CommonNormalDisable.DISABLE.equals(dept.getStatus())
             && deptService.selectNormalChildrenDeptById(deptId) > 0) {
             return R.fail("该部门包含未停用的子部门！");
         }

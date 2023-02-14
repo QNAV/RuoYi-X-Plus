@@ -86,7 +86,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         wrapper.eq("r.del_flag", UserConstants.ROLE_NORMAL)
             .eq(roleQuery != null && ObjectUtil.isNotNull(roleQuery.getRoleId()), "r.role_id", roleQuery.getRoleId())
             .like(roleQuery != null && StringUtils.isNotBlank(roleQuery.getRoleName()), "r.role_name", roleQuery.getRoleName())
-            .eq(roleQuery != null && StringUtils.isNotBlank(roleQuery.getStatus()), "r.status", roleQuery.getStatus())
+            .eq(roleQuery != null && roleQuery.getStatus() != null, "r.status", roleQuery.getStatus())
             .like(roleQuery != null && StringUtils.isNotBlank(roleQuery.getRoleKey()), "r.role_key", roleQuery.getRoleKey())
             .between(roleQuery != null && roleQuery.getBeginCreateTime() != null && roleQuery.getEndCreateTime() != null,
                 "r.create_time", roleQuery.getBeginCreateTime(), roleQuery.getEndCreateTime())

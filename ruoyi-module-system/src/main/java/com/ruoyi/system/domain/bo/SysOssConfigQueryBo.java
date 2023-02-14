@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
+import com.ruoyi.common.enums.CommonNormalDisable;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -30,8 +31,8 @@ public class SysOssConfigQueryBo implements Serializable {
 
 
     /**
-     * 是否默认（0=是,1=否）
+     * 状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "是否默认（0=是,1=否）")
-    private String status;
+    @Schema(description = "状态（NORMAL=正常 DISABLE=停用）")
+    private CommonNormalDisable status;
 }

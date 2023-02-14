@@ -38,7 +38,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * 数据权限过滤
+ * 后台数据权限过滤
  *
  * @author weibocy
  */
@@ -113,7 +113,7 @@ public class AdminDataPermissionHandler {
         for (RoleBo role : user.getRoles()) {
             user.setRoleId(role.getRoleId());
             // 获取角色权限泛型
-            DataScopeType type = DataScopeType.findCode(role.getDataScope());
+            DataScopeType type = role.getDataScope();
             if (ObjectUtil.isNull(type)) {
                 throw new ServiceException("角色数据范围异常 => " + role.getDataScope());
             }

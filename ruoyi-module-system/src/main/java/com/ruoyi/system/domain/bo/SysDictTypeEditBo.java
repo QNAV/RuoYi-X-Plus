@@ -1,9 +1,9 @@
 package com.ruoyi.system.domain.bo;
 
+import com.ruoyi.common.enums.CommonNormalDisable;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -40,10 +40,10 @@ public class SysDictTypeEditBo implements Serializable {
     private String dictType;
 
     /**
-     * 状态（0正常 1停用）
+     * 状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "状态（0正常 1停用）")
-    private String status;
+    @Schema(description = "状态（NORMAL=正常 DISABLE=停用）")
+    private CommonNormalDisable status;
 
     /**
      * 备注

@@ -1,5 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -63,16 +65,16 @@ public class SysDictDataAddBo implements Serializable {
     private String listClass;
 
     /**
-     * 是否默认（Y是 N否）
+     * 是否默认（YES=是 NO=否）
      */
-    @Schema(description = "是否默认（Y是 N否）")
-    private String isDefault;
+    @Schema(description = "是否默认（YES=是 NO=否）")
+    private CommonYesOrNo isDefault;
 
     /**
-     * 状态（0正常 1停用）
+     * 状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "状态（0正常 1停用）")
-    private String status;
+    @Schema(description = "状态（NORMAL=正常 DISABLE=停用）")
+    private CommonNormalDisable status;
 
     /**
      * 备注

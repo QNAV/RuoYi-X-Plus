@@ -2,6 +2,9 @@ package com.ruoyi.system.domain.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.ruoyi.common.core.domain.BaseVo;
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.system.enums.AccessPolicyEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -57,7 +60,7 @@ public class SysOssConfigVo extends BaseVo {
     /**
      * 访问站点
      */
-    @Schema(description = "访问站点")
+    @Schema(description = "访问站点", required = true)
     private String endpoint;
 
     /**
@@ -67,10 +70,10 @@ public class SysOssConfigVo extends BaseVo {
     private String domain;
 
     /**
-     * 是否https（Y=是,N=否）
+     * 是否https（NO=否 YES=是）
      */
-    @Schema(description = "是否https（Y=是,N=否）", required = true)
-    private String isHttps;
+    @Schema(description = "是否https（NO=否 YES=是）", required = true)
+    private CommonYesOrNo isHttps;
 
     /**
      * 域
@@ -79,10 +82,16 @@ public class SysOssConfigVo extends BaseVo {
     private String region;
 
     /**
-     * 状态（0=正常,1=停用）
+     * 桶权限类型（PUBLIC=公开 PRIVATE=私有 EXCEPTION=自定义）
      */
-    @Schema(description = "状态（0=正常,1=停用）", required = true)
-    private String status;
+    @Schema(description = "桶权限类型（PUBLIC=公开 PRIVATE=私有 EXCEPTION=自定义）", required = true)
+    private AccessPolicyEnum accessPolicy;
+
+    /**
+     * 状态（NORMAL=正常 DISABLE=停用）
+     */
+    @Schema(description = "状态（NORMAL=正常 DISABLE=停用）", required = true)
+    private CommonNormalDisable status;
 
     /**
      * 扩展字段
@@ -95,11 +104,5 @@ public class SysOssConfigVo extends BaseVo {
      */
     @Schema(description = "备注")
     private String remark;
-
-    /**
-     * 桶权限类型(0private 1public 2custom)
-     */
-    @Schema(description = "桶权限类型(0private 1public 2custom)")
-    private String accessPolicy;
 
 }

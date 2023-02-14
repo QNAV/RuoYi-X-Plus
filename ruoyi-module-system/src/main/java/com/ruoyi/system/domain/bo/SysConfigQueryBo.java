@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
+import com.ruoyi.common.enums.CommonYesOrNo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -29,10 +30,10 @@ public class SysConfigQueryBo implements Serializable {
     private String configKey;
 
     /**
-     * 系统内置（Y是 N否）
+     * 系统内置（YES=是 NO=否）
      */
-    @Schema(description = "系统内置（Y是 N否）")
-    private String configType;
+    @Schema(description = "系统内置（YES=是 NO=否）")
+    private CommonYesOrNo configType;
 
     /**
      * 开始时间

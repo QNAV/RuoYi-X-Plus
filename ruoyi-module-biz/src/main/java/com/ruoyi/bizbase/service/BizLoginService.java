@@ -267,10 +267,7 @@ public class BizLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", username);
             throw new UserException("user.not.exists", username);
-        } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
-            log.info("登录用户：{} 已被删除.", username);
-            throw new UserException("user.password.delete", username);
-        } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
+        }else if (UserStatus.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", username);
             throw new UserException("user.blocked", username);
         }
@@ -293,10 +290,7 @@ public class BizLoginService {
             log.info("自动注册手机号用户：{} .", phoneNumber);
             // 注册账户后再读取一次
             user = userService.selectUserByPhoneNumber(phoneNumber);
-        } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
-            log.info("登录用户：{} 已被删除.", phoneNumber);
-            throw new UserException("user.password.delete", phoneNumber);
-        } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
+        } else if (UserStatus.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", phoneNumber);
             throw new UserException("user.blocked", phoneNumber);
         }
@@ -321,10 +315,7 @@ public class BizLoginService {
             log.info("自动注册手机号用户：{} .", phoneNumber);
             // 注册账户后再读取一次
             user = userService.selectUserByPhoneNumberAndAppid(phoneNumber, appid);
-        } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
-            log.info("登录用户：{} 已被删除.", phoneNumber);
-            throw new UserException("user.password.delete", phoneNumber);
-        } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
+        }else if (UserStatus.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", phoneNumber);
             throw new UserException("user.blocked", phoneNumber);
         }
@@ -342,10 +333,7 @@ public class BizLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", openid);
             throw new UserException("user.not.exists", openid);
-        } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
-            log.info("登录用户：{} 已被删除.", openid);
-            throw new UserException("user.password.delete", openid);
-        } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
+        } else if (UserStatus.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", openid);
             throw new UserException("user.blocked", openid);
         }

@@ -109,9 +109,6 @@ public class SysUserController extends AdminBaseController {
      * @param updateSupport 是否更新已存在数据
      */
     @Operation(description = "导入用户列表", operationId = "SysUserPostImportData")
-    @Parameters({
-        @Parameter(name = "file", description = "导入文件", in = ParameterIn.QUERY, required = true),
-    })
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
     @SaCheckPermission("system:user:import")
     @PostMapping("/importData")

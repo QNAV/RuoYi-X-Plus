@@ -1,6 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.core.domain.bo.PageQuery;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -42,10 +43,10 @@ public class SysMenuUniquePageQueryBo extends PageQuery {
 
 
     /**
-     * 是否为外链（0是 1否）
+     * 是否为外链（Y是 N否）
      */
-    @Schema(description = "是否为外链（0是 1否）")
-    private String isFrame;
+    @Schema(description = "是否为外链（Y是 N否）")
+    private CommonYesOrNo isFrame;
 
 
 }

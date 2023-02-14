@@ -2,9 +2,8 @@ package com.ruoyi.common.core.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.ruoyi.common.annotation.Sensitive;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.BaseEntity;
-import com.ruoyi.common.enums.SensitiveStrategy;
+import com.ruoyi.common.enums.*;
 import com.ruoyi.common.xss.Xss;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -13,10 +12,8 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 业务用户实体对象 biz_user
@@ -77,10 +74,10 @@ public class BizUser extends BaseEntity {
     private String nickName;
 
     /**
-     * 用户类型（app_userAPP用户，wxapp_user微信小程序）
+     * 用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
-    @Schema(description = "用户类型（app_userAPP用户，wxapp_user微信小程序）")
-    private String userType;
+    @Schema(description = "用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）")
+    private UserType userType;
 
     /**
      * 用户邮箱
@@ -98,9 +95,9 @@ public class BizUser extends BaseEntity {
     @Schema(description = "手机号码")
     private String phoneNumber;
 
-    /** 用户性别（1男 2女 0未知） */
-    @Schema(description = "用户性别（1男 2女 0未知）")
-    private String sex;
+    /** 用户性别（UNKNOWN=未知 MAN=男 WOMAN=女） */
+    @Schema(description = "用户性别（UNKNOWN=未知 MAN=男 WOMAN=女）")
+    private UserSexEnum sex;
 
     /**
      * 用户头像
@@ -115,10 +112,10 @@ public class BizUser extends BaseEntity {
     private String password;
 
     /**
-     * 帐号状态（0正常 1停用）
+     * 帐号状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "帐号状态（0正常 1停用）")
-    private String status;
+    @Schema(description = "帐号状态（NORMAL=正常 DISABLE=停用）")
+    private CommonNormalDisable status;
 
     /** 国家 */
     @Schema(description = "国家")
@@ -131,13 +128,6 @@ public class BizUser extends BaseEntity {
     /** 城市 */
     @Schema(description = "城市")
     private String city;
-
-    /**
-     * 删除标志（0代表存在 2代表删除）
-     */
-    @Schema(description = "删除标志（0代表存在 2代表删除）")
-    @TableLogic
-    private String delFlag;
 
     /**
      * 最后登录IP
@@ -156,6 +146,13 @@ public class BizUser extends BaseEntity {
      */
     @Schema(description = "备注")
     private String remark;
+
+    /**
+     * 删除标志（EXIST=代表存在 DELETED=代表删除）
+     */
+    @Schema(description = "删除标志（EXIST=代表存在 DELETED=代表删除）")
+    @TableLogic
+    private DeleteStatus delFlag;
 
 
     public BizUser(Long userId) {

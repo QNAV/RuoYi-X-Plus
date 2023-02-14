@@ -1,10 +1,11 @@
 package com.ruoyi.system.domain.bo;
 
-import com.ruoyi.common.core.validate.EditGroup;
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.system.enums.AccessPolicyEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -25,7 +26,7 @@ public class SysOssConfigEditBo implements Serializable {
      * 主建
      */
     @Schema(description = "主建", required = true)
-    @NotNull(message = "主建不能为空", groups = {EditGroup.class})
+    @NotNull(message = "主建不能为空")
     private Long ossConfigId;
 
     /**
@@ -76,16 +77,22 @@ public class SysOssConfigEditBo implements Serializable {
     private String domain;
 
     /**
-     * 是否https（Y=是,N=否）
+     * 是否https（NO=否 YES=是）
      */
-    @Schema(description = "是否https（Y=是,N=否）")
-    private String isHttps;
+    @Schema(description = "是否https（NO=否 YES=是）")
+    private CommonYesOrNo isHttps;
 
     /**
-     * 是否默认（0=是,1=否）
+     * 桶权限类型（PUBLIC=公开 PRIVATE=私有 EXCEPTION=自定义）
      */
-    @Schema(description = "是否默认（0=是,1=否）")
-    private String status;
+    @Schema(description = "桶权限类型（PUBLIC=公开 PRIVATE=私有 EXCEPTION=自定义）")
+    private AccessPolicyEnum accessPolicy;
+
+    /**
+     * 状态（NORMAL=正常 DISABLE=停用）
+     */
+    @Schema(description = "状态（NORMAL=正常 DISABLE=停用）")
+    private CommonNormalDisable status;
 
     /**
      * 域
@@ -104,11 +111,5 @@ public class SysOssConfigEditBo implements Serializable {
      */
     @Schema(description = "备注")
     private String remark;
-
-    /**
-     * 桶权限类型(0private 1public 2custom)
-     */
-    @NotBlank(message = "桶权限类型不能为空")
-    private String accessPolicy;
 
 }

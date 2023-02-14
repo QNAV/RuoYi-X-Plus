@@ -82,7 +82,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
         LambdaQueryWrapper<SysOssConfig> lqw = Wrappers.lambdaQuery();
         lqw.eq(ossConfigQuery != null && StringUtils.isNotBlank(ossConfigQuery.getConfigKey()), SysOssConfig::getConfigKey, ossConfigQuery.getConfigKey());
         lqw.like(ossConfigQuery != null && StringUtils.isNotBlank(ossConfigQuery.getBucketName()), SysOssConfig::getBucketName, ossConfigQuery.getBucketName());
-        lqw.eq(ossConfigQuery != null && StringUtils.isNotBlank(ossConfigQuery.getStatus()), SysOssConfig::getStatus, ossConfigQuery.getStatus());
+        lqw.eq(ossConfigQuery != null && ossConfigQuery.getStatus() != null, SysOssConfig::getStatus, ossConfigQuery.getStatus());
         return lqw;
     }
 

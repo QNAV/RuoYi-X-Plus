@@ -50,7 +50,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
     public TableDataInfo<SysDictTypeVo> selectPageDictTypeList(SysDictTypeQueryBo dictTypeQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysDictType> lqw = new LambdaQueryWrapper<SysDictType>()
             .like(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getDictName()), SysDictType::getDictName, dictTypeQuery.getDictName())
-            .eq(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getStatus()), SysDictType::getStatus, dictTypeQuery.getStatus())
+            .eq(dictTypeQuery != null, SysDictType::getStatus, dictTypeQuery.getStatus())
             .like(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getDictType()), SysDictType::getDictType, dictTypeQuery.getDictType())
             .between(dictTypeQuery != null && dictTypeQuery.getBeginTime() != null && dictTypeQuery.getEndTime() != null,
                 SysDictType::getCreateTime, dictTypeQuery.getBeginTime(), dictTypeQuery.getEndTime());
@@ -68,7 +68,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
     public List<SysDictType> selectDictTypeList(SysDictTypeQueryBo dictTypeQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysDictType>()
             .like(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getDictName()), SysDictType::getDictName, dictTypeQuery.getDictName())
-            .eq(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getStatus()), SysDictType::getStatus, dictTypeQuery.getStatus())
+            .eq(dictTypeQuery != null, SysDictType::getStatus, dictTypeQuery.getStatus())
             .like(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getDictType()), SysDictType::getDictType, dictTypeQuery.getDictType())
             .between(dictTypeQuery != null && dictTypeQuery.getBeginTime() != null && dictTypeQuery.getEndTime() != null,
                 SysDictType::getCreateTime, dictTypeQuery.getBeginTime(), dictTypeQuery.getEndTime()));

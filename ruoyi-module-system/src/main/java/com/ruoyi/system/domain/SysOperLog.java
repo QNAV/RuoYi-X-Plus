@@ -7,13 +7,15 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.LoginStatusEnum;
+import com.ruoyi.common.enums.UserType;
+import com.ruoyi.system.enums.BusinessTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 操作日志记录表 oper_log
@@ -46,12 +48,12 @@ public class SysOperLog implements Serializable {
     private String title;
 
     /**
-     * 业务类型（0其它 1新增 2修改 3删除）
+     * 业务类型（ADD=新增 MODIFY=修改 DELETE=删除 GRANT=授权 EXPORT=导出 IMPORT=导入 FORCED=强退 GENCODE=生成代码 CLEAR=清空数据 OTHER=其他）
      */
-    @Schema(description = "业务类型（0其它 1新增 2修改 3删除）")
+    @Schema(description = "业务类型（ADD=新增 MODIFY=修改 DELETE=删除 GRANT=授权 EXPORT=导出 IMPORT=导入 FORCED=强退 GENCODE=生成代码 CLEAR=清空数据 OTHER=其他）")
     @ExcelProperty(value = "业务类型", converter = ExcelDictConvert.class)
     @ExcelDictFormat(dictType = "sys_oper_type")
-    private Integer businessType;
+    private BusinessTypeEnum businessType;
 
     /**
      * 业务类型数组
@@ -75,12 +77,12 @@ public class SysOperLog implements Serializable {
     private String requestMethod;
 
     /**
-     * 操作类别（0其它 1后台用户 2手机端用户）
+     * 操作类别（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
-    @Schema(description = "操作类别（0其它 1后台用户 2手机端用户）")
+    @Schema(description = "操作类别（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）")
     @ExcelProperty(value = "操作类别", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(readConverterExp = "0=其它,1=后台用户,2=手机端用户")
-    private Integer operatorType;
+    @ExcelDictFormat(readConverterExp = "PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端")
+    private UserType operatorType;
 
     /**
      * 操作人员
@@ -132,12 +134,12 @@ public class SysOperLog implements Serializable {
     private String jsonResult;
 
     /**
-     * 操作状态（0正常 1异常）
+     * 操作状态（NORMAL=正常 EXCEPTION=异常）
      */
-    @Schema(description = "操作状态（0正常 1异常）")
+    @Schema(description = "操作状态（NORMAL=正常 EXCEPTION=异常）")
     @ExcelProperty(value = "状态", converter = ExcelDictConvert.class)
     @ExcelDictFormat(dictType = "sys_common_status")
-    private Integer status;
+    private LoginStatusEnum status;
 
     /**
      * 错误消息

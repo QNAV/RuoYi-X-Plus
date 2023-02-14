@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain.bo;
 
+import com.ruoyi.common.enums.DataScopeType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -33,8 +34,8 @@ public class RoleBo implements Serializable {
     private String roleKey;
 
     /**
-     * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限；5：仅本人数据权限）
+     * 数据范围（ALL=全部数据权限 CUSTOM=自定数据权限 DEPT=本部门数据权限 DEPT_CHILD=本部门及以下数据权限 SELF=仅本人数据权限）
      */
-    private String dataScope;
+    private DataScopeType dataScope;
 
 }

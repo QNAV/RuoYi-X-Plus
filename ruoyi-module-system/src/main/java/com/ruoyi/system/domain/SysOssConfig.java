@@ -3,6 +3,9 @@ package com.ruoyi.system.domain;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.system.enums.AccessPolicyEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -58,9 +61,9 @@ public class SysOssConfig extends BaseEntity {
     private String domain;
 
     /**
-     * 是否https（0否 1是）
+     * 是否https（NO=否 YES=是）
      */
-    private String isHttps;
+    private CommonYesOrNo isHttps;
 
     /**
      * 域
@@ -68,9 +71,14 @@ public class SysOssConfig extends BaseEntity {
     private String region;
 
     /**
-     * 是否默认（0=是,1=否）
+     * 桶权限类型（PUBLIC=公开 PRIVATE=私有 EXCEPTION=自定义）
      */
-    private String status;
+    private AccessPolicyEnum accessPolicy;
+
+    /**
+     * 状态（NORMAL=正常 DISABLE=停用）
+     */
+    private CommonNormalDisable status;
 
     /**
      * 扩展字段
@@ -82,9 +90,4 @@ public class SysOssConfig extends BaseEntity {
      */
     private String remark;
 
-
-    /**
-     * 桶权限类型(0private 1public 2custom)
-     */
-    private String accessPolicy;
 }

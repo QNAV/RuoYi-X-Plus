@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
+import com.ruoyi.common.enums.CommonResult;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -42,12 +43,12 @@ public class SysLogininfor implements Serializable {
     private String userName;
 
     /**
-     * 登录状态 0成功 1失败
+     * 登录状态（SUCCESS=成功 FAIL=失败）
      */
-    @Schema(description = "登录状态 0成功 1失败")
+    @Schema(description = "登录状态（SUCCESS=成功 FAIL=失败）")
     @ExcelProperty(value = "登录状态", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(dictType = "sys_common_status")
-    private String status;
+    @ExcelDictFormat(dictType = "sys_common_result")
+    private CommonResult status;
 
     /**
      * 登录IP地址

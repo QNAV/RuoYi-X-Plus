@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.ruoyi.common.constant.GenConstants;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.generator.enums.GenTypeEnum;
+import com.ruoyi.generator.enums.TplCategoryEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -69,10 +71,10 @@ public class GenTable extends BaseEntity {
     private String className;
 
     /**
-     * 使用的模板（crud单表操作 tree树表操作 sub主子表操作）
+     * 使用的模板（CRUD=单表操作 TREE=树表操作 SUB=主子表操作）
      */
-    @Schema(description = "使用的模板（crud单表操作 tree树表操作 sub主子表操作）")
-    private String tplCategory;
+    @Schema(description = "使用的模板（CRUD=单表操作 TREE=树表操作 SUB=主子表操作）")
+    private TplCategoryEnum tplCategory;
 
     /**
      * 生成包路径
@@ -110,10 +112,10 @@ public class GenTable extends BaseEntity {
     private String functionAuthor;
 
     /**
-     * 生成代码方式（0zip压缩包 1自定义路径）
+     * 生成代码方式（ZIP=zip压缩包 CUSTOM=自定义路径）
      */
-    @Schema(description = "生成代码方式（0zip压缩包 1自定义路径）")
-    private String genType;
+    @Schema(description = "生成代码方式（ZIP=zip压缩包 CUSTOM=自定义路径）")
+    private GenTypeEnum genType;
 
     /**
      * 生成路径（不填默认项目路径）
@@ -210,31 +212,31 @@ public class GenTable extends BaseEntity {
         return isSub(this.tplCategory);
     }
 
-    public static boolean isSub(String tplCategory) {
-        return tplCategory != null && StringUtils.equals(GenConstants.TPL_SUB, tplCategory);
+    public static boolean isSub(TplCategoryEnum tplCategory) {
+        return tplCategory != null && tplCategory.equals(TplCategoryEnum.SUB);
     }
 
     public boolean isTree() {
         return isTree(this.tplCategory);
     }
 
-    public static boolean isTree(String tplCategory) {
-        return tplCategory != null && StringUtils.equals(GenConstants.TPL_TREE, tplCategory);
+    public static boolean isTree(TplCategoryEnum tplCategory) {
+        return tplCategory != null && tplCategory.equals(TplCategoryEnum.TREE);
     }
 
     public boolean isCrud() {
         return isCrud(this.tplCategory);
     }
 
-    public static boolean isCrud(String tplCategory) {
-        return tplCategory != null && StringUtils.equals(GenConstants.TPL_CRUD, tplCategory);
+    public static boolean isCrud(TplCategoryEnum tplCategory) {
+        return tplCategory != null && tplCategory.equals(TplCategoryEnum.CURD);
     }
 
     public boolean isSuperColumn(String javaField) {
         return isSuperColumn(this.tplCategory, javaField);
     }
 
-    public static boolean isSuperColumn(String tplCategory, String javaField) {
+    public static boolean isSuperColumn(TplCategoryEnum tplCategory, String javaField) {
         if (isTree(tplCategory)) {
             return StringUtils.equalsAnyIgnoreCase(javaField,
                 ArrayUtils.addAll(GenConstants.TREE_ENTITY, GenConstants.BASE_ENTITY));

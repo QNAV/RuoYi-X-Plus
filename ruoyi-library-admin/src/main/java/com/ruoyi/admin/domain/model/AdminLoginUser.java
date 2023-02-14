@@ -2,6 +2,7 @@ package com.ruoyi.admin.domain.model;
 
 import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.core.domain.bo.RoleBo;
+import com.ruoyi.common.enums.UserType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -44,7 +45,7 @@ public class AdminLoginUser implements Serializable {
     /**
      * 用户类型
      */
-    private String userType;
+    private UserType userType;
 
     /**
      * 登录时间
@@ -105,7 +106,7 @@ public class AdminLoginUser implements Serializable {
      * 获取登录id
      */
     public String getLoginId() {
-        return userType + AdminLoginHelper.JOIN_CODE + userId;
+        return userType.getUserType() + AdminLoginHelper.JOIN_CODE + userId;
     }
 
 }

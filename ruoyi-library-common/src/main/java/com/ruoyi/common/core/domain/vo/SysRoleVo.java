@@ -3,6 +3,10 @@ package com.ruoyi.common.core.domain.vo;
 
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.BaseVo;
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.DataScopeType;
+import com.ruoyi.common.enums.DeleteStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,34 +51,34 @@ public class SysRoleVo extends BaseVo {
     private Integer roleSort;
 
     /**
-     * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限；5：仅本人数据权限）
+     * 数据范围（ALL=全部数据权限 CUSTOM=自定数据权限 DEPT=本部门数据权限 DEPT_CHILD=本部门及以下数据权限 SELF=仅本人数据权限）
      */
-    @Schema(description = "数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限；5：仅本人数据权限）", required = true)
-    private String dataScope;
+    @Schema(description = "数据范围（ALL=全部数据权限 CUSTOM=自定数据权限 DEPT=本部门数据权限 DEPT_CHILD=本部门及以下数据权限 SELF=仅本人数据权限）", required = true)
+    private DataScopeType dataScope;
 
     /**
-     * 菜单树选择项是否关联显示（ 0：父子不互相关联显示 1：父子互相关联显示）
+     * 菜单树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示）
      */
-    @Schema(description = "菜单树选择项是否关联显示（ 0：父子不互相关联显示 1：父子互相关联显示）", required = true)
-    private Boolean menuCheckStrictly;
+    @Schema(description = "菜单树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示）", required = true)
+    private CommonYesOrNo menuCheckStrictly;
 
     /**
-     * 部门树选择项是否关联显示（0：父子不互相关联显示 1：父子互相关联显示 ）
+     * 部门树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示 ）
      */
-    @Schema(description = "部门树选择项是否关联显示（0：父子不互相关联显示 1：父子互相关联显示 ）", required = true)
-    private Boolean deptCheckStrictly;
+    @Schema(description = "部门树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示 ）", required = true)
+    private CommonYesOrNo deptCheckStrictly;
 
     /**
-     * 角色状态（0正常 1停用）
+     * 角色状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "角色状态（0正常 1停用）", required = true)
-    private String status;
+    @Schema(description = "角色状态（NORMAL=正常 DISABLE=停用）", required = true)
+    private CommonNormalDisable status;
 
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标志（EXIST=代表存在 DELETED=代表删除）
      */
-    @Schema(description = "删除标志（0代表存在 2代表删除）", required = true)
-    private String delFlag;
+    @Schema(description = "删除标志（EXIST=代表存在 DELETED=代表删除）", required = true)
+    private DeleteStatus delFlag;
 
     /**
      * 备注

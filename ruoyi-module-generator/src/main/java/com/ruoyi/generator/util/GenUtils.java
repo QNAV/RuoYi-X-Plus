@@ -1,10 +1,13 @@
 package com.ruoyi.generator.util;
 
 import com.ruoyi.common.constant.GenConstants;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.generator.config.GenConfig;
 import com.ruoyi.generator.domain.GenTable;
 import com.ruoyi.generator.domain.GenTableColumn;
+import com.ruoyi.generator.enums.HtmlTypeEnum;
+import com.ruoyi.generator.enums.QueryTypeEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RegExUtils;
@@ -43,18 +46,19 @@ public class GenUtils {
         column.setJavaField(StringUtils.toCamelCase(columnName));
         // 设置默认类型
         column.setJavaType(GenConstants.TYPE_STRING);
-        column.setQueryType(GenConstants.QUERY_EQ);
+        // 设置默认用等于
+        column.setQueryType(QueryTypeEnum.EQ);
 
         if (arraysContains(GenConstants.COLUMNTYPE_STR, dataType) || arraysContains(GenConstants.COLUMNTYPE_TEXT, dataType)) {
             // 字符串长度超过500设置为文本域
             Integer columnLength = getColumnLength(column.getColumnType());
-            String htmlType = columnLength >= 500 || arraysContains(GenConstants.COLUMNTYPE_TEXT, dataType) ? GenConstants.HTML_TEXTAREA : GenConstants.HTML_INPUT;
+            HtmlTypeEnum htmlType = columnLength >= 500 || arraysContains(GenConstants.COLUMNTYPE_TEXT, dataType) ? HtmlTypeEnum.TEXTAREA : HtmlTypeEnum.INPUT;
             column.setHtmlType(htmlType);
         } else if (arraysContains(GenConstants.COLUMNTYPE_TIME, dataType)) {
             column.setJavaType(GenConstants.TYPE_DATE);
-            column.setHtmlType(GenConstants.HTML_DATETIME);
+            column.setHtmlType(HtmlTypeEnum.DATETIME);
         } else if (arraysContains(GenConstants.COLUMNTYPE_NUMBER, dataType)) {
-            column.setHtmlType(GenConstants.HTML_INPUT);
+            column.setHtmlType(HtmlTypeEnum.INPUT);
 
             // 如果是浮点型 统一用BigDecimal
             String[] str = StringUtils.split(StringUtils.substringBetween(column.getColumnType(), "(", ")"), StringUtils.SEPARATOR);
@@ -78,49 +82,49 @@ public class GenUtils {
 
         // BO对象 默认插入勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_ADD, columnName) && !column.isPk()) {
-            column.setIsInsert(GenConstants.REQUIRE);
+            column.setIsInsert(CommonYesOrNo.YES);
         }
         // BO对象 默认编辑勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName)) {
-            column.setIsEdit(GenConstants.REQUIRE);
+            column.setIsEdit(CommonYesOrNo.YES);
         }
         // BO对象 默认是否必填勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName)) {
-            column.setIsRequired(GenConstants.REQUIRE);
+            column.setIsRequired(CommonYesOrNo.YES);
         }
         // VO对象 默认返回勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_LIST, columnName)) {
-            column.setIsList(GenConstants.REQUIRE);
+            column.setIsList(CommonYesOrNo.YES);
         }
         // BO对象 默认查询勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_QUERY, columnName) && !column.isPk()) {
-            column.setIsQuery(GenConstants.REQUIRE);
+            column.setIsQuery(CommonYesOrNo.YES);
         }
 
         // 查询字段类型
         if (StringUtils.endsWithIgnoreCase(columnName, "name")) {
-            column.setQueryType(GenConstants.QUERY_LIKE);
+            column.setQueryType(QueryTypeEnum.LIKE);
         }
         // 状态字段设置单选框
         if (StringUtils.endsWithIgnoreCase(columnName, "status")) {
-            column.setHtmlType(GenConstants.HTML_RADIO);
+            column.setHtmlType(HtmlTypeEnum.RADIO);
         }
         // 类型&性别字段设置下拉框
         else if (StringUtils.endsWithIgnoreCase(columnName, "type")
             || StringUtils.endsWithIgnoreCase(columnName, "sex")) {
-            column.setHtmlType(GenConstants.HTML_SELECT);
+            column.setHtmlType(HtmlTypeEnum.SELECT);
         }
         // 图片字段设置图片上传控件
         else if (StringUtils.endsWithIgnoreCase(columnName, "image")) {
-            column.setHtmlType(GenConstants.HTML_IMAGE_UPLOAD);
+            column.setHtmlType(HtmlTypeEnum.IMAGE);
         }
         // 文件字段设置文件上传控件
         else if (StringUtils.endsWithIgnoreCase(columnName, "file")) {
-            column.setHtmlType(GenConstants.HTML_FILE_UPLOAD);
+            column.setHtmlType(HtmlTypeEnum.UPLOAD);
         }
         // 内容字段设置富文本控件
         else if (StringUtils.endsWithIgnoreCase(columnName, "content")) {
-            column.setHtmlType(GenConstants.HTML_EDITOR);
+            column.setHtmlType(HtmlTypeEnum.EDITOR);
         }
     }
 

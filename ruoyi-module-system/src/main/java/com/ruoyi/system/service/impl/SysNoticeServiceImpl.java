@@ -32,7 +32,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
     public TableDataInfo<SysNoticeVo> selectPageNoticeList(SysNoticeQueryBo noticeQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysNotice> lqw = new LambdaQueryWrapper<SysNotice>()
             .like(noticeQuery != null && StringUtils.isNotBlank(noticeQuery.getNoticeTitle()), SysNotice::getNoticeTitle, noticeQuery.getNoticeTitle())
-            .eq(noticeQuery != null && StringUtils.isNotBlank(noticeQuery.getNoticeType()), SysNotice::getNoticeType, noticeQuery.getNoticeType())
+            .eq(noticeQuery != null && noticeQuery.getNoticeType() != null, SysNotice::getNoticeType, noticeQuery.getNoticeType())
             .like(noticeQuery != null && StringUtils.isNotBlank(noticeQuery.getCreateBy()), SysNotice::getCreateBy, noticeQuery.getCreateBy());
         Page<SysNoticeVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw, SysNoticeVo.class);
         return TableDataInfo.build(page);
@@ -59,7 +59,7 @@ public class SysNoticeServiceImpl implements ISysNoticeService {
     public List<SysNotice> selectNoticeList(SysNoticeQueryBo noticeQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysNotice>()
             .like(StringUtils.isNotBlank(noticeQuery.getNoticeTitle()), SysNotice::getNoticeTitle, noticeQuery.getNoticeTitle())
-            .eq(StringUtils.isNotBlank(noticeQuery.getNoticeType()), SysNotice::getNoticeType, noticeQuery.getNoticeType())
+            .eq(noticeQuery.getNoticeType() != null, SysNotice::getNoticeType, noticeQuery.getNoticeType())
             .like(StringUtils.isNotBlank(noticeQuery.getCreateBy()), SysNotice::getCreateBy, noticeQuery.getCreateBy()));
     }
 

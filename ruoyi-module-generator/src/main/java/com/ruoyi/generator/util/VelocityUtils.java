@@ -11,6 +11,8 @@ import com.ruoyi.common.utils.JsonUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.generator.domain.GenTable;
 import com.ruoyi.generator.domain.GenTableColumn;
+import com.ruoyi.generator.enums.HtmlTypeEnum;
+import com.ruoyi.generator.enums.TplCategoryEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.velocity.VelocityContext;
@@ -49,7 +51,6 @@ public class VelocityUtils {
         String moduleName = genTable.getModuleName();
         String businessName = genTable.getBusinessName();
         String packageName = genTable.getPackageName();
-        String tplCategory = genTable.getTplCategory();
         String functionName = genTable.getFunctionName();
 
         VelocityContext velocityContext = new VelocityContext();
@@ -72,10 +73,10 @@ public class VelocityUtils {
         velocityContext.put("table", genTable);
         velocityContext.put("dicts", getDicts(genTable));
         setMenuVelocityContext(velocityContext, genTable);
-        if (GenConstants.TPL_TREE.equals(tplCategory)) {
+        if (genTable.getTplCategory().equals(TplCategoryEnum.TREE)) {
             setTreeVelocityContext(velocityContext, genTable);
         }
-        if (GenConstants.TPL_SUB.equals(tplCategory)) {
+        if (genTable.getTplCategory().equals(TplCategoryEnum.SUB)) {
             setSubVelocityContext(velocityContext, genTable);
         }
         return velocityContext;
@@ -129,7 +130,7 @@ public class VelocityUtils {
      *
      * @return 模板列表
      */
-    public static List<String> getTemplateList(String tplCategory) {
+    public static List<String> getTemplateList(TplCategoryEnum tplCategory) {
         List<String> templates = new ArrayList<String>();
         templates.add("vm/java/domain.java.vm");
         templates.add("vm/java/vo.java.vm");
@@ -147,7 +148,7 @@ public class VelocityUtils {
         } else {
             templates.add("vm/sql/sql.vm");
         }
-        if (GenConstants.TPL_SUB.equals(tplCategory)) {
+        if (TplCategoryEnum.SUB.equals(tplCategory)) {
             templates.add("vm/java/sub-domain.java.vm");
         }
         return templates;
@@ -190,7 +191,7 @@ public class VelocityUtils {
         if (template.contains("bo-query.java.vm")) {
             fileName = StringUtils.format("{}/domain/bo/{}QueryBo.java", javaPath, className);
         }
-        if (template.contains("sub-domain.java.vm") && StringUtils.equals(GenConstants.TPL_SUB, genTable.getTplCategory())) {
+        if (template.contains("sub-domain.java.vm") && genTable.getTplCategory().equals(TplCategoryEnum.SUB)) {
             fileName = StringUtils.format("{}/domain/{}.java", javaPath, genTable.getSubTable().getClassName());
         } else if (template.contains("mapper.java.vm")) {
             fileName = StringUtils.format("{}/mapper/{}Mapper.java", javaPath, className);
@@ -275,9 +276,11 @@ public class VelocityUtils {
      */
     public static void addDicts(Set<String> dicts, List<GenTableColumn> columns) {
         for (GenTableColumn column : columns) {
-            if (!column.isSuperColumn() && StringUtils.isNotEmpty(column.getDictType()) && StringUtils.equalsAny(
-                column.getHtmlType(),
-                new String[] { GenConstants.HTML_SELECT, GenConstants.HTML_RADIO, GenConstants.HTML_CHECKBOX })) {
+            if (!column.isSuperColumn() && StringUtils.isNotEmpty(column.getDictType()) && (
+                    column.getHtmlType().equals(HtmlTypeEnum.SELECT) ||
+                    column.getHtmlType().equals(HtmlTypeEnum.RADIO) ||
+                    column.getHtmlType().equals(HtmlTypeEnum.CHECKBOX)
+            )) {
                 dicts.add("'" + column.getDictType() + "'");
             }
         }

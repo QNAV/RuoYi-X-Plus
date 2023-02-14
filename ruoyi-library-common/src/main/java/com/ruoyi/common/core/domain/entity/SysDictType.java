@@ -7,10 +7,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.enums.CommonNormalDisable;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -60,12 +60,12 @@ public class SysDictType extends BaseEntity {
     private String dictType;
 
     /**
-     * 状态（0正常 1停用）
+     * 状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "状态（0正常 1停用）")
+    @Schema(description = "状态（NORMAL=正常 DISABLE=停用）")
     @ExcelProperty(value = "状态", converter = ExcelDictConvert.class)
     @ExcelDictFormat(dictType = "sys_normal_disable")
-    private String status;
+    private CommonNormalDisable status;
 
     /**
      * 备注

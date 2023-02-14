@@ -69,15 +69,15 @@ public class SysDeptEditBo implements Serializable {
     private String email;
 
     /**
-     * 部门状态:0正常,1停用
+     * 部门状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "部门状态:0正常,1停用")
+    @Schema(description = "部门状态（NORMAL=正常 DISABLE=停用）")
     private String status;
 
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标志（EXIST=代表存在 DELETED=代表删除）
      */
-    @Schema(description = "删除标志（0代表存在 2代表删除）")
+    @Schema(description = "删除标志（EXIST=代表存在 DELETED=代表删除）")
     private String delFlag;
 
     /**

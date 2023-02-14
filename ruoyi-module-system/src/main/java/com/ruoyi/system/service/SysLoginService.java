@@ -191,10 +191,7 @@ public class SysLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", username);
             throw new UserException("user.not.exists", username);
-        } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
-            log.info("登录用户：{} 已被删除.", username);
-            throw new UserException("user.password.delete", username);
-        } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
+        } else if (UserStatus.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", username);
             throw new UserException("user.blocked", username);
         }
@@ -206,10 +203,7 @@ public class SysLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", phoneNumber);
             throw new UserException("user.not.exists", phoneNumber);
-        } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
-            log.info("登录用户：{} 已被删除.", phoneNumber);
-            throw new UserException("user.password.delete", phoneNumber);
-        } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
+        }else if (UserStatus.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", phoneNumber);
             throw new UserException("user.blocked", phoneNumber);
         }
@@ -223,10 +217,7 @@ public class SysLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", openid);
             // todo 用户不存在 业务逻辑自行实现
-        } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
-            log.info("登录用户：{} 已被删除.", openid);
-            // todo 用户已被删除 业务逻辑自行实现
-        } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
+        } else if (UserStatus.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", openid);
             // todo 用户已被停用 业务逻辑自行实现
         }

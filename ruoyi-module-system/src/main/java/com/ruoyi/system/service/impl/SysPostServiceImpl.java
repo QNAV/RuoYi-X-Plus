@@ -38,7 +38,7 @@ public class SysPostServiceImpl implements ISysPostService {
     public TableDataInfo<SysPostVo> selectPagePostList(SysPostQueryBo postQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysPost> lqw = new LambdaQueryWrapper<SysPost>()
             .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
-            .eq(postQuery != null && StringUtils.isNotBlank(postQuery.getStatus()), SysPost::getStatus, postQuery.getStatus())
+            .eq(postQuery != null && postQuery.getStatus() != null, SysPost::getStatus, postQuery.getStatus())
             .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName());
         Page<SysPostVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw, SysPostVo.class);
         return TableDataInfo.build(page);
@@ -54,7 +54,7 @@ public class SysPostServiceImpl implements ISysPostService {
     public List<SysPost> selectPostList(SysPostQueryBo postQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysPost>()
             .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
-            .eq(postQuery != null && StringUtils.isNotBlank(postQuery.getStatus()), SysPost::getStatus, postQuery.getStatus())
+            .eq(postQuery != null && postQuery.getStatus() != null, SysPost::getStatus, postQuery.getStatus())
             .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName()));
     }
 

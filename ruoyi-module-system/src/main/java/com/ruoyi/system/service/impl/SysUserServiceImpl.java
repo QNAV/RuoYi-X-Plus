@@ -18,6 +18,8 @@ import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.service.UserService;
+import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.DeleteStatus;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.helper.DataBaseHelper;
 import com.ruoyi.common.utils.BeanCopyUtils;
@@ -83,7 +85,7 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
 
     private Wrapper<SysUser> buildQueryWrapper(SysUserQueryBo userQuery) {
         QueryWrapper<SysUser> wrapper = Wrappers.query();
-        wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
+        wrapper.eq("u.del_flag", DeleteStatus.EXIST.getInfo())
             .eq(userQuery != null && ObjectUtil.isNotNull(userQuery.getUserId()), "u.user_id", userQuery.getUserId())
             .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
             .eq(userQuery != null && StringUtils.isNotBlank(userQuery.getStatus()), "u.status", userQuery.getStatus())
@@ -110,7 +112,7 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
     @Override
     public TableDataInfo<SysUser> selectAllocatedList(SysUserQueryBo userQuery, PageQuery pageQuery) {
         QueryWrapper<SysUser> wrapper = Wrappers.query();
-        wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
+        wrapper.eq("u.del_flag", DeleteStatus.EXIST)
             .eq(userQuery != null && ObjectUtil.isNotNull(userQuery.getRoleId()), "r.role_id", userQuery.getRoleId())
             .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
             .eq(userQuery != null && StringUtils.isNotBlank(userQuery.getStatus()), "u.status", userQuery.getStatus())
@@ -128,7 +130,7 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
     @Override
     public TableDataInfo<SysUserVo> selectAllocatedVoList(SysUserQueryBo userQuery, PageQuery pageQuery) {
         QueryWrapper<SysUser> wrapper = Wrappers.query();
-        wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
+        wrapper.eq("u.del_flag", DeleteStatus.EXIST)
             .eq(userQuery != null && ObjectUtil.isNotNull(userQuery.getRoleId()), "r.role_id", userQuery.getRoleId())
             .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
             .eq(userQuery != null && StringUtils.isNotBlank(userQuery.getStatus()), "u.status", userQuery.getStatus())
@@ -147,7 +149,7 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
     public TableDataInfo<SysUser> selectUnallocatedList(SysUserQueryBo userQuery, PageQuery pageQuery) {
         List<Long> userIds = userRoleMapper.selectUserIdsByRoleId(userQuery.getRoleId());
         QueryWrapper<SysUser> wrapper = Wrappers.query();
-        wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
+        wrapper.eq("u.del_flag", DeleteStatus.EXIST)
             .and(w -> w.ne("r.role_id", userQuery.getRoleId()).or().isNull("r.role_id"))
             .notIn(CollUtil.isNotEmpty(userIds), "u.user_id", userIds)
             .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
@@ -167,7 +169,7 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
     public TableDataInfo<SysUserVo> selectUnallocatedVoList(SysUserQueryBo userQuery, PageQuery pageQuery) {
         List<Long> userIds = userRoleMapper.selectUserIdsByRoleId(userQuery.getRoleId());
         QueryWrapper<SysUser> wrapper = Wrappers.query();
-        wrapper.eq("u.del_flag", UserConstants.USER_NORMAL)
+        wrapper.eq("u.del_flag", DeleteStatus.EXIST)
             .and(w -> w.ne("r.role_id", userQuery.getRoleId()).or().isNull("r.role_id"))
             .notIn(CollUtil.isNotEmpty(userIds), "u.user_id", userIds)
             .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())

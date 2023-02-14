@@ -13,6 +13,7 @@ import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.service.DeptService;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.helper.DataBaseHelper;
 import com.ruoyi.common.utils.BeanCopyUtils;
@@ -109,7 +110,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
     @Override
     public List<Long> selectDeptListByRoleId(Long roleId) {
         SysRole role = roleMapper.selectById(roleId);
-        return baseMapper.selectDeptListByRoleId(roleId, role.getDeptCheckStrictly());
+        return baseMapper.selectDeptListByRoleId(roleId, CommonYesOrNo.YES.equals(role.getDeptCheckStrictly()));
     }
 
     /**

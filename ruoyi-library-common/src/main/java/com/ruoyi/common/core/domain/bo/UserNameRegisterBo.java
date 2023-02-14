@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain.bo;
 
+import com.ruoyi.common.enums.UserType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +21,6 @@ public class UserNameRegisterBo extends UserNameLoginBo {
      * 用户类型
      */
     @Schema(description = "用户类型")
-    private String userType;
+    private UserType userType;
 
 }

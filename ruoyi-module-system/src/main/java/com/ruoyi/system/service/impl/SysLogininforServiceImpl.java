@@ -8,6 +8,7 @@ import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.event.AdminLogininforEvent;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.CommonResult;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
@@ -75,9 +76,9 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
         logininfor.setMsg(logininforEvent.getMessage());
         // 日志状态
         if (StringUtils.equalsAny(logininforEvent.getStatus(), Constants.LOGIN_SUCCESS, Constants.LOGOUT, Constants.REGISTER)) {
-            logininfor.setStatus(Constants.SUCCESS);
+            logininfor.setStatus(CommonResult.SUCCESS);
         } else if (Constants.LOGIN_FAIL.equals(logininforEvent.getStatus())) {
-            logininfor.setStatus(Constants.FAIL);
+            logininfor.setStatus(CommonResult.FAIL);
         }
         // 插入数据
         insertLogininfor(logininfor);
@@ -94,7 +95,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
     public TableDataInfo<SysLogininforVo> selectPageLogininforList(SysLogininforQueryBo logininforQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysLogininfor> lqw = new LambdaQueryWrapper<SysLogininfor>()
             .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
-            .eq(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getStatus()), SysLogininfor::getStatus, logininforQuery.getStatus())
+            .eq(logininforQuery != null && logininforQuery.getStatus() != null, SysLogininfor::getStatus, logininforQuery.getStatus())
             .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getUserName()), SysLogininfor::getUserName, logininforQuery.getUserName())
             .between(logininforQuery != null && logininforQuery.getBeginTime() != null && logininforQuery.getEndTime() != null,
                 SysLogininfor::getLoginTime, logininforQuery.getBeginTime(), logininforQuery.getEndTime());
@@ -127,7 +128,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
     public List<SysLogininfor> selectLogininforList(SysLogininforQueryBo logininforQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysLogininfor>()
             .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
-            .eq(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getStatus()), SysLogininfor::getStatus, logininforQuery.getStatus())
+            .eq(logininforQuery != null && logininforQuery.getStatus() != null, SysLogininfor::getStatus, logininforQuery.getStatus())
             .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getUserName()), SysLogininfor::getUserName, logininforQuery.getUserName())
             .between(logininforQuery != null && logininforQuery.getBeginTime() != null && logininforQuery.getEndTime() != null,
                 SysLogininfor::getLoginTime, logininforQuery.getBeginTime(), logininforQuery.getEndTime())

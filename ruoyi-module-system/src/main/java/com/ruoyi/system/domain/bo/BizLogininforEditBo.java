@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
+import com.ruoyi.common.enums.CommonResult;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import javax.validation.constraints.*;
@@ -60,11 +61,11 @@ public class BizLogininforEditBo implements Serializable {
     private String os;
 
     /**
-     * 登录状态（0成功 1失败）
+     * 登录状态（SUCCESS=成功 FAIL=失败）
      */
-    @Schema(description = "登录状态（0成功 1失败）", required = true)
-    @NotBlank(message = "登录状态（0成功 1失败）不能为空")
-    private String status;
+    @Schema(description = "登录状态（SUCCESS=成功 FAIL=失败）", required = true)
+    @NotBlank(message = "登录状态（SUCCESS=成功 FAIL=失败）不能为空")
+    private CommonResult status;
 
     /**
      * 提示消息

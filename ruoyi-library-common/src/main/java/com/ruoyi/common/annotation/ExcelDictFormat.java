@@ -20,7 +20,7 @@ public @interface ExcelDictFormat {
     String dictType() default "";
 
     /**
-     * 读取内容转表达式 (如: 0=男,1=女,2=未知)
+     * 读取内容转表达式 (如: UNKNOWN=未知,MAN=男,WOMAN=女)
      */
     String readConverterExp() default "";
 

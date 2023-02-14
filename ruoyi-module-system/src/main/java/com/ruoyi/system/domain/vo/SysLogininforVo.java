@@ -1,6 +1,10 @@
 package com.ruoyi.system.domain.vo;
 
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.ruoyi.common.annotation.ExcelDictFormat;
+import com.ruoyi.common.convert.ExcelDictConvert;
+import com.ruoyi.common.enums.CommonResult;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -32,10 +36,12 @@ public class SysLogininforVo implements Serializable {
     private String userName;
 
     /**
-     * 登录状态 0成功 1失败
+     * 登录状态（SUCCESS=成功 FAIL=失败）
      */
-    @Schema(description = "登录状态 0成功 1失败", required = true)
-    private String status;
+    @Schema(description = "登录状态（SUCCESS=成功 FAIL=失败）", required = true)
+    @ExcelProperty(value = "登录状态", converter = ExcelDictConvert.class)
+    @ExcelDictFormat(readConverterExp = "SUCCESS=成功 FAIL=失败")
+    private CommonResult status;
 
     /**
      * 登录IP地址

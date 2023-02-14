@@ -187,9 +187,9 @@ mybatis-plus:
       # AUTO 自增 NONE 空 INPUT 用户输入 ASSIGN_ID 雪花 ASSIGN_UUID 唯一 UUID
       idType: AUTO
       # 逻辑已删除值
-      logicDeleteValue: 2
+      logicDeleteValue: "DELETED"
       # 逻辑未删除值
-      logicNotDeleteValue: 0
+      logicNotDeleteValue: "EXIST"
       # 字段验证策略之 insert,在 insert 的时候的字段验证策略
       # IGNORED 忽略 NOT_NULL 非NULL NOT_EMPTY 非空 DEFAULT 默认 NEVER 不加入 SQL
       insertStrategy: NOT_NULL
@@ -335,7 +335,7 @@ spring:
     # 执行迁移时是否自动调用验证   当你的 版本不符合逻辑 比如 你先执行了 DML 而没有 对应的DDL 会抛出异常
     validate-on-migrate: true
     # 指定 baseline 的版本号,默认值为 1, 低于该版本号的 SQL 文件, migrate 时会被忽略
-    baseline-version: 1.0.0
+    baseline-version: 1.0.1
     # 字符编码 默认 UTF-8
     encoding: UTF-8
     # 是否允许不按顺序迁移 开发建议 true  生产建议 false

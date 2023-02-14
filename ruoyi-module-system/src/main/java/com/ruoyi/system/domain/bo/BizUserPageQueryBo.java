@@ -1,14 +1,13 @@
 package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.core.domain.bo.PageQuery;
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.UserSexEnum;
+import com.ruoyi.common.enums.UserType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import javax.validation.constraints.*;
 
 import java.util.Date;
-
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 业务用户信息业务分页查询对象 biz_user
@@ -54,10 +53,10 @@ public class BizUserPageQueryBo extends PageQuery {
     private String nickName;
 
     /**
-     * 用户类型（app_userAPP用户，wxapp_user微信小程序）
+     * 用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
-    @Schema(description = "用户类型（app_userAPP用户，wxapp_user微信小程序）")
-    private String userType;
+    @Schema(description = "用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）")
+    private UserType userType;
 
     /**
      * 用户邮箱
@@ -72,10 +71,10 @@ public class BizUserPageQueryBo extends PageQuery {
     private String phoneNumber;
 
     /**
-     * 用户性别（1男 2女 0未知）
+     * 用户性别（UNKNOWN=未知 MAN=男 WOMAN=女）
      */
-    @Schema(description = "用户性别（1男 2女 0未知）")
-    private String sex;
+    @Schema(description = "用户性别（UNKNOWN=未知 MAN=男 WOMAN=女）")
+    private UserSexEnum sex;
 
     /**
      * 头像地址
@@ -90,10 +89,10 @@ public class BizUserPageQueryBo extends PageQuery {
     private String password;
 
     /**
-     * 帐号状态（0正常 1停用）
+     * 帐号状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "帐号状态（0正常 1停用）")
-    private String status;
+    @Schema(description = "帐号状态（NORMAL=正常 DISABLE=停用）")
+    private CommonNormalDisable status;
 
     /**
      * 国家

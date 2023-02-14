@@ -53,7 +53,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
     public TableDataInfo<SysOperLogVo> selectPageOperLogList(SysOperLogQueryBo operLogQuery, PageQuery pageQuery) {
         LambdaQueryWrapper<SysOperLog> lqw = new LambdaQueryWrapper<SysOperLog>()
             .like(operLogQuery != null && StringUtils.isNotBlank(operLogQuery.getTitle()), SysOperLog::getTitle, operLogQuery.getTitle())
-            .eq(operLogQuery != null && operLogQuery.getBusinessType() != null && operLogQuery.getBusinessType() > 0,
+            .eq(operLogQuery != null && operLogQuery.getBusinessType() != null,
                 SysOperLog::getBusinessType, operLogQuery.getBusinessType())
             .func(f -> {
                 if (operLogQuery != null && ArrayUtil.isNotEmpty(operLogQuery.getBusinessTypes())) {
@@ -94,14 +94,14 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
     public List<SysOperLog> selectOperLogList(SysOperLogQueryBo operLogQuery) {
         return baseMapper.selectList(new LambdaQueryWrapper<SysOperLog>()
             .like(operLogQuery != null && StringUtils.isNotBlank(operLogQuery.getTitle()), SysOperLog::getTitle, operLogQuery.getTitle())
-            .eq(operLogQuery != null && operLogQuery.getBusinessType() != null && operLogQuery.getBusinessType() > 0,
+            .eq(operLogQuery != null && operLogQuery.getBusinessType() != null,
                 SysOperLog::getBusinessType, operLogQuery.getBusinessType())
             .func(f -> {
                 if (operLogQuery != null && ArrayUtil.isNotEmpty(operLogQuery.getBusinessTypes())) {
                     f.in(SysOperLog::getBusinessType, Arrays.asList(operLogQuery.getBusinessTypes()));
                 }
             })
-            .eq(operLogQuery != null && operLogQuery.getStatus() != null && operLogQuery.getStatus() > 0,
+            .eq(operLogQuery != null && operLogQuery.getStatus() != null,
                 SysOperLog::getStatus, operLogQuery.getStatus())
             .like(operLogQuery != null && StringUtils.isNotBlank(operLogQuery.getOperName()), SysOperLog::getOperName, operLogQuery.getOperName())
             .between(operLogQuery != null && operLogQuery.getBeginTime() != null && operLogQuery.getEndTime() != null,

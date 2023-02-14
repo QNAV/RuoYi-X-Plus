@@ -1,5 +1,7 @@
 package com.ruoyi.common.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.ruoyi.common.utils.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,20 +17,39 @@ import lombok.Getter;
 public enum UserType {
 
     /**
-     * pc端
+     * 电脑端
      */
-    SYS_USER("sys_user"),
+    PC("PC"),
 
     /**
-     * app端
+     * 安卓app端
      */
-    APP_USER("app_user"),
+    ANDROID("ANDROID"),
+
+    /**
+     * 苹果app端
+     */
+    IOS("IOS"),
 
     /**
      * 微信小程序端
      */
-    WXAPP_USER("wxapp_user");
+    WXAPP("WXAPP"),
 
+    /**
+     * 微信公众号端
+     */
+    WXMP("WXMP"),
+
+    /**
+     * 支付宝小程序端
+     */
+    ALIPAYAPP("ALIPAYAPP");
+
+    // 标记响应mbp值
+    @EnumValue
+    // 标记响应json值
+    @JsonValue
     private final String userType;
 
     public static UserType getUserType(String str) {

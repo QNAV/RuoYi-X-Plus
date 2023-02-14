@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
+import com.ruoyi.common.enums.CommonResult;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -23,10 +24,10 @@ public class SysLogininforQueryBo implements Serializable {
     private String userName;
 
     /**
-     * 登录状态 0成功 1失败
+     * 登录状态（SUCCESS=成功 FAIL=失败）
      */
-    @Schema(description = "登录状态 0成功 1失败")
-    private String status;
+    @Schema(description = "登录状态（SUCCESS=成功 FAIL=失败）")
+    private CommonResult status;
 
     /**
      * 登录IP地址

@@ -37,7 +37,7 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
         LambdaQueryWrapper<SysDictData> lqw = new LambdaQueryWrapper<SysDictData>()
             .eq(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictType()), SysDictData::getDictType, dictDataQuery.getDictType())
             .like(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictLabel()), SysDictData::getDictLabel, dictDataQuery.getDictLabel())
-            .eq(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getStatus()), SysDictData::getStatus, dictDataQuery.getStatus())
+            .eq(dictDataQuery != null && dictDataQuery.getStatus() != null, SysDictData::getStatus, dictDataQuery.getStatus())
             .orderByAsc(SysDictData::getDictSort);
         Page<SysDictDataVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw, SysDictDataVo.class);
         return TableDataInfo.build(page);
@@ -54,7 +54,7 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
         return baseMapper.selectList(new LambdaQueryWrapper<SysDictData>()
             .eq(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictType()), SysDictData::getDictType, dictDataQuery.getDictType())
             .like(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getDictLabel()), SysDictData::getDictLabel, dictDataQuery.getDictLabel())
-            .eq(dictDataQuery != null && StringUtils.isNotBlank(dictDataQuery.getStatus()), SysDictData::getStatus, dictDataQuery.getStatus())
+            .eq(dictDataQuery != null && dictDataQuery.getStatus() != null, SysDictData::getStatus, dictDataQuery.getStatus())
             .orderByAsc(SysDictData::getDictSort));
     }
 

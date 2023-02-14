@@ -1,6 +1,7 @@
 package com.ruoyi.system.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.ruoyi.common.enums.CommonResult;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -64,10 +65,10 @@ public class BizLogininfor extends BaseEntity {
     private String os;
 
     /**
-     * 登录状态（0成功 1失败）
+     * 登录状态（SUCCESS=成功 FAIL=失败）
      */
-    @Schema(description = "登录状态（0成功 1失败）")
-    private String status;
+    @Schema(description = "登录状态（SUCCESS=成功 FAIL=失败）")
+    private CommonResult status;
 
     /**
      * 提示消息

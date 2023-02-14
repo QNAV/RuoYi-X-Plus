@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
 import com.ruoyi.common.core.domain.BaseEntity;
+import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.system.enums.ConfigValueTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -54,6 +56,15 @@ public class SysConfig extends BaseEntity {
     @Size(min = 0, max = 100, message = "参数键名长度不能超过{max}个字符")
     private String configKey;
 
+
+    /**
+     * 参数值类型
+     */
+    @Schema(description = "参数值类型", required = true)
+    @ExcelProperty(value = "参数值类型")
+    @NotBlank(message = "参数值类型不能为空")
+    private ConfigValueTypeEnum valueType;
+
     /**
      * 参数键值
      */
@@ -64,12 +75,12 @@ public class SysConfig extends BaseEntity {
     private String configValue;
 
     /**
-     * 系统内置（Y是 N否）
+     * 系统内置（YES=是 NO=否）
      */
-    @Schema(description = "系统内置（Y是 N否）")
+    @Schema(description = "系统内置（YES=是 NO=否）")
     @ExcelProperty(value = "系统内置", converter = ExcelDictConvert.class)
     @ExcelDictFormat(dictType = "sys_yes_no")
-    private String configType;
+    private CommonYesOrNo configType;
 
     /**
      * 备注

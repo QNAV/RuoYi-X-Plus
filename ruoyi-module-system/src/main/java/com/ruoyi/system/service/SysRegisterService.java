@@ -42,8 +42,6 @@ public class SysRegisterService {
         HttpServletRequest request = ServletUtils.getRequest();
         String username = registerBody.getUsername();
         String password = registerBody.getPassword();
-        // 校验用户类型是否存在
-        String userType = UserType.getUserType(registerBody.getUserType()).getUserType();
 
         boolean captchaEnabled = configService.selectCaptchaEnabled();
         // 验证码开关
@@ -54,7 +52,7 @@ public class SysRegisterService {
         sysUser.setUserName(username);
         sysUser.setNickName(username);
         sysUser.setPassword(BCrypt.hashpw(password));
-        sysUser.setUserType(userType);
+        sysUser.setUserType(registerBody.getUserType());
         if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(sysUser))) {
             throw new UserException("user.register.save.error", username);
         }

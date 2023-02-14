@@ -82,7 +82,7 @@ public class BizUserServiceImpl implements IBizUserService {
         lqw.like(StringUtils.isNotBlank(queryBo.getNickName()), BizUser::getNickName, queryBo.getNickName());
         lqw.like(StringUtils.isNotBlank(queryBo.getEmail()), BizUser::getEmail, queryBo.getEmail());
         lqw.like(StringUtils.isNotBlank(queryBo.getPhoneNumber()), BizUser::getPhoneNumber, queryBo.getPhoneNumber());
-        lqw.eq(StringUtils.isNotBlank(queryBo.getStatus()), BizUser::getStatus, queryBo.getStatus());
+        lqw.eq(queryBo.getStatus() != null, BizUser::getStatus, queryBo.getStatus());
         return lqw;
     }
 
@@ -99,7 +99,7 @@ public class BizUserServiceImpl implements IBizUserService {
         lqw.eq(StringUtils.isNotBlank(queryBo.getNickName()), BizUser::getNickName, queryBo.getNickName());
         lqw.eq(StringUtils.isNotBlank(queryBo.getEmail()), BizUser::getEmail, queryBo.getEmail());
         lqw.eq(StringUtils.isNotBlank(queryBo.getPhoneNumber()), BizUser::getPhoneNumber, queryBo.getPhoneNumber());
-        lqw.eq(StringUtils.isNotBlank(queryBo.getStatus()), BizUser::getStatus, queryBo.getStatus());
+        lqw.eq(queryBo.getStatus() != null, BizUser::getStatus, queryBo.getStatus());
         return lqw;
     }
 

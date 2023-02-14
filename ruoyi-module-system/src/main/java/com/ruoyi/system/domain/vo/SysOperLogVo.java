@@ -1,5 +1,8 @@
 package com.ruoyi.system.domain.vo;
 
+import com.ruoyi.common.enums.LoginStatusEnum;
+import com.ruoyi.common.enums.UserType;
+import com.ruoyi.system.enums.BusinessTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -31,10 +34,10 @@ public class SysOperLogVo implements Serializable {
     private String title;
 
     /**
-     * 业务类型（0其它 1新增 2修改 3删除）
+     * 业务类型（ADD=新增 MODIFY=修改 DELETE=删除 GRANT=授权 EXPORT=导出 IMPORT=导入 FORCED=强退 GENCODE=生成代码 CLEAR=清空数据 OTHER=其他）
      */
-    @Schema(description = "业务类型（0其它 1新增 2修改 3删除）", required = true)
-    private Integer businessType;
+    @Schema(description = "业务类型（ADD=新增 MODIFY=修改 DELETE=删除 GRANT=授权 EXPORT=导出 IMPORT=导入 FORCED=强退 GENCODE=生成代码 CLEAR=清空数据 OTHER=其他）", required = true)
+    private BusinessTypeEnum businessType;
 
     /**
      * 业务类型数组
@@ -55,10 +58,10 @@ public class SysOperLogVo implements Serializable {
     private String requestMethod;
 
     /**
-     * 操作类别（0其它 1后台用户 2手机端用户）
+     * 操作类别（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
-    @Schema(description = "操作类别（0其它 1后台用户 2手机端用户）", required = true)
-    private Integer operatorType;
+    @Schema(description = "操作类别（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）", required = true)
+    private UserType operatorType;
 
     /**
      * 操作人员
@@ -103,10 +106,10 @@ public class SysOperLogVo implements Serializable {
     private String jsonResult;
 
     /**
-     * 操作状态（0正常 1异常）
+     * 操作状态（NORMAL=正常 EXCEPTION=异常）
      */
-    @Schema(description = "操作状态（0正常 1异常）", required = true)
-    private Integer status;
+    @Schema(description = "操作状态（NORMAL=正常 EXCEPTION=异常）", required = true)
+    private LoginStatusEnum status;
 
     /**
      * 错误消息

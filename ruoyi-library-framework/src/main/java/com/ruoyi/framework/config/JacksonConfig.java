@@ -1,17 +1,16 @@
 package com.ruoyi.framework.config;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.ruoyi.framework.jackson.BigNumberSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
@@ -40,6 +39,8 @@ public class JacksonConfig {
             javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(formatter));
             builder.modules(javaTimeModule);
             builder.timeZone(TimeZone.getDefault());
+            // 枚举自动转字符串
+            builder.featuresToEnable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
             log.info("初始化 jackson 配置");
         };
     }

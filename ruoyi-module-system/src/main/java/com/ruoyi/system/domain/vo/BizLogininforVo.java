@@ -7,6 +7,7 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
 import com.ruoyi.common.core.domain.BaseVo;
+import com.ruoyi.common.enums.CommonResult;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import java.util.Date;
@@ -69,12 +70,12 @@ public class BizLogininforVo extends BaseVo {
     private String os;
 
     /**
-     * 登录状态（0成功 1失败）
+     * 登录状态（SUCCESS=成功 FAIL=失败）
      */
     @ExcelProperty(value = "登录状态", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(readConverterExp = "0=成功,1=失败")
-    @Schema(description = "登录状态（0成功 1失败）", required = true)
-    private String status;
+    @ExcelDictFormat(readConverterExp = "SUCCESS=成功 FAIL=失败")
+    @Schema(description = "登录状态（SUCCESS=成功 FAIL=失败）", required = true)
+    private CommonResult status;
 
     /**
      * 提示消息

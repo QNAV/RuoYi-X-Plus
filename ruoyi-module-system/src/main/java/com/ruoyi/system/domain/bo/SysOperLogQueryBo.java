@@ -1,5 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
+import com.ruoyi.common.enums.LoginStatusEnum;
+import com.ruoyi.system.enums.BusinessTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -23,10 +25,10 @@ public class SysOperLogQueryBo implements Serializable {
     private String title;
 
     /**
-     * 业务类型（0其它 1新增 2修改 3删除）
+     * 业务类型（ADD=新增 MODIFY=修改 DELETE=删除 GRANT=授权 EXPORT=导出 IMPORT=导入 FORCED=强退 GENCODE=生成代码 CLEAR=清空数据 OTHER=其他）
      */
-    @Schema(description = "业务类型（0其它 1新增 2修改 3删除）")
-    private Integer businessType;
+    @Schema(description = "业务类型（ADD=新增 MODIFY=修改 DELETE=删除 GRANT=授权 EXPORT=导出 IMPORT=导入 FORCED=强退 GENCODE=生成代码 CLEAR=清空数据 OTHER=其他）")
+    private BusinessTypeEnum businessType;
 
     /**
      * 业务类型数组
@@ -41,10 +43,10 @@ public class SysOperLogQueryBo implements Serializable {
     private String operName;
 
     /**
-     * 操作状态（0正常 1异常）
+     * 操作状态（NORMAL=正常 EXCEPTION=异常）
      */
-    @Schema(description = "操作状态（0正常 1异常）")
-    private Integer status;
+    @Schema(description = "操作状态（NORMAL=正常 EXCEPTION=异常）")
+    private LoginStatusEnum status;
 
 
     /**

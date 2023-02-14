@@ -1,9 +1,10 @@
 package com.ruoyi.system.domain.bo;
 
+import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.system.enums.ConfigValueTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -42,6 +43,12 @@ public class SysConfigEditBo implements Serializable {
     private String configKey;
 
     /**
+     * 参数值类型
+     */
+    @Schema(description = "参数值类型")
+    private ConfigValueTypeEnum valueType;
+
+    /**
      * 参数键值
      */
     @Schema(description = "参数键值")
@@ -49,10 +56,10 @@ public class SysConfigEditBo implements Serializable {
     private String configValue;
 
     /**
-     * 系统内置（Y是 N否）
+     * 系统内置（YES=是 NO=否）
      */
-    @Schema(description = "系统内置（Y是 N否）")
-    private String configType;
+    @Schema(description = "系统内置（YES=是 NO=否）")
+    private CommonYesOrNo configType;
 
     /**
      * 备注

@@ -1,6 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.core.domain.bo.PageQuery;
+import com.ruoyi.system.enums.NoticeTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -22,10 +23,10 @@ public class SysNoticePageQueryBo extends PageQuery {
     private String noticeTitle;
 
     /**
-     * 公告类型（1通知 2公告）
+     * 公告类型（NOTICE=通知 BULLETIN=公告）
      */
-    @Schema(description = "公告类型（1通知 2公告）")
-    private String noticeType;
+    @Schema(description = "公告类型（NOTICE=通知 BULLETIN=公告）")
+    private NoticeTypeEnum noticeType;
 
     /**
      * 创建者

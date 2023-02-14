@@ -8,7 +8,8 @@ import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.convert.ExcelDictConvert;
 import com.ruoyi.common.core.domain.BaseEntity;
-import com.ruoyi.common.core.domain.TreeEntity;
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -88,20 +89,20 @@ public class SysDictData extends BaseEntity {
     private String listClass;
 
     /**
-     * 是否默认（Y是 N否）
+     * 是否默认（YES=是 NO=否）
      */
-    @Schema(description = "是否默认（Y是 N否）")
+    @Schema(description = "是否默认（YES=是 NO=否）")
     @ExcelProperty(value = "是否默认", converter = ExcelDictConvert.class)
     @ExcelDictFormat(dictType = "sys_yes_no")
-    private String isDefault;
+    private CommonYesOrNo isDefault;
 
     /**
-     * 状态（0正常 1停用）
+     * 状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "状态（0正常 1停用）")
+    @Schema(description = "状态（NORMAL=正常 DISABLE=停用）")
     @ExcelProperty(value = "状态", converter = ExcelDictConvert.class)
     @ExcelDictFormat(dictType = "sys_normal_disable")
-    private String status;
+    private CommonNormalDisable status;
 
     /**
      * 备注

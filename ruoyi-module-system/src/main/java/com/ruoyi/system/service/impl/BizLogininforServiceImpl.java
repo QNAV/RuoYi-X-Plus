@@ -7,6 +7,8 @@ import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.event.BizLogininforEvent;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.bo.PageQuery;
+import com.ruoyi.common.enums.CommonResult;
+import com.ruoyi.common.enums.LoginStatusEnum;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -88,7 +90,7 @@ public class BizLogininforServiceImpl implements IBizLogininforService {
         lqw.eq(StringUtils.isNotBlank(queryBo.getLoginLocation()), BizLogininfor::getLoginLocation, queryBo.getLoginLocation());
         lqw.eq(StringUtils.isNotBlank(queryBo.getBrowser()), BizLogininfor::getBrowser, queryBo.getBrowser());
         lqw.eq(StringUtils.isNotBlank(queryBo.getOs()), BizLogininfor::getOs, queryBo.getOs());
-        lqw.eq(StringUtils.isNotBlank(queryBo.getStatus()), BizLogininfor::getStatus, queryBo.getStatus());
+        lqw.eq(queryBo.getStatus() != null, BizLogininfor::getStatus, queryBo.getStatus());
         lqw.eq(StringUtils.isNotBlank(queryBo.getMsg()), BizLogininfor::getMsg, queryBo.getMsg());
         lqw.eq(queryBo.getLoginTime() != null, BizLogininfor::getLoginTime, queryBo.getLoginTime());
         return lqw;
@@ -180,9 +182,9 @@ public class BizLogininforServiceImpl implements IBizLogininforService {
         logininfor.setMsg(logininforEvent.getMessage());
         // 日志状态
         if (StringUtils.equalsAny(logininforEvent.getStatus(), Constants.LOGIN_SUCCESS, Constants.LOGOUT, Constants.REGISTER)) {
-            logininfor.setStatus(Constants.SUCCESS);
+            logininfor.setStatus(CommonResult.SUCCESS);
         } else if (Constants.LOGIN_FAIL.equals(logininforEvent.getStatus())) {
-            logininfor.setStatus(Constants.FAIL);
+            logininfor.setStatus(CommonResult.FAIL);
         }
         // 插入数据
         insertByBo(logininfor);

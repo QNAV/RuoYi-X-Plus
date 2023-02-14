@@ -2,6 +2,9 @@ package com.ruoyi.common.core.domain.vo;
 
 
 import com.ruoyi.common.core.domain.BaseVo;
+import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.DeleteStatus;
+import com.ruoyi.common.enums.UserType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -61,10 +64,10 @@ public class BizUserVo extends BaseVo {
     private String nickName;
 
     /**
-     * 用户类型（app_userAPP用户，wxapp_user微信小程序）
+     * 用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
-    @Schema(description = "用户类型（app_userAPP用户，wxapp_user微信小程序）", required = true)
-    private String userType;
+    @Schema(description = "用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）", required = true)
+    private UserType userType;
 
     /**
      * 用户邮箱
@@ -79,9 +82,9 @@ public class BizUserVo extends BaseVo {
     private String phoneNumber;
 
     /**
-     * 用户性别
+     * 用户性别（UNKNOWN=未知 MAN=男 WOMAN=女）
      */
-    @Schema(description = "用户性别", required = true)
+    @Schema(description = "用户性别（UNKNOWN=未知 MAN=男 WOMAN=女）", required = true)
     private String sex;
 
     /**
@@ -97,10 +100,10 @@ public class BizUserVo extends BaseVo {
     private String password;
 
     /**
-     * 帐号状态（0正常 1停用）
+     * 帐号状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "帐号状态（0正常 1停用）", required = true)
-    private String status;
+    @Schema(description = "帐号状态（NORMAL=正常 DISABLE=停用）", required = true)
+    private CommonNormalDisable status;
 
     /** 国家 */
     @Schema(description = "国家")
@@ -115,10 +118,10 @@ public class BizUserVo extends BaseVo {
     private String city;
 
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标志（EXIST=代表存在 DELETED=代表删除）
      */
-    @Schema(description = "删除标志（0代表存在 2代表删除）", required = true)
-    private String delFlag;
+    @Schema(description = "删除标志（EXIST=代表存在 DELETED=代表删除）", required = true)
+    private DeleteStatus delFlag;
 
     /**
      * 最后登录IP
