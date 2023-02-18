@@ -12,53 +12,54 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 查询方式枚举
+ * JAVA数据类型枚举
  * @author weibocy
  */
 @AllArgsConstructor
 @Getter
-public enum QueryTypeEnum {
+public enum JavaTypeEnum {
 
 
     /**
-     * 等于
+     * 长整型
      */
-    EQ("EQ", "等于"),
+    LONG("Long", "长整型"),
 
     /**
-     * 不等于
+     * 整型
      */
-    NE("NE", "不等于"),
+    INTEGER("Integer", "整型"),
 
     /**
-     * 大于
+     * 字符串
      */
-    GT("GT", "大于"),
+    STRING("String", "字符串"),
+
 
     /**
-     * 大于等于
+     * 日期
      */
-    GE("GE", "大于等于"),
+    DATE("Date", "日期"),
+
 
     /**
-     * 小于
+     * 浮点数
      */
-    LT("LT", "小于"),
+    DOUBLE("Double", "浮点数"),
+
 
     /**
-     * 小于等于
+     * 布尔型
      */
-    LE("LE", "小于等于"),
+    BOOLEAN("Boolean", "布尔型"),
+
 
     /**
-     * 模糊
+     * 金额
      */
-    LIKE("LIKE", "模糊"),
+    BIGDECIMAL("BigDecimal", "金额"),
 
-    /**
-     * 范围
-     */
-    BETWEEN("BETWEEN", "范围");
+    ;
 
 
     /**
@@ -84,7 +85,7 @@ public enum QueryTypeEnum {
      */
     public static List getList() {
         List list = Lists.newArrayList();
-        for (QueryTypeEnum statusEnum : QueryTypeEnum.values()) {
+        for (JavaTypeEnum statusEnum : JavaTypeEnum.values()) {
             Map<String, Object> map = new HashMap<>();
             map.put("code", statusEnum.getCode());
             map.put("info", statusEnum.getInfo());
@@ -100,7 +101,7 @@ public enum QueryTypeEnum {
      */
     public static String getInfoByCode(String code){
         String info = "";
-        for (QueryTypeEnum statusEnum : QueryTypeEnum.values()) {
+        for (JavaTypeEnum statusEnum : JavaTypeEnum.values()) {
             if (statusEnum.getCode().equals(code)){
                 info = statusEnum.getInfo();
                 break;

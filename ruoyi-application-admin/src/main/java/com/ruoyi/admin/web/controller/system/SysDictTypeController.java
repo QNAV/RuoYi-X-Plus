@@ -3,12 +3,12 @@ package com.ruoyi.admin.web.controller.system;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysDictType;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.bo.SysDictTypeAddBo;
@@ -81,7 +81,7 @@ public class SysDictTypeController extends AdminBaseController {
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysDictTypeAddBo dictBo) {
         SysDictType dict = BeanCopyUtils.copy(dictBo, SysDictType.class);
-        if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
+        if (CommonYesOrNo.NO.equals(dictTypeService.checkDictTypeUnique(dict))) {
             return R.fail("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
         dictTypeService.insertDictType(dict);
@@ -97,7 +97,7 @@ public class SysDictTypeController extends AdminBaseController {
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysDictTypeEditBo dictBo) {
         SysDictType dict = BeanCopyUtils.copy(dictBo, SysDictType.class);
-        if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
+        if (CommonYesOrNo.NO.equals(dictTypeService.checkDictTypeUnique(dict))) {
             return R.fail("修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
         dictTypeService.updateDictType(dict);

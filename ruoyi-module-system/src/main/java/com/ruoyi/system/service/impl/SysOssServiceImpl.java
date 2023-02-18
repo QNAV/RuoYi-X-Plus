@@ -83,15 +83,18 @@ public class SysOssServiceImpl implements ISysOssService, OssService {
     }
 
     private LambdaQueryWrapper<SysOss> buildQueryWrapper(SysOssQueryBo query) {
+        if (ObjectUtil.isNull(query)){
+            query = new SysOssQueryBo();
+        }
         LambdaQueryWrapper<SysOss> lqw = Wrappers.lambdaQuery();
-        lqw.like(query != null && StringUtils.isNotBlank(query.getFileName()), SysOss::getFileName, query.getFileName());
-        lqw.like(query != null && StringUtils.isNotBlank(query.getOriginalName()), SysOss::getOriginalName, query.getOriginalName());
-        lqw.eq(query != null && StringUtils.isNotBlank(query.getFileSuffix()), SysOss::getFileSuffix, query.getFileSuffix());
-        lqw.eq(query != null && StringUtils.isNotBlank(query.getUrl()), SysOss::getUrl, query.getUrl());
-        lqw.between(query != null && query.getBeginCreateTime() != null && query.getEndCreateTime() != null,
+        lqw.like(StringUtils.isNotBlank(query.getFileName()), SysOss::getFileName, query.getFileName());
+        lqw.like(StringUtils.isNotBlank(query.getOriginalName()), SysOss::getOriginalName, query.getOriginalName());
+        lqw.eq(StringUtils.isNotBlank(query.getFileSuffix()), SysOss::getFileSuffix, query.getFileSuffix());
+        lqw.eq(StringUtils.isNotBlank(query.getUrl()), SysOss::getUrl, query.getUrl());
+        lqw.between(query.getBeginCreateTime() != null && query.getEndCreateTime() != null,
             SysOss::getCreateTime, query.getBeginCreateTime(), query.getEndCreateTime());
-        lqw.eq(query != null && StringUtils.isNotBlank(query.getCreateBy()), SysOss::getCreateBy, query.getCreateBy());
-        lqw.eq(query != null && StringUtils.isNotBlank(query.getService()), SysOss::getService, query.getService());
+        lqw.eq(StringUtils.isNotBlank(query.getCreateBy()), SysOss::getCreateBy, query.getCreateBy());
+        lqw.eq(StringUtils.isNotBlank(query.getService()), SysOss::getService, query.getService());
         return lqw;
     }
 

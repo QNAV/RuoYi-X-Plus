@@ -6,7 +6,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.constant.CacheNames;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.service.ConfigService;
@@ -206,13 +205,13 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
      * @return 结果
      */
     @Override
-    public String checkConfigKeyUnique(SysConfig config) {
+    public CommonYesOrNo checkConfigKeyUnique(SysConfig config) {
         long configId = ObjectUtil.isNull(config.getConfigId()) ? -1L : config.getConfigId();
         SysConfig info = baseMapper.selectOne(new LambdaQueryWrapper<SysConfig>().eq(SysConfig::getConfigKey, config.getConfigKey()));
         if (ObjectUtil.isNotNull(info) && info.getConfigId() != configId) {
-            return UserConstants.NOT_UNIQUE;
+            return CommonYesOrNo.NO;
         }
-        return UserConstants.UNIQUE;
+        return CommonYesOrNo.YES;
     }
 
     /**

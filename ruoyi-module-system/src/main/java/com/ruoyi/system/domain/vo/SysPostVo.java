@@ -1,6 +1,7 @@
 package com.ruoyi.system.domain.vo;
 
 import com.ruoyi.common.core.domain.BaseVo;
+import com.ruoyi.common.enums.CommonNormalDisable;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -44,10 +45,10 @@ public class SysPostVo extends BaseVo {
     private Integer postSort;
 
     /**
-     * 状态（0正常 1停用）
+     * 状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "状态（0正常 1停用）", required = true)
-    private String status;
+    @Schema(description = "状态（NORMAL=正常 DISABLE=停用）", required = true)
+    private CommonNormalDisable status;
 
     /**
      * 备注

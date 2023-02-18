@@ -35,10 +35,10 @@ public class TreeEntity<T> extends BaseEntity {
     private Long parentId;
 
     /**
-     * 子部门
+     * 子级数据
      */
     @TableField(exist = false)
-    @Schema(description = "子部门")
+    @Schema(description = "子级数据")
     private List<T> children = new ArrayList<>();
 
 }

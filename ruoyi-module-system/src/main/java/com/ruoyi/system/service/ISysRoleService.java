@@ -3,6 +3,7 @@ package com.ruoyi.system.service;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.system.domain.SysUserRole;
 import com.ruoyi.system.domain.bo.SysRoleQueryBo;
 import com.ruoyi.common.core.domain.vo.SysRoleVo;
@@ -99,7 +100,7 @@ public interface ISysRoleService {
      * @param role 角色信息
      * @return 结果
      */
-    String checkRoleNameUnique(SysRole role);
+    CommonYesOrNo checkRoleNameUnique(SysRole role);
 
     /**
      * 校验角色权限是否唯一
@@ -107,7 +108,7 @@ public interface ISysRoleService {
      * @param role 角色信息
      * @return 结果
      */
-    String checkRoleKeyUnique(SysRole role);
+    CommonYesOrNo checkRoleKeyUnique(SysRole role);
 
     /**
      * 校验角色是否允许操作

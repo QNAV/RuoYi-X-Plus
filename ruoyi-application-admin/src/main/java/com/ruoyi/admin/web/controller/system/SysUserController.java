@@ -19,6 +19,7 @@ import com.ruoyi.common.core.domain.vo.SysRoleVo;
 import com.ruoyi.common.core.domain.vo.SysUserVo;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.excel.ExcelResult;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StreamUtils;
@@ -156,13 +157,13 @@ public class SysUserController extends AdminBaseController {
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysUserAddBo userBo) {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
-        if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(user))) {
+        if (CommonYesOrNo.NO.equals(userService.checkUserNameUnique(user))) {
             return R.fail("新增用户'" + user.getUserName() + "'失败，登录账号已存在");
         } else if (StringUtils.isNotEmpty(user.getPhoneNumber())
-            && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
+            && CommonYesOrNo.NO.equals(userService.checkPhoneUnique(user))) {
             return R.fail("新增用户'" + user.getUserName() + "'失败，手机号码已存在");
         } else if (StringUtils.isNotEmpty(user.getEmail())
-            && UserConstants.NOT_UNIQUE.equals(userService.checkEmailUnique(user))) {
+            && CommonYesOrNo.NO.equals(userService.checkEmailUnique(user))) {
             return R.fail("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
         user.setPassword(BCrypt.hashpw(user.getPassword()));
@@ -180,15 +181,15 @@ public class SysUserController extends AdminBaseController {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
         userService.checkUserAllowed(userBo);
         userService.checkUserDataScope(user.getUserId());
-        if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(user)))
+        if (CommonYesOrNo.NO.equals(userService.checkUserNameUnique(user)))
         {
             return R.fail("修改用户'" + user.getUserName() + "'失败，登录账号已存在");
         }
         else if (StringUtils.isNotEmpty(user.getPhoneNumber())
-            && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
+            && CommonYesOrNo.NO.equals(userService.checkPhoneUnique(user))) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
         } else if (StringUtils.isNotEmpty(user.getEmail())
-            && UserConstants.NOT_UNIQUE.equals(userService.checkEmailUnique(user))) {
+            && CommonYesOrNo.NO.equals(userService.checkEmailUnique(user))) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
         return toAjax(userService.updateUser(user));

@@ -115,6 +115,7 @@ public class CaptchaController {
         RedisUtils.setCacheObject(verifyKey, code, Duration.ofMinutes(CacheConstants.CAPTCHA_EXPIRATION));
         data.setUuid(uuid);
         data.setImg(captcha.getImageBase64());
+        log.debug("UUID为 => {},    图片验证码为 => {}", uuid, code);
         return R.ok(data);
     }
 

@@ -3,11 +3,11 @@ package com.ruoyi.admin.web.controller.system;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysConfig;
@@ -102,7 +102,7 @@ public class SysConfigController extends AdminBaseController {
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysConfigAddBo configBo) {
         SysConfig config = BeanCopyUtils.copy(configBo, SysConfig.class);
-        if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
+        if (CommonYesOrNo.NO.equals(configService.checkConfigKeyUnique(config))) {
             return R.fail("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
         configService.insertConfig(config);
@@ -118,7 +118,7 @@ public class SysConfigController extends AdminBaseController {
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysConfigEditBo configBo) {
         SysConfig config = BeanCopyUtils.copy(configBo, SysConfig.class);
-        if (UserConstants.NOT_UNIQUE.equals(configService.checkConfigKeyUnique(config))) {
+        if (CommonYesOrNo.NO.equals(configService.checkConfigKeyUnique(config))) {
             return R.fail("修改参数'" + configBo.getConfigName() + "'失败，参数键名已存在");
         }
         configService.updateConfig(config);

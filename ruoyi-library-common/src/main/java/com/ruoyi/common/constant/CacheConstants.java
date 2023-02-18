@@ -9,8 +9,10 @@ public interface CacheConstants
 {
     /**
      * 后台登录用户 redis key
+     * 主要用于 统计在线用户用 sa-token存储jwt用的key
      */
-    String ADMIN_LOGIN_TOKEN_KEY = "admin_login_tokens:";
+    String ADMIN_LOGIN_TOKEN_KEY = "Authorization:login:token:";
+//    String ADMIN_LOGIN_TOKEN_KEY = "admin_login_tokens:";
 
 
     /**

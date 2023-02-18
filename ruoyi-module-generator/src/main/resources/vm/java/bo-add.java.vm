@@ -26,15 +26,16 @@ public class ${ClassName}AddBo implements Serializable {
 
 #foreach ($column in $columns)
 ## 只包含新增标记字段和保留主键字段
-#if((!$table.isSuperColumn($column.javaField) && $column.isInsert))
+#if((!$table.isSuperColumn($column.javaField) && $column.isInsert()))
     /**
      * $column.columnComment
      */
 ## 字段必须&&字段不是主键
-#if($column.isRequired == 1)
+#if($column.isRequired())
     @Schema(description = "$column.columnComment", required = true)
     #if($column.javaType == 'String')
     @NotBlank(message = "$column.columnComment不能为空")
+    @Size(min = 0, max = $column.columnMaxLength, message = "$column.columnComment不能超过{max}个字符")
     #else
     @NotNull(message = "$column.columnComment不能为空")
     #end

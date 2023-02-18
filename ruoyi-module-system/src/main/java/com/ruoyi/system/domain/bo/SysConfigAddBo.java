@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -42,7 +43,7 @@ public class SysConfigAddBo implements Serializable {
      * 参数值类型
      */
     @Schema(description = "参数值类型", required = true)
-    @NotBlank(message = "参数值类型不能为空")
+    @NotNull(message = "参数值类型不能为空")
     private ConfigValueTypeEnum valueType;
 
     /**

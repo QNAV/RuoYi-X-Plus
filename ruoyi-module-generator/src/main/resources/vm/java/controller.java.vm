@@ -23,9 +23,9 @@ import ${packageName}.domain.bo.${ClassName}QueryBo;
 import ${packageName}.domain.bo.${ClassName}AddBo;
 import ${packageName}.domain.bo.${ClassName}EditBo;
 import ${packageName}.service.I${ClassName}Service;
-#if($table.crud || $table.sub)
+#if($table.isCrud() || $table.isSub())
 import com.ruoyi.common.core.page.TableDataInfo;
-#elseif($table.tree)
+#elseif($table.isTree())
 #end
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -55,7 +55,7 @@ public class ${ClassName}Controller extends AdminBaseController {
     @Operation(description = "查询${functionName}列表", operationId = "${ClassName}PostList")
     @SaCheckPermission("${permissionPrefix}:list")
     @PostMapping("/list")
-#if($table.crud || $table.sub)
+#if($table.isCrud() || $table.isSub())
     public TableDataInfo<${ClassName}Vo> list(@RequestBody(required = false) ${ClassName}PageQueryBo bo) {
         // 分页参数组装
         PageQuery pageQuery = BeanCopyUtils.copy(bo, PageQuery.class);
@@ -63,7 +63,7 @@ public class ${ClassName}Controller extends AdminBaseController {
         ${ClassName}QueryBo queryBo = BeanCopyUtils.copy(bo, ${ClassName}QueryBo.class);
         return i${ClassName}Service.queryPageList(queryBo, pageQuery);
     }
-#elseif($table.tree)
+#elseif($table.isTree())
     public R<List<${ClassName}Vo>> list(@RequestBody(required = false) ${ClassName}QueryBo bo) {
         List<${ClassName}Vo> list = i${ClassName}Service.queryList(bo);
         return R.ok(list);

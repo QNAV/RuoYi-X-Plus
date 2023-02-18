@@ -1,7 +1,8 @@
 validEntityBeforeAddpackage ${packageName}.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-    #if($table.crud || $table.sub)
+import cn.hutool.core.util.ObjectUtil;
+#if($table.isCrud() || $table.isSub())
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.utils.StringUtils;
@@ -48,7 +49,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
         return baseMapper.selectVoById(${pkColumn.javaField});
     }
 
-#if($table.crud || $table.sub)
+#if($table.isCrud() || $table.isSub())
     /**
      * 查询${functionName}分页列表
      * @param queryBo ${functionName}业务查询对象
@@ -56,6 +57,9 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      */
     @Override
     public TableDataInfo<${ClassName}Vo> queryPageList(${ClassName}QueryBo queryBo, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         LambdaQueryWrapper<${ClassName}> lqw = buildQueryWrapper(queryBo);
         Page<${ClassName}Vo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
@@ -77,24 +81,27 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      * @param queryBo ${functionName}业务查询对象
      */
     private LambdaQueryWrapper<${ClassName}> buildQueryWrapper(${ClassName}QueryBo queryBo) {
+        if (ObjectUtil.isNull(queryBo)){
+            queryBo = new ${ClassName}QueryBo();
+        }
         LambdaQueryWrapper<${ClassName}> lqw = Wrappers.lambdaQuery();
 #foreach($column in $columns)
-#if($column.query)
-#set($queryType=$column.queryType)
-#set($javaField=$column.javaField)
-#set($javaType=$column.javaType)
-#set($columnName=$column.columnName)
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-#set($mpMethod=$column.queryType.toLowerCase())
-#if($queryType != 'BETWEEN')
-#if($javaType == 'String')
-#set($condition='StringUtils.isNotBlank(queryBo.get'+$AttrName+'())')
-#else
-#set($condition='queryBo.get'+$AttrName+'() != null')
-#end
+#if($column.isQuery())
+    #set($queryType=$column.queryType)
+    #set($javaField=$column.javaField)
+    #set($javaType=$column.javaType)
+    #set($columnName=$column.columnName)
+    #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+    #set($mpMethod=$column.queryType.toLowerCase())
+    #if($queryType != 'BETWEEN')
+        #if($javaType == 'String')
+            #set($condition='StringUtils.isNotBlank(queryBo.get'+$AttrName+'())')
+        #else
+            #set($condition='queryBo.get'+$AttrName+'() != null')
+    #end
         lqw.$mpMethod($condition, ${ClassName}::get$AttrName, queryBo.get$AttrName());
 #else
-        lqw.between(queryBo != null && queryBo.getCreateBeginTime() != null && queryBo.getCreateEndTime() != null,
+        lqw.between(queryBo.getCreateBeginTime() != null && queryBo.getCreateEndTime() != null,
             ${ClassName}::getCreateTime, queryBo.getCreateBeginTime(), queryBo.getCreateEndTime());
 #end
 #end

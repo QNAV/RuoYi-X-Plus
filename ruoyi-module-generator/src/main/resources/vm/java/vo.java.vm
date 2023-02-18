@@ -28,7 +28,7 @@ public class ${ClassName}Vo extends BaseVo {
     private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
-#if($column.isList)
+#if($column.isList())
     /**
      * $column.columnComment
      */
@@ -47,8 +47,8 @@ public class ${ClassName}Vo extends BaseVo {
 #else
     @ExcelProperty(value = "${comment}")
 #end
-## 视图对象，如果是主键、必填、有默认值 则标记必须 让前端知道这个字段必须有值返回
-#if($column.isPk==1 || $column.isRequired==1 || ($column.columnDefault && $column.columnDefault != '' && $column.columnDefault != 'null' && $column.columnDefault != 'NULL'))
+## 视图对象，如果是标记的列表字段 则返回必须
+#if($column.isList())
     @Schema(description = "$column.columnComment", required = true)
 #else
     @Schema(description = "$column.columnComment")

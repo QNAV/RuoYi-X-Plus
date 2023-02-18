@@ -5,6 +5,7 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.mapper.BaseMapperPlus;
 import com.ruoyi.common.core.domain.vo.SysDictDataVo;
+import com.ruoyi.common.enums.CommonNormalDisable;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface SysDictDataMapper extends BaseMapperPlus<SysDictDataMapper, Sys
     default List<SysDictDataVo> selectDictDataByType(String dictType) {
         return selectVoList(
             new LambdaQueryWrapper<SysDictData>()
-                .eq(SysDictData::getStatus, UserConstants.DICT_NORMAL)
+                .eq(SysDictData::getStatus, CommonNormalDisable.NORMAL)
                 .eq(SysDictData::getDictType, dictType)
                 .orderByAsc(SysDictData::getDictSort), SysDictDataVo.class);
     }

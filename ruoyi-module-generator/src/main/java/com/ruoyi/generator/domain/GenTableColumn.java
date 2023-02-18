@@ -9,6 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.generator.enums.HtmlTypeEnum;
+import com.ruoyi.generator.enums.JavaTypeEnum;
 import com.ruoyi.generator.enums.QueryTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -66,16 +67,16 @@ public class GenTableColumn extends BaseEntity {
     private String columnType;
 
     /**
-     * 列默认值
+     * 列长度限制（仅限字符串类型）
      */
-    @Schema(description = "列默认值")
-    private String columnDefault;
+    @Schema(description = "列长度限制（仅限字符串类型）")
+    private Integer columnMaxLength;
 
     /**
-     * JAVA类型
+     * JAVA类型（Long=长整型 Integer=整型 String=字符串 Date=日期 Double=浮点数 Boolean=布尔型 BigDecimal=金额）
      */
-    @Schema(description = "JAVA类型")
-    private String javaType;
+    @Schema(description = "JAVA类型（Long=长整型 Integer=整型 String=字符串 Date=日期 Double=浮点数 Boolean=布尔型 BigDecimal=金额）")
+    private JavaTypeEnum javaType;
 
     /**
      * JAVA字段名
@@ -127,6 +128,13 @@ public class GenTableColumn extends BaseEntity {
     private CommonYesOrNo isList;
 
     /**
+     * 是否VO必须返回（YES=是 NO=否）
+     */
+    @Schema(description = "是否VO必须返回（YES=是 NO=否）")
+    @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
+    private CommonYesOrNo isVoRequired;
+
+    /**
      * 是否查询字段（YES=是 NO=否）
      */
     @Schema(description = "是否查询字段（YES=是 NO=否）")
@@ -134,9 +142,9 @@ public class GenTableColumn extends BaseEntity {
     private CommonYesOrNo isQuery;
 
     /**
-     * 查询方式（EQ=等于 NE=不等于 GT=大于 LT=小于 LIKE=模糊 BETWEEN=范围）
+     * 查询方式（EQ=等于 NE=不等于 GT=大于 GE=大于等于 LT=小于 LE=小于等于 LIKE=模糊 BETWEEN=范围）
      */
-    @Schema(description = "查询方式（EQ=等于 NE=不等于 GT=大于 LT=小于 LIKE=模糊 BETWEEN=范围）")
+    @Schema(description = "查询方式（EQ=等于 NE=不等于 GT=大于 GE=大于等于 LT=小于 LE=小于等于 LIKE=模糊 BETWEEN=范围）")
     private QueryTypeEnum queryType;
 
     /**
@@ -174,7 +182,7 @@ public class GenTableColumn extends BaseEntity {
     }
 
     public boolean isIncrement(CommonYesOrNo isIncrement) {
-        return isIncrement != null && isPk.equals(CommonYesOrNo.YES);
+        return isIncrement != null && isIncrement.equals(CommonYesOrNo.YES);
     }
 
     public boolean isRequired() {
@@ -182,7 +190,7 @@ public class GenTableColumn extends BaseEntity {
     }
 
     public boolean isRequired(CommonYesOrNo isRequired) {
-        return isRequired != null && isPk.equals(CommonYesOrNo.YES);
+        return isRequired != null && isRequired.equals(CommonYesOrNo.YES);
     }
 
     public boolean isInsert() {
@@ -190,7 +198,7 @@ public class GenTableColumn extends BaseEntity {
     }
 
     public boolean isInsert(CommonYesOrNo isInsert) {
-        return isInsert != null && isPk.equals(CommonYesOrNo.YES);
+        return isInsert != null && isInsert.equals(CommonYesOrNo.YES);
     }
 
     public boolean isEdit() {
@@ -198,15 +206,24 @@ public class GenTableColumn extends BaseEntity {
     }
 
     public boolean isEdit(CommonYesOrNo isEdit) {
-        return isEdit != null && isPk.equals(CommonYesOrNo.YES);
+        return isEdit != null && isEdit.equals(CommonYesOrNo.YES);
     }
 
     public boolean isList() {
         return isList(this.isList);
     }
 
+
     public boolean isList(CommonYesOrNo isList) {
-        return isList != null && isPk.equals(CommonYesOrNo.YES);
+        return isList != null && isList.equals(CommonYesOrNo.YES);
+    }
+
+    public boolean isVoRequired(CommonYesOrNo isVoRequired) {
+        return isVoRequired != null && isVoRequired.equals(CommonYesOrNo.YES);
+    }
+
+    public boolean isVoRequired() {
+        return isVoRequired(this.isVoRequired);
     }
 
     public boolean isQuery() {
@@ -214,7 +231,7 @@ public class GenTableColumn extends BaseEntity {
     }
 
     public boolean isQuery(CommonYesOrNo isQuery) {
-        return isQuery != null && isPk.equals(CommonYesOrNo.YES);
+        return isQuery != null && isQuery.equals(CommonYesOrNo.YES);
     }
 
     public boolean isSuperColumn() {

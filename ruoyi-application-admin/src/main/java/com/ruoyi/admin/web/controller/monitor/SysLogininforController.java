@@ -33,7 +33,7 @@ import java.util.List;
  * @author Lion Li
  */
 @Validated
-@Tag(description = "系统访问记录管理", name = "SysLoginService")
+@Tag(description = "系统访问记录管理", name = "SysLogininforService")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/monitor/logininfor")

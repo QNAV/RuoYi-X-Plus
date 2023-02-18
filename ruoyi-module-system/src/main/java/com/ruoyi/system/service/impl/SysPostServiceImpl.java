@@ -3,9 +3,9 @@ package com.ruoyi.system.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysPost;
@@ -36,10 +36,16 @@ public class SysPostServiceImpl implements ISysPostService {
 
     @Override
     public TableDataInfo<SysPostVo> selectPagePostList(SysPostQueryBo postQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(postQuery)){
+            postQuery = new SysPostQueryBo();
+        }
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         LambdaQueryWrapper<SysPost> lqw = new LambdaQueryWrapper<SysPost>()
-            .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
-            .eq(postQuery != null && postQuery.getStatus() != null, SysPost::getStatus, postQuery.getStatus())
-            .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName());
+            .like(StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
+            .eq(postQuery.getStatus() != null, SysPost::getStatus, postQuery.getStatus())
+            .like(StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName());
         Page<SysPostVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw, SysPostVo.class);
         return TableDataInfo.build(page);
     }
@@ -52,10 +58,13 @@ public class SysPostServiceImpl implements ISysPostService {
      */
     @Override
     public List<SysPost> selectPostList(SysPostQueryBo postQuery) {
+        if (ObjectUtil.isNull(postQuery)){
+            postQuery = new SysPostQueryBo();
+        }
         return baseMapper.selectList(new LambdaQueryWrapper<SysPost>()
-            .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
-            .eq(postQuery != null && postQuery.getStatus() != null, SysPost::getStatus, postQuery.getStatus())
-            .like(postQuery != null && StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName()));
+            .like(StringUtils.isNotBlank(postQuery.getPostCode()), SysPost::getPostCode, postQuery.getPostCode())
+            .eq(postQuery.getStatus() != null, SysPost::getStatus, postQuery.getStatus())
+            .like(StringUtils.isNotBlank(postQuery.getPostName()), SysPost::getPostName, postQuery.getPostName()));
     }
 
     /**
@@ -97,14 +106,14 @@ public class SysPostServiceImpl implements ISysPostService {
      * @return 结果
      */
     @Override
-    public String checkPostNameUnique(SysPost post) {
+    public CommonYesOrNo checkPostNameUnique(SysPost post) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysPost>()
             .eq(SysPost::getPostName, post.getPostName())
             .ne(ObjectUtil.isNotNull(post.getPostId()), SysPost::getPostId, post.getPostId()));
         if (exist) {
-            return UserConstants.NOT_UNIQUE;
+            return CommonYesOrNo.NO;
         }
-        return UserConstants.UNIQUE;
+        return CommonYesOrNo.YES;
     }
 
     /**
@@ -114,14 +123,14 @@ public class SysPostServiceImpl implements ISysPostService {
      * @return 结果
      */
     @Override
-    public String checkPostCodeUnique(SysPost post) {
+    public CommonYesOrNo checkPostCodeUnique(SysPost post) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysPost>()
             .eq(SysPost::getPostCode, post.getPostCode())
             .ne(ObjectUtil.isNotNull(post.getPostId()), SysPost::getPostId, post.getPostId()));
         if (exist) {
-            return UserConstants.NOT_UNIQUE;
+            return CommonYesOrNo.NO;
         }
-        return UserConstants.UNIQUE;
+        return CommonYesOrNo.YES;
     }
 
     /**

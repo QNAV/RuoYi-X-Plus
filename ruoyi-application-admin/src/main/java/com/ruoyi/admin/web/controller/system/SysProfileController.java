@@ -10,6 +10,7 @@ import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.UpdatePwdBo;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.MimeTypeUtils;
@@ -72,11 +73,11 @@ public class SysProfileController extends AdminBaseController {
     public R<Void> updateProfile(@RequestBody LoginUserUpdateBo userBo) {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
         if (StringUtils.isNotEmpty(user.getPhoneNumber())
-            && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
+            && CommonYesOrNo.NO.equals(userService.checkPhoneUnique(user))) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
         }
         if (StringUtils.isNotEmpty(user.getEmail())
-            && UserConstants.NOT_UNIQUE.equals(userService.checkEmailUnique(user))) {
+            && CommonYesOrNo.NO.equals(userService.checkEmailUnique(user))) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
         user.setUserId(getUserId());

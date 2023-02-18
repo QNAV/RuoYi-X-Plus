@@ -15,11 +15,11 @@ import java.util.TimeZone;
  */
 
 @SpringBootApplication(scanBasePackages = {"com.ruoyi"})
-public class RuoYiApplication {
+public class RuoYiAdminApplication {
 
     public static void main(String[] args) {
         System.setProperty("spring.devtools.restart.enabled", "false");
-        SpringApplication application = new SpringApplication(RuoYiApplication.class);
+        SpringApplication application = new SpringApplication(RuoYiAdminApplication.class);
         application.setApplicationStartup(new BufferingApplicationStartup(2048));
         application.run(args);
         System.out.println("(♥◠‿◠)ﾉﾞ  RuoYi-X-Plus启动成功   ლ(´ڡ`ლ)ﾞ");

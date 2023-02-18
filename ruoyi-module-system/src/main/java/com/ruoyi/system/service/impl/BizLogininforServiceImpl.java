@@ -8,7 +8,6 @@ import com.ruoyi.common.core.domain.event.BizLogininforEvent;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.enums.CommonResult;
-import com.ruoyi.common.enums.LoginStatusEnum;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -86,13 +85,8 @@ public class BizLogininforServiceImpl implements IBizLogininforService {
     private LambdaQueryWrapper<BizLogininfor> buildQueryWrapper(BizLogininforQueryBo queryBo) {
         LambdaQueryWrapper<BizLogininfor> lqw = Wrappers.lambdaQuery();
         lqw.like(StringUtils.isNotBlank(queryBo.getUserName()), BizLogininfor::getUserName, queryBo.getUserName());
-        lqw.eq(StringUtils.isNotBlank(queryBo.getIpaddr()), BizLogininfor::getIpaddr, queryBo.getIpaddr());
-        lqw.eq(StringUtils.isNotBlank(queryBo.getLoginLocation()), BizLogininfor::getLoginLocation, queryBo.getLoginLocation());
-        lqw.eq(StringUtils.isNotBlank(queryBo.getBrowser()), BizLogininfor::getBrowser, queryBo.getBrowser());
-        lqw.eq(StringUtils.isNotBlank(queryBo.getOs()), BizLogininfor::getOs, queryBo.getOs());
         lqw.eq(queryBo.getStatus() != null, BizLogininfor::getStatus, queryBo.getStatus());
-        lqw.eq(StringUtils.isNotBlank(queryBo.getMsg()), BizLogininfor::getMsg, queryBo.getMsg());
-        lqw.eq(queryBo.getLoginTime() != null, BizLogininfor::getLoginTime, queryBo.getLoginTime());
+        lqw.between(queryBo.getCreateBeginTime() != null && queryBo.getCreateEndTime() != null, BizLogininfor::getLoginTime, queryBo.getCreateBeginTime(), queryBo.getCreateEndTime());
         return lqw;
     }
 

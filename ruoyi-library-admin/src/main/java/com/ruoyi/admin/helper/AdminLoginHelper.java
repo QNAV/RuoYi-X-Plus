@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 public class AdminLoginHelper {
 
     public static final String JOIN_CODE = ":";
-    public static final String LOGIN_USER_KEY = "loginUser";
+    public static final String LOGIN_USER_KEY = "loginAdminUser";
 
     /**
      * 登录系统

@@ -2,7 +2,10 @@ package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.annotation.Sensitive;
 import com.ruoyi.common.constant.UserConstants;
+import com.ruoyi.common.enums.CommonNormalDisable;
 import com.ruoyi.common.enums.SensitiveStrategy;
+import com.ruoyi.common.enums.UserSexEnum;
+import com.ruoyi.common.enums.UserType;
 import com.ruoyi.common.xss.Xss;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -56,10 +59,10 @@ public class SysUserEditBo implements Serializable {
     private String nickName;
 
     /**
-     * 用户类型（sys_user系统用户）
+     * 用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
-    @Schema(description = "用户类型")
-    private String userType;
+    @Schema(description = "用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）")
+    private UserType userType;
 
     /**
      * 用户邮箱
@@ -78,10 +81,10 @@ public class SysUserEditBo implements Serializable {
     private String phoneNumber;
 
     /**
-     * 用户性别
+     * 用户性别（UNKNOWN=未知 MAN=男 WOMAN=女）
      */
-    @Schema(description = "用户性别")
-    private String sex;
+    @Schema(description = "用户性别（UNKNOWN=未知 MAN=男 WOMAN=女）")
+    private UserSexEnum sex;
 
     /**
      * 用户头像
@@ -96,10 +99,10 @@ public class SysUserEditBo implements Serializable {
     private String password;
 
     /**
-     * 帐号状态（0正常 1停用）
+     * 帐号状态（NORMAL=正常 DISABLE=停用）
      */
-    @Schema(description = "帐号状态（0正常 1停用）")
-    private String status;
+    @Schema(description = "帐号状态（NORMAL=正常 DISABLE=停用）")
+    private CommonNormalDisable status;
 
     /**
      * 备注

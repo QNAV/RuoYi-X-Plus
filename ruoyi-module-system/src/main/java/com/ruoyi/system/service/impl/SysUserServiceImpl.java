@@ -11,7 +11,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.constant.CacheNames;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysRole;
@@ -62,12 +61,18 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
 
     @Override
     public TableDataInfo<SysUser> selectPageUserList(SysUserQueryBo userQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         Page<SysUser> page = baseMapper.selectPageUserList(pageQuery.build(), this.buildQueryWrapper(userQuery));
         return TableDataInfo.build(page);
     }
 
     @Override
     public TableDataInfo<SysUserVo> selectPageUserVoList(SysUserQueryBo userQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         Page<SysUserVo> page = baseMapper.selectPageUserVoList(pageQuery.build(), this.buildQueryWrapper(userQuery));
         return TableDataInfo.build(page);
     }
@@ -84,20 +89,24 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
     }
 
     private Wrapper<SysUser> buildQueryWrapper(SysUserQueryBo userQuery) {
+        if (ObjectUtil.isNull(userQuery)){
+            userQuery = new SysUserQueryBo();
+        }
         QueryWrapper<SysUser> wrapper = Wrappers.query();
-        wrapper.eq("u.del_flag", DeleteStatus.EXIST.getInfo())
-            .eq(userQuery != null && ObjectUtil.isNotNull(userQuery.getUserId()), "u.user_id", userQuery.getUserId())
-            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
-            .eq(userQuery != null && StringUtils.isNotBlank(userQuery.getStatus()), "u.status", userQuery.getStatus())
-            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber())
-            .between(userQuery != null && userQuery.getBeginCreateTime() != null && userQuery.getEndCreateTime() != null,
+        SysUserQueryBo finalUserQuery = userQuery;
+        wrapper.eq("u.del_flag", DeleteStatus.EXIST)
+            .eq(ObjectUtil.isNotNull(userQuery.getUserId()), "u.user_id", userQuery.getUserId())
+            .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
+            .eq(ObjectUtil.isNotNull(userQuery.getStatus()), "u.status", userQuery.getStatus())
+            .like(StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber())
+            .between(userQuery.getBeginCreateTime() != null && userQuery.getEndCreateTime() != null,
                 "u.create_time", userQuery.getBeginCreateTime(), userQuery.getEndCreateTime())
-            .and(userQuery != null && ObjectUtil.isNotNull(userQuery.getDeptId()), w -> {
+            .and(ObjectUtil.isNotNull(userQuery.getDeptId()), w -> {
                 List<SysDept> deptList = deptMapper.selectList(new LambdaQueryWrapper<SysDept>()
                     .select(SysDept::getDeptId)
-                    .apply(DataBaseHelper.findInSet(userQuery.getDeptId(), "ancestors")));
+                    .apply(DataBaseHelper.findInSet(finalUserQuery.getDeptId(), "ancestors")));
                 List<Long> ids = StreamUtils.toList(deptList, SysDept::getDeptId);
-                ids.add(userQuery.getDeptId());
+                ids.add(finalUserQuery.getDeptId());
                 w.in("u.dept_id", ids);
             });
         return wrapper;
@@ -111,12 +120,18 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
      */
     @Override
     public TableDataInfo<SysUser> selectAllocatedList(SysUserQueryBo userQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(userQuery)){
+            userQuery = new SysUserQueryBo();
+        }
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         QueryWrapper<SysUser> wrapper = Wrappers.query();
         wrapper.eq("u.del_flag", DeleteStatus.EXIST)
-            .eq(userQuery != null && ObjectUtil.isNotNull(userQuery.getRoleId()), "r.role_id", userQuery.getRoleId())
-            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
-            .eq(userQuery != null && StringUtils.isNotBlank(userQuery.getStatus()), "u.status", userQuery.getStatus())
-            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
+            .eq(ObjectUtil.isNotNull(userQuery.getRoleId()), "r.role_id", userQuery.getRoleId())
+            .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
+            .eq(userQuery.getStatus() != null, "u.status", userQuery.getStatus())
+            .like(StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
         Page<SysUser> page = baseMapper.selectAllocatedList(pageQuery.build(), wrapper);
         return TableDataInfo.build(page);
     }
@@ -129,12 +144,18 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
      */
     @Override
     public TableDataInfo<SysUserVo> selectAllocatedVoList(SysUserQueryBo userQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(userQuery)){
+            userQuery = new SysUserQueryBo();
+        }
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         QueryWrapper<SysUser> wrapper = Wrappers.query();
         wrapper.eq("u.del_flag", DeleteStatus.EXIST)
-            .eq(userQuery != null && ObjectUtil.isNotNull(userQuery.getRoleId()), "r.role_id", userQuery.getRoleId())
-            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
-            .eq(userQuery != null && StringUtils.isNotBlank(userQuery.getStatus()), "u.status", userQuery.getStatus())
-            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
+            .eq(ObjectUtil.isNotNull(userQuery.getRoleId()), "r.role_id", userQuery.getRoleId())
+            .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
+            .eq(ObjectUtil.isNotNull(userQuery.getStatus()), "u.status", userQuery.getStatus())
+            .like(StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
         Page<SysUserVo> page = baseMapper.selectAllocatedVoList(pageQuery.build(), wrapper);
         return TableDataInfo.build(page);
     }
@@ -147,13 +168,20 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
      */
     @Override
     public TableDataInfo<SysUser> selectUnallocatedList(SysUserQueryBo userQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(userQuery)){
+            userQuery = new SysUserQueryBo();
+        }
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         List<Long> userIds = userRoleMapper.selectUserIdsByRoleId(userQuery.getRoleId());
         QueryWrapper<SysUser> wrapper = Wrappers.query();
+        SysUserQueryBo finalUserQuery = userQuery;
         wrapper.eq("u.del_flag", DeleteStatus.EXIST)
-            .and(w -> w.ne("r.role_id", userQuery.getRoleId()).or().isNull("r.role_id"))
+            .and(w -> w.ne("r.role_id", finalUserQuery.getRoleId()).or().isNull("r.role_id"))
             .notIn(CollUtil.isNotEmpty(userIds), "u.user_id", userIds)
-            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
-            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
+            .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
+            .like(StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
         Page<SysUser> page = baseMapper.selectUnallocatedList(pageQuery.build(), wrapper);
         return TableDataInfo.build(page);
     }
@@ -167,13 +195,20 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
      */
     @Override
     public TableDataInfo<SysUserVo> selectUnallocatedVoList(SysUserQueryBo userQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(userQuery)){
+            userQuery = new SysUserQueryBo();
+        }
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         List<Long> userIds = userRoleMapper.selectUserIdsByRoleId(userQuery.getRoleId());
         QueryWrapper<SysUser> wrapper = Wrappers.query();
+        SysUserQueryBo finalUserQuery = userQuery;
         wrapper.eq("u.del_flag", DeleteStatus.EXIST)
-            .and(w -> w.ne("r.role_id", userQuery.getRoleId()).or().isNull("r.role_id"))
+            .and(w -> w.ne("r.role_id", finalUserQuery.getRoleId()).or().isNull("r.role_id"))
             .notIn(CollUtil.isNotEmpty(userIds), "u.user_id", userIds)
-            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
-            .like(userQuery != null && StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
+            .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
+            .like(StringUtils.isNotBlank(userQuery.getPhoneNumber()), "u.phone_number", userQuery.getPhoneNumber());
         Page<SysUserVo> page = baseMapper.selectUnallocatedVoList(pageQuery.build(), wrapper);
         return TableDataInfo.build(page);
     }
@@ -259,14 +294,14 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
      * @return 结果
      */
     @Override
-    public String checkUserNameUnique(SysUser user) {
+    public CommonYesOrNo checkUserNameUnique(SysUser user) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysUser>()
                 .eq(SysUser::getUserName, user.getUserName())
                 .ne(ObjectUtil.isNotNull(user.getUserId()), SysUser::getUserId, user.getUserId()));
         if (exist) {
-            return UserConstants.NOT_UNIQUE;
+            return CommonYesOrNo.NO;
         }
-        return UserConstants.UNIQUE;
+        return CommonYesOrNo.YES;
     }
 
     /**
@@ -275,14 +310,14 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
      * @param user 用户信息
      */
     @Override
-    public String checkPhoneUnique(SysUser user) {
+    public CommonYesOrNo checkPhoneUnique(SysUser user) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysUser>()
             .eq(SysUser::getPhoneNumber, user.getPhoneNumber())
             .ne(ObjectUtil.isNotNull(user.getUserId()), SysUser::getUserId, user.getUserId()));
         if (exist) {
-            return UserConstants.NOT_UNIQUE;
+            return CommonYesOrNo.NO;
         }
-        return UserConstants.UNIQUE;
+        return CommonYesOrNo.YES;
     }
 
     /**
@@ -291,14 +326,14 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
      * @param user 用户信息
      */
     @Override
-    public String checkEmailUnique(SysUser user) {
+    public CommonYesOrNo checkEmailUnique(SysUser user) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysUser>()
             .eq(SysUser::getEmail, user.getEmail())
             .ne(ObjectUtil.isNotNull(user.getUserId()), SysUser::getUserId, user.getUserId()));
         if (exist) {
-            return UserConstants.NOT_UNIQUE;
+            return CommonYesOrNo.NO;
         }
-        return UserConstants.UNIQUE;
+        return CommonYesOrNo.YES;
     }
 
     /**

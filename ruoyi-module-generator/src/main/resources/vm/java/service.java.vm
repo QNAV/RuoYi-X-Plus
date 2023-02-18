@@ -28,7 +28,7 @@ public interface I${ClassName}Service {
      */
     ${ClassName}Vo queryById(${pkColumn.javaType} ${pkColumn.javaField});
 
-#if($table.crud || $table.sub)
+#if($table.isCrud() || $table.isSub())
     /**
      * 查询${functionName}分页列表
      * @param queryBo ${functionName}业务查询对象

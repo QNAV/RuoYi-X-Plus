@@ -8,6 +8,7 @@ import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.bo.SysMenuAddBo;
@@ -93,9 +94,9 @@ public class SysMenuController extends AdminBaseController {
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysMenuAddBo menuBo) {
         SysMenu menu = BeanCopyUtils.copy(menuBo, SysMenu.class);
-        if (UserConstants.NOT_UNIQUE.equals(menuService.checkMenuNameUnique(menu))) {
+        if (CommonYesOrNo.NO.equals(menuService.checkMenuNameUnique(menu))) {
             return R.fail("新增菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
-        } else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath())) {
+        } else if (CommonYesOrNo.YES.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath())) {
             return R.fail("新增菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
         }
         return toAjax(menuService.insertMenu(menu));
@@ -110,7 +111,7 @@ public class SysMenuController extends AdminBaseController {
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysMenuEditBo menuBo) {
         SysMenu menu = BeanCopyUtils.copy(menuBo, SysMenu.class);
-        if (UserConstants.NOT_UNIQUE.equals(menuService.checkMenuNameUnique(menu))) {
+        if (CommonYesOrNo.NO.equals(menuService.checkMenuNameUnique(menu))) {
             return R.fail("修改菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
         } else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath())) {
             return R.fail("修改菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");

@@ -1,15 +1,14 @@
 package com.ruoyi.admin.web.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.util.ArrayUtil;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.bo.SysDeptAddBo;
@@ -17,7 +16,6 @@ import com.ruoyi.system.domain.bo.SysDeptEditBo;
 import com.ruoyi.system.domain.bo.SysDeptQueryBo;
 import com.ruoyi.common.core.domain.vo.SysDeptVo;
 import com.ruoyi.system.service.ISysDeptService;
-import com.ruoyi.admin.web.model.vo.RoleDeptTreeSelectVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -86,7 +84,7 @@ public class SysDeptController extends AdminBaseController {
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysDeptAddBo deptBo) {
         SysDept dept = BeanCopyUtils.copy(deptBo, SysDept.class);
-        if (UserConstants.NOT_UNIQUE.equals(deptService.checkDeptNameUnique(dept))) {
+        if (CommonYesOrNo.NO.equals(deptService.checkDeptNameUnique(dept))) {
             return R.fail("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         }
         return toAjax(deptService.insertDept(dept));
@@ -103,7 +101,7 @@ public class SysDeptController extends AdminBaseController {
         SysDept dept = BeanCopyUtils.copy(deptBo, SysDept.class);
         Long deptId = dept.getDeptId();
         deptService.checkDeptDataScope(deptId);
-        if (UserConstants.NOT_UNIQUE.equals(deptService.checkDeptNameUnique(dept))) {
+        if (CommonYesOrNo.NO.equals(deptService.checkDeptNameUnique(dept))) {
             return R.fail("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         } else if (dept.getParentId().equals(deptId)) {
             return R.fail("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");

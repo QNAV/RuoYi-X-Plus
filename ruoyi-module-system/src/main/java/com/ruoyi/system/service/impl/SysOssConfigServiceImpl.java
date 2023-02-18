@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.constant.CacheNames;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.JsonUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -79,10 +79,13 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
 
 
     private LambdaQueryWrapper<SysOssConfig> buildQueryWrapper(SysOssConfigQueryBo ossConfigQuery) {
+        if (ObjectUtil.isNull(ossConfigQuery)){
+            ossConfigQuery = new SysOssConfigQueryBo();
+        }
         LambdaQueryWrapper<SysOssConfig> lqw = Wrappers.lambdaQuery();
-        lqw.eq(ossConfigQuery != null && StringUtils.isNotBlank(ossConfigQuery.getConfigKey()), SysOssConfig::getConfigKey, ossConfigQuery.getConfigKey());
-        lqw.like(ossConfigQuery != null && StringUtils.isNotBlank(ossConfigQuery.getBucketName()), SysOssConfig::getBucketName, ossConfigQuery.getBucketName());
-        lqw.eq(ossConfigQuery != null && ossConfigQuery.getStatus() != null, SysOssConfig::getStatus, ossConfigQuery.getStatus());
+        lqw.eq(StringUtils.isNotBlank(ossConfigQuery.getConfigKey()), SysOssConfig::getConfigKey, ossConfigQuery.getConfigKey());
+        lqw.like(StringUtils.isNotBlank(ossConfigQuery.getBucketName()), SysOssConfig::getBucketName, ossConfigQuery.getBucketName());
+        lqw.eq(ossConfigQuery.getStatus() != null, SysOssConfig::getStatus, ossConfigQuery.getStatus());
         return lqw;
     }
 
@@ -119,7 +122,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
      */
     private void validEntityBeforeSave(SysOssConfig entity) {
         if (StringUtils.isNotEmpty(entity.getConfigKey())
-            && UserConstants.NOT_UNIQUE.equals(checkConfigKeyUnique(entity))) {
+            && CommonYesOrNo.NO.equals(checkConfigKeyUnique(entity))) {
             throw new ServiceException("操作配置'" + entity.getConfigKey() + "'失败, 配置key已存在!");
         }
     }
@@ -147,15 +150,15 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
     /**
      * 判断configKey是否唯一
      */
-    private String checkConfigKeyUnique(SysOssConfig sysOssConfig) {
+    private CommonYesOrNo checkConfigKeyUnique(SysOssConfig sysOssConfig) {
         long ossConfigId = ObjectUtil.isNull(sysOssConfig.getOssConfigId()) ? -1L : sysOssConfig.getOssConfigId();
         SysOssConfig info = baseMapper.selectOne(new LambdaQueryWrapper<SysOssConfig>()
             .select(SysOssConfig::getOssConfigId, SysOssConfig::getConfigKey)
             .eq(SysOssConfig::getConfigKey, sysOssConfig.getConfigKey()));
         if (ObjectUtil.isNotNull(info) && info.getOssConfigId() != ossConfigId) {
-            return UserConstants.NOT_UNIQUE;
+            return CommonYesOrNo.NO;
         }
-        return UserConstants.UNIQUE;
+        return CommonYesOrNo.YES;
     }
 
     /**

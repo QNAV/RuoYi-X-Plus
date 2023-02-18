@@ -7,6 +7,7 @@ import com.ruoyi.generator.config.GenConfig;
 import com.ruoyi.generator.domain.GenTable;
 import com.ruoyi.generator.domain.GenTableColumn;
 import com.ruoyi.generator.enums.HtmlTypeEnum;
+import com.ruoyi.generator.enums.JavaTypeEnum;
 import com.ruoyi.generator.enums.QueryTypeEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -45,7 +46,7 @@ public class GenUtils {
         // 设置java字段名
         column.setJavaField(StringUtils.toCamelCase(columnName));
         // 设置默认类型
-        column.setJavaType(GenConstants.TYPE_STRING);
+        column.setJavaType(JavaTypeEnum.STRING);
         // 设置默认用等于
         column.setQueryType(QueryTypeEnum.EQ);
 
@@ -55,7 +56,7 @@ public class GenUtils {
             HtmlTypeEnum htmlType = columnLength >= 500 || arraysContains(GenConstants.COLUMNTYPE_TEXT, dataType) ? HtmlTypeEnum.TEXTAREA : HtmlTypeEnum.INPUT;
             column.setHtmlType(htmlType);
         } else if (arraysContains(GenConstants.COLUMNTYPE_TIME, dataType)) {
-            column.setJavaType(GenConstants.TYPE_DATE);
+            column.setJavaType(JavaTypeEnum.DATE);
             column.setHtmlType(HtmlTypeEnum.DATETIME);
         } else if (arraysContains(GenConstants.COLUMNTYPE_NUMBER, dataType)) {
             column.setHtmlType(HtmlTypeEnum.INPUT);
@@ -63,41 +64,49 @@ public class GenUtils {
             // 如果是浮点型 统一用BigDecimal
             String[] str = StringUtils.split(StringUtils.substringBetween(column.getColumnType(), "(", ")"), StringUtils.SEPARATOR);
             if (str != null && str.length == 2 && Integer.parseInt(str[1]) > 0) {
-                column.setJavaType(GenConstants.TYPE_BIGDECIMAL);
+                column.setJavaType(JavaTypeEnum.BIGDECIMAL);
             }
             // 如果是整形
             else if ((str != null && str.length == 1 && Integer.parseInt(str[0]) <= 10) || arraysContains(GenConstants.COLUMNTYPE_INTEGER, column.getColumnType())) {
-                column.setJavaType(GenConstants.TYPE_INTEGER);
+                column.setJavaType(JavaTypeEnum.INTEGER);
             }
             // 长整形
             else {
-                column.setJavaType(GenConstants.TYPE_LONG);
+                column.setJavaType(JavaTypeEnum.LONG);
             }
         }
 
         // 主键改成long
         if (column.isPk()){
-            column.setJavaType(GenConstants.TYPE_LONG);
+            column.setJavaType(JavaTypeEnum.LONG);
         }
 
-        // BO对象 默认插入勾选
+        // BO对象 碰到常规字段 和主键字段 不勾选 其他的都勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_ADD, columnName) && !column.isPk()) {
             column.setIsInsert(CommonYesOrNo.YES);
         }
-        // BO对象 默认编辑勾选
+        // BO对象 碰到常规字段不勾选 其他的都勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName)) {
             column.setIsEdit(CommonYesOrNo.YES);
         }
-        // BO对象 默认是否必填勾选
-        if (!arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName)) {
-            column.setIsRequired(CommonYesOrNo.YES);
+        // BO对象 碰到常规字段 必填项 不勾选
+        if (arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName)) {
+            column.setIsRequired(CommonYesOrNo.NO);
         }
-        // VO对象 默认返回勾选
+        // VO对象 碰到常规字段 不勾选 其他都勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_LIST, columnName)) {
             column.setIsList(CommonYesOrNo.YES);
         }
+        // VO必须对象 碰到常规字段 勾选
+        if (arraysContains(GenConstants.COLUMNNAME_DEFAULT_VO_REQUIRED, columnName)) {
+            column.setIsVoRequired(CommonYesOrNo.YES);
+        }
+        // VO必须对象 碰到不勾选字段
+        if (arraysContains(GenConstants.COLUMNNAME_NOT_VO_REQUIRED, columnName)) {
+            column.setIsVoRequired(CommonYesOrNo.NO);
+        }
         // BO对象 默认查询勾选
-        if (!arraysContains(GenConstants.COLUMNNAME_NOT_QUERY, columnName) && !column.isPk()) {
+        if (arraysContains(GenConstants.COLUMNNAME_DEFAULT_QUERY, columnName)) {
             column.setIsQuery(CommonYesOrNo.YES);
         }
 
@@ -125,6 +134,12 @@ public class GenUtils {
         // 内容字段设置富文本控件
         else if (StringUtils.endsWithIgnoreCase(columnName, "content")) {
             column.setHtmlType(HtmlTypeEnum.EDITOR);
+        }
+        // 内容字段设置时间控件
+        else if (StringUtils.endsWithIgnoreCase(columnName, "time")) {
+            column.setHtmlType(HtmlTypeEnum.DATETIME);
+            // 时间格式 用范围查询方式
+            column.setQueryType(QueryTypeEnum.BETWEEN);
         }
     }
 

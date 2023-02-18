@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class BizLoginHelper {
 
     public static final String JOIN_CODE = ":";
-    public static final String LOGIN_USER_KEY = "bizLoginUser";
+    public static final String LOGIN_USER_KEY = "loginBizUser";
 
     /**
      * 登录系统

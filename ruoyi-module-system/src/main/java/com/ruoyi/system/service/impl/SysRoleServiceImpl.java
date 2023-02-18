@@ -8,10 +8,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.admin.helper.AdminLoginHelper;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.DeleteStatus;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -48,12 +49,18 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Override
     public TableDataInfo<SysRole> selectPageRoleList(SysRoleQueryBo roleQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         Page<SysRole> page = baseMapper.selectPageRoleList(pageQuery.build(), this.buildQueryWrapper(roleQuery));
         return TableDataInfo.build(page);
     }
 
     @Override
     public TableDataInfo<SysRoleVo> selectPageRoleVoList(SysRoleQueryBo roleQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         Page<SysRoleVo> page = baseMapper.selectPageRoleVoList(pageQuery.build(), this.buildQueryWrapper(roleQuery));
         return TableDataInfo.build(page);
     }
@@ -82,13 +89,16 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     private Wrapper<SysRole> buildQueryWrapper(SysRoleQueryBo roleQuery) {
+        if (ObjectUtil.isNull(roleQuery)){
+            roleQuery = new SysRoleQueryBo();
+        }
         QueryWrapper<SysRole> wrapper = Wrappers.query();
-        wrapper.eq("r.del_flag", UserConstants.ROLE_NORMAL)
-            .eq(roleQuery != null && ObjectUtil.isNotNull(roleQuery.getRoleId()), "r.role_id", roleQuery.getRoleId())
-            .like(roleQuery != null && StringUtils.isNotBlank(roleQuery.getRoleName()), "r.role_name", roleQuery.getRoleName())
-            .eq(roleQuery != null && roleQuery.getStatus() != null, "r.status", roleQuery.getStatus())
-            .like(roleQuery != null && StringUtils.isNotBlank(roleQuery.getRoleKey()), "r.role_key", roleQuery.getRoleKey())
-            .between(roleQuery != null && roleQuery.getBeginCreateTime() != null && roleQuery.getEndCreateTime() != null,
+        wrapper.eq("r.del_flag", DeleteStatus.EXIST)
+            .eq(ObjectUtil.isNotNull(roleQuery.getRoleId()), "r.role_id", roleQuery.getRoleId())
+            .like(StringUtils.isNotBlank(roleQuery.getRoleName()), "r.role_name", roleQuery.getRoleName())
+            .eq(roleQuery.getStatus() != null, "r.status", roleQuery.getStatus())
+            .like(StringUtils.isNotBlank(roleQuery.getRoleKey()), "r.role_key", roleQuery.getRoleKey())
+            .between(roleQuery.getBeginCreateTime() != null && roleQuery.getEndCreateTime() != null,
                 "r.create_time", roleQuery.getBeginCreateTime(), roleQuery.getEndCreateTime())
             .orderByAsc("r.role_sort");
         return wrapper;
@@ -193,14 +203,14 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 结果
      */
     @Override
-    public String checkRoleNameUnique(SysRole role) {
+    public CommonYesOrNo checkRoleNameUnique(SysRole role) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysRole>()
             .eq(SysRole::getRoleName, role.getRoleName())
             .ne(ObjectUtil.isNotNull(role.getRoleId()), SysRole::getRoleId, role.getRoleId()));
         if (exist) {
-            return UserConstants.NOT_UNIQUE;
+            return CommonYesOrNo.NO;
         }
-        return UserConstants.UNIQUE;
+        return CommonYesOrNo.YES;
     }
 
     /**
@@ -210,14 +220,14 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 结果
      */
     @Override
-    public String checkRoleKeyUnique(SysRole role) {
+    public CommonYesOrNo checkRoleKeyUnique(SysRole role) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysRole>()
             .eq(SysRole::getRoleKey, role.getRoleKey())
             .ne(ObjectUtil.isNotNull(role.getRoleId()), SysRole::getRoleId, role.getRoleId()));
         if (exist) {
-            return UserConstants.NOT_UNIQUE;
+            return CommonYesOrNo.NO;
         }
-        return UserConstants.UNIQUE;
+        return CommonYesOrNo.YES;
     }
 
     /**

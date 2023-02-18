@@ -76,7 +76,7 @@ public interface GenConstants {
     /**
      * BO对象 不需要添加字段
      */
-    String[] COLUMNNAME_NOT_ADD = {"create_by", "create_time", "del_flag", "update_by",
+    String[] COLUMNNAME_NOT_ADD = {"id", "create_by", "create_time", "del_flag", "update_by",
         "update_time", "version"};
 
     /**
@@ -88,14 +88,29 @@ public interface GenConstants {
     /**
      * VO对象 不需要返回字段
      */
-    String[] COLUMNNAME_NOT_LIST = {"create_by", "create_time", "del_flag", "update_by",
+    String[] COLUMNNAME_NOT_LIST = {"create_by", "del_flag", "update_by",
         "update_time", "version"};
+
+    /**
+     * VO对象 默认返回的必须字段
+     */
+    String[] COLUMNNAME_DEFAULT_VO_REQUIRED = {"create_time"};
+
+    /**
+     * VO对象 不返回的必须字段
+     */
+    String[] COLUMNNAME_NOT_VO_REQUIRED = {"del_flag", "version", "create_by"};
 
     /**
      * BO对象 不需要查询字段
      */
     String[] COLUMNNAME_NOT_QUERY = {"id", "create_by", "create_time", "del_flag", "update_by",
         "update_time", "remark", "version"};
+
+    /**
+     * BO对象 默认查询字段
+     */
+    String[] COLUMNNAME_DEFAULT_QUERY = {"create_time"};
 
     /**
      * Entity基类字段

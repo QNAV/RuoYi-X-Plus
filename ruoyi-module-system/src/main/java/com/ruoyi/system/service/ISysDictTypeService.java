@@ -4,6 +4,7 @@ import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.domain.entity.SysDictType;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.system.domain.bo.SysDictTypeQueryBo;
 import com.ruoyi.common.core.domain.vo.SysDictDataVo;
 import com.ruoyi.common.core.domain.vo.SysDictTypeVo;
@@ -104,5 +105,5 @@ public interface ISysDictTypeService {
      * @param dictType 字典类型
      * @return 结果
      */
-    String checkDictTypeUnique(SysDictType dictType);
+    CommonYesOrNo checkDictTypeUnique(SysDictType dictType);
 }

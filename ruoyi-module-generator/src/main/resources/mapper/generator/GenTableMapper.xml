@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="columnName"     column="column_name"    />
         <result property="columnComment"  column="column_comment" />
         <result property="columnType"     column="column_type"    />
-        <result property="columnDefault"  column="column_default" />
+        <result property="columnMaxLength"  column="column_max_length" />
         <result property="javaType"       column="java_type"      />
         <result property="javaField"      column="java_field"     />
         <result property="isPk"           column="is_pk"          />
@@ -43,6 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="isInsert"       column="is_insert"      />
         <result property="isEdit"         column="is_edit"        />
         <result property="isList"         column="is_list"        />
+        <result property="isVoRequired"         column="is_vo_required"        />
         <result property="isQuery"        column="is_query"       />
         <result property="queryType"      column="query_type"     />
         <result property="htmlType"       column="html_type"      />
@@ -61,27 +62,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             where table_schema = (select database())
             AND table_name NOT LIKE 'xxl_job_%' AND table_name NOT LIKE 'gen_%'
             AND table_name NOT IN (select table_name from gen_table)
-            <if test="genTable.tableName != null and genTable.tableName != ''">
+            <if test="genTable != null and genTable.tableName != null and genTable.tableName != ''">
                 AND lower(table_name) like lower(concat('%', #{genTable.tableName}, '%'))
             </if>
-            <if test="genTable.tableComment != null and genTable.tableComment != ''">
+            <if test="genTable != null and genTable.tableComment != null and genTable.tableComment != ''">
                 AND lower(table_comment) like lower(concat('%', #{genTable.tableComment}, '%'))
-            </if>
-            order by create_time desc
-        </if>
-        <if test="@com.ruoyi.common.helper.DataBaseHelper@isOracle()">
-            select lower(dt.table_name) as table_name, dtc.comments as table_comment, uo.created as create_time, uo.last_ddl_time as update_time
-            from user_tables dt, user_tab_comments dtc, user_objects uo
-            where dt.table_name = dtc.table_name
-            and dt.table_name = uo.object_name
-            and uo.object_type = 'TABLE'
-            AND dt.table_name NOT LIKE 'XXL_JOB_%' AND dt.table_name NOT LIKE 'GEN_%'
-            AND lower(dt.table_name) NOT IN (select table_name from gen_table)
-            <if test="genTable.tableName != null and genTable.tableName != ''">
-                AND lower(dt.table_name) like lower(concat(concat('%', #{genTable.tableName}), '%'))
-            </if>
-            <if test="genTable.tableComment != null and genTable.tableComment != ''">
-                AND lower(dtc.comments) like lower(concat(concat('%', #{genTable.tableComment}), '%'))
             </if>
             order by create_time desc
         </if>
@@ -101,31 +86,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ) list_table
             where table_name NOT LIKE 'xxl_job_%' AND table_name NOT LIKE 'gen_%'
             AND table_name NOT IN (select table_name from gen_table)
-            <if test="genTable.tableName != null and genTable.tableName != ''">
+            <if test="genTable != null and genTable.tableName != null and genTable.tableName != ''">
                 AND lower(table_name) like lower(concat('%', #{genTable.tableName}, '%'))
             </if>
-            <if test="genTable.tableComment != null and genTable.tableComment != ''">
+            <if test="genTable != null and genTable.tableComment != null and genTable.tableComment != ''">
                 AND lower(table_comment) like lower(concat('%', #{genTable.tableComment}, '%'))
             </if>
             order by create_time desc
-        </if>
-        <if test="@com.ruoyi.common.helper.DataBaseHelper@isSqlServer()">
-            SELECT cast(D.NAME as nvarchar) as table_name,
-                   cast(F.VALUE as nvarchar) as table_comment,
-                   crdate as create_time,
-                   refdate as update_time
-            FROM SYSOBJECTS D
-                INNER JOIN SYS.EXTENDED_PROPERTIES F ON D.ID = F.MAJOR_ID
-                    AND F.MINOR_ID = 0 AND D.XTYPE = 'U' AND D.NAME != 'DTPROPERTIES'
-                    AND D.NAME NOT LIKE 'xxl_job_%' AND D.NAME NOT LIKE 'gen_%'
-                    AND D.NAME NOT IN (select table_name from gen_table)
-            <if test="genTable.tableName != null and genTable.tableName != ''">
-                AND lower(D.NAME) like lower(concat(N'%', N'${genTable.tableName}', N'%'))
-            </if>
-            <if test="genTable.tableComment != null and genTable.tableComment != ''">
-                AND lower(CAST(F.VALUE AS nvarchar)) like lower(concat(N'%', N'${genTable.tableComment}', N'%'))
-            </if>
-            order by crdate desc
         </if>
     </select>
 
@@ -138,19 +105,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                  #{name}
             </foreach>
         </if>
-        <if test="@com.ruoyi.common.helper.DataBaseHelper@isOracle()">
-            select lower(dt.table_name) as table_name, dtc.comments as table_comment, uo.created as create_time, uo.last_ddl_time as update_time
-            from user_tables dt, user_tab_comments dtc, user_objects uo
-            where dt.table_name = dtc.table_name
-            and dt.table_name = uo.object_name
-            and uo.object_type = 'TABLE'
-            AND dt.table_name NOT LIKE 'XXL_JOB_%' AND dt.table_name NOT LIKE 'GEN_%'
-            AND dt.table_name NOT IN (select table_name from gen_table)
-            and lower(dt.table_name) in
-            <foreach collection="array" item="name" open="(" separator="," close=")">
-                #{name}
-            </foreach>
-        </if>
         <if test="@com.ruoyi.common.helper.DataBaseHelper@isPostgerSql()">
             select table_name, table_comment, create_time, update_time
             from (
@@ -171,20 +125,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 #{name}
             </foreach>
         </if>
-        <if test="@com.ruoyi.common.helper.DataBaseHelper@isSqlServer()">
-            SELECT cast(D.NAME as nvarchar) as table_name,
-                   cast(F.VALUE as nvarchar) as table_comment,
-                   crdate as create_time,
-                   refdate as update_time
-            FROM SYSOBJECTS D
-                INNER JOIN SYS.EXTENDED_PROPERTIES F ON D.ID = F.MAJOR_ID
-                    AND F.MINOR_ID = 0 AND D.XTYPE = 'U' AND D.NAME != 'DTPROPERTIES'
-                    AND D.NAME NOT LIKE 'xxl_job_%' AND D.NAME NOT LIKE 'gen_%'
-                    AND D.NAME in
-            <foreach collection="array" item="name" open="(" separator="," close=")">
-                #{name}
-            </foreach>
-        </if>
     </select>
 
     <select id="selectTableByName" parameterType="String" resultMap="GenTableResult">
@@ -192,16 +132,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             select table_name, table_comment, create_time, update_time from information_schema.tables
             where table_name NOT LIKE 'xxl_job_%' and table_name NOT LIKE 'gen_%' and table_schema = (select database())
             and table_name = #{tableName}
-        </if>
-        <if test="@com.ruoyi.common.helper.DataBaseHelper@isOracle()">
-            select lower(dt.table_name) as table_name, dtc.comments as table_comment, uo.created as create_time, uo.last_ddl_time as update_time
-            from user_tables dt, user_tab_comments dtc, user_objects uo
-            where dt.table_name = dtc.table_name
-            and dt.table_name = uo.object_name
-            and uo.object_type = 'TABLE'
-            AND dt.table_name NOT LIKE 'XXL_JOB_%' AND dt.table_name NOT LIKE 'GEN_%'
-            AND dt.table_name NOT IN (select table_name from gen_table)
-            and lower(dt.table_name) = #{tableName}
         </if>
         <if test="@com.ruoyi.common.helper.DataBaseHelper@isPostgerSql()">
             select table_name, table_comment, create_time, update_time
@@ -220,22 +150,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             where table_name NOT LIKE 'xxl_job_%' and table_name NOT LIKE 'gen_%'
             and table_name = #{tableName}
         </if>
-        <if test="@com.ruoyi.common.helper.DataBaseHelper@isSqlServer()">
-            SELECT cast(D.NAME as nvarchar) as table_name,
-                   cast(F.VALUE as nvarchar) as table_comment,
-                   crdate as create_time,
-                   refdate as update_time
-            FROM SYSOBJECTS D
-                INNER JOIN SYS.EXTENDED_PROPERTIES F ON D.ID = F.MAJOR_ID
-                    AND F.MINOR_ID = 0 AND D.XTYPE = 'U' AND D.NAME != 'DTPROPERTIES'
-                    AND D.NAME NOT LIKE 'xxl_job_%' AND D.NAME NOT LIKE 'gen_%'
-                    AND D.NAME = #{tableName}
-        </if>
     </select>
 
     <select id="selectGenTableById" parameterType="Long" resultMap="GenTableResult">
         SELECT t.table_id, t.table_name, t.table_comment, t.sub_table_name, t.sub_table_fk_name, t.class_name, t.tpl_category, t.package_name, t.module_name, t.business_name, t.function_name, t.function_author, t.gen_type, t.gen_path, t.options, t.remark,
-               c.column_id, c.column_name, c.column_comment, c.column_type, c.column_default, c.java_type, c.java_field, c.is_pk, c.is_increment, c.is_required, c.is_insert, c.is_edit, c.is_list, c.is_query, c.query_type, c.html_type, c.dict_type, c.sort
+               c.column_id, c.column_name, c.column_comment, c.column_type, c.column_max_length, c.java_type, c.java_field, c.is_pk, c.is_increment, c.is_required, c.is_insert, c.is_edit, c.is_list, c.is_vo_required, c.is_query, c.query_type, c.html_type, c.dict_type, c.sort
         FROM gen_table t
              LEFT JOIN gen_table_column c ON t.table_id = c.table_id
         where t.table_id = #{tableId} order by c.sort
@@ -243,7 +162,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectGenTableByName" parameterType="String" resultMap="GenTableResult">
         SELECT t.table_id, t.table_name, t.table_comment, t.sub_table_name, t.sub_table_fk_name, t.class_name, t.tpl_category, t.package_name, t.module_name, t.business_name, t.function_name, t.function_author, t.gen_type, t.gen_path, t.options, t.remark,
-               c.column_id, c.column_name, c.column_comment, c.column_type, c.column_default, c.java_type, c.java_field, c.is_pk, c.is_increment, c.is_required, c.is_insert, c.is_edit, c.is_list, c.is_query, c.query_type, c.html_type, c.dict_type, c.sort
+               c.column_id, c.column_name, c.column_comment, c.column_type, c.column_max_length, c.java_type, c.java_field, c.is_pk, c.is_increment, c.is_required, c.is_insert, c.is_edit, c.is_list, c.is_vo_required, c.is_vo_required, c.is_query, c.query_type, c.html_type, c.dict_type, c.sort
         FROM gen_table t
              LEFT JOIN gen_table_column c ON t.table_id = c.table_id
         where t.table_name = #{tableName} order by c.sort
@@ -251,7 +170,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectGenTableAll" parameterType="String" resultMap="GenTableResult">
         SELECT t.table_id, t.table_name, t.table_comment, t.sub_table_name, t.sub_table_fk_name, t.class_name, t.tpl_category, t.package_name, t.module_name, t.business_name, t.function_name, t.function_author, t.options, t.remark,
-               c.column_id, c.column_name, c.column_comment, c.column_type, c.column_default, c.java_type, c.java_field, c.is_pk, c.is_increment, c.is_required, c.is_insert, c.is_edit, c.is_list, c.is_query, c.query_type, c.html_type, c.dict_type, c.sort
+               c.column_id, c.column_name, c.column_comment, c.column_type, c.column_max_length, c.java_type, c.java_field, c.is_pk, c.is_increment, c.is_required, c.is_insert, c.is_edit, c.is_list, c.is_vo_required, c.is_query, c.query_type, c.html_type, c.dict_type, c.sort
         FROM gen_table t
              LEFT JOIN gen_table_column c ON t.table_id = c.table_id
         order by c.sort

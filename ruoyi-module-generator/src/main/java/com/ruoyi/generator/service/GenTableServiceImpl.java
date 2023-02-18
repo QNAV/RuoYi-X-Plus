@@ -52,7 +52,8 @@ import java.util.zip.ZipOutputStream;
  * @author Lion Li
  * @author weibocy
  */
-@DS("#header.datasource")
+//@DS("#header.datasource")
+@DS("master")
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -90,11 +91,17 @@ public class GenTableServiceImpl implements IGenTableService {
 
     @Override
     public TableDataInfo<GenTable> selectPageGenTableList(GenTableQuery genTableQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         Page<GenTable> page = baseMapper.selectPage(pageQuery.build(), this.buildGenTableQueryWrapper(genTableQuery));
         return TableDataInfo.build(page);
     }
 
     private QueryWrapper<GenTable> buildGenTableQueryWrapper(GenTableQuery genTableQuery) {
+        if (ObjectUtil.isNull(genTableQuery)){
+            genTableQuery = new GenTableQuery();
+        }
         QueryWrapper<GenTable> wrapper = Wrappers.query();
         wrapper.like(StringUtils.isNotBlank(genTableQuery.getTableName()), "lower(table_name)", StringUtils.lowerCase(genTableQuery.getTableName()))
             .like(StringUtils.isNotBlank(genTableQuery.getTableComment()), "lower(table_comment)", StringUtils.lowerCase(genTableQuery.getTableComment()))
@@ -106,6 +113,9 @@ public class GenTableServiceImpl implements IGenTableService {
 
     @Override
     public TableDataInfo<GenTable> selectPageDbTableList(GenTableQuery genTableQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         Page<GenTable> page = baseMapper.selectPageDbTableList(pageQuery.build(), genTableQuery);
         return TableDataInfo.build(page);
     }
@@ -164,6 +174,13 @@ public class GenTableServiceImpl implements IGenTableService {
         genTableColumnMapper.delete(new LambdaQueryWrapper<GenTableColumn>().in(GenTableColumn::getTableId, ids));
     }
 
+    private Long selectGenTableCount(String tableName){
+        GenTableQuery genTableQuery = new GenTableQuery();
+        genTableQuery.setTableName(tableName);
+
+        return baseMapper.selectCount(buildGenTableQueryWrapper(genTableQuery));
+    }
+
     /**
      * 导入表结构
      *
@@ -175,6 +192,11 @@ public class GenTableServiceImpl implements IGenTableService {
         try {
             for (GenTable table : tableList) {
                 String tableName = table.getTableName();
+                // 如果存在则跳过
+                if (selectGenTableCount(tableName) > 0){
+                    continue;
+                }
+
                 GenUtils.initTable(table);
                 int row = baseMapper.insert(table);
                 if (row > 0) {

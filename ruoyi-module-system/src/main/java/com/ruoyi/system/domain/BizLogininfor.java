@@ -4,14 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.ruoyi.common.enums.CommonResult;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import java.io.Serializable;
 import java.util.Date;
-import java.math.BigDecimal;
-
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 业务用户登录记录对象 biz_logininfor
@@ -20,10 +13,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @date 2022-10-26
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("biz_logininfor")
 @Schema(description = "业务用户登录记录实体对象")
-public class BizLogininfor extends BaseEntity {
+public class BizLogininfor {
 
     private static final long serialVersionUID=1L;
 

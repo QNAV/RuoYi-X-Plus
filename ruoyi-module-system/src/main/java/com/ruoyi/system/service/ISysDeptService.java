@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import cn.hutool.core.lang.tree.Tree;
 import com.ruoyi.common.core.domain.entity.SysDept;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.system.domain.bo.SysDeptQueryBo;
 import com.ruoyi.common.core.domain.vo.SysDeptVo;
 
@@ -84,7 +85,7 @@ public interface ISysDeptService {
      * @param dept 部门信息
      * @return 结果
      */
-    String checkDeptNameUnique(SysDept dept);
+    CommonYesOrNo checkDeptNameUnique(SysDept dept);
 
     /**
      * 校验部门是否有数据权限

@@ -64,7 +64,7 @@ public class BizLogininforEditBo implements Serializable {
      * 登录状态（SUCCESS=成功 FAIL=失败）
      */
     @Schema(description = "登录状态（SUCCESS=成功 FAIL=失败）", required = true)
-    @NotBlank(message = "登录状态（SUCCESS=成功 FAIL=失败）不能为空")
+    @NotNull(message = "登录状态（SUCCESS=成功 FAIL=失败）不能为空")
     private CommonResult status;
 
     /**

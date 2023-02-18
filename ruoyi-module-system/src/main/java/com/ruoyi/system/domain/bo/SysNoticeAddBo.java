@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -35,7 +36,7 @@ public class SysNoticeAddBo implements Serializable {
      * 公告类型（NOTICE=通知 BULLETIN=公告）
      */
     @Schema(description = "公告类型（NOTICE=通知 BULLETIN=公告）", required = true)
-    @NotBlank(message = "公告类型不能为空")
+    @NotNull(message = "公告类型不能为空")
     private NoticeTypeEnum noticeType;
 
     /**
@@ -49,7 +50,7 @@ public class SysNoticeAddBo implements Serializable {
      * 公告状态（NORMAL=正常 DISABLE=关闭）
      */
     @Schema(description = "公告状态（NORMAL=正常 DISABLE=关闭）", required = true)
-    @NotBlank(message = "公告状态不能为空")
+    @NotNull(message = "公告状态不能为空")
     private CommonNormalDisable status;
 
     /**

@@ -25,14 +25,15 @@ public class ${ClassName}EditBo implements Serializable {
     private static final long serialVersionUID = 1L;
 
 #foreach ($column in $columns)
-#if(!$table.isSuperColumn($column.javaField) && ($column.isPk() || $column.isEdit()))
+#if(!$table.isSuperColumn($column.javaField) && $column.isEdit())
     /**
      * $column.columnComment
      */
-#if($column.isRequired == 1 || $column.isPk == 1)
+#if($column.isPk())
     @Schema(description = "$column.columnComment", required = true)
 #if($column.javaType == 'String')
     @NotBlank(message = "$column.columnComment不能为空")
+    @Size(min = 0, max = $column.columnMaxLength, message = "$column.columnComment不能超过{max}个字符")
 #else
     @NotNull(message = "$column.columnComment不能为空")
 #end

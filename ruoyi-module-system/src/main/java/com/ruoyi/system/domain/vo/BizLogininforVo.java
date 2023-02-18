@@ -23,7 +23,7 @@ import java.util.Date;
 @Data
 @Schema(description = "业务用户登录记录视图对象")
 @ExcelIgnoreUnannotated
-public class BizLogininforVo extends BaseVo {
+public class BizLogininforVo {
 
     private static final long serialVersionUID = 1L;
 

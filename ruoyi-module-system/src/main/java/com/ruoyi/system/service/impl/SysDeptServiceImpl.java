@@ -8,12 +8,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.constant.CacheNames;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.service.DeptService;
+import com.ruoyi.common.enums.CommonNormalDisable;
 import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.DeleteStatus;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.helper.DataBaseHelper;
 import com.ruoyi.common.utils.BeanCopyUtils;
@@ -58,12 +59,15 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
      */
     @Override
     public List<SysDeptVo> selectDeptList(SysDeptQueryBo deptQuery) {
+        if (ObjectUtil.isNull(deptQuery)){
+            deptQuery = new SysDeptQueryBo();
+        }
         LambdaQueryWrapper<SysDept> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(SysDept::getDelFlag, "0")
-            .eq(deptQuery != null && ObjectUtil.isNotNull(deptQuery.getDeptId()), SysDept::getDeptId, deptQuery.getDeptId())
-            .eq(deptQuery != null && ObjectUtil.isNotNull(deptQuery.getParentId()), SysDept::getParentId, deptQuery.getParentId())
-            .like(deptQuery != null && StringUtils.isNotBlank(deptQuery.getDeptName()), SysDept::getDeptName, deptQuery.getDeptName())
-            .eq(deptQuery != null && StringUtils.isNotBlank(deptQuery.getStatus()), SysDept::getStatus, deptQuery.getStatus())
+        lqw.eq(SysDept::getDelFlag, DeleteStatus.EXIST)
+            .eq(ObjectUtil.isNotNull(deptQuery.getDeptId()), SysDept::getDeptId, deptQuery.getDeptId())
+            .eq(ObjectUtil.isNotNull(deptQuery.getParentId()), SysDept::getParentId, deptQuery.getParentId())
+            .like(StringUtils.isNotBlank(deptQuery.getDeptName()), SysDept::getDeptName, deptQuery.getDeptName())
+            .eq(StringUtils.isNotBlank(deptQuery.getStatus()), SysDept::getStatus, deptQuery.getStatus())
             .orderByAsc(SysDept::getParentId)
             .orderByAsc(SysDept::getOrderNum);
         List<SysDept> sysDeptList = baseMapper.selectDeptList(lqw);
@@ -156,7 +160,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
     @Override
     public long selectNormalChildrenDeptById(Long deptId) {
         return baseMapper.selectCount(new LambdaQueryWrapper<SysDept>()
-            .eq(SysDept::getStatus, UserConstants.DEPT_NORMAL)
+            .eq(SysDept::getStatus, CommonNormalDisable.NORMAL)
             .apply(DataBaseHelper.findInSet(deptId, "ancestors")));
     }
 
@@ -191,15 +195,15 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
      * @return 结果
      */
     @Override
-    public String checkDeptNameUnique(SysDept dept) {
+    public CommonYesOrNo checkDeptNameUnique(SysDept dept) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysDept>()
             .eq(SysDept::getDeptName, dept.getDeptName())
             .eq(SysDept::getParentId, dept.getParentId())
             .ne(ObjectUtil.isNotNull(dept.getDeptId()), SysDept::getDeptId, dept.getDeptId()));
         if (exist) {
-            return UserConstants.NOT_UNIQUE;
+            return CommonYesOrNo.NO;
         }
-        return UserConstants.UNIQUE;
+        return CommonYesOrNo.YES;
     }
 
     /**
@@ -229,7 +233,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
     public int insertDept(SysDept dept) {
         SysDept info = baseMapper.selectById(dept.getParentId());
         // 如果父节点不为正常状态,则不允许新增子节点
-        if (!UserConstants.DEPT_NORMAL.equals(info.getStatus())) {
+        if (!CommonNormalDisable.NORMAL.equals(info.getStatus())) {
             throw new ServiceException("部门停用，不允许新增");
         }
         dept.setAncestors(info.getAncestors() + StringUtils.SEPARATOR + dept.getParentId());
@@ -254,8 +258,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
             updateDeptChildren(dept.getDeptId(), newAncestors, oldAncestors);
         }
         int result = baseMapper.updateById(dept);
-        if (UserConstants.DEPT_NORMAL.equals(dept.getStatus()) && StringUtils.isNotEmpty(dept.getAncestors())
-            && !StringUtils.equals(UserConstants.DEPT_NORMAL, dept.getAncestors())) {
+        if (CommonNormalDisable.NORMAL.equals(dept.getStatus()) && StringUtils.isNotEmpty(dept.getAncestors())) {
             // 如果该部门是启用状态，则启用该部门的所有上级部门
             updateParentDeptStatusNormal(dept);
         }
@@ -271,7 +274,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
         String ancestors = dept.getAncestors();
         Long[] deptIds = Convert.toLongArray(ancestors);
         baseMapper.update(null, new LambdaUpdateWrapper<SysDept>()
-            .set(SysDept::getStatus, UserConstants.DEPT_NORMAL)
+            .set(SysDept::getStatus, CommonNormalDisable.NORMAL)
             .in(SysDept::getDeptId, Arrays.asList(deptIds)));
     }
 

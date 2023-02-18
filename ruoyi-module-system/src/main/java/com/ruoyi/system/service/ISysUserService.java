@@ -3,6 +3,7 @@ package com.ruoyi.system.service;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.system.domain.bo.SysUserEditBo;
 import com.ruoyi.system.domain.bo.SysUserQueryBo;
 import com.ruoyi.common.core.domain.vo.SysUserVo;
@@ -117,7 +118,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    String checkUserNameUnique(SysUser user);
+    CommonYesOrNo checkUserNameUnique(SysUser user);
 
     /**
      * 校验手机号码是否唯一
@@ -125,7 +126,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    String checkPhoneUnique(SysUser user);
+    CommonYesOrNo checkPhoneUnique(SysUser user);
 
     /**
      * 校验email是否唯一
@@ -133,7 +134,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
-    String checkEmailUnique(SysUser user);
+    CommonYesOrNo checkEmailUnique(SysUser user);
 
     /**
      * 校验用户是否允许操作

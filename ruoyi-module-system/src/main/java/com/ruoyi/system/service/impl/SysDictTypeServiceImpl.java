@@ -14,6 +14,7 @@ import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.domain.entity.SysDictType;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.service.DictService;
+import com.ruoyi.common.enums.CommonYesOrNo;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -48,11 +49,17 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
 
     @Override
     public TableDataInfo<SysDictTypeVo> selectPageDictTypeList(SysDictTypeQueryBo dictTypeQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(dictTypeQuery)){
+            dictTypeQuery = new SysDictTypeQueryBo();
+        }
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         LambdaQueryWrapper<SysDictType> lqw = new LambdaQueryWrapper<SysDictType>()
-            .like(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getDictName()), SysDictType::getDictName, dictTypeQuery.getDictName())
-            .eq(dictTypeQuery != null, SysDictType::getStatus, dictTypeQuery.getStatus())
-            .like(dictTypeQuery != null && StringUtils.isNotBlank(dictTypeQuery.getDictType()), SysDictType::getDictType, dictTypeQuery.getDictType())
-            .between(dictTypeQuery != null && dictTypeQuery.getBeginTime() != null && dictTypeQuery.getEndTime() != null,
+            .like(StringUtils.isNotBlank(dictTypeQuery.getDictName()), SysDictType::getDictName, dictTypeQuery.getDictName())
+            .eq(dictTypeQuery.getStatus() != null, SysDictType::getStatus, dictTypeQuery.getStatus())
+            .like(StringUtils.isNotBlank(dictTypeQuery.getDictType()), SysDictType::getDictType, dictTypeQuery.getDictType())
+            .between(dictTypeQuery.getBeginTime() != null && dictTypeQuery.getEndTime() != null,
                 SysDictType::getCreateTime, dictTypeQuery.getBeginTime(), dictTypeQuery.getEndTime());
         Page<SysDictTypeVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw, SysDictTypeVo.class);
         return TableDataInfo.build(page);
@@ -217,14 +224,14 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
      * @return 结果
      */
     @Override
-    public String checkDictTypeUnique(SysDictType dict) {
+    public CommonYesOrNo checkDictTypeUnique(SysDictType dict) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysDictType>()
             .eq(SysDictType::getDictType, dict.getDictType())
             .ne(ObjectUtil.isNotNull(dict.getDictId()), SysDictType::getDictId, dict.getDictId()));
         if (exist) {
-            return UserConstants.NOT_UNIQUE;
+            return CommonYesOrNo.NO;
         }
-        return UserConstants.UNIQUE;
+        return CommonYesOrNo.YES;
     }
 
     /**

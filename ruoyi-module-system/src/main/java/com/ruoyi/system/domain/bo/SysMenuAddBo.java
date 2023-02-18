@@ -77,7 +77,7 @@ public class SysMenuAddBo implements Serializable {
      * 类型（D目录 M菜单 B按钮）
      */
     @Schema(description = "类型（D目录 M菜单 B按钮）", required = true)
-    @NotBlank(message = "菜单类型不能为空")
+    @NotNull(message = "菜单类型不能为空")
     private MenuType menuType;
 
     /**
