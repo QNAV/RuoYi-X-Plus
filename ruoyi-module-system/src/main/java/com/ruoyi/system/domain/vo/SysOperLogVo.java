@@ -1,6 +1,6 @@
 package com.ruoyi.system.domain.vo;
 
-import com.ruoyi.common.enums.LoginStatusEnum;
+import com.ruoyi.common.enums.OperationStatusEnum;
 import com.ruoyi.common.enums.UserType;
 import com.ruoyi.system.enums.BusinessTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -109,7 +109,7 @@ public class SysOperLogVo implements Serializable {
      * 操作状态（NORMAL=正常 EXCEPTION=异常）
      */
     @Schema(description = "操作状态（NORMAL=正常 EXCEPTION=异常）", required = true)
-    private LoginStatusEnum status;
+    private OperationStatusEnum status;
 
     /**
      * 错误消息

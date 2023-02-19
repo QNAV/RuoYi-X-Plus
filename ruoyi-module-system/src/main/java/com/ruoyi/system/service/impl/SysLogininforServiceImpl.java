@@ -1,14 +1,13 @@
 package com.ruoyi.system.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.event.AdminLogininforEvent;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.CommonResult;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
@@ -75,11 +74,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
         logininfor.setOs(os);
         logininfor.setMsg(logininforEvent.getMessage());
         // 日志状态
-        if (StringUtils.equalsAny(logininforEvent.getStatus(), Constants.LOGIN_SUCCESS, Constants.LOGOUT, Constants.REGISTER)) {
-            logininfor.setStatus(CommonResult.SUCCESS);
-        } else if (Constants.LOGIN_FAIL.equals(logininforEvent.getStatus())) {
-            logininfor.setStatus(CommonResult.FAIL);
-        }
+        logininfor.setStatus(logininforEvent.getStatus());
         // 插入数据
         insertLogininfor(logininfor);
     }
@@ -93,11 +88,17 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
 
     @Override
     public TableDataInfo<SysLogininforVo> selectPageLogininforList(SysLogininforQueryBo logininforQuery, PageQuery pageQuery) {
+        if (ObjectUtil.isNull(logininforQuery)){
+            logininforQuery = new SysLogininforQueryBo();
+        }
+        if (ObjectUtil.isNull(pageQuery)){
+            pageQuery = new PageQuery();
+        }
         LambdaQueryWrapper<SysLogininfor> lqw = new LambdaQueryWrapper<SysLogininfor>()
-            .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
-            .eq(logininforQuery != null && logininforQuery.getStatus() != null, SysLogininfor::getStatus, logininforQuery.getStatus())
-            .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getUserName()), SysLogininfor::getUserName, logininforQuery.getUserName())
-            .between(logininforQuery != null && logininforQuery.getBeginTime() != null && logininforQuery.getEndTime() != null,
+            .like(StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
+            .eq(logininforQuery.getStatus() != null, SysLogininfor::getStatus, logininforQuery.getStatus())
+            .like(StringUtils.isNotBlank(logininforQuery.getUserName()), SysLogininfor::getUserName, logininforQuery.getUserName())
+            .between(logininforQuery.getBeginTime() != null && logininforQuery.getEndTime() != null,
                 SysLogininfor::getLoginTime, logininforQuery.getBeginTime(), logininforQuery.getEndTime());
         if (StringUtils.isBlank(pageQuery.getOrderByColumn())) {
             pageQuery.setOrderByColumn("info_id");
@@ -126,6 +127,9 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
      */
     @Override
     public List<SysLogininfor> selectLogininforList(SysLogininforQueryBo logininforQuery) {
+        if (ObjectUtil.isNull(logininforQuery)){
+            logininforQuery = new SysLogininforQueryBo();
+        }
         return baseMapper.selectList(new LambdaQueryWrapper<SysLogininfor>()
             .like(logininforQuery != null && StringUtils.isNotBlank(logininforQuery.getIpaddr()), SysLogininfor::getIpaddr, logininforQuery.getIpaddr())
             .eq(logininforQuery != null && logininforQuery.getStatus() != null, SysLogininfor::getStatus, logininforQuery.getStatus())

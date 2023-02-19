@@ -1,7 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.core.domain.bo.PageQuery;
-import com.ruoyi.common.enums.LoginStatusEnum;
+import com.ruoyi.common.enums.OperationStatusEnum;
 import com.ruoyi.system.enums.BusinessTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -46,7 +46,7 @@ public class SysOperLogPageQueryBo extends PageQuery {
      * 操作状态（NORMAL=正常 EXCEPTION=异常）
      */
     @Schema(description = "操作状态（NORMAL=正常 EXCEPTION=异常）")
-    private LoginStatusEnum status;
+    private OperationStatusEnum status;
 
 
     /**

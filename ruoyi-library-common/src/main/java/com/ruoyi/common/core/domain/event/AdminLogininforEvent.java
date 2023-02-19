@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain.event;
 
+import com.ruoyi.common.enums.UserActionEnum;
 import lombok.Data;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +23,9 @@ public class AdminLogininforEvent implements Serializable {
     private String username;
 
     /**
-     * 登录状态 0成功 1失败
+     * 登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）
      */
-    private String status;
+    private UserActionEnum status;
 
     /**
      * 提示消息

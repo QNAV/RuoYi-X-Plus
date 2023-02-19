@@ -101,7 +101,7 @@ public class SysRole extends BaseEntity {
     @Schema(description = "角色状态（NORMAL=正常 DISABLE=停用）", required = true)
     @ExcelProperty(value = "角色状态", converter = ExcelDictConvert.class)
     @ExcelDictFormat(dictType = "sys_normal_disable")
-    @NotBlank(message = "角色状态不能为空")
+    @NotNull(message = "角色状态不能为空")
     private CommonNormalDisable status;
 
     /**

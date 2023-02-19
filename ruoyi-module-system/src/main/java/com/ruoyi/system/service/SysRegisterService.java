@@ -2,11 +2,11 @@ package com.ruoyi.system.service;
 
 import cn.dev33.satoken.secure.BCrypt;
 import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.bo.UserNameRegisterBo;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.event.AdminLogininforEvent;
 import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.UserActionEnum;
 import com.ruoyi.common.exception.user.CaptchaException;
 import com.ruoyi.common.exception.user.CaptchaExpireException;
 import com.ruoyi.common.exception.user.UserException;
@@ -59,7 +59,7 @@ public class SysRegisterService {
         if (!regFlag) {
             throw new UserException("user.register.error");
         }
-        recordLogininfor(username, Constants.REGISTER, MessageUtils.message("user.register.success"));
+        recordLogininfor(username, UserActionEnum.REGISTER, MessageUtils.message("user.register.success"));
     }
 
     /**
@@ -75,11 +75,11 @@ public class SysRegisterService {
         String captcha = RedisUtils.getCacheObject(verifyKey);
         RedisUtils.deleteObject(verifyKey);
         if (captcha == null) {
-            recordLogininfor(username, Constants.REGISTER, MessageUtils.message("user.jcaptcha.expire"));
+            recordLogininfor(username, UserActionEnum.REGISTER, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
         }
         if (!code.equalsIgnoreCase(captcha)) {
-            recordLogininfor(username, Constants.REGISTER, MessageUtils.message("user.jcaptcha.error"));
+            recordLogininfor(username, UserActionEnum.REGISTER, MessageUtils.message("user.jcaptcha.error"));
             throw new CaptchaException();
         }
     }
@@ -92,7 +92,7 @@ public class SysRegisterService {
      * @param message  消息内容
      * @return
      */
-    private void recordLogininfor(String username, String status, String message) {
+    private void recordLogininfor(String username, UserActionEnum status, String message) {
         AdminLogininforEvent logininforDTO = new AdminLogininforEvent();
         logininforDTO.setUsername(username);
         logininforDTO.setStatus(status);

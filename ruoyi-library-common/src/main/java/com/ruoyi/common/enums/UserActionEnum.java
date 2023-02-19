@@ -4,13 +4,16 @@ import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * 登录状态枚举
+ * 用户动作枚举
  *
- * @author weibocy
+ * @author ruoyi
  */
-public enum LoginStatusEnum {
-    NORMAL("NORMAL", "正常"),
-    EXCEPTION("EXCEPTION", "异常"),
+public enum UserActionEnum {
+    LOGINOK("LOGINOK", "登录成功"),
+    LOGINFAIL("LOGINFAIL", "登录失败"),
+    LOGOUT("LOGOUT", "注销登录"),
+    REGISTER("REGISTER", "注册"),
+
     ;
 
     // 标记响应mbp值
@@ -20,7 +23,7 @@ public enum LoginStatusEnum {
     private final String code;
     private final String info;
 
-    LoginStatusEnum(String code, String info) {
+    UserActionEnum(String code, String info) {
         this.code = code;
         this.info = info;
     }

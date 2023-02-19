@@ -36,11 +36,11 @@ public class SysLogininforVo implements Serializable {
     private String userName;
 
     /**
-     * 登录状态（SUCCESS=成功 FAIL=失败）
+     * 登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）
      */
-    @Schema(description = "登录状态（SUCCESS=成功 FAIL=失败）", required = true)
+    @Schema(description = "登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）", required = true)
     @ExcelProperty(value = "登录状态", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(readConverterExp = "SUCCESS=成功 FAIL=失败")
+    @ExcelDictFormat(readConverterExp = "LOGINOK=登录成功,LOGINFAIL=登录失败,LOGOUT=注销登录,REGISTER=注册")
     private CommonResult status;
 
     /**

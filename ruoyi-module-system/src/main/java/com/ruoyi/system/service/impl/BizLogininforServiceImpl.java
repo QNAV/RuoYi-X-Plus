@@ -1,13 +1,12 @@
 package com.ruoyi.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
-import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.event.BizLogininforEvent;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.bo.PageQuery;
-import com.ruoyi.common.enums.CommonResult;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -83,6 +82,9 @@ public class BizLogininforServiceImpl implements IBizLogininforService {
      * @param queryBo 业务用户登录记录业务查询对象
      */
     private LambdaQueryWrapper<BizLogininfor> buildQueryWrapper(BizLogininforQueryBo queryBo) {
+        if (ObjectUtil.isNull(queryBo)){
+            queryBo = new BizLogininforQueryBo();
+        }
         LambdaQueryWrapper<BizLogininfor> lqw = Wrappers.lambdaQuery();
         lqw.like(StringUtils.isNotBlank(queryBo.getUserName()), BizLogininfor::getUserName, queryBo.getUserName());
         lqw.eq(queryBo.getStatus() != null, BizLogininfor::getStatus, queryBo.getStatus());
@@ -175,11 +177,7 @@ public class BizLogininforServiceImpl implements IBizLogininforService {
         logininfor.setOs(os);
         logininfor.setMsg(logininforEvent.getMessage());
         // 日志状态
-        if (StringUtils.equalsAny(logininforEvent.getStatus(), Constants.LOGIN_SUCCESS, Constants.LOGOUT, Constants.REGISTER)) {
-            logininfor.setStatus(CommonResult.SUCCESS);
-        } else if (Constants.LOGIN_FAIL.equals(logininforEvent.getStatus())) {
-            logininfor.setStatus(CommonResult.FAIL);
-        }
+        logininfor.setStatus(logininforEvent.getStatus());
         // 插入数据
         insertByBo(logininfor);
     }

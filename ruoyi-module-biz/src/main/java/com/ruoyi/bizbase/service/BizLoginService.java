@@ -8,13 +8,9 @@ import com.ruoyi.biz.domain.model.BizLoginUser;
 import com.ruoyi.biz.helper.BizLoginHelper;
 import com.ruoyi.bizbase.model.bo.SmsLoginBindWeixinBo;
 import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.entity.BizUser;
 import com.ruoyi.common.core.domain.event.BizLogininforEvent;
-import com.ruoyi.common.enums.DeviceType;
-import com.ruoyi.common.enums.LoginType;
-import com.ruoyi.common.enums.UnionAuthType;
-import com.ruoyi.common.enums.UserStatus;
+import com.ruoyi.common.enums.*;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.exception.user.CaptchaException;
 import com.ruoyi.common.exception.user.CaptchaExpireException;
@@ -87,7 +83,7 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
+        recordLogininfor(username, UserActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), username);
         return StpUtil.getTokenValue();
     }
@@ -113,7 +109,7 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
+        recordLogininfor(user.getUserName(), UserActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
@@ -154,7 +150,7 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
+        recordLogininfor(user.getUserName(), UserActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
@@ -182,7 +178,7 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        recordLogininfor(user.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
+        recordLogininfor(user.getUserName(), UserActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
@@ -193,7 +189,7 @@ public class BizLoginService {
      * 退出登录
      */
     public void logout(String loginName) {
-        recordLogininfor(loginName, Constants.LOGOUT, MessageUtils.message("user.logout.success"));
+        recordLogininfor(loginName, UserActionEnum.LOGOUT, MessageUtils.message("user.logout.success"));
     }
 
 
@@ -205,7 +201,7 @@ public class BizLoginService {
      * @param message  消息内容
      * @return
      */
-    private void recordLogininfor(String username, String status, String message) {
+    private void recordLogininfor(String username, UserActionEnum status, String message) {
         BizLogininforEvent logininfor = new BizLogininforEvent();
         logininfor.setUsername(username);
         logininfor.setStatus(status);
@@ -220,7 +216,7 @@ public class BizLoginService {
     public boolean validateSmsCode(String phoneNumber, String smsCode, HttpServletRequest request) {
         String code = RedisUtils.getCacheObject(CacheConstants.CAPTCHA_CODE_KEY + phoneNumber);
         if (StringUtils.isBlank(code)) {
-            recordLogininfor(phoneNumber, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"));
+            recordLogininfor(phoneNumber, UserActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
         }
         return code.equals(smsCode);
@@ -248,11 +244,11 @@ public class BizLoginService {
         String captcha = RedisUtils.getCacheObject(verifyKey);
         RedisUtils.deleteObject(verifyKey);
         if (captcha == null) {
-            recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"));
+            recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
         }
         if (!code.equalsIgnoreCase(captcha)) {
-            recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error"));
+            recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.error"));
             throw new CaptchaException();
         }
     }
@@ -267,7 +263,7 @@ public class BizLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", username);
             throw new UserException("user.not.exists", username);
-        }else if (UserStatus.DISABLE.equals(user.getStatus())) {
+        }else if (CommonNormalDisable.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", username);
             throw new UserException("user.blocked", username);
         }
@@ -290,7 +286,7 @@ public class BizLoginService {
             log.info("自动注册手机号用户：{} .", phoneNumber);
             // 注册账户后再读取一次
             user = userService.selectUserByPhoneNumber(phoneNumber);
-        } else if (UserStatus.DISABLE.equals(user.getStatus())) {
+        } else if (CommonNormalDisable.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", phoneNumber);
             throw new UserException("user.blocked", phoneNumber);
         }
@@ -315,7 +311,7 @@ public class BizLoginService {
             log.info("自动注册手机号用户：{} .", phoneNumber);
             // 注册账户后再读取一次
             user = userService.selectUserByPhoneNumberAndAppid(phoneNumber, appid);
-        }else if (UserStatus.DISABLE.equals(user.getStatus())) {
+        }else if (CommonNormalDisable.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", phoneNumber);
             throw new UserException("user.blocked", phoneNumber);
         }
@@ -333,7 +329,7 @@ public class BizLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", openid);
             throw new UserException("user.not.exists", openid);
-        } else if (UserStatus.DISABLE.equals(user.getStatus())) {
+        } else if (CommonNormalDisable.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", openid);
             throw new UserException("user.blocked", openid);
         }
@@ -368,13 +364,12 @@ public class BizLoginService {
     public void checkLogin(LoginType loginType, String username, Supplier<Boolean> supplier) {
         HttpServletRequest request = ServletUtils.getRequest();
         String errorKey = CacheConstants.PWD_ERR_CNT_KEY + username;
-        String loginFail = Constants.LOGIN_FAIL;
 
         // 获取用户登录错误次数(可自定义限制策略 例如: key + username + ip)
         Integer errorNumber = RedisUtils.getCacheObject(errorKey);
         // 锁定时间内登录 则踢出
         if (ObjectUtil.isNotNull(errorNumber) && errorNumber.equals(maxRetryCount)) {
-            recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
+            recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
             throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
         }
 
@@ -384,12 +379,12 @@ public class BizLoginService {
             // 达到规定错误次数 则锁定登录
             if (errorNumber.equals(maxRetryCount)) {
                 RedisUtils.setCacheObject(errorKey, errorNumber, Duration.ofMinutes(lockTime));
-                recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
+                recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
                 throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
             } else {
                 // 未达到规定错误次数 则递增
                 RedisUtils.setCacheObject(errorKey, errorNumber);
-                recordLogininfor(username, loginFail, MessageUtils.message(loginType.getRetryLimitCount(), errorNumber));
+                recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitCount(), errorNumber));
                 throw new UserException(loginType.getRetryLimitCount(), errorNumber);
             }
         }

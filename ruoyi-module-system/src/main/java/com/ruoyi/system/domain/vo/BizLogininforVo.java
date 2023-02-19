@@ -70,11 +70,11 @@ public class BizLogininforVo {
     private String os;
 
     /**
-     * 登录状态（SUCCESS=成功 FAIL=失败）
+     * 登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）
      */
-    @ExcelProperty(value = "登录状态", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(readConverterExp = "SUCCESS=成功 FAIL=失败")
-    @Schema(description = "登录状态（SUCCESS=成功 FAIL=失败）", required = true)
+    @ExcelProperty(value = "登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）", converter = ExcelDictConvert.class)
+    @ExcelDictFormat(readConverterExp = "LOGINOK=登录成功,LOGINFAIL=登录失败,LOGOUT=注销登录,REGISTER=注册")
+    @Schema(description = "登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）", required = true)
     private CommonResult status;
 
     /**

@@ -1,7 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.core.domain.bo.PageQuery;
-import com.ruoyi.common.enums.CommonResult;
+import com.ruoyi.common.enums.UserActionEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -29,10 +29,10 @@ public class BizLogininforPageQueryBo extends PageQuery {
 
 
     /**
-     * 登录状态（SUCCESS=成功 FAIL=失败）
+     * 登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）
      */
-    @Schema(description = "登录状态（SUCCESS=成功 FAIL=失败）")
-    private CommonResult status;
+    @Schema(description = "登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）")
+    private UserActionEnum status;
 
 
     /**

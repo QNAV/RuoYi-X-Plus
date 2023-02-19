@@ -2,18 +2,15 @@ package com.ruoyi.system.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.ruoyi.common.core.domain.entity.BizUser;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.vo.BizUserVo;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.domain.bo.PageQuery;
-import com.ruoyi.common.enums.UserStatus;
 import com.ruoyi.common.utils.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.ruoyi.system.domain.bo.BizUserPageQueryBo;
 import com.ruoyi.system.domain.bo.BizUserQueryBo;
 import com.ruoyi.system.domain.bo.BizUserAddBo;
 import com.ruoyi.system.domain.bo.BizUserEditBo;

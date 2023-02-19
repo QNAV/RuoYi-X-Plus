@@ -1,6 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
-import com.ruoyi.common.enums.CommonResult;
+import com.ruoyi.common.enums.UserActionEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import javax.validation.constraints.*;
@@ -17,7 +17,7 @@ import java.util.Date;
 
 @Data
 @Schema(description = "业务用户登录记录业务编辑对象")
-public class BizLogininforEditBo implements Serializable {
+public class  BizLogininforEditBo implements Serializable {
 
     private static final long serialVersionUID=1L;
 
@@ -61,11 +61,11 @@ public class BizLogininforEditBo implements Serializable {
     private String os;
 
     /**
-     * 登录状态（SUCCESS=成功 FAIL=失败）
+     * 登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）
      */
-    @Schema(description = "登录状态（SUCCESS=成功 FAIL=失败）", required = true)
-    @NotNull(message = "登录状态（SUCCESS=成功 FAIL=失败）不能为空")
-    private CommonResult status;
+    @Schema(description = "登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）", required = true)
+    @NotNull(message = "登录状态不能为空")
+    private UserActionEnum status;
 
     /**
      * 提示消息

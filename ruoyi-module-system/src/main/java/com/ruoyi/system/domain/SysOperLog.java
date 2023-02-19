@@ -7,8 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.LoginStatusEnum;
+import com.ruoyi.common.enums.OperationStatusEnum;
 import com.ruoyi.common.enums.UserType;
 import com.ruoyi.system.enums.BusinessTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -139,7 +138,7 @@ public class SysOperLog implements Serializable {
     @Schema(description = "操作状态（NORMAL=正常 EXCEPTION=异常）")
     @ExcelProperty(value = "状态", converter = ExcelDictConvert.class)
     @ExcelDictFormat(dictType = "sys_common_status")
-    private LoginStatusEnum status;
+    private OperationStatusEnum status;
 
     /**
      * 错误消息

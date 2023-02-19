@@ -88,7 +88,7 @@ public class SysMenu extends TreeEntity<SysMenu> {
      * 类型（DIRECTORY=目录 MENU=菜单 BUTTON=按钮）
      */
     @Schema(description = "类型（DIRECTORY=目录 MENU=菜单 BUTTON=按钮）", required = true)
-    @NotBlank(message = "菜单类型不能为空")
+    @NotNull(message = "菜单类型不能为空")
     private MenuType menuType;
 
     /**

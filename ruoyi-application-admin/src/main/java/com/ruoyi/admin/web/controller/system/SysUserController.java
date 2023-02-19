@@ -269,8 +269,8 @@ public class SysUserController extends AdminBaseController {
      */
     @Operation(description = "获取部门树列表", operationId = "SysUserGetDeptTree")
     @SaCheckPermission("system:user:list")
-    @GetMapping("/deptTree")
-    public R<List<Tree<Long>>> deptTree(SysDeptQueryBo deptQuery) {
+    @PostMapping("/deptTree")
+    public R<List<Tree<Long>>> deptTree(@RequestBody(required = false) SysDeptQueryBo deptQuery) {
         return R.ok(deptService.selectDeptTreeList(deptQuery));
     }
 }
