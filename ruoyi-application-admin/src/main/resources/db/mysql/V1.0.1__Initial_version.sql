@@ -246,6 +246,9 @@ INSERT INTO `sys_dict_data` VALUES(63, 0, '日期', 'Date', 'sys_java_type', NUL
 INSERT INTO `sys_dict_data` VALUES(64, 0, '浮点数', 'Double', 'sys_java_type', NULL, 'none', 'NO', 'NORMAL', 'admin', '2023-02-18 21:19:45', 'admin', '2023-02-18 21:23:15', NULL);
 INSERT INTO `sys_dict_data` VALUES(65, 0, '布尔型', 'Boolean', 'sys_java_type', NULL, 'none', 'NO', 'NORMAL', 'admin', '2023-02-18 21:20:01', 'admin', '2023-02-18 21:23:12', NULL);
 INSERT INTO `sys_dict_data` VALUES(66, 0, '金额', 'BigDecimal', 'sys_java_type', NULL, 'none', 'NO', 'NORMAL', 'admin', '2023-02-18 21:20:10', 'admin', '2023-02-18 21:23:08', NULL);
+INSERT INTO `sys_dict_data` VALUES(67, 0, '公开', 'PUBLIC', 'sys_access_policy', NULL, 'none', 'NO', 'NORMAL', 'admin', '2023-02-20 21:32:59', 'admin', '2023-02-20 21:32:59', NULL);
+INSERT INTO `sys_dict_data` VALUES(68, 0, '私有', 'PRIVATE', 'sys_access_policy', NULL, 'none', 'YES', 'NORMAL', 'admin', '2023-02-20 21:33:11', 'admin', '2023-02-20 21:34:03', NULL);
+INSERT INTO `sys_dict_data` VALUES(69, 0, '自定义', 'CUSTOM', 'sys_access_policy', NULL, 'none', 'NO', 'NORMAL', 'admin', '2023-02-20 21:33:44', 'admin', '2023-02-20 21:33:44', NULL);
 
 CREATE TABLE IF NOT EXISTS `sys_dict_type` (
   `dict_id` bigint NOT NULL AUTO_INCREMENT COMMENT '字典主键',
@@ -278,6 +281,7 @@ INSERT INTO `sys_dict_type` VALUES(14, '查询方式', 'sys_query_type', 'NORMAL
 INSERT INTO `sys_dict_type` VALUES(15, 'HTML类型', 'sys_html_type', 'NORMAL', 'admin', '2023-02-18 21:13:43', 'admin', '2023-02-18 21:18:18', NULL);
 INSERT INTO `sys_dict_type` VALUES(16, '生成模版类型', 'sys_tpl_category', 'NORMAL', 'admin', '2023-02-18 21:16:36', 'admin', '2023-02-18 21:16:36', NULL);
 INSERT INTO `sys_dict_type` VALUES(17, 'JAVA类型', 'sys_java_type', 'NORMAL', 'admin', '2023-02-18 21:18:01', 'admin', '2023-02-18 21:18:01', NULL);
+INSERT INTO `sys_dict_type` VALUES(18, '桶权限类型', 'sys_access_policy', 'NORMAL', 'admin', '2023-02-20 21:32:39', 'admin', '2023-02-20 21:32:39', NULL);
 
 CREATE TABLE IF NOT EXISTS `sys_logininfor` (
   `info_id` bigint NOT NULL AUTO_INCREMENT COMMENT '访问ID',
