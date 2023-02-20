@@ -84,9 +84,9 @@ public class SysOssConfigAddBo implements Serializable {
     private CommonYesOrNoEnum isHttps;
 
     /**
-     * 桶权限类型（PUBLIC=公开 PRIVATE=私有 EXCEPTION=自定义）
+     * 桶权限类型（PUBLIC=公开 PRIVATE=私有 CUSTOM=自定义）
      */
-    @Schema(description = "桶权限类型（PUBLIC=公开 PRIVATE=私有 EXCEPTION=自定义）", required = true)
+    @Schema(description = "桶权限类型（PUBLIC=公开 PRIVATE=私有 CUSTOM=自定义）", required = true)
     @NotNull(message = "桶权限类型不能为空")
     private AccessPolicyEnum accessPolicy;
 

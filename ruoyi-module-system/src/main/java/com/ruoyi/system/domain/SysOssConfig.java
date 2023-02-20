@@ -71,7 +71,7 @@ public class SysOssConfig extends BaseEntity {
     private String region;
 
     /**
-     * 桶权限类型（PUBLIC=公开 PRIVATE=私有 EXCEPTION=自定义）
+     * 桶权限类型（PUBLIC=公开 PRIVATE=私有 CUSTOM=自定义）
      */
     private AccessPolicyEnum accessPolicy;
 
