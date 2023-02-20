@@ -6,15 +6,13 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.domain.bo.AdminUserOnlineBo;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.CacheNames;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.redis.CacheUtils;
 import com.ruoyi.common.utils.redis.RedisUtils;
 import com.ruoyi.system.domain.vo.SysUserOnlineVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -87,7 +85,7 @@ public class SysUserOnlineController extends AdminBaseController {
      */
     @Operation(description = "强退用户", operationId = "SysUserOnlinePostForceLogout")
     @SaCheckPermission("monitor:online:forceLogout")
-    @Log(title = "在线用户", businessType = BusinessType.FORCE)
+    @AdminLog(title = "在线用户", businessType = BusinessTypeEnum.FORCED)
     @PostMapping("/forceLogout")
     public R<Void> forceLogout(@Parameter(description = "tokenId", required = true) @RequestParam String tokenId) {
         try {

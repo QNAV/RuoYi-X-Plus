@@ -5,6 +5,7 @@ package com.ruoyi.common.enums;
  *
  * @author ruoyi
  */
+@Deprecated
 public enum OperatorType {
     /**
      * 其它

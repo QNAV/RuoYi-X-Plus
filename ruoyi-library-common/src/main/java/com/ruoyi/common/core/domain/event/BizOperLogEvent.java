@@ -1,18 +1,21 @@
 package com.ruoyi.common.core.domain.event;
 
+import com.ruoyi.common.enums.BusinessTypeEnum;
+import com.ruoyi.common.enums.OperationStatusEnum;
+import com.ruoyi.common.enums.UserTypeEnum;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 操作日志事件
+ * 业务操作日志事件
  *
- * @author Lion Li
+ * @author weibocy
  */
 
 @Data
-public class OperLogEvent implements Serializable {
+public class BizOperLogEvent implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,9 +30,9 @@ public class OperLogEvent implements Serializable {
     private String title;
 
     /**
-     * 业务类型（0其它 1新增 2修改 3删除）
+     * 业务类型（ADD=新增 MODIFY=修改 DELETE=删除 GRANT=授权 EXPORT=导出 IMPORT=导入 FORCED=强退 GENCODE=生成代码 CLEAR=清空数据 OTHER=其他）
      */
-    private Integer businessType;
+    private BusinessTypeEnum businessType;
 
     /**
      * 业务类型数组
@@ -47,9 +50,9 @@ public class OperLogEvent implements Serializable {
     private String requestMethod;
 
     /**
-     * 操作类别（0其它 1后台用户 2手机端用户）
+     * 操作类别（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
-    private Integer operatorType;
+    private UserTypeEnum operatorType;
 
     /**
      * 操作人员
@@ -87,9 +90,9 @@ public class OperLogEvent implements Serializable {
     private String jsonResult;
 
     /**
-     * 操作状态（0正常 1异常）
+     * 操作状态（NORMAL=正常 EXCEPTION=异常）
      */
-    private Integer status;
+    private OperationStatusEnum status;
 
     /**
      * 错误消息

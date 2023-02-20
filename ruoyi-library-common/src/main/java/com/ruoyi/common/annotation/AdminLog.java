@@ -1,19 +1,19 @@
 package com.ruoyi.common.annotation;
 
-import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.enums.OperatorType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
+import com.ruoyi.common.enums.UserTypeEnum;
 
 import java.lang.annotation.*;
 
 /**
- * 自定义操作日志记录注解
+ * 自定义后台操作日志记录注解
  *
- * @author ruoyi
+ * @author weibocy
  */
 @Target({ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Log {
+public @interface AdminLog {
     /**
      * 模块
      */
@@ -22,12 +22,12 @@ public @interface Log {
     /**
      * 功能
      */
-    BusinessType businessType() default BusinessType.OTHER;
+    BusinessTypeEnum businessType() default BusinessTypeEnum.OTHER;
 
     /**
      * 操作人类别
      */
-    OperatorType operatorType() default OperatorType.MANAGE;
+    UserTypeEnum operatorType() default UserTypeEnum.PC;
 
     /**
      * 是否保存请求的参数

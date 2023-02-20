@@ -3,10 +3,10 @@ package com.ruoyi.admin.web.controller.system;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.util.ArrayUtil;
 import com.ruoyi.admin.controller.AdminBaseController;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysDept;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.enums.CommonNormalDisableEnum;
 import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
@@ -80,7 +80,7 @@ public class SysDeptController extends AdminBaseController {
      */
     @Operation(description = "新增部门", operationId = "SysDeptPostAdd")
     @SaCheckPermission("system:dept:add")
-    @Log(title = "部门管理", businessType = BusinessType.INSERT)
+    @AdminLog(title = "部门管理", businessType = BusinessTypeEnum.ADD)
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysDeptAddBo deptBo) {
         SysDept dept = BeanCopyUtils.copy(deptBo, SysDept.class);
@@ -95,7 +95,7 @@ public class SysDeptController extends AdminBaseController {
      */
     @Operation(description = "修改部门", operationId = "SysDeptPostEdit")
     @SaCheckPermission("system:dept:edit")
-    @Log(title = "部门管理", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "部门管理", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysDeptEditBo deptBo) {
         SysDept dept = BeanCopyUtils.copy(deptBo, SysDept.class);
@@ -117,7 +117,7 @@ public class SysDeptController extends AdminBaseController {
      */
     @Operation(description = "删除部门", operationId = "SysDeptPostRemove")
     @SaCheckPermission("system:dept:remove")
-    @Log(title = "部门管理", businessType = BusinessType.DELETE)
+    @AdminLog(title = "部门管理", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "部门ID串", required = true) @RequestParam Long deptId) {
         if (deptService.hasChildByDeptId(deptId)) {

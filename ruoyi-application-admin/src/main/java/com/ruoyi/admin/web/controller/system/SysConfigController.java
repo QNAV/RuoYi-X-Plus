@@ -2,11 +2,11 @@ package com.ruoyi.admin.web.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.admin.controller.AdminBaseController;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -62,7 +62,7 @@ public class SysConfigController extends AdminBaseController {
      * @param response
      */
     @Operation(description = "导出参数配置列表", operationId = "SysConfigPostExport")
-    @Log(title = "参数管理", businessType = BusinessType.EXPORT)
+    @AdminLog(title = "参数管理", businessType = BusinessTypeEnum.EXPORT)
     @SaCheckPermission("system:config:export")
     @PostMapping("/export")
     public void export(@RequestBody(required = false) SysConfigQueryBo configQuery, @Parameter(hidden = true) HttpServletResponse response) {
@@ -98,7 +98,7 @@ public class SysConfigController extends AdminBaseController {
      */
     @Operation(description = "新增参数配置", operationId = "SysConfigPostAdd")
     @SaCheckPermission("system:config:add")
-    @Log(title = "参数管理", businessType = BusinessType.INSERT)
+    @AdminLog(title = "参数管理", businessType = BusinessTypeEnum.ADD)
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysConfigAddBo configBo) {
         SysConfig config = BeanCopyUtils.copy(configBo, SysConfig.class);
@@ -114,7 +114,7 @@ public class SysConfigController extends AdminBaseController {
      */
     @Operation(description = "修改参数配置", operationId = "SysConfigPostEdit")
     @SaCheckPermission("system:config:edit")
-    @Log(title = "参数管理", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "参数管理", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysConfigEditBo configBo) {
         SysConfig config = BeanCopyUtils.copy(configBo, SysConfig.class);
@@ -130,7 +130,7 @@ public class SysConfigController extends AdminBaseController {
      */
     @Operation(description = "根据参数键名修改参数配置", operationId = "SysConfigPostUpdateByKey")
     @SaCheckPermission("system:config:edit")
-    @Log(title = "参数管理", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "参数管理", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/updateByKey")
     public R<Void> updateByKey(@RequestBody SysConfigEditBo configBo) {
         SysConfig config = BeanCopyUtils.copy(configBo, SysConfig.class);
@@ -145,7 +145,7 @@ public class SysConfigController extends AdminBaseController {
      */
     @Operation(description = "删除参数配置", operationId = "SysConfigPostRemove")
     @SaCheckPermission("system:config:remove")
-    @Log(title = "参数管理", businessType = BusinessType.DELETE)
+    @AdminLog(title = "参数管理", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "参数ID串", required = true) @RequestParam Long[] configIds) {
         configService.deleteConfigByIds(configIds);
@@ -157,7 +157,7 @@ public class SysConfigController extends AdminBaseController {
      */
     @Operation(description = "刷新参数缓存", operationId = "SysConfigPostRefreshCache")
     @SaCheckPermission("system:config:remove")
-    @Log(title = "参数管理", businessType = BusinessType.CLEAN)
+    @AdminLog(title = "参数管理", businessType = BusinessTypeEnum.CLEAR)
     @PostMapping("/refreshCache")
     public R<Void> refreshCache() {
         configService.resetConfigCache();

@@ -5,13 +5,11 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.annotation.ExcelEnumFormat;
-import com.ruoyi.common.convert.ExcelDictConvert;
 import com.ruoyi.common.convert.ExcelEnumConvert;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.enums.OperationStatusEnum;
 import com.ruoyi.common.enums.UserTypeEnum;
-import com.ruoyi.system.enums.BusinessTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -138,8 +136,8 @@ public class SysOperLog implements Serializable {
      * 操作状态（NORMAL=正常 EXCEPTION=异常）
      */
     @Schema(description = "操作状态（NORMAL=正常 EXCEPTION=异常）")
-    @ExcelProperty(value = "状态", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(dictType = "sys_common_status")
+    @ExcelProperty(value = "状态", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = OperationStatusEnum.class)
     private OperationStatusEnum status;
 
     /**

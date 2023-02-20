@@ -2,11 +2,11 @@ package com.ruoyi.admin.web.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.admin.controller.AdminBaseController;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.system.domain.SysNotice;
 import com.ruoyi.system.domain.bo.SysNoticeAddBo;
@@ -66,7 +66,7 @@ public class SysNoticeController extends AdminBaseController {
      */
     @Operation(description = "新增通知公告", operationId = "SysNoticePostAdd")
     @SaCheckPermission("system:notice:add")
-    @Log(title = "通知公告", businessType = BusinessType.INSERT)
+    @AdminLog(title = "通知公告", businessType = BusinessTypeEnum.ADD)
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysNoticeAddBo noticeBo) {
         SysNotice notice = BeanCopyUtils.copy(noticeBo, SysNotice.class);
@@ -78,7 +78,7 @@ public class SysNoticeController extends AdminBaseController {
      */
     @Operation(description = "修改通知公告", operationId = "SysNoticePostEdit")
     @SaCheckPermission("system:notice:edit")
-    @Log(title = "通知公告", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "通知公告", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysNoticeEditBo noticeBo) {
         SysNotice notice = BeanCopyUtils.copy(noticeBo, SysNotice.class);
@@ -90,7 +90,7 @@ public class SysNoticeController extends AdminBaseController {
      */
     @Operation(description = "删除通知公告", operationId = "SysNoticePostRemove")
     @SaCheckPermission("system:notice:remove")
-    @Log(title = "通知公告", businessType = BusinessType.DELETE)
+    @AdminLog(title = "通知公告", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "公告ID串", required = true) @RequestParam(required = true) Long[] noticeIds) {
         return toAjax(noticeService.deleteNoticeByIds(noticeIds));

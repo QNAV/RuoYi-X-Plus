@@ -2,12 +2,12 @@ package com.ruoyi.admin.web.controller.monitor;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.admin.controller.AdminBaseController;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.utils.redis.RedisUtils;
@@ -63,7 +63,7 @@ public class SysLogininforController extends AdminBaseController {
      * @param response
      */
     @Operation(description = "导出系统访问记录列表", operationId = "SysLogininforPostExport")
-    @Log(title = "登录日志", businessType = BusinessType.EXPORT)
+    @AdminLog(title = "登录日志", businessType = BusinessTypeEnum.EXPORT)
     @SaCheckPermission("monitor:logininfor:export")
     @PostMapping("/export")
     public void export(@RequestBody(required = false) SysLogininforQueryBo logininforQuery, @Parameter(hidden = true) HttpServletResponse response) {
@@ -78,7 +78,7 @@ public class SysLogininforController extends AdminBaseController {
      */
     @Operation(description = "删除系统访问记录", operationId = "SysLogininforPostRemove")
     @SaCheckPermission("monitor:logininfor:remove")
-    @Log(title = "登录日志", businessType = BusinessType.DELETE)
+    @AdminLog(title = "登录日志", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "登录日志ID组", required = true) @RequestParam Long[] infoIds) {
         return toAjax(logininforService.deleteLogininforByIds(infoIds));
@@ -90,7 +90,7 @@ public class SysLogininforController extends AdminBaseController {
      */
     @Operation(description = "清空系统访问记录", operationId = "SysLogininforPostClean")
     @SaCheckPermission("monitor:logininfor:remove")
-    @Log(title = "登录日志", businessType = BusinessType.CLEAN)
+    @AdminLog(title = "登录日志", businessType = BusinessTypeEnum.CLEAR)
     @PostMapping("/clean")
     public R<Void> clean() {
         logininforService.cleanLogininfor();
@@ -103,7 +103,7 @@ public class SysLogininforController extends AdminBaseController {
      * @return
      */
     @SaCheckPermission("monitor:logininfor:unlock")
-    @Log(title = "账户解锁", businessType = BusinessType.OTHER)
+    @AdminLog(title = "账户解锁", businessType = BusinessTypeEnum.OTHER)
     @GetMapping("/unlock/{userName}")
     public R<Void> unlock(@PathVariable("userName") String userName) {
         String loginName = CacheConstants.PWD_ERR_CNT_KEY + userName;

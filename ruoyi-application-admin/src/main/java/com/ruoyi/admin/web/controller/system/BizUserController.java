@@ -16,10 +16,10 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
 import com.ruoyi.common.annotation.RepeatSubmit;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.bo.BizUserPageQueryBo;
 import com.ruoyi.system.domain.bo.BizUserQueryBo;
@@ -65,7 +65,7 @@ public class BizUserController extends AdminBaseController {
      */
     @Operation(description = "导出业务用户信息列表", operationId = "BizUserPostExport")
     @SaCheckPermission("system:user:export")
-    @Log(title = "业务用户信息", businessType = BusinessType.EXPORT)
+    @AdminLog(title = "业务用户信息", businessType = BusinessTypeEnum.EXPORT)
     @PostMapping("/export")
     public void export(@RequestBody(required = false) BizUserQueryBo bo, @Parameter(hidden = true) HttpServletResponse response) {
         List<BizUserVo> list = iBizUserService.queryList(bo);
@@ -89,7 +89,7 @@ public class BizUserController extends AdminBaseController {
      */
     @Operation(description = "新增业务用户信息", operationId = "BizUserPostAdd")
     @SaCheckPermission("system:user:add")
-    @Log(title = "业务用户信息", businessType = BusinessType.INSERT)
+    @AdminLog(title = "业务用户信息", businessType = BusinessTypeEnum.ADD)
     @RepeatSubmit()
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody BizUserAddBo bo) {
@@ -101,7 +101,7 @@ public class BizUserController extends AdminBaseController {
      */
     @Operation(description = "修改业务用户信息", operationId = "BizUserPostEdit")
     @SaCheckPermission("system:user:edit")
-    @Log(title = "业务用户信息", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "业务用户信息", businessType = BusinessTypeEnum.MODIFY)
     @RepeatSubmit()
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody BizUserEditBo bo) {
@@ -113,7 +113,7 @@ public class BizUserController extends AdminBaseController {
      */
     @Operation(description = "删除业务用户信息", operationId = "BizUserPostRemove")
     @SaCheckPermission("system:user:remove")
-    @Log(title = "业务用户信息", businessType = BusinessType.DELETE)
+    @AdminLog(title = "业务用户信息", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "主键串", required = true)
                           @NotEmpty(message = "主键不能为空")

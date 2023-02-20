@@ -5,13 +5,13 @@ import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.domain.model.AdminLoginUser;
 import com.ruoyi.admin.helper.AdminLoginHelper;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -65,7 +65,7 @@ public class SysRoleController extends AdminBaseController {
     }
 
     @Operation(description = "导出角色信息列表", operationId = "SysRolePostExport")
-    @Log(title = "角色管理", businessType = BusinessType.EXPORT)
+    @AdminLog(title = "角色管理", businessType = BusinessTypeEnum.EXPORT)
     @SaCheckPermission("system:role:export")
     @PostMapping("/export")
     public void export(@RequestBody(required = false) SysRoleQueryBo roleQuery, @Parameter(hidden = true) HttpServletResponse response) {
@@ -89,7 +89,7 @@ public class SysRoleController extends AdminBaseController {
      */
     @Operation(description = "新增角色", operationId = "SysRolePostAdd")
     @SaCheckPermission("system:role:add")
-    @Log(title = "角色管理", businessType = BusinessType.INSERT)
+    @AdminLog(title = "角色管理", businessType = BusinessTypeEnum.ADD)
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysRole role) {
         if (CommonYesOrNoEnum.NO.equals(roleService.checkRoleNameUnique(role))) {
@@ -106,7 +106,7 @@ public class SysRoleController extends AdminBaseController {
      */
     @Operation(description = "修改保存角色", operationId = "SysRolePostEdit")
     @SaCheckPermission("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "角色管理", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
@@ -135,7 +135,7 @@ public class SysRoleController extends AdminBaseController {
      */
     @Operation(description = "修改保存数据权限", operationId = "SysRolePostDataScope")
     @SaCheckPermission("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "角色管理", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/dataScope")
     public R<Void> dataScope(@RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
@@ -148,7 +148,7 @@ public class SysRoleController extends AdminBaseController {
      */
     @Operation(description = "状态修改", operationId = "SysRolePostChangeStatus")
     @SaCheckPermission("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "角色管理", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/changeStatus")
     public R<Void> changeStatus(@RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
@@ -161,7 +161,7 @@ public class SysRoleController extends AdminBaseController {
      */
     @Operation(description = "删除角色", operationId = "SysRolePostRemove")
     @SaCheckPermission("system:role:remove")
-    @Log(title = "角色管理", businessType = BusinessType.DELETE)
+    @AdminLog(title = "角色管理", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "角色ID串",required = true) @RequestParam Long[] roleIds) {
         return toAjax(roleService.deleteRoleByIds(roleIds));
@@ -210,7 +210,7 @@ public class SysRoleController extends AdminBaseController {
      */
     @Operation(description = "取消授权用户", operationId = "SysRolePostCancelAuthUser")
     @SaCheckPermission("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+    @AdminLog(title = "角色管理", businessType = BusinessTypeEnum.GRANT)
     @PostMapping("/authUser/cancel")
     public R<Void> cancelAuthUser(@RequestBody SysUserRole userRole) {
         return toAjax(roleService.deleteAuthUser(userRole));
@@ -221,7 +221,7 @@ public class SysRoleController extends AdminBaseController {
      */
     @Operation(description = "批量取消授权用户", operationId = "SysRolePostCancelAuthUserAll")
     @SaCheckPermission("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+    @AdminLog(title = "角色管理", businessType = BusinessTypeEnum.GRANT)
     @PostMapping("/authUser/cancelAll")
     public R<Void> cancelAuthUserAll(@RequestBody @Validated AuthUserAllBo body) {
         return toAjax(roleService.deleteAuthUsers(body.getRoleId(), body.getUserIds()));
@@ -232,7 +232,7 @@ public class SysRoleController extends AdminBaseController {
      */
     @Operation(description = "批量选择用户授权", operationId = "SysRolePostSelectAuthUserAll")
     @SaCheckPermission("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+    @AdminLog(title = "角色管理", businessType = BusinessTypeEnum.GRANT)
     @PostMapping("/authUser/selectAll")
     public R<Void> selectAuthUserAll(@RequestBody @Validated AuthUserAllBo body) {
         roleService.checkRoleDataScope(body.getRoleId());

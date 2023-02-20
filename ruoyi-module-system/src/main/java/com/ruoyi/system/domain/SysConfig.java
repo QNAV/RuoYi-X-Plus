@@ -14,6 +14,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -61,7 +62,7 @@ public class SysConfig extends BaseEntity {
      * 参数值类型
      */
     @Schema(description = "参数值类型", required = true)
-    @NotBlank(message = "参数值类型不能为空")
+    @NotNull(message = "参数值类型不能为空")
     @ExcelProperty(value = "参数值类型", converter = ExcelEnumConvert.class)
     @ExcelEnumFormat(enumClass = ConfigValueTypeEnum.class)
     private ConfigValueTypeEnum valueType;

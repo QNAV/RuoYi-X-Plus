@@ -5,7 +5,7 @@ import cn.hutool.core.util.ArrayUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.domain.bo.PageQuery;
-import com.ruoyi.common.core.domain.event.OperLogEvent;
+import com.ruoyi.common.core.domain.event.AdminOperLogEvent;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
@@ -36,13 +36,13 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
     private final SysOperLogMapper baseMapper;
 
     /**
-     * 操作日志记录
+     * 后台操作日志记录
      *
      * @param operLogEvent 操作日志事件
      */
     @Async
     @EventListener
-    public void recordOper(OperLogEvent operLogEvent) {
+    public void recordOper(AdminOperLogEvent operLogEvent) {
         SysOperLog operLog = BeanUtil.toBean(operLogEvent, SysOperLog.class);
         // 远程查询操作地点
         operLog.setOperLocation(AddressUtils.getRealAddressByIP(operLog.getOperIp()));

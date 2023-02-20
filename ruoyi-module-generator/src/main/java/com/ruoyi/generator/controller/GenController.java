@@ -3,11 +3,11 @@ package com.ruoyi.generator.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.IoUtil;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.generator.domain.GenTable;
 import com.ruoyi.generator.domain.GenTableColumn;
@@ -108,7 +108,7 @@ public class GenController {
      */
     @Operation(description = "导入表结构（保存）", operationId = "GenPostImportTable")
     @SaCheckPermission("tool:gen:import")
-    @Log(title = "代码生成", businessType = BusinessType.IMPORT)
+    @AdminLog(title = "代码生成", businessType = BusinessTypeEnum.IMPORT)
     @PostMapping("/importTable")
     public R<Void> importTable(@Parameter(description = "业务生成表名称组", required = true) @RequestParam String[] tables) {
         String[] tableNames = Convert.toStrArray(tables);
@@ -123,7 +123,7 @@ public class GenController {
      */
     @Operation(description = "修改保存代码生成业务", operationId = "GenPostEdit")
     @SaCheckPermission("tool:gen:edit")
-    @Log(title = "代码生成", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "代码生成", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody GenTable genTable) {
         genTableService.validateEdit(genTable);
@@ -136,7 +136,7 @@ public class GenController {
      */
     @Operation(description = "删除代码生成", operationId = "GenPostRemove")
     @SaCheckPermission("tool:gen:remove")
-    @Log(title = "代码生成", businessType = BusinessType.DELETE)
+    @AdminLog(title = "代码生成", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "代码生成表编号组", required = true) @RequestParam Long[] tableIds) {
         genTableService.deleteGenTableByIds(tableIds);
@@ -159,7 +159,7 @@ public class GenController {
      */
     @Operation(description = "生成代码（下载方式）", operationId = "GenGetDownload")
     @SaCheckPermission("tool:gen:code")
-    @Log(title = "代码生成", businessType = BusinessType.GENCODE)
+    @AdminLog(title = "代码生成", businessType = BusinessTypeEnum.GENCODE)
     @GetMapping("/download")
     public void download(@Parameter(hidden = true) HttpServletResponse response, @Parameter(description = "业务生成表名称", required = true) @RequestParam String tableName) throws IOException {
         byte[] data = genTableService.downloadCode(tableName);
@@ -171,7 +171,7 @@ public class GenController {
      */
     @Operation(description = "生成代码（自定义路径）", operationId = "GenGetGenCode")
     @SaCheckPermission("tool:gen:code")
-    @Log(title = "代码生成", businessType = BusinessType.GENCODE)
+    @AdminLog(title = "代码生成", businessType = BusinessTypeEnum.GENCODE)
     @GetMapping("/genCode")
     public R<Void> genCode(@Parameter(description = "业务生成表名称", required = true) @RequestParam String tableName) {
         genTableService.generatorCode(tableName);
@@ -183,7 +183,7 @@ public class GenController {
      */
     @Operation(description = "同步数据库", operationId = "GenGetSynchDb")
     @SaCheckPermission("tool:gen:edit")
-    @Log(title = "代码生成", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "代码生成", businessType = BusinessTypeEnum.MODIFY)
     @GetMapping("/synchDb")
     public R<Void> synchDb(@Parameter(description = "业务生成表名称", required = true) @RequestParam String tableName) {
         genTableService.synchDb(tableName);
@@ -195,7 +195,7 @@ public class GenController {
      */
     @Operation(description = "批量生成代码", operationId = "GenGetBatchGenCode")
     @SaCheckPermission("tool:gen:code")
-    @Log(title = "代码生成", businessType = BusinessType.GENCODE)
+    @AdminLog(title = "代码生成", businessType = BusinessTypeEnum.GENCODE)
     @GetMapping("/batchGenCode")
     public void batchGenCode(@Parameter(hidden = true) HttpServletResponse response, @Parameter(description = "业务生成表名称，多个表用,分隔", required = true) @RequestParam  String tables) throws IOException {
         String[] tableNames = Convert.toStrArray(tables);

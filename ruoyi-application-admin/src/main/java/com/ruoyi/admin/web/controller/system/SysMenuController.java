@@ -3,11 +3,11 @@ package com.ruoyi.admin.web.controller.system;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.lang.tree.Tree;
 import com.ruoyi.admin.controller.AdminBaseController;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysMenu;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -90,7 +90,7 @@ public class SysMenuController extends AdminBaseController {
      */
     @Operation(description = "新增菜单", operationId = "SysMenuPostAdd")
     @SaCheckPermission("system:menu:add")
-    @Log(title = "菜单管理", businessType = BusinessType.INSERT)
+    @AdminLog(title = "菜单管理", businessType = BusinessTypeEnum.ADD)
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysMenuAddBo menuBo) {
         SysMenu menu = BeanCopyUtils.copy(menuBo, SysMenu.class);
@@ -107,7 +107,7 @@ public class SysMenuController extends AdminBaseController {
      */
     @Operation(description = "修改菜单", operationId = "SysMenuPostEdit")
     @SaCheckPermission("system:menu:edit")
-    @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "菜单管理", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysMenuEditBo menuBo) {
         SysMenu menu = BeanCopyUtils.copy(menuBo, SysMenu.class);
@@ -126,7 +126,7 @@ public class SysMenuController extends AdminBaseController {
      */
     @Operation(description = "删除菜单", operationId = "SysMenuPostRemove")
     @SaCheckPermission("system:menu:remove")
-    @Log(title = "菜单管理", businessType = BusinessType.DELETE)
+    @AdminLog(title = "菜单管理", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "菜单ID", required = true) @RequestParam Long menuId) {
         if (menuService.hasChildByMenuId(menuId)) {

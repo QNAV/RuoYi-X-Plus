@@ -4,10 +4,10 @@ import cn.hutool.core.lang.Dict;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.admin.helper.AdminLoginHelper;
-import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.domain.event.OperLogEvent;
-import com.ruoyi.common.enums.BusinessStatus;
+import com.ruoyi.common.annotation.AdminLog;
+import com.ruoyi.common.core.domain.event.AdminOperLogEvent;
 import com.ruoyi.common.enums.HttpMethod;
+import com.ruoyi.common.enums.OperationStatusEnum;
 import com.ruoyi.common.utils.JsonUtils;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -50,7 +50,7 @@ public class AdminLogAspect {
      * @param joinPoint 切点
      */
     @AfterReturning(pointcut = "@annotation(controllerLog)", returning = "jsonResult")
-    public void doAfterReturning(JoinPoint joinPoint, Log controllerLog, Object jsonResult) {
+    public void doAfterReturning(JoinPoint joinPoint, AdminLog controllerLog, Object jsonResult) {
         handleLog(joinPoint, controllerLog, null, jsonResult);
     }
 
@@ -61,16 +61,16 @@ public class AdminLogAspect {
      * @param e         异常
      */
     @AfterThrowing(value = "@annotation(controllerLog)", throwing = "e")
-    public void doAfterThrowing(JoinPoint joinPoint, Log controllerLog, Exception e) {
+    public void doAfterThrowing(JoinPoint joinPoint, AdminLog controllerLog, Exception e) {
         handleLog(joinPoint, controllerLog, e, null);
     }
 
-    protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e, Object jsonResult) {
+    protected void handleLog(final JoinPoint joinPoint, AdminLog controllerLog, final Exception e, Object jsonResult) {
         try {
 
             // *========数据库日志=========*//
-            OperLogEvent operLog = new OperLogEvent();
-            operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
+            AdminOperLogEvent operLog = new AdminOperLogEvent();
+            operLog.setStatus(OperationStatusEnum.NORMAL);
             // 请求的地址
             String ip = ServletUtils.getClientIP();
             operLog.setOperIp(ip);
@@ -78,7 +78,7 @@ public class AdminLogAspect {
             operLog.setOperName(AdminLoginHelper.getUsername());
 
             if (e != null) {
-                operLog.setStatus(BusinessStatus.FAIL.ordinal());
+                operLog.setStatus(OperationStatusEnum.EXCEPTION);
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
             // 设置方法名称
@@ -105,13 +105,13 @@ public class AdminLogAspect {
      * @param operLog 操作日志
      * @throws Exception
      */
-    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, OperLogEvent operLog, Object jsonResult) throws Exception {
+    public void getControllerMethodDescription(JoinPoint joinPoint, AdminLog log, AdminOperLogEvent operLog, Object jsonResult) throws Exception {
         // 设置action动作
-        operLog.setBusinessType(log.businessType().ordinal());
+        operLog.setBusinessType(log.businessType());
         // 设置标题
         operLog.setTitle(log.title());
         // 设置操作人类别
-        operLog.setOperatorType(log.operatorType().ordinal());
+        operLog.setOperatorType(log.operatorType());
         // 是否需要保存request，参数和值
         if (log.isSaveRequestData()) {
             // 获取参数的信息，传入到数据库中。
@@ -129,7 +129,7 @@ public class AdminLogAspect {
      * @param operLog 操作日志
      * @throws Exception 异常
      */
-    private void setRequestValue(JoinPoint joinPoint, OperLogEvent operLog) throws Exception {
+    private void setRequestValue(JoinPoint joinPoint, AdminOperLogEvent operLog) throws Exception {
         String requestMethod = operLog.getRequestMethod();
         if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
             String params = argsArrayToString(joinPoint.getArgs());

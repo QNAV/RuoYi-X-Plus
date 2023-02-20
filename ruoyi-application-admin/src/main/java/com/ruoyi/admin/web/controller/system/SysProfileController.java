@@ -4,11 +4,11 @@ import cn.dev33.satoken.secure.BCrypt;
 import cn.hutool.core.io.FileUtil;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.helper.AdminLoginHelper;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.UpdatePwdBo;
 import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -66,7 +66,7 @@ public class SysProfileController extends AdminBaseController {
      * 修改用户
      */
     @Operation(description = "修改用户", operationId = "SysProfilePostUpdateProfile")
-    @Log(title = "个人信息", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "个人信息", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping
     public R<Void> updateProfile(@RequestBody LoginUserUpdateBo userBo) {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
@@ -91,7 +91,7 @@ public class SysProfileController extends AdminBaseController {
      * 重置密码
      */
     @Operation(description = "重置密码", operationId = "SysProfilePostUpdatePwd")
-    @Log(title = "个人信息", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "个人信息", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/updatePwd")
     public R<Void> updatePwd(@Validated @RequestBody UpdatePwdBo updatePwdBody) {
         SysUser user = userService.selectUserById(AdminLoginHelper.getUserId());
@@ -117,7 +117,7 @@ public class SysProfileController extends AdminBaseController {
     @Parameters({
         @Parameter(name = "avatarfile", description = "用户头像", in = ParameterIn.QUERY, required = true)
     })
-    @Log(title = "用户头像", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "用户头像", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/avatar")
     public R<AvatarUploadVo> avatar(@RequestPart("avatarfile") MultipartFile file) {
         AvatarUploadVo data = new AvatarUploadVo();

@@ -1,9 +1,8 @@
-package com.ruoyi.system.enums;
+package com.ruoyi.common.enums;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.ruoyi.common.enums.BaseEnum;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +12,7 @@ import java.util.Map;
  *
  * @author weibocy
  */
-public enum BusinessTypeEnum  implements BaseEnum {
+public enum BusinessTypeEnum implements BaseEnum {
     ADD("ADD", "新增"),
     MODIFY("MODIFY", "修改"),
     DELETE("DELETE", "删除"),

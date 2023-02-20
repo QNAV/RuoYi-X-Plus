@@ -2,12 +2,12 @@ package com.ruoyi.admin.web.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.admin.controller.AdminBaseController;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysDictType;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -54,7 +54,7 @@ public class SysDictTypeController extends AdminBaseController {
     }
 
     @Operation(description = "导出字典类型列表", operationId = "SysDictTypePostExport")
-    @Log(title = "字典类型", businessType = BusinessType.EXPORT)
+    @AdminLog(title = "字典类型", businessType = BusinessTypeEnum.EXPORT)
     @SaCheckPermission("system:dict:export")
     @PostMapping("/export")
     public void export(@RequestBody(required = false) SysDictTypeQueryBo dictTypeQuery, @Parameter(hidden = true) HttpServletResponse response) {
@@ -77,7 +77,7 @@ public class SysDictTypeController extends AdminBaseController {
      */
     @Operation(description = "新增字典类型", operationId = "SysDictTypePostAdd")
     @SaCheckPermission("system:dict:add")
-    @Log(title = "字典类型", businessType = BusinessType.INSERT)
+    @AdminLog(title = "字典类型", businessType = BusinessTypeEnum.ADD)
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysDictTypeAddBo dictBo) {
         SysDictType dict = BeanCopyUtils.copy(dictBo, SysDictType.class);
@@ -93,7 +93,7 @@ public class SysDictTypeController extends AdminBaseController {
      */
     @Operation(description = "修改字典类型", operationId = "SysDictTypePostEdit")
     @SaCheckPermission("system:dict:edit")
-    @Log(title = "字典类型", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "字典类型", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysDictTypeEditBo dictBo) {
         SysDictType dict = BeanCopyUtils.copy(dictBo, SysDictType.class);
@@ -109,7 +109,7 @@ public class SysDictTypeController extends AdminBaseController {
      */
     @Operation(description = "删除字典类型", operationId = "SysDictTypePostRemove")
     @SaCheckPermission("system:dict:remove")
-    @Log(title = "字典类型", businessType = BusinessType.DELETE)
+    @AdminLog(title = "字典类型", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "字典ID串", required = true) @RequestParam Long[] dictIds) {
         dictTypeService.deleteDictTypeByIds(dictIds);
@@ -121,7 +121,7 @@ public class SysDictTypeController extends AdminBaseController {
      */
     @Operation(description = "刷新字典缓存", operationId = "SysDictTypePostRefreshCache")
     @SaCheckPermission("system:dict:remove")
-    @Log(title = "字典类型", businessType = BusinessType.CLEAN)
+    @AdminLog(title = "字典类型", businessType = BusinessTypeEnum.CLEAR)
     @PostMapping("/refreshCache")
     public R<Void> refreshCache() {
         dictTypeService.resetDictCache();

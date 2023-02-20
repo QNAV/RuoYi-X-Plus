@@ -2,11 +2,11 @@ package com.ruoyi.admin.web.controller.monitor;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.admin.controller.AdminBaseController;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysOperLog;
@@ -60,7 +60,7 @@ public class SysOperlogController extends AdminBaseController {
      * @param operLogQuery 查询对象
      */
     @Operation(description = "导出操作日志记录列表", operationId = "SysOperLogPostExport")
-    @Log(title = "操作日志", businessType = BusinessType.EXPORT)
+    @AdminLog(title = "操作日志", businessType = BusinessTypeEnum.EXPORT)
     @SaCheckPermission("monitor:operlog:export")
     @PostMapping("/export")
     public void export(@RequestBody(required = false) SysOperLogQueryBo operLogQuery, @Parameter(hidden = true) HttpServletResponse response) {
@@ -74,7 +74,7 @@ public class SysOperlogController extends AdminBaseController {
      * @return
      */
     @Operation(description = "删除操作日志记录", operationId = "SysOperLogPostRemove")
-    @Log(title = "操作日志", businessType = BusinessType.DELETE)
+    @AdminLog(title = "操作日志", businessType = BusinessTypeEnum.DELETE)
     @SaCheckPermission("monitor:operlog:remove")
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "操作日志ID组", required = true) @RequestParam Long[] operIds) {
@@ -86,7 +86,7 @@ public class SysOperlogController extends AdminBaseController {
      * @return
      */
     @Operation(description = "清空操作日志记录", operationId = "SysOperLogPostClean")
-    @Log(title = "操作日志", businessType = BusinessType.CLEAN)
+    @AdminLog(title = "操作日志", businessType = BusinessTypeEnum.CLEAR)
     @SaCheckPermission("monitor:operlog:remove")
     @PostMapping("/clean")
     public R<Void> clean() {

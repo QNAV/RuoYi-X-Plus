@@ -1,10 +1,10 @@
 package com.ruoyi.demo.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.annotation.RepeatSubmit;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.demo.domain.bo.TestTreeBo;
 import com.ruoyi.demo.domain.to.TestTreeQuery;
@@ -54,7 +54,7 @@ public class TestTreeController {
      */
     @Operation(description = "导出测试树表列表", operationId = "TestTreeServiceGetExport")
     @SaCheckPermission("demo:tree:export")
-    @Log(title = "测试树表", businessType = BusinessType.EXPORT)
+    @AdminLog(title = "测试树表", businessType = BusinessTypeEnum.EXPORT)
     @GetMapping("/export")
     public void export(@Validated TestTreeQuery query, HttpServletResponse response) {
         List<TestTreeVo> list = iTestTreeService.queryList(query);
@@ -78,7 +78,7 @@ public class TestTreeController {
      */
     @Operation(description = "新增测试树表", operationId = "TestTreeServicePostAdd")
     @SaCheckPermission("demo:tree:add")
-    @Log(title = "测试树表", businessType = BusinessType.INSERT)
+    @AdminLog(title = "测试树表", businessType = BusinessTypeEnum.ADD)
     @RepeatSubmit
     @PostMapping()
     public R<Void> add(@Validated @RequestBody TestTreeBo bo) {
@@ -90,7 +90,7 @@ public class TestTreeController {
      */
     @Operation(description = "修改测试树表", operationId = "TestTreeServicePutEdit")
     @SaCheckPermission("demo:tree:edit")
-    @Log(title = "测试树表", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "测试树表", businessType = BusinessTypeEnum.MODIFY)
     @RepeatSubmit
     @PutMapping()
     public R<Void> edit(@Validated @RequestBody TestTreeBo bo) {
@@ -102,7 +102,7 @@ public class TestTreeController {
      */
     @Operation(description = "删除测试树表", operationId = "TestTreeServiceDeleteRemove")
     @SaCheckPermission("demo:tree:remove")
-    @Log(title = "测试树表", businessType = BusinessType.DELETE)
+    @AdminLog(title = "测试树表", businessType = BusinessTypeEnum.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@Parameter(description = "测试树ID串")
                                    @NotEmpty(message = "主键不能为空")

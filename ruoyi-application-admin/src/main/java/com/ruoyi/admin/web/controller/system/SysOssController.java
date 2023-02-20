@@ -4,11 +4,11 @@ package com.ruoyi.admin.web.controller.system;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.admin.controller.AdminBaseController;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.system.domain.bo.SysOssPageQueryBo;
@@ -79,7 +79,7 @@ public class SysOssController extends AdminBaseController {
         @Parameter(name = "file", description = "文件", in = ParameterIn.QUERY, required = true)
     })
     @SaCheckPermission("system:oss:upload")
-    @Log(title = "OSS对象存储", businessType = BusinessType.INSERT)
+    @AdminLog(title = "OSS对象存储", businessType = BusinessTypeEnum.ADD)
     @PostMapping("/upload")
     public R<OssUploadVo> upload(@RequestPart("file") MultipartFile file) {
         if (ObjectUtil.isNull(file)) {
@@ -105,7 +105,7 @@ public class SysOssController extends AdminBaseController {
      */
     @Operation(description = "删除OSS对象存储", operationId = "SysOssPostRemove")
     @SaCheckPermission("system:oss:remove")
-    @Log(title = "OSS对象存储", businessType = BusinessType.DELETE)
+    @AdminLog(title = "OSS对象存储", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "OSS对象ID组", required = true) @RequestParam Long[] ossIds) {
         return toAjax(iSysOssService.deleteWithValidByIds(Arrays.asList(ossIds), true));

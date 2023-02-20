@@ -321,6 +321,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   KEY `IDX_VISIBLE` (`visible`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单权限表';
 
+
 INSERT INTO `sys_menu` VALUES(1, '系统管理', 0, 1, 'system', NULL, '', 'NO', 'YES', 'DIRECTORY', 'YES', 'NORMAL', '', 'SettingOutlined', 'admin', '2022-06-19 06:27:41', 'admin', '2022-06-19 14:18:32', '系统管理目录');
 INSERT INTO `sys_menu` VALUES(2, '系统监控', 0, 2, 'monitor', NULL, '', 'NO', 'YES', 'DIRECTORY', 'YES', 'NORMAL', '', 'MonitorOutlined', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-19 20:55:54', '系统监控目录');
 INSERT INTO `sys_menu` VALUES(3, '系统工具', 0, 3, 'tool', NULL, '', 'NO', 'YES', 'DIRECTORY', 'YES', 'NORMAL', '', 'ToolOutlined', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-19 20:56:11', '系统工具目录');
@@ -339,10 +340,9 @@ INSERT INTO `sys_menu` VALUES(109, '在线用户', 2, 1, 'online', 'monitor/onli
 INSERT INTO `sys_menu` VALUES(113, '缓存监控', 2, 5, 'cache', 'monitor/cache/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'monitor:cache:list', 'redis', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:51:15', '缓存监控菜单');
 INSERT INTO `sys_menu` VALUES(114, '表单构建', 3, 1, 'build', 'tool/build/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'tool:build:list', 'build', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:50:51', '表单构建菜单');
 INSERT INTO `sys_menu` VALUES(115, '代码生成', 3, 2, 'gen', 'tool/gen/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'tool:gen:list', 'code', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:50:45', '代码生成菜单');
-INSERT INTO `sys_menu` VALUES(116, '系统接口', 3, 3, 'swagger', 'tool/swagger/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'tool:swagger:list', 'swagger', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:50:40', '系统接口菜单');
 INSERT INTO `sys_menu` VALUES(117, 'Admin监控', 2, 5, 'admin', 'monitor/admin/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'monitor:admin:list', 'dashboard', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:51:04', 'Admin监控菜单');
 INSERT INTO `sys_menu` VALUES(118, '文件管理', 1, 10, 'oss', 'system/oss/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'system:oss:list', 'upload', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:51:29', '文件管理菜单');
-INSERT INTO `sys_menu` VALUES(120, '任务调度中心', 2, 5, 'xxljob', 'monitor/xxljob/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'monitor:xxljob:list', 'job', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:51:09', 'Xxl-Job控制台菜单');
+INSERT INTO `sys_menu` VALUES(120, '任务调度中心', 2, 5, 'xxl-job', 'monitor/xxljob/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'monitor:xxljob:list', '', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-20 21:01:50', 'Xxl-Job控制台菜单');
 INSERT INTO `sys_menu` VALUES(500, '操作日志', 108, 1, 'operlog', 'monitor/operlog/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'monitor:operlog:list', 'form', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 21:28:24', '操作日志菜单');
 INSERT INTO `sys_menu` VALUES(501, '登录日志', 108, 2, 'logininfor', 'monitor/logininfor/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'monitor:logininfor:list', 'logininfor', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:51:35', '登录日志菜单');
 INSERT INTO `sys_menu` VALUES(1001, '用户查询', 100, 1, '', '', '', 'NO', 'YES', 'BUTTON', 'YES', 'NORMAL', 'system:user:query', '#', 'admin', '2022-06-19 06:27:41', '', NULL, '');
@@ -422,6 +422,10 @@ INSERT INTO `sys_menu` VALUES(1607, '字典管理-详情', 1, 6, 'dict/:dictType
 INSERT INTO `sys_menu` VALUES(1608, '首页', 0, 0, '/', NULL, NULL, 'NO', 'YES', 'MENU', 'NO', 'NORMAL', NULL, 'DashboardOutlined', 'admin', '2023-02-18 21:40:25', 'admin', '2023-02-19 20:55:32', '');
 INSERT INTO `sys_menu` VALUES(1610, '个人中心', 0, 0, '/settings', NULL, NULL, 'NO', 'YES', 'MENU', 'NO', 'NORMAL', NULL, 'ProfileOutlined', 'admin', '2023-02-18 21:41:32', 'admin', '2023-02-19 20:54:40', '');
 INSERT INTO `sys_menu` VALUES(1611, '角色管理-用户授权', 1, 2, 'role-auth', NULL, NULL, 'NO', 'YES', 'MENU', 'NO', 'NORMAL', NULL, '#', 'admin', '2023-02-19 20:53:39', 'admin', '2023-02-19 20:53:39', '');
+INSERT INTO `sys_menu` VALUES(1612, '文件管理-配置管理', 1, 10, 'oss-config', NULL, NULL, 'NO', 'YES', 'MENU', 'NO', 'NORMAL', NULL, '#', 'admin', '2023-02-20 21:13:58', 'admin', '2023-02-20 21:13:58', '');
+INSERT INTO `sys_menu` VALUES(1613, '代码生成-编辑', 3, 2, 'gen-edit/:tableId', NULL, NULL, 'NO', 'YES', 'MENU', 'NO', 'NORMAL', NULL, '#', 'admin', '2023-02-20 22:09:02', 'admin', '2023-02-20 22:09:10', '');
+INSERT INTO `sys_menu` VALUES(1614, '系统接口', 3, 3, 'swagger', NULL, NULL, 'NO', 'YES', 'MENU', 'YES', 'NORMAL', NULL, '#', 'admin', '2023-02-20 22:10:05', 'admin', '2023-02-20 22:10:05', '');
+
 
 CREATE TABLE IF NOT EXISTS `sys_notice` (
   `notice_id` int NOT NULL AUTO_INCREMENT COMMENT '公告ID',

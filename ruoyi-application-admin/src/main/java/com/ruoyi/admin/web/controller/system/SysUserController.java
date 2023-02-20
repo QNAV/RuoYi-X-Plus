@@ -8,7 +8,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.helper.AdminLoginHelper;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysDept;
@@ -17,7 +17,7 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.vo.SysRoleVo;
 import com.ruoyi.common.core.domain.vo.SysUserVo;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.excel.ExcelResult;
 import com.ruoyi.common.utils.BeanCopyUtils;
@@ -82,7 +82,7 @@ public class SysUserController extends AdminBaseController {
      * 导出用户列表
      */
     @Operation(description = "导出用户列表", operationId = "SysUserPostExport")
-    @Log(title = "用户管理", businessType = BusinessType.EXPORT)
+    @AdminLog(title = "用户管理", businessType = BusinessTypeEnum.EXPORT)
     @SaCheckPermission("system:user:export")
     @PostMapping("/export")
     public void export(@RequestBody(required = false) SysUserQueryBo userQuery, @Parameter(hidden = true) HttpServletResponse response) {
@@ -107,7 +107,7 @@ public class SysUserController extends AdminBaseController {
      * @param updateSupport 是否更新已存在数据
      */
     @Operation(description = "导入用户列表", operationId = "SysUserPostImportData")
-    @Log(title = "用户管理", businessType = BusinessType.IMPORT)
+    @AdminLog(title = "用户管理", businessType = BusinessTypeEnum.IMPORT)
     @SaCheckPermission("system:user:import")
     @PostMapping("/importData")
     public R<Void> importData(@RequestPart("file") MultipartFile file, boolean updateSupport) throws Exception {
@@ -150,7 +150,7 @@ public class SysUserController extends AdminBaseController {
      */
     @Operation(description = "新增用户", operationId = "SysUserPostAdd")
     @SaCheckPermission("system:user:add")
-    @Log(title = "用户管理", businessType = BusinessType.INSERT)
+    @AdminLog(title = "用户管理", businessType = BusinessTypeEnum.ADD)
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysUserAddBo userBo) {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
@@ -172,7 +172,7 @@ public class SysUserController extends AdminBaseController {
      */
     @Operation(description = "修改用户", operationId = "SysUserPostEdit")
     @SaCheckPermission("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "用户管理", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysUserEditBo userBo) {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
@@ -197,7 +197,7 @@ public class SysUserController extends AdminBaseController {
      */
     @Operation(description = "删除用户", operationId = "SysUserPostRemove")
     @SaCheckPermission("system:user:remove")
-    @Log(title = "用户管理", businessType = BusinessType.DELETE)
+    @AdminLog(title = "用户管理", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "角色ID串", required = true) @RequestParam Long[] userIds) {
         if (ArrayUtil.contains(userIds, getUserId())) {
@@ -211,7 +211,7 @@ public class SysUserController extends AdminBaseController {
      */
     @Operation(description = "重置密码", operationId = "SysUserPostResetPwd")
     @SaCheckPermission("system:user:resetPwd")
-    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "用户管理", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/resetPwd")
     public R<Void> resetPwd(@RequestBody SysUserEditBo userBo) {
         userService.checkUserAllowed(userBo);
@@ -225,7 +225,7 @@ public class SysUserController extends AdminBaseController {
      */
     @Operation(description = "状态修改", operationId = "SysUserPostChangeStatus")
     @SaCheckPermission("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "用户管理", businessType = BusinessTypeEnum.MODIFY)
     @PostMapping("/changeStatus")
     public R<Void> changeStatus(@RequestBody SysUserEditBo userBo) {
         userService.checkUserAllowed(userBo);
@@ -253,7 +253,7 @@ public class SysUserController extends AdminBaseController {
      */
     @Operation(description = "用户授权角色", operationId = "SysUserPostInsertAuthRole")
     @SaCheckPermission("system:user:edit")
-    @Log(title = "用户管理", businessType = BusinessType.GRANT)
+    @AdminLog(title = "用户管理", businessType = BusinessTypeEnum.GRANT)
     @PostMapping("/insertAuthRole")
     public R<Void> insertAuthRole(@RequestBody @Validated AuthRoleAllBo body) {
         userService.checkUserDataScope(body.getUserId());

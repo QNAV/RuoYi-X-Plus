@@ -1,7 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.enums.OperationStatusEnum;
-import com.ruoyi.system.enums.BusinessTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

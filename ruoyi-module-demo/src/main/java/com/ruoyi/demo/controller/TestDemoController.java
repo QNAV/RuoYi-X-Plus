@@ -14,10 +14,10 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
 import com.ruoyi.common.annotation.RepeatSubmit;
-import com.ruoyi.common.annotation.Log;
+import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.enums.BusinessType;
+import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.demo.domain.vo.TestDemoVo;
 import com.ruoyi.demo.domain.bo.TestDemoAddBo;
@@ -64,7 +64,7 @@ public class TestDemoController {
      */
     @Operation(description = "导出测试单列表", operationId = "TestDemoServicePostExport")
     @SaCheckPermission("demo:demo:export")
-    @Log(title = "测试单", businessType = BusinessType.EXPORT)
+    @AdminLog(title = "测试单", businessType = BusinessTypeEnum.EXPORT)
     @PostMapping("/export")
     public void export(@RequestBody(required = false) TestDemoQueryBo bo, @Parameter(hidden = true) HttpServletResponse response) {
         List<TestDemoVo> list = iTestDemoService.queryList(bo);
@@ -88,7 +88,7 @@ public class TestDemoController {
      */
     @Operation(description = "新增测试单", operationId = "TestDemoServicePostAdd")
     @SaCheckPermission("demo:demo:add")
-    @Log(title = "测试单", businessType = BusinessType.INSERT)
+    @AdminLog(title = "测试单", businessType = BusinessTypeEnum.ADD)
     @RepeatSubmit()
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody TestDemoAddBo bo) {
@@ -100,7 +100,7 @@ public class TestDemoController {
      */
     @Operation(description = "修改测试单", operationId = "TestDemoServicePostEdit")
     @SaCheckPermission("demo:demo:edit")
-    @Log(title = "测试单", businessType = BusinessType.UPDATE)
+    @AdminLog(title = "测试单", businessType = BusinessTypeEnum.MODIFY)
     @RepeatSubmit()
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody TestDemoEditBo bo) {
@@ -112,7 +112,7 @@ public class TestDemoController {
      */
     @Operation(description = "删除测试单", operationId = "TestDemoServicePostRemove")
     @SaCheckPermission("demo:demo:remove")
-    @Log(title = "测试单", businessType = BusinessType.DELETE)
+    @AdminLog(title = "测试单", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "主键串", required = true)
                           @NotEmpty(message = "主键不能为空")

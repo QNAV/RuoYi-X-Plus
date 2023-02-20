@@ -49,7 +49,7 @@ public class SysPostAddBo implements Serializable {
      * 状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "状态（NORMAL=正常 DISABLE=停用）", required = true)
-    @NotBlank(message = "状态不能为空")
+    @NotNull(message = "状态不能为空")
     private CommonNormalDisableEnum status;
 
     /**
