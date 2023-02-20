@@ -2,8 +2,8 @@ package com.ruoyi.system.domain.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.ruoyi.common.core.domain.BaseVo;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.system.enums.AccessPolicyEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -73,7 +73,7 @@ public class SysOssConfigVo extends BaseVo {
      * 是否https（NO=否 YES=是）
      */
     @Schema(description = "是否https（NO=否 YES=是）", required = true)
-    private CommonYesOrNo isHttps;
+    private CommonYesOrNoEnum isHttps;
 
     /**
      * 域
@@ -91,7 +91,7 @@ public class SysOssConfigVo extends BaseVo {
      * 状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "状态（NORMAL=正常 DISABLE=停用）", required = true)
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 扩展字段

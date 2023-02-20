@@ -77,7 +77,7 @@ public class BizUser extends BaseEntity {
      * 用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
     @Schema(description = "用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）")
-    private UserType userType;
+    private UserTypeEnum userType;
 
     /**
      * 用户邮箱
@@ -115,7 +115,7 @@ public class BizUser extends BaseEntity {
      * 帐号状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "帐号状态（NORMAL=正常 DISABLE=停用）")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /** 国家 */
     @Schema(description = "国家")
@@ -152,7 +152,7 @@ public class BizUser extends BaseEntity {
      */
     @Schema(description = "删除标志（EXIST=代表存在 DELETED=代表删除）")
     @TableLogic
-    private DeleteStatus delFlag;
+    private DeleteStatusEnum delFlag;
 
 
     public BizUser(Long userId) {

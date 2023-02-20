@@ -1,8 +1,8 @@
 package com.ruoyi.system.domain.bo;
 
-import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
 import com.ruoyi.common.enums.UserSexEnum;
-import com.ruoyi.common.enums.UserType;
+import com.ruoyi.common.enums.UserTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -56,7 +56,7 @@ public class BizUserQueryBo implements Serializable {
      * 用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
     @Schema(description = "用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）")
-    private UserType userType;
+    private UserTypeEnum userType;
 
     /**
      * 用户邮箱
@@ -92,7 +92,7 @@ public class BizUserQueryBo implements Serializable {
      * 帐号状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "帐号状态（NORMAL=正常 DISABLE=停用）")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 国家

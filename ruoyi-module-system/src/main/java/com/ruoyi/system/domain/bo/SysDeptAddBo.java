@@ -2,8 +2,8 @@ package com.ruoyi.system.domain.bo;
 
 
 import com.ruoyi.common.core.domain.entity.SysDept;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.DeleteStatus;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.DeleteStatusEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -68,13 +68,13 @@ public class SysDeptAddBo implements Serializable {
      * 部门状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "部门状态（NORMAL=正常 DISABLE=停用）")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 删除标志（EXIST=代表存在 DELETED=代表删除）
      */
     @Schema(description = "删除标志（EXIST=代表存在 DELETED=代表删除）")
-    private DeleteStatus delFlag;
+    private DeleteStatusEnum delFlag;
 
     /**
      * 祖级列表

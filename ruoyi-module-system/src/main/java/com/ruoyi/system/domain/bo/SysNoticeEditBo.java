@@ -1,6 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
-import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
 import com.ruoyi.common.xss.Xss;
 import com.ruoyi.system.enums.NoticeTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -53,7 +53,7 @@ public class SysNoticeEditBo implements Serializable {
      * 公告状态（NORMAL=正常 DISABLE=关闭）
      */
     @Schema(description = "公告状态（NORMAL=正常 DISABLE=关闭）")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 备注

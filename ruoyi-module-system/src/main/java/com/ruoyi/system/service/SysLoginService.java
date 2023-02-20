@@ -188,7 +188,7 @@ public class SysLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", username);
             throw new UserException("user.not.exists", username);
-        } else if (CommonNormalDisable.DISABLE.equals(user.getStatus())) {
+        } else if (CommonNormalDisableEnum.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", username);
             throw new UserException("user.blocked", username);
         }
@@ -200,7 +200,7 @@ public class SysLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", phoneNumber);
             throw new UserException("user.not.exists", phoneNumber);
-        }else if (CommonNormalDisable.DISABLE.equals(user.getStatus())) {
+        }else if (CommonNormalDisableEnum.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", phoneNumber);
             throw new UserException("user.blocked", phoneNumber);
         }
@@ -214,7 +214,7 @@ public class SysLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", openid);
             // todo 用户不存在 业务逻辑自行实现
-        } else if (CommonNormalDisable.DISABLE.equals(user.getStatus())) {
+        } else if (CommonNormalDisableEnum.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", openid);
             // todo 用户已被停用 业务逻辑自行实现
         }

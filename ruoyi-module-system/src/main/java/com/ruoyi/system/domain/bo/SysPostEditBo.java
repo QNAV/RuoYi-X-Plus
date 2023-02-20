@@ -1,6 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
-import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -53,7 +53,7 @@ public class SysPostEditBo implements Serializable {
      */
     @Schema(description = "状态（NORMAL=正常 DISABLE=停用）", required = true)
     @NotBlank(message = "状态不能为空")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 备注

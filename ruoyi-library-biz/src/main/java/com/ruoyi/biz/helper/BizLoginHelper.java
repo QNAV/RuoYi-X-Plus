@@ -5,7 +5,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.biz.domain.model.BizLoginUser;
 import com.ruoyi.common.enums.DeviceType;
-import com.ruoyi.common.enums.UserType;
+import com.ruoyi.common.enums.UserTypeEnum;
 import com.ruoyi.common.exception.UtilException;
 import com.ruoyi.common.utils.StringUtils;
 import lombok.AccessLevel;
@@ -73,8 +73,8 @@ public class BizLoginHelper {
         if (ObjectUtil.isNull(loginUser)) {
             String loginId = StpUtil.getLoginIdAsString();
             String userId = null;
-            for (UserType value : UserType.values()) {
-                if (StringUtils.contains(loginId, value.getUserType())) {
+            for (UserTypeEnum value : UserTypeEnum.values()) {
+                if (StringUtils.contains(loginId, value.getCode())) {
                     String[] strs = StringUtils.split(loginId, JOIN_CODE);
                     // 用户id在总是在最后
                     userId = strs[strs.length - 1];
@@ -106,8 +106,8 @@ public class BizLoginHelper {
     /**
      * 获取用户类型
      */
-    public static UserType getUserType() {
+    public static UserTypeEnum getUserType() {
         String loginId = StpUtil.getLoginIdAsString();
-        return UserType.getUserType(loginId);
+        return UserTypeEnum.getUserType(loginId);
     }
 }

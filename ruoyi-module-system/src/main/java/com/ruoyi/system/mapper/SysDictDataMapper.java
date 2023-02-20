@@ -1,11 +1,10 @@
 package com.ruoyi.system.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.mapper.BaseMapperPlus;
 import com.ruoyi.common.core.domain.vo.SysDictDataVo;
-import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ public interface SysDictDataMapper extends BaseMapperPlus<SysDictDataMapper, Sys
     default List<SysDictDataVo> selectDictDataByType(String dictType) {
         return selectVoList(
             new LambdaQueryWrapper<SysDictData>()
-                .eq(SysDictData::getStatus, CommonNormalDisable.NORMAL)
+                .eq(SysDictData::getStatus, CommonNormalDisableEnum.NORMAL)
                 .eq(SysDictData::getDictType, dictType)
                 .orderByAsc(SysDictData::getDictSort), SysDictDataVo.class);
     }

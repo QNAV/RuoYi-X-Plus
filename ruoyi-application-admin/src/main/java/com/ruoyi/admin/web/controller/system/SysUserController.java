@@ -9,7 +9,6 @@ import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysDept;
@@ -19,7 +18,7 @@ import com.ruoyi.common.core.domain.vo.SysRoleVo;
 import com.ruoyi.common.core.domain.vo.SysUserVo;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.excel.ExcelResult;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StreamUtils;
@@ -36,8 +35,6 @@ import com.ruoyi.admin.web.model.vo.UserAuthRoleVo;
 import com.ruoyi.admin.web.model.vo.UserDetailVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -157,13 +154,13 @@ public class SysUserController extends AdminBaseController {
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysUserAddBo userBo) {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
-        if (CommonYesOrNo.NO.equals(userService.checkUserNameUnique(user))) {
+        if (CommonYesOrNoEnum.NO.equals(userService.checkUserNameUnique(user))) {
             return R.fail("新增用户'" + user.getUserName() + "'失败，登录账号已存在");
         } else if (StringUtils.isNotEmpty(user.getPhoneNumber())
-            && CommonYesOrNo.NO.equals(userService.checkPhoneUnique(user))) {
+            && CommonYesOrNoEnum.NO.equals(userService.checkPhoneUnique(user))) {
             return R.fail("新增用户'" + user.getUserName() + "'失败，手机号码已存在");
         } else if (StringUtils.isNotEmpty(user.getEmail())
-            && CommonYesOrNo.NO.equals(userService.checkEmailUnique(user))) {
+            && CommonYesOrNoEnum.NO.equals(userService.checkEmailUnique(user))) {
             return R.fail("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
         user.setPassword(BCrypt.hashpw(user.getPassword()));
@@ -181,15 +178,15 @@ public class SysUserController extends AdminBaseController {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
         userService.checkUserAllowed(userBo);
         userService.checkUserDataScope(user.getUserId());
-        if (CommonYesOrNo.NO.equals(userService.checkUserNameUnique(user)))
+        if (CommonYesOrNoEnum.NO.equals(userService.checkUserNameUnique(user)))
         {
             return R.fail("修改用户'" + user.getUserName() + "'失败，登录账号已存在");
         }
         else if (StringUtils.isNotEmpty(user.getPhoneNumber())
-            && CommonYesOrNo.NO.equals(userService.checkPhoneUnique(user))) {
+            && CommonYesOrNoEnum.NO.equals(userService.checkPhoneUnique(user))) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
         } else if (StringUtils.isNotEmpty(user.getEmail())
-            && CommonYesOrNo.NO.equals(userService.checkEmailUnique(user))) {
+            && CommonYesOrNoEnum.NO.equals(userService.checkEmailUnique(user))) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
         return toAjax(userService.updateUser(user));

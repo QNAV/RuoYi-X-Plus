@@ -2,8 +2,10 @@ package com.ruoyi.system.domain.vo;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.ruoyi.common.annotation.ExcelDictFormat;
+import com.ruoyi.common.annotation.ExcelEnumFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
-import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.convert.ExcelEnumConvert;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
 import com.ruoyi.common.enums.UserSexEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -56,16 +58,16 @@ public class SysUserExportVo implements Serializable {
     /**
      * 用户性别
      */
-    @ExcelProperty(value = "用户性别", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(dictType = "sys_user_sex")
+    @ExcelProperty(value = "用户性别", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = UserSexEnum.class)
     private UserSexEnum sex;
 
     /**
      * 帐号状态（NORMAL=正常 DISABLE=停用）
      */
-    @ExcelProperty(value = "帐号状态", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(dictType = "sys_normal_disable")
-    private CommonNormalDisable status;
+    @ExcelProperty(value = "帐号状态", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = CommonNormalDisableEnum.class)
+    private CommonNormalDisableEnum status;
 
     /**
      * 最后登录IP

@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
 import com.ruoyi.common.core.domain.BaseEntity;
-import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -72,7 +72,7 @@ public class SysPost extends BaseEntity {
     @ExcelProperty(value = "状态", converter = ExcelDictConvert.class)
     @ExcelDictFormat(dictType = "sys_normal_disable")
     @NotBlank(message = "状态不能为空")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 备注

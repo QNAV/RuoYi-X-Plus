@@ -1,10 +1,7 @@
 package com.ruoyi.common.core.domain.vo;
 
-
 import com.ruoyi.common.core.domain.BaseVo;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.DeleteStatus;
-import com.ruoyi.common.enums.UserType;
+import com.ruoyi.common.enums.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -67,7 +64,7 @@ public class BizUserVo extends BaseVo {
      * 用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
     @Schema(description = "用户类型（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）", required = true)
-    private UserType userType;
+    private UserTypeEnum userType;
 
     /**
      * 用户邮箱
@@ -85,7 +82,7 @@ public class BizUserVo extends BaseVo {
      * 用户性别（UNKNOWN=未知 MAN=男 WOMAN=女）
      */
     @Schema(description = "用户性别（UNKNOWN=未知 MAN=男 WOMAN=女）", required = true)
-    private String sex;
+    private UserSexEnum sex;
 
     /**
      * 用户头像
@@ -103,7 +100,7 @@ public class BizUserVo extends BaseVo {
      * 帐号状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "帐号状态（NORMAL=正常 DISABLE=停用）", required = true)
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /** 国家 */
     @Schema(description = "国家")
@@ -121,7 +118,7 @@ public class BizUserVo extends BaseVo {
      * 删除标志（EXIST=代表存在 DELETED=代表删除）
      */
     @Schema(description = "删除标志（EXIST=代表存在 DELETED=代表删除）", required = true)
-    private DeleteStatus delFlag;
+    private DeleteStatusEnum delFlag;
 
     /**
      * 最后登录IP

@@ -10,7 +10,7 @@ import com.ruoyi.biz.domain.model.BizLoginUser;
 import com.ruoyi.biz.helper.BizLoginHelper;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.CacheNames;
-import com.ruoyi.common.enums.UserType;
+import com.ruoyi.common.enums.UserTypeEnum;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
 import com.ruoyi.common.utils.redis.CacheUtils;
@@ -40,7 +40,7 @@ public class BizUserActionListener implements SaTokenListener {
      */
     @Override
     public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
-        UserType userType = UserType.getUserType(loginId.toString());
+        UserTypeEnum userType = UserTypeEnum.getUserType(loginId.toString());
 
         UserAgent userAgent = UserAgentUtil.parse(ServletUtils.getRequest().getHeader("User-Agent"));
         String ip = ServletUtils.getClientIP();

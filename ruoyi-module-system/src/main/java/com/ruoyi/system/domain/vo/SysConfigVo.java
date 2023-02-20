@@ -1,7 +1,7 @@
 package com.ruoyi.system.domain.vo;
 
 import com.ruoyi.common.core.domain.BaseVo;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,7 +47,7 @@ public class SysConfigVo extends BaseVo {
      * 系统内置（YES=是 NO=否）
      */
     @Schema(description = "系统内置（YES=是 NO=否）", required = true)
-    private CommonYesOrNo configType;
+    private CommonYesOrNoEnum configType;
 
     /**
      * 备注

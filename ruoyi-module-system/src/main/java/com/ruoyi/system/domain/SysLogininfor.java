@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
-import com.ruoyi.common.enums.CommonResult;
 import com.ruoyi.common.enums.UserActionEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

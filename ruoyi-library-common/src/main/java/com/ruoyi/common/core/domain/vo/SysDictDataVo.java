@@ -1,8 +1,8 @@
 package com.ruoyi.common.core.domain.vo;
 
 import com.ruoyi.common.core.domain.BaseVo;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -66,13 +66,13 @@ public class SysDictDataVo extends BaseVo {
      * 是否默认（YES=是 NO=否）
      */
     @Schema(description = "是否默认（YES=是 NO=否）", required = true)
-    private CommonYesOrNo isDefault;
+    private CommonYesOrNoEnum isDefault;
 
     /**
      * 状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "状态（NORMAL=正常 DISABLE=停用）", required = true)
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 备注

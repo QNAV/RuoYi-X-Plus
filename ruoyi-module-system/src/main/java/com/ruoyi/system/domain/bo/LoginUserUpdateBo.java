@@ -3,6 +3,7 @@ package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.annotation.Sensitive;
 import com.ruoyi.common.enums.SensitiveStrategy;
+import com.ruoyi.common.enums.UserSexEnum;
 import com.ruoyi.common.xss.Xss;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -54,7 +55,7 @@ public class LoginUserUpdateBo implements Serializable {
      * 用户性别
      */
     @Schema(description = "用户性别")
-    private String sex;
+    private UserSexEnum sex;
 
     /**
      * 用户头像

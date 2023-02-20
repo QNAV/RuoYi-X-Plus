@@ -7,13 +7,15 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelDictFormat;
+import com.ruoyi.common.annotation.ExcelEnumFormat;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.convert.ExcelDictConvert;
+import com.ruoyi.common.convert.ExcelEnumConvert;
 import com.ruoyi.common.core.domain.BaseEntity;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.enums.DataScopeType;
-import com.ruoyi.common.enums.DeleteStatus;
+import com.ruoyi.common.enums.DeleteStatusEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -79,37 +81,39 @@ public class SysRole extends BaseEntity {
      * 数据范围（ALL=全部数据权限 CUSTOM=自定数据权限 DEPT=本部门数据权限 DEPT_CHILD=本部门及以下数据权限 SELF=仅本人数据权限）
      */
     @Schema(description = "数据范围（ALL=全部数据权限 CUSTOM=自定数据权限 DEPT=本部门数据权限 DEPT_CHILD=本部门及以下数据权限 SELF=仅本人数据权限）")
-    @ExcelProperty(value = "数据范围", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(readConverterExp = "ALL=全部数据权限,CUSTOM=自定数据权限,DEPT=本部门数据权限,DEPT_CHILD=本部门及以下数据权限 SELF=仅本人数据权限")
+    @ExcelProperty(value = "数据范围", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = DataScopeType.class)
     private DataScopeType dataScope;
 
     /**
      * 菜单树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示）
      */
     @Schema(description = "菜单树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示）")
-    private CommonYesOrNo menuCheckStrictly;
+    @ExcelProperty(value = "菜单树选择项是否关联显示", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = CommonYesOrNoEnum.class)
+    private CommonYesOrNoEnum menuCheckStrictly;
 
     /**
      * 部门树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示 ）
      */
     @Schema(description = "部门树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示 ）")
-    private CommonYesOrNo deptCheckStrictly;
+    private CommonYesOrNoEnum deptCheckStrictly;
 
     /**
      * 角色状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "角色状态（NORMAL=正常 DISABLE=停用）", required = true)
-    @ExcelProperty(value = "角色状态", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(dictType = "sys_normal_disable")
+    @ExcelProperty(value = "角色状态", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = CommonNormalDisableEnum.class)
     @NotNull(message = "角色状态不能为空")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 删除标志（EXIST=代表存在 DELETED=代表删除）
      */
     @Schema(description = "删除标志（EXIST=代表存在 DELETED=代表删除）")
     @TableLogic
-    private DeleteStatus delFlag;
+    private DeleteStatusEnum delFlag;
 
     /**
      * 备注

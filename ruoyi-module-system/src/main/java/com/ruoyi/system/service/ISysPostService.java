@@ -2,7 +2,7 @@ package com.ruoyi.system.service;
 
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.domain.bo.SysPostQueryBo;
 import com.ruoyi.system.domain.vo.SysPostVo;
@@ -57,7 +57,7 @@ public interface ISysPostService {
      * @param post 岗位信息
      * @return 结果
      */
-    CommonYesOrNo checkPostNameUnique(SysPost post);
+    CommonYesOrNoEnum checkPostNameUnique(SysPost post);
 
     /**
      * 校验岗位编码
@@ -65,7 +65,7 @@ public interface ISysPostService {
      * @param post 岗位信息
      * @return 结果
      */
-    CommonYesOrNo checkPostCodeUnique(SysPost post);
+    CommonYesOrNoEnum checkPostCodeUnique(SysPost post);
 
     /**
      * 通过岗位ID查询岗位使用数量

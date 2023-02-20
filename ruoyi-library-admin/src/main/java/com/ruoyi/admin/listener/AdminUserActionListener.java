@@ -10,7 +10,6 @@ import com.ruoyi.admin.domain.model.AdminLoginUser;
 import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.constant.CacheNames;
-import com.ruoyi.common.enums.UserType;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.ip.AddressUtils;
 import com.ruoyi.common.utils.redis.CacheUtils;

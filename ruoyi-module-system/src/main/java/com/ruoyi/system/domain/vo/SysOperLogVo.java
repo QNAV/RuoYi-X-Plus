@@ -1,7 +1,7 @@
 package com.ruoyi.system.domain.vo;
 
 import com.ruoyi.common.enums.OperationStatusEnum;
-import com.ruoyi.common.enums.UserType;
+import com.ruoyi.common.enums.UserTypeEnum;
 import com.ruoyi.system.enums.BusinessTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -61,7 +61,7 @@ public class SysOperLogVo implements Serializable {
      * 操作类别（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
     @Schema(description = "操作类别（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）", required = true)
-    private UserType operatorType;
+    private UserTypeEnum operatorType;
 
     /**
      * 操作人员

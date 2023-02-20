@@ -1,7 +1,7 @@
 package com.ruoyi.generator.util;
 
 import com.ruoyi.common.constant.GenConstants;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.generator.config.GenConfig;
 import com.ruoyi.generator.domain.GenTable;
@@ -83,31 +83,31 @@ public class GenUtils {
 
         // BO对象 碰到常规字段 和主键字段 不勾选 其他的都勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_ADD, columnName) && !column.isPk()) {
-            column.setIsInsert(CommonYesOrNo.YES);
+            column.setIsInsert(CommonYesOrNoEnum.YES);
         }
         // BO对象 碰到常规字段不勾选 其他的都勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName)) {
-            column.setIsEdit(CommonYesOrNo.YES);
+            column.setIsEdit(CommonYesOrNoEnum.YES);
         }
         // BO对象 碰到常规字段 必填项 不勾选
         if (arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName)) {
-            column.setIsRequired(CommonYesOrNo.NO);
+            column.setIsRequired(CommonYesOrNoEnum.NO);
         }
         // VO对象 碰到常规字段 不勾选 其他都勾选
         if (!arraysContains(GenConstants.COLUMNNAME_NOT_LIST, columnName)) {
-            column.setIsList(CommonYesOrNo.YES);
+            column.setIsList(CommonYesOrNoEnum.YES);
         }
         // VO必须对象 碰到常规字段 勾选
         if (arraysContains(GenConstants.COLUMNNAME_DEFAULT_VO_REQUIRED, columnName)) {
-            column.setIsVoRequired(CommonYesOrNo.YES);
+            column.setIsVoRequired(CommonYesOrNoEnum.YES);
         }
         // VO必须对象 碰到不勾选字段
         if (arraysContains(GenConstants.COLUMNNAME_NOT_VO_REQUIRED, columnName)) {
-            column.setIsVoRequired(CommonYesOrNo.NO);
+            column.setIsVoRequired(CommonYesOrNoEnum.NO);
         }
         // BO对象 默认查询勾选
         if (arraysContains(GenConstants.COLUMNNAME_DEFAULT_QUERY, columnName)) {
-            column.setIsQuery(CommonYesOrNo.YES);
+            column.setIsQuery(CommonYesOrNoEnum.YES);
         }
 
         // 查询字段类型

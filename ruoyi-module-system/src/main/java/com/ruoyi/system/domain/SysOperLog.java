@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelDictFormat;
+import com.ruoyi.common.annotation.ExcelEnumFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
+import com.ruoyi.common.convert.ExcelEnumConvert;
 import com.ruoyi.common.enums.OperationStatusEnum;
-import com.ruoyi.common.enums.UserType;
+import com.ruoyi.common.enums.UserTypeEnum;
 import com.ruoyi.system.enums.BusinessTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -50,8 +52,8 @@ public class SysOperLog implements Serializable {
      * 业务类型（ADD=新增 MODIFY=修改 DELETE=删除 GRANT=授权 EXPORT=导出 IMPORT=导入 FORCED=强退 GENCODE=生成代码 CLEAR=清空数据 OTHER=其他）
      */
     @Schema(description = "业务类型（ADD=新增 MODIFY=修改 DELETE=删除 GRANT=授权 EXPORT=导出 IMPORT=导入 FORCED=强退 GENCODE=生成代码 CLEAR=清空数据 OTHER=其他）")
-    @ExcelProperty(value = "业务类型", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(dictType = "sys_oper_type")
+    @ExcelProperty(value = "业务类型", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = BusinessTypeEnum.class)
     private BusinessTypeEnum businessType;
 
     /**
@@ -79,9 +81,9 @@ public class SysOperLog implements Serializable {
      * 操作类别（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）
      */
     @Schema(description = "操作类别（PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端）")
-    @ExcelProperty(value = "操作类别", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(readConverterExp = "PC=电脑端 ANDROID=安卓app端 IOS=苹果app端 WXAPP=微信小程序端 WXMP=微信公众号端 ALIPAYAPP=支付宝小程序端")
-    private UserType operatorType;
+    @ExcelProperty(value = "操作类别", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = UserTypeEnum.class)
+    private UserTypeEnum operatorType;
 
     /**
      * 操作人员

@@ -3,11 +3,10 @@ package com.ruoyi.system.mapper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.core.mapper.BaseMapperPlus;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.MenuType;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.MenuTypeEnum;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -58,8 +57,8 @@ public interface SysMenuMapper extends BaseMapperPlus<SysMenuMapper, SysMenu, Sy
      */
     default List<SysMenu> selectMenuTreeAll() {
         LambdaQueryWrapper<SysMenu> lqw = new LambdaQueryWrapper<SysMenu>()
-            .in(SysMenu::getMenuType, MenuType.DIRECTORY, MenuType.MENU)
-            .eq(SysMenu::getStatus, CommonNormalDisable.NORMAL)
+            .in(SysMenu::getMenuType, MenuTypeEnum.DIRECTORY, MenuTypeEnum.MENU)
+            .eq(SysMenu::getStatus, CommonNormalDisableEnum.NORMAL)
             .orderByAsc(SysMenu::getParentId)
             .orderByAsc(SysMenu::getOrderNum);
         return this.selectList(lqw);

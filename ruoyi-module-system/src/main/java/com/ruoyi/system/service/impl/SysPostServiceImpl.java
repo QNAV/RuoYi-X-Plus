@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysPost;
@@ -106,14 +106,14 @@ public class SysPostServiceImpl implements ISysPostService {
      * @return 结果
      */
     @Override
-    public CommonYesOrNo checkPostNameUnique(SysPost post) {
+    public CommonYesOrNoEnum checkPostNameUnique(SysPost post) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysPost>()
             .eq(SysPost::getPostName, post.getPostName())
             .ne(ObjectUtil.isNotNull(post.getPostId()), SysPost::getPostId, post.getPostId()));
         if (exist) {
-            return CommonYesOrNo.NO;
+            return CommonYesOrNoEnum.NO;
         }
-        return CommonYesOrNo.YES;
+        return CommonYesOrNoEnum.YES;
     }
 
     /**
@@ -123,14 +123,14 @@ public class SysPostServiceImpl implements ISysPostService {
      * @return 结果
      */
     @Override
-    public CommonYesOrNo checkPostCodeUnique(SysPost post) {
+    public CommonYesOrNoEnum checkPostCodeUnique(SysPost post) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysPost>()
             .eq(SysPost::getPostCode, post.getPostCode())
             .ne(ObjectUtil.isNotNull(post.getPostId()), SysPost::getPostId, post.getPostId()));
         if (exist) {
-            return CommonYesOrNo.NO;
+            return CommonYesOrNoEnum.NO;
         }
-        return CommonYesOrNo.YES;
+        return CommonYesOrNoEnum.YES;
     }
 
     /**

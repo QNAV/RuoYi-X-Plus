@@ -6,14 +6,13 @@ import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.domain.model.AdminLoginUser;
 import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysUserRole;
@@ -93,9 +92,9 @@ public class SysRoleController extends AdminBaseController {
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysRole role) {
-        if (CommonYesOrNo.NO.equals(roleService.checkRoleNameUnique(role))) {
+        if (CommonYesOrNoEnum.NO.equals(roleService.checkRoleNameUnique(role))) {
             return R.fail("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
-        } else if (CommonYesOrNo.NO.equals(roleService.checkRoleKeyUnique(role))) {
+        } else if (CommonYesOrNoEnum.NO.equals(roleService.checkRoleKeyUnique(role))) {
             return R.fail("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
         }
         return toAjax(roleService.insertRole(role));
@@ -112,9 +111,9 @@ public class SysRoleController extends AdminBaseController {
     public R<Void> edit(@Validated @RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
         roleService.checkRoleDataScope(role.getRoleId());
-        if (CommonYesOrNo.NO.equals(roleService.checkRoleNameUnique(role))) {
+        if (CommonYesOrNoEnum.NO.equals(roleService.checkRoleNameUnique(role))) {
             return R.fail("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
-        } else if (CommonYesOrNo.NO.equals(roleService.checkRoleKeyUnique(role))) {
+        } else if (CommonYesOrNoEnum.NO.equals(roleService.checkRoleKeyUnique(role))) {
             return R.fail("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
         }
 

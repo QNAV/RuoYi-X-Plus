@@ -1,6 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
-import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
 import com.ruoyi.common.enums.UserSexEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -94,7 +94,7 @@ public class BizUserAddBo implements Serializable {
      * 帐号状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "帐号状态（NORMAL=正常 DISABLE=停用）")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 国家

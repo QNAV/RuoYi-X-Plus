@@ -11,8 +11,8 @@ import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.CommonYesOrNo;
-import com.ruoyi.common.enums.DeleteStatus;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
+import com.ruoyi.common.enums.DeleteStatusEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -93,7 +93,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
             roleQuery = new SysRoleQueryBo();
         }
         QueryWrapper<SysRole> wrapper = Wrappers.query();
-        wrapper.eq("r.del_flag", DeleteStatus.EXIST)
+        wrapper.eq("r.del_flag", DeleteStatusEnum.EXIST)
             .eq(ObjectUtil.isNotNull(roleQuery.getRoleId()), "r.role_id", roleQuery.getRoleId())
             .like(StringUtils.isNotBlank(roleQuery.getRoleName()), "r.role_name", roleQuery.getRoleName())
             .eq(roleQuery.getStatus() != null, "r.status", roleQuery.getStatus())
@@ -203,14 +203,14 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 结果
      */
     @Override
-    public CommonYesOrNo checkRoleNameUnique(SysRole role) {
+    public CommonYesOrNoEnum checkRoleNameUnique(SysRole role) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysRole>()
             .eq(SysRole::getRoleName, role.getRoleName())
             .ne(ObjectUtil.isNotNull(role.getRoleId()), SysRole::getRoleId, role.getRoleId()));
         if (exist) {
-            return CommonYesOrNo.NO;
+            return CommonYesOrNoEnum.NO;
         }
-        return CommonYesOrNo.YES;
+        return CommonYesOrNoEnum.YES;
     }
 
     /**
@@ -220,14 +220,14 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * @return 结果
      */
     @Override
-    public CommonYesOrNo checkRoleKeyUnique(SysRole role) {
+    public CommonYesOrNoEnum checkRoleKeyUnique(SysRole role) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysRole>()
             .eq(SysRole::getRoleKey, role.getRoleKey())
             .ne(ObjectUtil.isNotNull(role.getRoleId()), SysRole::getRoleId, role.getRoleId()));
         if (exist) {
-            return CommonYesOrNo.NO;
+            return CommonYesOrNoEnum.NO;
         }
-        return CommonYesOrNo.YES;
+        return CommonYesOrNoEnum.YES;
     }
 
     /**

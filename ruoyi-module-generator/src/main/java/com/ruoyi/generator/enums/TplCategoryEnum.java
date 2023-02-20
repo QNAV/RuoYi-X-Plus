@@ -1,14 +1,13 @@
 package com.ruoyi.generator.enums;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.enums.BaseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.commons.compress.utils.Lists;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,7 +16,7 @@ import java.util.Map;
  */
 @AllArgsConstructor
 @Getter
-public enum TplCategoryEnum {
+public enum TplCategoryEnum implements BaseEnum {
 
 
     /**
@@ -51,41 +50,68 @@ public enum TplCategoryEnum {
     private final String info;
 
 
+    // code对应的枚举map
+    public static Map<String, TplCategoryEnum> CMAPS= new HashMap<>();
+    // info对应的枚举map
+    public static Map<String, TplCategoryEnum> IMAPS= new HashMap<>();
+
+
+    static {
+        // 静态初始化
+        for (TplCategoryEnum e: values()){
+            CMAPS.put(e.getCode(), e);
+            IMAPS.put(e.getInfo(), e);
+        }
+    }
+
+
     /**
-     * 将枚举转换成list格式
-     * 这样前台遍历的时候比较容易，列如 下拉框 后台调用toList方法
+     * 根据枚举编码查询对应枚举
+     * 应用场景：数据库存储的枚举编码（手工，常规已经有自动转换机制了）查询对应枚举
      *
      * @return
      */
-    public static List getList() {
-        List list = Lists.newArrayList();
-        for (TplCategoryEnum statusEnum : TplCategoryEnum.values()) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("code", statusEnum.getCode());
-            map.put("info", statusEnum.getInfo());
-            list.add(map);
-        }
-        return list;
+    public static TplCategoryEnum getEnumByCode(String code) {
+        return CMAPS.get(code);
+    }
+
+
+    /**
+     * 根据枚举说明查询对应枚举
+     * 应用场景：导入excel数据时说明信息转换成枚举
+     *
+     * @return
+     */
+    public static TplCategoryEnum getEnumByInfo(String info) {
+        return IMAPS.get(info);
     }
 
     /**
-     * 根据枚举代码转换信息说明
-     * @param code
+     * 根据枚举查询枚举代码
+     * 应用场景：反射转换值时使用
+     *
      * @return
      */
-    public static String getInfoByCode(String code){
-        String info = "";
-        for (TplCategoryEnum statusEnum : TplCategoryEnum.values()) {
-            if (statusEnum.getCode().equals(code)){
-                info = statusEnum.getInfo();
-                break;
-            }
+    public static String getCode(Object obj) {
+        if (ObjectUtil.isNull(obj)){
+            return "";
         }
-        if (StringUtils.isNotBlank(info)){
-            return info;
-        }else { // 找不到则返回 code
-            return String.valueOf(code);
+        TplCategoryEnum e = (TplCategoryEnum) obj;
+        return e.getCode();
+    }
+
+    /**
+     * 根据枚举查询枚举说明
+     * 应用场景：反射转换值时使用
+     *
+     * @return
+     */
+    public static String getInfo(Object obj) {
+        if (ObjectUtil.isNull(obj)){
+            return "";
         }
+        TplCategoryEnum e = (TplCategoryEnum) obj;
+        return e.getInfo();
     }
 
 

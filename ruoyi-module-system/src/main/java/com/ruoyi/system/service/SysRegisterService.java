@@ -5,7 +5,7 @@ import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.core.domain.bo.UserNameRegisterBo;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.event.AdminLogininforEvent;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.enums.UserActionEnum;
 import com.ruoyi.common.exception.user.CaptchaException;
 import com.ruoyi.common.exception.user.CaptchaExpireException;
@@ -52,7 +52,7 @@ public class SysRegisterService {
         sysUser.setNickName(username);
         sysUser.setPassword(BCrypt.hashpw(password));
         sysUser.setUserType(registerBody.getUserType());
-        if (CommonYesOrNo.NO.equals(userService.checkUserNameUnique(sysUser))) {
+        if (CommonYesOrNoEnum.NO.equals(userService.checkUserNameUnique(sysUser))) {
             throw new UserException("user.register.save.error", username);
         }
         boolean regFlag = userService.registerUser(sysUser);

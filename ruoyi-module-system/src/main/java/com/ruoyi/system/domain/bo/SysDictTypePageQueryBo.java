@@ -1,7 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.core.domain.bo.PageQuery;
-import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -34,7 +34,7 @@ public class SysDictTypePageQueryBo extends PageQuery {
      * 状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "状态（NORMAL=正常 DISABLE=停用）")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
 
     /**

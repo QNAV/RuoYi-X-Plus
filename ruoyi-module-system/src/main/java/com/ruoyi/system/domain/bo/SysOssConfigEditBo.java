@@ -1,7 +1,7 @@
 package com.ruoyi.system.domain.bo;
 
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.system.enums.AccessPolicyEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -80,7 +80,7 @@ public class SysOssConfigEditBo implements Serializable {
      * 是否https（NO=否 YES=是）
      */
     @Schema(description = "是否https（NO=否 YES=是）")
-    private CommonYesOrNo isHttps;
+    private CommonYesOrNoEnum isHttps;
 
     /**
      * 桶权限类型（PUBLIC=公开 PRIVATE=私有 EXCEPTION=自定义）
@@ -92,7 +92,7 @@ public class SysOssConfigEditBo implements Serializable {
      * 状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "状态（NORMAL=正常 DISABLE=停用）")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 域

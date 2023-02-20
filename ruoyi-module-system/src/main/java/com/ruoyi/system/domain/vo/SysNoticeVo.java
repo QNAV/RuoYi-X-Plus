@@ -1,7 +1,7 @@
 package com.ruoyi.system.domain.vo;
 
 import com.ruoyi.common.core.domain.BaseVo;
-import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
 import com.ruoyi.system.enums.NoticeTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -48,7 +48,7 @@ public class SysNoticeVo extends BaseVo {
      * 公告状态（NORMAL=正常 DISABLE=关闭）
      */
     @Schema(description = "公告状态（NORMAL=正常 DISABLE=关闭）", required = true)
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 备注

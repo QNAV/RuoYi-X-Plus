@@ -3,12 +3,11 @@ package com.ruoyi.admin.web.controller.system;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.system.domain.SysPost;
@@ -85,9 +84,9 @@ public class SysPostController extends AdminBaseController {
     @PostMapping("/add")
     public R<Void> add(@Validated @RequestBody SysPostAddBo postAddBo) {
         SysPost post = BeanCopyUtils.copy(postAddBo, SysPost.class);
-        if (CommonYesOrNo.NO.equals(postService.checkPostNameUnique(post))) {
+        if (CommonYesOrNoEnum.NO.equals(postService.checkPostNameUnique(post))) {
             return R.fail("新增岗位'" + post.getPostName() + "'失败，岗位名称已存在");
-        } else if (CommonYesOrNo.NO.equals(postService.checkPostCodeUnique(post))) {
+        } else if (CommonYesOrNoEnum.NO.equals(postService.checkPostCodeUnique(post))) {
             return R.fail("新增岗位'" + post.getPostName() + "'失败，岗位编码已存在");
         }
         return toAjax(postService.insertPost(post));
@@ -102,9 +101,9 @@ public class SysPostController extends AdminBaseController {
     @PostMapping("/edit")
     public R<Void> edit(@Validated @RequestBody SysPostEditBo postBo) {
         SysPost post = BeanCopyUtils.copy(postBo, SysPost.class);
-        if (CommonYesOrNo.NO.equals(postService.checkPostNameUnique(post))) {
+        if (CommonYesOrNoEnum.NO.equals(postService.checkPostNameUnique(post))) {
             return R.fail("修改岗位'" + post.getPostName() + "'失败，岗位名称已存在");
-        } else if (CommonYesOrNo.NO.equals(postService.checkPostCodeUnique(post))) {
+        } else if (CommonYesOrNoEnum.NO.equals(postService.checkPostCodeUnique(post))) {
             return R.fail("修改岗位'" + post.getPostName() + "'失败，岗位编码已存在");
         }
         return toAjax(postService.updatePost(post));

@@ -1,8 +1,8 @@
 package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.core.domain.bo.PageQuery;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -26,12 +26,12 @@ public class SysMenuQueryBo extends PageQuery {
      * 显示状态（Y显示 N隐藏）
      */
     @Schema(description = "显示状态（Y显示 N隐藏）")
-    private CommonYesOrNo visible;
+    private CommonYesOrNoEnum visible;
 
     /**
      * 菜单状态（N正常 D停用）
      */
     @Schema(description = "菜单状态（N正常 D停用）")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
 }

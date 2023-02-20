@@ -263,7 +263,7 @@ public class BizLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", username);
             throw new UserException("user.not.exists", username);
-        }else if (CommonNormalDisable.DISABLE.equals(user.getStatus())) {
+        }else if (CommonNormalDisableEnum.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", username);
             throw new UserException("user.blocked", username);
         }
@@ -286,7 +286,7 @@ public class BizLoginService {
             log.info("自动注册手机号用户：{} .", phoneNumber);
             // 注册账户后再读取一次
             user = userService.selectUserByPhoneNumber(phoneNumber);
-        } else if (CommonNormalDisable.DISABLE.equals(user.getStatus())) {
+        } else if (CommonNormalDisableEnum.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", phoneNumber);
             throw new UserException("user.blocked", phoneNumber);
         }
@@ -311,7 +311,7 @@ public class BizLoginService {
             log.info("自动注册手机号用户：{} .", phoneNumber);
             // 注册账户后再读取一次
             user = userService.selectUserByPhoneNumberAndAppid(phoneNumber, appid);
-        }else if (CommonNormalDisable.DISABLE.equals(user.getStatus())) {
+        }else if (CommonNormalDisableEnum.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", phoneNumber);
             throw new UserException("user.blocked", phoneNumber);
         }
@@ -329,7 +329,7 @@ public class BizLoginService {
         if (ObjectUtil.isNull(user)) {
             log.info("登录用户：{} 不存在.", openid);
             throw new UserException("user.not.exists", openid);
-        } else if (CommonNormalDisable.DISABLE.equals(user.getStatus())) {
+        } else if (CommonNormalDisableEnum.DISABLE.equals(user.getStatus())) {
             log.info("登录用户：{} 已被停用.", openid);
             throw new UserException("user.blocked", openid);
         }

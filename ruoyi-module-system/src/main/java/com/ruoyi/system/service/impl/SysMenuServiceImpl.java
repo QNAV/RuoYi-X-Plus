@@ -11,8 +11,8 @@ import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import com.ruoyi.common.core.domain.entity.SysRole;
-import com.ruoyi.common.enums.CommonYesOrNo;
-import com.ruoyi.common.enums.MenuType;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
+import com.ruoyi.common.enums.MenuTypeEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -148,7 +148,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     public List<Long> selectMenuListByRoleId(Long roleId) {
         SysRole role = roleMapper.selectById(roleId);
-        boolean menuCheckStrictly = role.getMenuCheckStrictly().equals(CommonYesOrNo.YES);
+        boolean menuCheckStrictly = role.getMenuCheckStrictly().equals(CommonYesOrNoEnum.YES);
         return baseMapper.selectMenuListByRoleId(roleId, menuCheckStrictly);
     }
 
@@ -163,14 +163,14 @@ public class SysMenuServiceImpl implements ISysMenuService {
         List<RouterVo> routers = new LinkedList<>();
         for (SysMenu menu : menus) {
             RouterVo router = new RouterVo();
-            router.setHidden(CommonYesOrNo.NO.equals(menu.getVisible()));
+            router.setHidden(CommonYesOrNoEnum.NO.equals(menu.getVisible()));
             router.setName(getRouteName(menu));
             router.setPath(getRouterPath(menu));
             router.setComponent(getComponent(menu));
             router.setQuery(menu.getQueryParam());
-            router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getIsCache().equals(CommonYesOrNo.YES), menu.getPath()));
+            router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getIsCache().equals(CommonYesOrNoEnum.YES), menu.getPath()));
             List<SysMenu> cMenus = menu.getChildren();
-            if (!cMenus.isEmpty() && MenuType.DIRECTORY.equals(menu.getMenuType())) {
+            if (!cMenus.isEmpty() && MenuTypeEnum.DIRECTORY.equals(menu.getMenuType())) {
                 router.setAlwaysShow(true);
                 router.setRedirect("noRedirect");
                 router.setChildren(buildMenus(cMenus));
@@ -181,7 +181,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
                 children.setPath(menu.getPath());
                 children.setComponent(menu.getComponent());
                 children.setName(StringUtils.capitalize(menu.getPath()));
-                children.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getIsCache().equals(CommonYesOrNo.YES), menu.getPath()));
+                children.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getIsCache().equals(CommonYesOrNoEnum.YES), menu.getPath()));
                 children.setQuery(menu.getQueryParam());
                 childrenList.add(children);
                 router.setChildren(childrenList);
@@ -294,15 +294,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return 结果
      */
     @Override
-    public CommonYesOrNo checkMenuNameUnique(SysMenu menu) {
+    public CommonYesOrNoEnum checkMenuNameUnique(SysMenu menu) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysMenu>()
             .eq(SysMenu::getMenuName, menu.getMenuName())
             .eq(SysMenu::getParentId, menu.getParentId())
             .ne(ObjectUtil.isNotNull(menu.getMenuId()), SysMenu::getMenuId, menu.getMenuId()));
         if (exist) {
-            return CommonYesOrNo.NO;
+            return CommonYesOrNoEnum.NO;
         }
-        return CommonYesOrNo.YES;
+        return CommonYesOrNoEnum.YES;
     }
 
     /**

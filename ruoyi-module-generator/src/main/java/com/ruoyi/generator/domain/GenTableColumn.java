@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.core.domain.BaseEntity;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.generator.enums.HtmlTypeEnum;
 import com.ruoyi.generator.enums.JavaTypeEnum;
@@ -90,56 +90,56 @@ public class GenTableColumn extends BaseEntity {
      */
     @Schema(description = "是否主键（YES=是 NO=否）")
     @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private CommonYesOrNo isPk;
+    private CommonYesOrNoEnum isPk;
 
     /**
      * 是否自增（YES=是 NO=否）
      */
     @Schema(description = "是否自增（YES=是 NO=否）")
     @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private CommonYesOrNo isIncrement;
+    private CommonYesOrNoEnum isIncrement;
 
     /**
      * 是否必填（YES=是 NO=否）
      */
     @Schema(description = "是否必填（YES=是 NO=否）")
     @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private CommonYesOrNo isRequired;
+    private CommonYesOrNoEnum isRequired;
 
     /**
      * 是否为插入字段（YES=是 NO=否）
      */
     @Schema(description = "是否为插入字段（YES=是 NO=否）")
     @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private CommonYesOrNo isInsert;
+    private CommonYesOrNoEnum isInsert;
 
     /**
      * 是否编辑字段（YES=是 NO=否）
      */
     @Schema(description = "是否编辑字段（YES=是 NO=否）")
     @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private CommonYesOrNo isEdit;
+    private CommonYesOrNoEnum isEdit;
 
     /**
      * 是否列表字段（YES=是 NO=否）
      */
     @Schema(description = "是否列表字段（YES=是 NO=否）")
     @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private CommonYesOrNo isList;
+    private CommonYesOrNoEnum isList;
 
     /**
      * 是否VO必须返回（YES=是 NO=否）
      */
     @Schema(description = "是否VO必须返回（YES=是 NO=否）")
     @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private CommonYesOrNo isVoRequired;
+    private CommonYesOrNoEnum isVoRequired;
 
     /**
      * 是否查询字段（YES=是 NO=否）
      */
     @Schema(description = "是否查询字段（YES=是 NO=否）")
     @TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.VARCHAR)
-    private CommonYesOrNo isQuery;
+    private CommonYesOrNoEnum isQuery;
 
     /**
      * 查询方式（EQ=等于 NE=不等于 GT=大于 GE=大于等于 LT=小于 LE=小于等于 LIKE=模糊 BETWEEN=范围）
@@ -173,40 +173,40 @@ public class GenTableColumn extends BaseEntity {
         return isPk(this.isPk);
     }
 
-    public boolean isPk(CommonYesOrNo isPk) {
-        return isPk != null && isPk.equals(CommonYesOrNo.YES);
+    public boolean isPk(CommonYesOrNoEnum isPk) {
+        return isPk != null && isPk.equals(CommonYesOrNoEnum.YES);
     }
 
     public boolean isIncrement() {
         return isIncrement(this.isIncrement);
     }
 
-    public boolean isIncrement(CommonYesOrNo isIncrement) {
-        return isIncrement != null && isIncrement.equals(CommonYesOrNo.YES);
+    public boolean isIncrement(CommonYesOrNoEnum isIncrement) {
+        return isIncrement != null && isIncrement.equals(CommonYesOrNoEnum.YES);
     }
 
     public boolean isRequired() {
         return isRequired(this.isRequired);
     }
 
-    public boolean isRequired(CommonYesOrNo isRequired) {
-        return isRequired != null && isRequired.equals(CommonYesOrNo.YES);
+    public boolean isRequired(CommonYesOrNoEnum isRequired) {
+        return isRequired != null && isRequired.equals(CommonYesOrNoEnum.YES);
     }
 
     public boolean isInsert() {
         return isInsert(this.isInsert);
     }
 
-    public boolean isInsert(CommonYesOrNo isInsert) {
-        return isInsert != null && isInsert.equals(CommonYesOrNo.YES);
+    public boolean isInsert(CommonYesOrNoEnum isInsert) {
+        return isInsert != null && isInsert.equals(CommonYesOrNoEnum.YES);
     }
 
     public boolean isEdit() {
         return isInsert(this.isEdit);
     }
 
-    public boolean isEdit(CommonYesOrNo isEdit) {
-        return isEdit != null && isEdit.equals(CommonYesOrNo.YES);
+    public boolean isEdit(CommonYesOrNoEnum isEdit) {
+        return isEdit != null && isEdit.equals(CommonYesOrNoEnum.YES);
     }
 
     public boolean isList() {
@@ -214,12 +214,12 @@ public class GenTableColumn extends BaseEntity {
     }
 
 
-    public boolean isList(CommonYesOrNo isList) {
-        return isList != null && isList.equals(CommonYesOrNo.YES);
+    public boolean isList(CommonYesOrNoEnum isList) {
+        return isList != null && isList.equals(CommonYesOrNoEnum.YES);
     }
 
-    public boolean isVoRequired(CommonYesOrNo isVoRequired) {
-        return isVoRequired != null && isVoRequired.equals(CommonYesOrNo.YES);
+    public boolean isVoRequired(CommonYesOrNoEnum isVoRequired) {
+        return isVoRequired != null && isVoRequired.equals(CommonYesOrNoEnum.YES);
     }
 
     public boolean isVoRequired() {
@@ -230,8 +230,8 @@ public class GenTableColumn extends BaseEntity {
         return isQuery(this.isQuery);
     }
 
-    public boolean isQuery(CommonYesOrNo isQuery) {
-        return isQuery != null && isQuery.equals(CommonYesOrNo.YES);
+    public boolean isQuery(CommonYesOrNoEnum isQuery) {
+        return isQuery != null && isQuery.equals(CommonYesOrNoEnum.YES);
     }
 
     public boolean isSuperColumn() {

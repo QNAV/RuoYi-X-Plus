@@ -12,9 +12,9 @@ import com.ruoyi.common.core.domain.entity.SysDept;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.service.DeptService;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.CommonYesOrNo;
-import com.ruoyi.common.enums.DeleteStatus;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
+import com.ruoyi.common.enums.DeleteStatusEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.helper.DataBaseHelper;
 import com.ruoyi.common.utils.BeanCopyUtils;
@@ -63,7 +63,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
             deptQuery = new SysDeptQueryBo();
         }
         LambdaQueryWrapper<SysDept> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(SysDept::getDelFlag, DeleteStatus.EXIST)
+        lqw.eq(SysDept::getDelFlag, DeleteStatusEnum.EXIST)
             .eq(ObjectUtil.isNotNull(deptQuery.getDeptId()), SysDept::getDeptId, deptQuery.getDeptId())
             .eq(ObjectUtil.isNotNull(deptQuery.getParentId()), SysDept::getParentId, deptQuery.getParentId())
             .like(StringUtils.isNotBlank(deptQuery.getDeptName()), SysDept::getDeptName, deptQuery.getDeptName())
@@ -114,7 +114,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
     @Override
     public List<Long> selectDeptListByRoleId(Long roleId) {
         SysRole role = roleMapper.selectById(roleId);
-        return baseMapper.selectDeptListByRoleId(roleId, CommonYesOrNo.YES.equals(role.getDeptCheckStrictly()));
+        return baseMapper.selectDeptListByRoleId(roleId, CommonYesOrNoEnum.YES.equals(role.getDeptCheckStrictly()));
     }
 
     /**
@@ -160,7 +160,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
     @Override
     public long selectNormalChildrenDeptById(Long deptId) {
         return baseMapper.selectCount(new LambdaQueryWrapper<SysDept>()
-            .eq(SysDept::getStatus, CommonNormalDisable.NORMAL)
+            .eq(SysDept::getStatus, CommonNormalDisableEnum.NORMAL)
             .apply(DataBaseHelper.findInSet(deptId, "ancestors")));
     }
 
@@ -195,15 +195,15 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
      * @return 结果
      */
     @Override
-    public CommonYesOrNo checkDeptNameUnique(SysDept dept) {
+    public CommonYesOrNoEnum checkDeptNameUnique(SysDept dept) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysDept>()
             .eq(SysDept::getDeptName, dept.getDeptName())
             .eq(SysDept::getParentId, dept.getParentId())
             .ne(ObjectUtil.isNotNull(dept.getDeptId()), SysDept::getDeptId, dept.getDeptId()));
         if (exist) {
-            return CommonYesOrNo.NO;
+            return CommonYesOrNoEnum.NO;
         }
-        return CommonYesOrNo.YES;
+        return CommonYesOrNoEnum.YES;
     }
 
     /**
@@ -233,7 +233,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
     public int insertDept(SysDept dept) {
         SysDept info = baseMapper.selectById(dept.getParentId());
         // 如果父节点不为正常状态,则不允许新增子节点
-        if (!CommonNormalDisable.NORMAL.equals(info.getStatus())) {
+        if (!CommonNormalDisableEnum.NORMAL.equals(info.getStatus())) {
             throw new ServiceException("部门停用，不允许新增");
         }
         dept.setAncestors(info.getAncestors() + StringUtils.SEPARATOR + dept.getParentId());
@@ -258,7 +258,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
             updateDeptChildren(dept.getDeptId(), newAncestors, oldAncestors);
         }
         int result = baseMapper.updateById(dept);
-        if (CommonNormalDisable.NORMAL.equals(dept.getStatus()) && StringUtils.isNotEmpty(dept.getAncestors())) {
+        if (CommonNormalDisableEnum.NORMAL.equals(dept.getStatus()) && StringUtils.isNotEmpty(dept.getAncestors())) {
             // 如果该部门是启用状态，则启用该部门的所有上级部门
             updateParentDeptStatusNormal(dept);
         }
@@ -274,7 +274,7 @@ public class SysDeptServiceImpl implements ISysDeptService, DeptService {
         String ancestors = dept.getAncestors();
         Long[] deptIds = Convert.toLongArray(ancestors);
         baseMapper.update(null, new LambdaUpdateWrapper<SysDept>()
-            .set(SysDept::getStatus, CommonNormalDisable.NORMAL)
+            .set(SysDept::getStatus, CommonNormalDisableEnum.NORMAL)
             .in(SysDept::getDeptId, Arrays.asList(deptIds)));
     }
 

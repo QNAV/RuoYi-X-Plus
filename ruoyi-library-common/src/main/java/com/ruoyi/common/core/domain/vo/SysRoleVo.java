@@ -3,10 +3,10 @@ package com.ruoyi.common.core.domain.vo;
 
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.BaseVo;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.enums.DataScopeType;
-import com.ruoyi.common.enums.DeleteStatus;
+import com.ruoyi.common.enums.DeleteStatusEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -60,25 +60,25 @@ public class SysRoleVo extends BaseVo {
      * 菜单树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示）
      */
     @Schema(description = "菜单树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示）", required = true)
-    private CommonYesOrNo menuCheckStrictly;
+    private CommonYesOrNoEnum menuCheckStrictly;
 
     /**
      * 部门树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示 ）
      */
     @Schema(description = "部门树选择项是否关联显示（NO=父子不互相关联显示 YES=父子互相关联显示 ）", required = true)
-    private CommonYesOrNo deptCheckStrictly;
+    private CommonYesOrNoEnum deptCheckStrictly;
 
     /**
      * 角色状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "角色状态（NORMAL=正常 DISABLE=停用）", required = true)
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 删除标志（EXIST=代表存在 DELETED=代表删除）
      */
     @Schema(description = "删除标志（EXIST=代表存在 DELETED=代表删除）", required = true)
-    private DeleteStatus delFlag;
+    private DeleteStatusEnum delFlag;
 
     /**
      * 备注

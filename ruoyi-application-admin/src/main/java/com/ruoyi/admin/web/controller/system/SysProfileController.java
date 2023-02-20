@@ -5,12 +5,11 @@ import cn.hutool.core.io.FileUtil;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.helper.AdminLoginHelper;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.UpdatePwdBo;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.MimeTypeUtils;
@@ -31,7 +30,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.Arrays;
 
 /**
@@ -73,11 +71,11 @@ public class SysProfileController extends AdminBaseController {
     public R<Void> updateProfile(@RequestBody LoginUserUpdateBo userBo) {
         SysUser user = BeanCopyUtils.copy(userBo, SysUser.class);
         if (StringUtils.isNotEmpty(user.getPhoneNumber())
-            && CommonYesOrNo.NO.equals(userService.checkPhoneUnique(user))) {
+            && CommonYesOrNoEnum.NO.equals(userService.checkPhoneUnique(user))) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
         }
         if (StringUtils.isNotEmpty(user.getEmail())
-            && CommonYesOrNo.NO.equals(userService.checkEmailUnique(user))) {
+            && CommonYesOrNoEnum.NO.equals(userService.checkEmailUnique(user))) {
             return R.fail("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
         user.setUserId(getUserId());

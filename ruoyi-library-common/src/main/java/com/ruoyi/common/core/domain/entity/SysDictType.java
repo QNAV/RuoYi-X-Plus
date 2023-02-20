@@ -5,9 +5,11 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelDictFormat;
+import com.ruoyi.common.annotation.ExcelEnumFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
+import com.ruoyi.common.convert.ExcelEnumConvert;
 import com.ruoyi.common.core.domain.BaseEntity;
-import com.ruoyi.common.enums.CommonNormalDisable;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -63,9 +65,9 @@ public class SysDictType extends BaseEntity {
      * 状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "状态（NORMAL=正常 DISABLE=停用）")
-    @ExcelProperty(value = "状态", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(dictType = "sys_normal_disable")
-    private CommonNormalDisable status;
+    @ExcelProperty(value = "状态", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = CommonNormalDisableEnum.class)
+    private CommonNormalDisableEnum status;
 
     /**
      * 备注

@@ -1,9 +1,9 @@
 package com.ruoyi.system.domain.bo;
 
 import com.ruoyi.common.core.domain.entity.SysMenu;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.CommonYesOrNo;
-import com.ruoyi.common.enums.MenuType;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
+import com.ruoyi.common.enums.MenuTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -65,32 +65,32 @@ public class SysMenuAddBo implements Serializable {
      * 是否为外链（Y是 N否）
      */
     @Schema(description = "是否为外链（Y是 N否）")
-    private CommonYesOrNo isFrame;
+    private CommonYesOrNoEnum isFrame;
 
     /**
      * 是否缓存（Y缓存 N不缓存）
      */
     @Schema(description = "是否缓存（Y缓存 N不缓存）")
-    private CommonYesOrNo isCache;
+    private CommonYesOrNoEnum isCache;
 
     /**
      * 类型（D目录 M菜单 B按钮）
      */
     @Schema(description = "类型（D目录 M菜单 B按钮）", required = true)
     @NotNull(message = "菜单类型不能为空")
-    private MenuType menuType;
+    private MenuTypeEnum menuType;
 
     /**
      * 显示状态（Y显示 N隐藏）
      */
     @Schema(description = "显示状态（Y显示 N隐藏）")
-    private CommonYesOrNo visible;
+    private CommonYesOrNoEnum visible;
 
     /**
      * 菜单状态（N正常 D停用）
      */
     @Schema(description = "菜单状态（N正常 D停用）")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 权限字符串

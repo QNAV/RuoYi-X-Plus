@@ -1,8 +1,8 @@
 package com.ruoyi.common.core.domain.vo;
 
 import com.ruoyi.common.core.domain.TreeVo;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.DeleteStatus;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.DeleteStatusEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -60,13 +60,13 @@ public class SysDeptVo extends TreeVo<SysDeptVo> {
      * 部门状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "部门状态（NORMAL=正常 DISABLE=停用）", required = true)
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 删除标志（EXIST=代表存在 DELETED=代表删除）
      */
     @Schema(description = "删除标志（EXIST=代表存在 DELETED=代表删除）", required = true)
-    private DeleteStatus delFlag;
+    private DeleteStatusEnum delFlag;
 
     /**
      * 祖级列表

@@ -4,10 +4,10 @@ import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.ruoyi.common.annotation.ExcelDictFormat;
-import com.ruoyi.common.convert.ExcelDictConvert;
+import com.ruoyi.common.annotation.ExcelEnumFormat;
+import com.ruoyi.common.convert.ExcelEnumConvert;
 import com.ruoyi.common.core.domain.BaseEntity;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.system.enums.ConfigValueTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -61,8 +61,9 @@ public class SysConfig extends BaseEntity {
      * 参数值类型
      */
     @Schema(description = "参数值类型", required = true)
-    @ExcelProperty(value = "参数值类型")
     @NotBlank(message = "参数值类型不能为空")
+    @ExcelProperty(value = "参数值类型", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = ConfigValueTypeEnum.class)
     private ConfigValueTypeEnum valueType;
 
     /**
@@ -78,9 +79,9 @@ public class SysConfig extends BaseEntity {
      * 系统内置（YES=是 NO=否）
      */
     @Schema(description = "系统内置（YES=是 NO=否）")
-    @ExcelProperty(value = "系统内置", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(dictType = "sys_yes_no")
-    private CommonYesOrNo configType;
+    @ExcelProperty(value = "系统内置", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = CommonYesOrNoEnum.class)
+    private CommonYesOrNoEnum configType;
 
     /**
      * 备注

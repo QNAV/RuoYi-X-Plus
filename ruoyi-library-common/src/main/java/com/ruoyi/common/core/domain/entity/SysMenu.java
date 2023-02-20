@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ruoyi.common.core.domain.TreeEntity;
-import com.ruoyi.common.enums.CommonNormalDisable;
-import com.ruoyi.common.enums.CommonYesOrNo;
-import com.ruoyi.common.enums.MenuType;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
+import com.ruoyi.common.enums.MenuTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -76,32 +76,32 @@ public class SysMenu extends TreeEntity<SysMenu> {
      * 是否为外链（YES=是 NO=否）
      */
     @Schema(description = "是否为外链（YES=是 NO=否）")
-    private CommonYesOrNo isFrame;
+    private CommonYesOrNoEnum isFrame;
 
     /**
      * 是否缓存（YES=缓存 NO=不缓存）
      */
     @Schema(description = "是否缓存（YES=缓存 NO=不缓存）")
-    private CommonYesOrNo isCache;
+    private CommonYesOrNoEnum isCache;
 
     /**
      * 类型（DIRECTORY=目录 MENU=菜单 BUTTON=按钮）
      */
     @Schema(description = "类型（DIRECTORY=目录 MENU=菜单 BUTTON=按钮）", required = true)
     @NotNull(message = "菜单类型不能为空")
-    private MenuType menuType;
+    private MenuTypeEnum menuType;
 
     /**
      * 显示状态（YES=显示 NO=隐藏）
      */
     @Schema(description = "显示状态（YES=显示 NO=隐藏）")
-    private CommonYesOrNo visible;
+    private CommonYesOrNoEnum visible;
 
     /**
      * 菜单状态（NORMAL=正常 DISABLE=停用）
      */
     @Schema(description = "菜单状态（NORMAL=正常 DISABLE=停用）")
-    private CommonNormalDisable status;
+    private CommonNormalDisableEnum status;
 
     /**
      * 权限字符串

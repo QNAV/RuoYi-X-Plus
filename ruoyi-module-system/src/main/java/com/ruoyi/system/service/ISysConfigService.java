@@ -2,7 +2,7 @@ package com.ruoyi.system.service;
 
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.system.domain.SysConfig;
 import com.ruoyi.system.domain.bo.SysConfigQueryBo;
 import com.ruoyi.system.domain.vo.SysConfigVo;
@@ -95,7 +95,7 @@ public interface ISysConfigService {
      * @param config 参数信息
      * @return 结果
      */
-    CommonYesOrNo checkConfigKeyUnique(SysConfig config);
+    CommonYesOrNoEnum checkConfigKeyUnique(SysConfig config);
 
 
 }

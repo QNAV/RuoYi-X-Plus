@@ -14,7 +14,7 @@ import com.ruoyi.common.core.domain.entity.SysDictData;
 import com.ruoyi.common.core.domain.entity.SysDictType;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.service.DictService;
-import com.ruoyi.common.enums.CommonYesOrNo;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StreamUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -224,14 +224,14 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService 
      * @return 结果
      */
     @Override
-    public CommonYesOrNo checkDictTypeUnique(SysDictType dict) {
+    public CommonYesOrNoEnum checkDictTypeUnique(SysDictType dict) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysDictType>()
             .eq(SysDictType::getDictType, dict.getDictType())
             .ne(ObjectUtil.isNotNull(dict.getDictId()), SysDictType::getDictId, dict.getDictId()));
         if (exist) {
-            return CommonYesOrNo.NO;
+            return CommonYesOrNoEnum.NO;
         }
-        return CommonYesOrNo.YES;
+        return CommonYesOrNoEnum.YES;
     }
 
     /**

@@ -17,8 +17,8 @@ import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.service.UserService;
-import com.ruoyi.common.enums.CommonYesOrNo;
-import com.ruoyi.common.enums.DeleteStatus;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
+import com.ruoyi.common.enums.DeleteStatusEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.helper.DataBaseHelper;
 import com.ruoyi.common.utils.BeanCopyUtils;
@@ -94,7 +94,7 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
         }
         QueryWrapper<SysUser> wrapper = Wrappers.query();
         SysUserQueryBo finalUserQuery = userQuery;
-        wrapper.eq("u.del_flag", DeleteStatus.EXIST)
+        wrapper.eq("u.del_flag", DeleteStatusEnum.EXIST)
             .eq(ObjectUtil.isNotNull(userQuery.getUserId()), "u.user_id", userQuery.getUserId())
             .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
             .eq(ObjectUtil.isNotNull(userQuery.getStatus()), "u.status", userQuery.getStatus())
@@ -127,7 +127,7 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
             pageQuery = new PageQuery();
         }
         QueryWrapper<SysUser> wrapper = Wrappers.query();
-        wrapper.eq("u.del_flag", DeleteStatus.EXIST)
+        wrapper.eq("u.del_flag", DeleteStatusEnum.EXIST)
             .eq(ObjectUtil.isNotNull(userQuery.getRoleId()), "r.role_id", userQuery.getRoleId())
             .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
             .eq(userQuery.getStatus() != null, "u.status", userQuery.getStatus())
@@ -151,7 +151,7 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
             pageQuery = new PageQuery();
         }
         QueryWrapper<SysUser> wrapper = Wrappers.query();
-        wrapper.eq("u.del_flag", DeleteStatus.EXIST)
+        wrapper.eq("u.del_flag", DeleteStatusEnum.EXIST)
             .eq(ObjectUtil.isNotNull(userQuery.getRoleId()), "r.role_id", userQuery.getRoleId())
             .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
             .eq(ObjectUtil.isNotNull(userQuery.getStatus()), "u.status", userQuery.getStatus())
@@ -177,7 +177,7 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
         List<Long> userIds = userRoleMapper.selectUserIdsByRoleId(userQuery.getRoleId());
         QueryWrapper<SysUser> wrapper = Wrappers.query();
         SysUserQueryBo finalUserQuery = userQuery;
-        wrapper.eq("u.del_flag", DeleteStatus.EXIST)
+        wrapper.eq("u.del_flag", DeleteStatusEnum.EXIST)
             .and(w -> w.ne("r.role_id", finalUserQuery.getRoleId()).or().isNull("r.role_id"))
             .notIn(CollUtil.isNotEmpty(userIds), "u.user_id", userIds)
             .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
@@ -204,7 +204,7 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
         List<Long> userIds = userRoleMapper.selectUserIdsByRoleId(userQuery.getRoleId());
         QueryWrapper<SysUser> wrapper = Wrappers.query();
         SysUserQueryBo finalUserQuery = userQuery;
-        wrapper.eq("u.del_flag", DeleteStatus.EXIST)
+        wrapper.eq("u.del_flag", DeleteStatusEnum.EXIST)
             .and(w -> w.ne("r.role_id", finalUserQuery.getRoleId()).or().isNull("r.role_id"))
             .notIn(CollUtil.isNotEmpty(userIds), "u.user_id", userIds)
             .like(StringUtils.isNotBlank(userQuery.getUserName()), "u.user_name", userQuery.getUserName())
@@ -294,14 +294,14 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
      * @return 结果
      */
     @Override
-    public CommonYesOrNo checkUserNameUnique(SysUser user) {
+    public CommonYesOrNoEnum checkUserNameUnique(SysUser user) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysUser>()
                 .eq(SysUser::getUserName, user.getUserName())
                 .ne(ObjectUtil.isNotNull(user.getUserId()), SysUser::getUserId, user.getUserId()));
         if (exist) {
-            return CommonYesOrNo.NO;
+            return CommonYesOrNoEnum.NO;
         }
-        return CommonYesOrNo.YES;
+        return CommonYesOrNoEnum.YES;
     }
 
     /**
@@ -310,14 +310,14 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
      * @param user 用户信息
      */
     @Override
-    public CommonYesOrNo checkPhoneUnique(SysUser user) {
+    public CommonYesOrNoEnum checkPhoneUnique(SysUser user) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysUser>()
             .eq(SysUser::getPhoneNumber, user.getPhoneNumber())
             .ne(ObjectUtil.isNotNull(user.getUserId()), SysUser::getUserId, user.getUserId()));
         if (exist) {
-            return CommonYesOrNo.NO;
+            return CommonYesOrNoEnum.NO;
         }
-        return CommonYesOrNo.YES;
+        return CommonYesOrNoEnum.YES;
     }
 
     /**
@@ -326,14 +326,14 @@ public class SysUserServiceImpl implements ISysUserService, UserService {
      * @param user 用户信息
      */
     @Override
-    public CommonYesOrNo checkEmailUnique(SysUser user) {
+    public CommonYesOrNoEnum checkEmailUnique(SysUser user) {
         boolean exist = baseMapper.exists(new LambdaQueryWrapper<SysUser>()
             .eq(SysUser::getEmail, user.getEmail())
             .ne(ObjectUtil.isNotNull(user.getUserId()), SysUser::getUserId, user.getUserId()));
         if (exist) {
-            return CommonYesOrNo.NO;
+            return CommonYesOrNoEnum.NO;
         }
-        return CommonYesOrNo.YES;
+        return CommonYesOrNoEnum.YES;
     }
 
     /**

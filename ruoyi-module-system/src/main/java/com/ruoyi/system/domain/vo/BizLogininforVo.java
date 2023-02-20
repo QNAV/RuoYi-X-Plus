@@ -1,17 +1,16 @@
 package com.ruoyi.system.domain.vo;
 
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.ruoyi.common.annotation.ExcelDictFormat;
+import com.ruoyi.common.annotation.ExcelEnumFormat;
 import com.ruoyi.common.convert.ExcelDictConvert;
-import com.ruoyi.common.core.domain.BaseVo;
-import com.ruoyi.common.enums.CommonResult;
+import com.ruoyi.common.convert.ExcelEnumConvert;
+import com.ruoyi.common.enums.CommonResultEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import java.util.Date;
-
 
 
 /**
@@ -72,10 +71,10 @@ public class BizLogininforVo {
     /**
      * 登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）
      */
-    @ExcelProperty(value = "登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）", converter = ExcelDictConvert.class)
-    @ExcelDictFormat(readConverterExp = "LOGINOK=登录成功,LOGINFAIL=登录失败,LOGOUT=注销登录,REGISTER=注册")
+    @ExcelProperty(value = "登录状态", converter = ExcelEnumConvert.class)
+    @ExcelEnumFormat(enumClass = CommonResultEnum.class)
     @Schema(description = "登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）", required = true)
-    private CommonResult status;
+    private CommonResultEnum status;
 
     /**
      * 提示消息

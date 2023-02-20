@@ -1,6 +1,6 @@
 package com.ruoyi.admin;
 
-import com.ruoyi.common.enums.UserType;
+import com.ruoyi.common.enums.UserTypeEnum;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -40,9 +40,9 @@ public class ParamUnitTest {
 
     @DisplayName("测试 @EnumSource 注解")
     @ParameterizedTest
-    @EnumSource(UserType.class)
-    public void testEnumSource(UserType type) {
-        System.out.println(type.getUserType());
+    @EnumSource(UserTypeEnum.class)
+    public void testEnumSource(UserTypeEnum type) {
+        System.out.println(type.getCode());
     }
 
     @DisplayName("测试 @MethodSource 注解")
