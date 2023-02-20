@@ -322,12 +322,12 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜单权限表';
 
 INSERT INTO `sys_menu` VALUES(1, '系统管理', 0, 1, 'system', NULL, '', 'NO', 'YES', 'DIRECTORY', 'YES', 'NORMAL', '', 'SettingOutlined', 'admin', '2022-06-19 06:27:41', 'admin', '2022-06-19 14:18:32', '系统管理目录');
-INSERT INTO `sys_menu` VALUES(2, '系统监控', 0, 2, 'monitor', NULL, '', 'NO', 'YES', 'DIRECTORY', 'YES', 'NORMAL', '', 'monitor', 'admin', '2022-06-19 06:27:41', '', NULL, '系统监控目录');
-INSERT INTO `sys_menu` VALUES(3, '系统工具', 0, 3, 'tool', NULL, '', 'NO', 'YES', 'DIRECTORY', 'YES', 'NORMAL', '', 'tool', 'admin', '2022-06-19 06:27:41', '', NULL, '系统工具目录');
-INSERT INTO `sys_menu` VALUES(4, 'RuoYiX官网', 0, 4, 'https://github.com/QNAV/RuoYi-X-Plus', NULL, '', 'YES', 'YES', 'DIRECTORY', 'YES', 'NORMAL', '', 'guide', 'admin', '2022-06-19 06:27:41', 'admin', '2022-06-19 14:08:08', 'RuoYi-X-Plus官网地址');
-INSERT INTO `sys_menu` VALUES(5, '测试菜单', 0, 5, 'demo', NULL, NULL, 'NO', 'YES', 'DIRECTORY', 'YES', 'NORMAL', NULL, 'star', 'admin', '2022-06-19 06:28:02', NULL, NULL, '');
-INSERT INTO `sys_menu` VALUES(100, '用户管理', 1, 1, 'user', 'system/user/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'system:user:list', 'UserOutlined', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:49:50', '用户管理菜单');
-INSERT INTO `sys_menu` VALUES(101, '角色管理', 1, 2, 'role', 'system/role/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'system:role:list', 'TeamOutlined', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:49:58', '角色管理菜单');
+INSERT INTO `sys_menu` VALUES(2, '系统监控', 0, 2, 'monitor', NULL, '', 'NO', 'YES', 'DIRECTORY', 'YES', 'NORMAL', '', 'MonitorOutlined', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-19 20:55:54', '系统监控目录');
+INSERT INTO `sys_menu` VALUES(3, '系统工具', 0, 3, 'tool', NULL, '', 'NO', 'YES', 'DIRECTORY', 'YES', 'NORMAL', '', 'ToolOutlined', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-19 20:56:11', '系统工具目录');
+INSERT INTO `sys_menu` VALUES(4, 'RuoYiX官网', 0, 4, 'https://github.com/QNAV/RuoYi-X-Plus', NULL, '', 'YES', 'YES', 'DIRECTORY', 'YES', 'NORMAL', '', 'HomeOutlined', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-19 20:56:32', 'RuoYi-X-Plus官网地址');
+INSERT INTO `sys_menu` VALUES(5, '测试菜单', 0, 5, 'demo', NULL, NULL, 'NO', 'YES', 'DIRECTORY', 'YES', 'NORMAL', NULL, 'BugOutlined', 'admin', '2022-06-19 06:28:02', 'admin', '2023-02-19 20:57:57', '');
+INSERT INTO `sys_menu` VALUES(100, '用户管理', 1, 1, 'user', 'system/user/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'system:user:list', '', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-19 20:53:53', '用户管理菜单');
+INSERT INTO `sys_menu` VALUES(101, '角色管理', 1, 2, 'role', 'system/role/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'system:role:list', '', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-19 20:53:46', '角色管理菜单');
 INSERT INTO `sys_menu` VALUES(102, '菜单管理', 1, 3, 'menu', 'system/menu/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'system:menu:list', 'tree-table', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:50:02', '菜单管理菜单');
 INSERT INTO `sys_menu` VALUES(103, '部门管理', 1, 4, 'dept', 'system/dept/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'system:dept:list', 'tree', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:50:07', '部门管理菜单');
 INSERT INTO `sys_menu` VALUES(104, '岗位管理', 1, 5, 'post', 'system/post/index', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'system:post:list', 'post', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 20:50:12', '岗位管理菜单');
@@ -405,7 +405,7 @@ INSERT INTO `sys_menu` VALUES(1502, '测试单表新增', 1500, 2, '#', '', NULL
 INSERT INTO `sys_menu` VALUES(1503, '测试单表修改', 1500, 3, '#', '', NULL, 'NO', 'YES', 'BUTTON', 'YES', 'NORMAL', 'demo:demo:edit', '#', 'admin', '2022-06-19 06:28:02', '', NULL, '');
 INSERT INTO `sys_menu` VALUES(1504, '测试单表删除', 1500, 4, '#', '', NULL, 'NO', 'YES', 'BUTTON', 'YES', 'NORMAL', 'demo:demo:remove', '#', 'admin', '2022-06-19 06:28:02', '', NULL, '');
 INSERT INTO `sys_menu` VALUES(1505, '测试单表导出', 1500, 5, '#', '', NULL, 'NO', 'YES', 'BUTTON', 'YES', 'NORMAL', 'demo:demo:export', '#', 'admin', '2022-06-19 06:28:02', '', NULL, '');
-INSERT INTO `sys_menu` VALUES(1506, '测试树表', 5, 1, 'tree', 'demo/tree/index', NULL, 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'demo:tree:list', '#', 'admin', '2022-06-19 06:28:02', 'admin', '2023-02-18 20:50:28', '测试树表菜单');
+INSERT INTO `sys_menu` VALUES(1506, '测试树表', 5, 1, 'tree', 'demo/tree/index', NULL, 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'demo:tree:list', '', 'admin', '2022-06-19 06:28:02', 'admin', '2023-02-19 20:58:18', '测试树表菜单');
 INSERT INTO `sys_menu` VALUES(1507, '测试树表查询', 1506, 1, '#', '', NULL, 'NO', 'YES', 'BUTTON', 'YES', 'NORMAL', 'demo:tree:query', '#', 'admin', '2022-06-19 06:28:02', '', NULL, '');
 INSERT INTO `sys_menu` VALUES(1508, '测试树表新增', 1506, 2, '#', '', NULL, 'NO', 'YES', 'BUTTON', 'YES', 'NORMAL', 'demo:tree:add', '#', 'admin', '2022-06-19 06:28:02', '', NULL, '');
 INSERT INTO `sys_menu` VALUES(1509, '测试树表修改', 1506, 3, '#', '', NULL, 'NO', 'YES', 'BUTTON', 'YES', 'NORMAL', 'demo:tree:edit', '#', 'admin', '2022-06-19 06:28:02', '', NULL, '');
@@ -417,10 +417,11 @@ INSERT INTO `sys_menu` VALUES(1602, '文件下载', 118, 3, '#', '', '', 'NO', '
 INSERT INTO `sys_menu` VALUES(1603, '文件删除', 118, 4, '#', '', '', 'NO', 'YES', 'BUTTON', 'YES', 'NORMAL', 'system:oss:remove', '#', 'admin', '2022-06-19 06:27:41', '', NULL, '');
 INSERT INTO `sys_menu` VALUES(1604, '配置添加', 118, 5, '#', '', '', 'NO', 'YES', 'BUTTON', 'YES', 'NORMAL', 'system:oss:add', '#', 'admin', '2022-06-19 06:27:41', '', NULL, '');
 INSERT INTO `sys_menu` VALUES(1605, '配置编辑', 118, 6, '#', '', '', 'NO', 'YES', 'BUTTON', 'YES', 'NORMAL', 'system:oss:edit', '#', 'admin', '2022-06-19 06:27:41', '', NULL, '');
-INSERT INTO `sys_menu` VALUES(1606, '缓存列表', 2, 6, 'cache', 'monitor/cache/list', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'monitor:cache:list', 'redis-list', 'admin', '2023-01-13 12:57:05', 'admin', '2023-02-18 20:50:58', '缓存列表菜单');
+INSERT INTO `sys_menu` VALUES(1606, '缓存列表', 2, 6, 'cache-list', 'monitor/cache/list', '', 'NO', 'YES', 'MENU', 'YES', 'NORMAL', 'monitor:cache:list', 'redis-list', 'admin', '2023-01-13 12:57:05', 'admin', '2023-02-19 19:52:24', '缓存列表菜单');
 INSERT INTO `sys_menu` VALUES(1607, '字典管理-详情', 1, 6, 'dict/:dictType', NULL, NULL, 'NO', 'YES', 'MENU', 'NO', 'NORMAL', NULL, '#', 'admin', '2023-02-18 20:56:59', 'admin', '2023-02-18 20:58:49', '');
-INSERT INTO `sys_menu` VALUES(1608, '首页', 0, 0, '/', NULL, NULL, 'NO', 'YES', 'MENU', 'NO', 'NORMAL', NULL, '#', 'admin', '2023-02-18 21:40:25', 'admin', '2023-02-18 21:43:14', '');
-INSERT INTO `sys_menu` VALUES(1610, '个人中心', 0, 0, '/settings', NULL, NULL, 'NO', 'YES', 'MENU', 'NO', 'NORMAL', NULL, '#', 'admin', '2023-02-18 21:41:32', 'admin', '2023-02-18 21:42:53', '');
+INSERT INTO `sys_menu` VALUES(1608, '首页', 0, 0, '/', NULL, NULL, 'NO', 'YES', 'MENU', 'NO', 'NORMAL', NULL, 'DashboardOutlined', 'admin', '2023-02-18 21:40:25', 'admin', '2023-02-19 20:55:32', '');
+INSERT INTO `sys_menu` VALUES(1610, '个人中心', 0, 0, '/settings', NULL, NULL, 'NO', 'YES', 'MENU', 'NO', 'NORMAL', NULL, 'ProfileOutlined', 'admin', '2023-02-18 21:41:32', 'admin', '2023-02-19 20:54:40', '');
+INSERT INTO `sys_menu` VALUES(1611, '角色管理-用户授权', 1, 2, 'role-auth', NULL, NULL, 'NO', 'YES', 'MENU', 'NO', 'NORMAL', NULL, '#', 'admin', '2023-02-19 20:53:39', 'admin', '2023-02-19 20:53:39', '');
 
 CREATE TABLE IF NOT EXISTS `sys_notice` (
   `notice_id` int NOT NULL AUTO_INCREMENT COMMENT '公告ID',
@@ -558,7 +559,7 @@ INSERT INTO `sys_role` VALUES(1, '超级管理员', 'admin', 1, 'ALL', 'YES', 'Y
 INSERT INTO `sys_role` VALUES(2, '普通角色', 'common', 2, 'SELF', 'YES', 'YES', 'NORMAL', 'EXIST', 'admin', '2022-06-19 06:27:41', '', NULL, '普通角色');
 INSERT INTO `sys_role` VALUES(3, '本部门及以下', 'test1', 3, 'THIS', 'YES', 'YES', 'NORMAL', 'EXIST', 'admin', '2022-06-19 06:28:02', 'admin', NULL, NULL);
 INSERT INTO `sys_role` VALUES(4, '仅本人', 'test2', 4, 'THISANDSUB', 'YES', 'YES', 'NORMAL', 'EXIST', 'admin', '2022-06-19 06:28:02', 'admin', NULL, NULL);
-INSERT INTO `sys_role` VALUES(9, 'dsd', '2wd', 0, 'ALL', 'YES', 'YES', 'NORMAL', 'EXIST', 'admin', '2022-06-26 19:21:02', 'admin', '2022-06-26 19:21:02', NULL);
+INSERT INTO `sys_role` VALUES(9, 'dsd', '2wd', 0, 'ALL', 'YES', 'YES', 'NORMAL', 'DELETED', 'admin', '2022-06-26 19:21:02', 'admin', '2022-06-26 19:21:02', NULL);
 
 CREATE TABLE IF NOT EXISTS `sys_role_dept` (
   `role_id` bigint NOT NULL COMMENT '角色ID',
@@ -765,7 +766,7 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   KEY `IDX_DELFLAG` (`del_flag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户信息表';
 
-INSERT INTO `sys_user` VALUES(1, 103, 'admin', '若依', 'PC', 'admin@ruoyi.vip', '15888888888', 'WOMAN', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', 'NORMAL', 'EXIST', '0:0:0:0:0:0:0:1', '2023-02-18 21:32:05', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-18 21:32:05', '管理员');
+INSERT INTO `sys_user` VALUES(1, 103, 'admin', '若依', 'PC', 'admin@ruoyi.vip', '15888888888', 'WOMAN', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', 'NORMAL', 'EXIST', '127.0.0.1', '2023-02-19 23:41:42', 'admin', '2022-06-19 06:27:41', 'admin', '2023-02-19 23:41:42', '管理员');
 INSERT INTO `sys_user` VALUES(2, 105, 'test', '测试', 'PC', 'test@ruoyi.vip', '15666666666', 'MAN', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', 'NORMAL', 'EXIST', '127.0.0.1', '2022-06-19 06:27:41', 'admin', '2022-06-19 06:27:41', '', NULL, '测试员');
 INSERT INTO `sys_user` VALUES(3, 108, 'test1', '本部门及以下 密码666666', 'PC', '', '', 'UNKNOWN', '', '$2a$10$b8yUzN0C71sbz.PhNOCgJe.Tu1yWC3RNrTyjSQ8p1W0.aaUXUJ.Ne', 'NORMAL', 'EXIST', '127.0.0.1', '2022-06-19 06:28:02', 'admin', '2022-06-19 06:28:02', 'test', '2022-06-19 06:28:02', NULL);
 INSERT INTO `sys_user` VALUES(4, 102, 'test2', '仅本人 密码666666', 'PC', '', '', 'UNKNOWN', '', '$2a$10$b8yUzN0C71sbz.PhNOCgJe.Tu1yWC3RNrTyjSQ8p1W0.aaUXUJ.Ne', 'NORMAL', 'EXIST', '127.0.0.1', '2022-06-19 06:28:02', 'admin', '2022-06-19 06:28:02', 'test1', '2022-06-19 06:28:02', NULL);
