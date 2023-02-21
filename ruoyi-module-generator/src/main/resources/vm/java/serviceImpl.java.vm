@@ -1,4 +1,4 @@
-validEntityBeforeAddpackage ${packageName}.service.impl;
+package ${packageName}.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -45,7 +45,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      * @param ${pkColumn.javaField} 主键编号
      */
     @Override
-    public ${ClassName}Vo queryById(${pkColumn.javaType} ${pkColumn.javaField}){
+    public ${ClassName}Vo queryById(${pkColumn.javaType.getCode()} ${pkColumn.javaField}){
         return baseMapper.selectVoById(${pkColumn.javaField});
     }
 
@@ -89,7 +89,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 #if($column.isQuery())
     #set($queryType=$column.queryType)
     #set($javaField=$column.javaField)
-    #set($javaType=$column.javaType)
+    #set($javaType=$column.javaType.getCode())
     #set($columnName=$column.columnName)
     #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
     #set($mpMethod=$column.queryType.toLowerCase())
@@ -120,9 +120,6 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
         validEntityBeforeSave(add);
         boolean flag = baseMapper.insert(add) > 0;
 #set($pk=$pkColumn.javaField.substring(0,1).toUpperCase() + ${pkColumn.javaField.substring(1)})
-        if (flag) {
-            addBo.set$pk(add.get$pk());
-        }
         return flag;
     }
 
@@ -169,7 +166,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      * @param isValid 是否检验?
      */
     @Override
-    public Boolean deleteWithValidByIds(Collection<${pkColumn.javaType}> ids, Boolean isValid) {
+    public Boolean deleteWithValidByIds(Collection<${pkColumn.javaType.getCode()}> ids, Boolean isValid) {
         if(isValid){
             //TODO 做一些业务上的校验,判断是否需要校验
         }

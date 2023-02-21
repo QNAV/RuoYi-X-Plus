@@ -55,7 +55,7 @@ public class ${ClassName} extends ${Entity} {
     @TableId(value = "$column.columnName")
 #end
     @Schema(description = "$column.columnComment")
-    private $column.javaType $column.javaField;
+    private $column.javaType.getCode() $column.javaField;
 
 #end
 #end

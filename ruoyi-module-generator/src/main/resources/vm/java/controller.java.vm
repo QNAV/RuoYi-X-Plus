@@ -90,7 +90,7 @@ public class ${ClassName}Controller extends AdminBaseController {
     @GetMapping(value = "/info")
     public R<${ClassName}Vo> getInfo(@Parameter(description = "主键", required = true)
                                      @NotNull(message = "主键不能为空")
-                                     @RequestParam(required = true) ${pkColumn.javaType} ${pkColumn.javaField}) {
+                                     @RequestParam(required = true) ${pkColumn.javaType.getCode()} ${pkColumn.javaField}) {
         return R.ok(i${ClassName}Service.queryById(${pkColumn.javaField}));
     }
 
@@ -127,7 +127,7 @@ public class ${ClassName}Controller extends AdminBaseController {
     @PostMapping("/remove")
     public R<Void> remove(@Parameter(description = "主键串", required = true)
                                        @NotEmpty(message = "主键不能为空")
-                                       @RequestParam(required = true) ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
+                                       @RequestParam(required = true) ${pkColumn.javaType.getCode()}[] ${pkColumn.javaField}s) {
         return toAjax(i${ClassName}Service.deleteWithValidByIds(Arrays.asList(${pkColumn.javaField}s), true));
     }
 }

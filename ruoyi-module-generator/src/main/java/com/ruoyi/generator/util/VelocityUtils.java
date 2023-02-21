@@ -5,6 +5,8 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.common.constant.GenConstants;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
+import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.helper.DataBaseHelper;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.JsonUtils;
@@ -12,6 +14,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.generator.domain.GenTable;
 import com.ruoyi.generator.domain.GenTableColumn;
 import com.ruoyi.generator.enums.HtmlTypeEnum;
+import com.ruoyi.generator.enums.JavaTypeEnum;
 import com.ruoyi.generator.enums.TplCategoryEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -54,6 +57,11 @@ public class VelocityUtils {
         String functionName = genTable.getFunctionName();
 
         VelocityContext velocityContext = new VelocityContext();
+
+        // 放入常用枚举，用于替换时的比较或者判断
+        velocityContext.put("CommonYesOrNoEnum", CommonYesOrNoEnum.class);
+        velocityContext.put("CommonNormalDisableEnum", CommonNormalDisableEnum.class);
+        velocityContext.put("JavaTypeEnum", JavaTypeEnum.class);
 
         // 表信息放入模板容器
         velocityContext.put("tplCategory", genTable.getTplCategory());

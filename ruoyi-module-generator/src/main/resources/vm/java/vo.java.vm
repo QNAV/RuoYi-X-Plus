@@ -48,12 +48,12 @@ public class ${ClassName}Vo extends BaseVo {
     @ExcelProperty(value = "${comment}")
 #end
 ## 视图对象，如果是标记的列表字段 则返回必须
-#if($column.isList())
+#if($column.isVoRequired())
     @Schema(description = "$column.columnComment", required = true)
 #else
     @Schema(description = "$column.columnComment")
 #end
-    private $column.javaType $column.javaField;
+    private $column.javaType.getCode() $column.javaField;
 
 #end
 #end

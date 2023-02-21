@@ -33,7 +33,7 @@ public class ${ClassName}AddBo implements Serializable {
 ## 字段必须&&字段不是主键
 #if($column.isRequired())
     @Schema(description = "$column.columnComment", required = true)
-    #if($column.javaType == 'String')
+    #if($column.javaType.getCode() == "String")
     @NotBlank(message = "$column.columnComment不能为空")
     @Size(min = 0, max = $column.columnMaxLength, message = "$column.columnComment不能超过{max}个字符")
     #else
@@ -42,7 +42,7 @@ public class ${ClassName}AddBo implements Serializable {
 #else
     @Schema(description = "$column.columnComment")
 #end
-    private $column.javaType $column.javaField;
+    private $column.javaType.getCode() $column.javaField;
 
 #end
 #end
