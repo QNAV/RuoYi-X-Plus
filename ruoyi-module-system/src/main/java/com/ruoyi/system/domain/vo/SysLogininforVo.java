@@ -2,11 +2,9 @@ package com.ruoyi.system.domain.vo;
 
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.ruoyi.common.annotation.ExcelDictFormat;
 import com.ruoyi.common.annotation.ExcelEnumFormat;
-import com.ruoyi.common.convert.ExcelDictConvert;
 import com.ruoyi.common.convert.ExcelEnumConvert;
-import com.ruoyi.common.enums.CommonResultEnum;
+import com.ruoyi.common.enums.LoginActionEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -42,8 +40,8 @@ public class SysLogininforVo implements Serializable {
      */
     @Schema(description = "登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）", required = true)
     @ExcelProperty(value = "登录状态", converter = ExcelEnumConvert.class)
-    @ExcelEnumFormat(enumClass = CommonResultEnum.class)
-    private CommonResultEnum status;
+    @ExcelEnumFormat(enumClass = LoginActionEnum.class)
+    private LoginActionEnum status;
 
     /**
      * 登录IP地址

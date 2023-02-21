@@ -77,7 +77,7 @@ public class SysLoginService {
         // 生成token
         AdminLoginHelper.loginByDevice(loginUser, DeviceType.PC);
 
-        recordLogininfor(username, UserActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
+        recordLogininfor(username, LoginActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), username);
         return StpUtil.getTokenValue();
     }
@@ -92,7 +92,7 @@ public class SysLoginService {
         // 生成token
         AdminLoginHelper.loginByDevice(loginUser, DeviceType.APP);
 
-        recordLogininfor(user.getUserName(), UserActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
+        recordLogininfor(user.getUserName(), LoginActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
@@ -114,7 +114,7 @@ public class SysLoginService {
         // 生成token
         AdminLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        recordLogininfor(user.getUserName(), UserActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
+        recordLogininfor(user.getUserName(), LoginActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
@@ -127,7 +127,7 @@ public class SysLoginService {
         try {
             AdminLoginUser loginUser = AdminLoginHelper.getLoginUser();
             StpUtil.logout();
-            recordLogininfor(loginUser.getUsername(), UserActionEnum.LOGOUT, MessageUtils.message("user.logout.success"));
+            recordLogininfor(loginUser.getUsername(), LoginActionEnum.LOGOUT, MessageUtils.message("user.logout.success"));
         } catch (NotLoginException ignored) {
         }
     }
@@ -140,7 +140,7 @@ public class SysLoginService {
      * @param message  消息内容
      * @return
      */
-    private void recordLogininfor(String username, UserActionEnum status, String message) {
+    private void recordLogininfor(String username, LoginActionEnum status, String message) {
         AdminLogininforEvent logininfor = new AdminLogininforEvent();
         logininfor.setUsername(username);
         logininfor.setStatus(status);
@@ -156,7 +156,7 @@ public class SysLoginService {
     private boolean validateSmsCode(String phonenumber, String smsCode) {
         String code = RedisUtils.getCacheObject(CacheConstants.SMS_CAPTCHA_CODE_KEY + phonenumber);
         if (StringUtils.isBlank(code)) {
-            recordLogininfor(phonenumber, UserActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.expire"));
+            recordLogininfor(phonenumber, LoginActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
         }
         return code.equals(smsCode);
@@ -174,11 +174,11 @@ public class SysLoginService {
         String captcha = RedisUtils.getCacheObject(verifyKey);
         RedisUtils.deleteObject(verifyKey);
         if (captcha == null) {
-            recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.expire"));
+            recordLogininfor(username, LoginActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
         }
         if (!code.equalsIgnoreCase(captcha)) {
-            recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.error"));
+            recordLogininfor(username, LoginActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.error"));
             throw new CaptchaException();
         }
     }
@@ -262,7 +262,7 @@ public class SysLoginService {
         Integer errorNumber = RedisUtils.getCacheObject(errorKey);
         // 锁定时间内登录 则踢出
         if (ObjectUtil.isNotNull(errorNumber) && errorNumber.equals(maxRetryCount)) {
-            recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
+            recordLogininfor(username, LoginActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
             throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
         }
 
@@ -272,12 +272,12 @@ public class SysLoginService {
             // 达到规定错误次数 则锁定登录
             if (errorNumber.equals(maxRetryCount)) {
                 RedisUtils.setCacheObject(errorKey, errorNumber, Duration.ofMinutes(lockTime));
-                recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
+                recordLogininfor(username, LoginActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
                 throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
             } else {
                 // 未达到规定错误次数 则递增
                 RedisUtils.setCacheObject(errorKey, errorNumber);
-                recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitCount(), errorNumber));
+                recordLogininfor(username, LoginActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitCount(), errorNumber));
                 throw new UserException(loginType.getRetryLimitCount(), errorNumber);
             }
         }

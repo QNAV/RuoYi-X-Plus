@@ -1,6 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
-import com.ruoyi.common.enums.UserActionEnum;
+import com.ruoyi.common.enums.LoginActionEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -27,7 +27,7 @@ public class SysLogininforQueryBo implements Serializable {
      * 登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）
      */
     @Schema(description = "登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）")
-    private UserActionEnum status;
+    private LoginActionEnum status;
 
     /**
      * 登录IP地址

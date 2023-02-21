@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author ruoyi
  */
-public enum UserActionEnum implements BaseEnum {
+public enum LoginActionEnum implements BaseEnum {
     LOGINOK("LOGINOK", "登录成功"),
     LOGINFAIL("LOGINFAIL", "登录失败"),
     LOGOUT("LOGOUT", "注销登录"),
@@ -27,7 +27,7 @@ public enum UserActionEnum implements BaseEnum {
     private final String code;
     private final String info;
 
-    UserActionEnum(String code, String info) {
+    LoginActionEnum(String code, String info) {
         this.code = code;
         this.info = info;
     }
@@ -41,13 +41,13 @@ public enum UserActionEnum implements BaseEnum {
     }
 
     // code对应的枚举map
-    public static Map<String, UserActionEnum> CMAPS = new HashMap<>();
+    public static Map<String, LoginActionEnum> CMAPS = new HashMap<>();
     // info对应的枚举map
-    public static Map<String, UserActionEnum> IMAPS = new HashMap<>();
+    public static Map<String, LoginActionEnum> IMAPS = new HashMap<>();
 
     static {
         // 静态初始化
-        for (UserActionEnum e: values()){
+        for (LoginActionEnum e: values()){
             CMAPS.put(e.getCode(), e);
             IMAPS.put(e.getInfo(), e);
         }
@@ -60,7 +60,7 @@ public enum UserActionEnum implements BaseEnum {
      *
      * @return
      */
-    public static UserActionEnum getEnumByCode(String code) {
+    public static LoginActionEnum getEnumByCode(String code) {
         return CMAPS.get(code);
     }
 
@@ -71,7 +71,7 @@ public enum UserActionEnum implements BaseEnum {
      *
      * @return
      */
-    public static UserActionEnum getEnumByInfo(String info) {
+    public static LoginActionEnum getEnumByInfo(String info) {
         return IMAPS.get(info);
     }
 
@@ -85,7 +85,7 @@ public enum UserActionEnum implements BaseEnum {
         if (ObjectUtil.isNull(obj)){
             return "";
         }
-        UserActionEnum e = (UserActionEnum) obj;
+        LoginActionEnum e = (LoginActionEnum) obj;
         return e.getCode();
     }
 
@@ -99,7 +99,7 @@ public enum UserActionEnum implements BaseEnum {
         if (ObjectUtil.isNull(obj)){
             return "";
         }
-        UserActionEnum e = (UserActionEnum) obj;
+        LoginActionEnum e = (LoginActionEnum) obj;
         return e.getInfo();
     }
 }

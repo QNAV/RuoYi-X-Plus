@@ -1,6 +1,6 @@
 package com.ruoyi.system.domain.bo;
 
-import com.ruoyi.common.enums.UserActionEnum;
+import com.ruoyi.common.enums.LoginActionEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import javax.validation.constraints.*;
@@ -65,7 +65,7 @@ public class  BizLogininforEditBo implements Serializable {
      */
     @Schema(description = "登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）", required = true)
     @NotNull(message = "登录状态不能为空")
-    private UserActionEnum status;
+    private LoginActionEnum status;
 
     /**
      * 提示消息

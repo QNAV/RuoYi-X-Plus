@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ruoyi.common.annotation.ExcelEnumFormat;
 import com.ruoyi.common.convert.ExcelEnumConvert;
-import com.ruoyi.common.enums.UserActionEnum;
+import com.ruoyi.common.enums.LoginActionEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -47,8 +47,8 @@ public class SysLogininfor implements Serializable {
      */
     @Schema(description = "登录状态登录状态（LOGINOK=登录成功 LOGINFAIL=登录失败 LOGOUT=注销登录 REGISTER=注册）")
     @ExcelProperty(value = "登录状态", converter = ExcelEnumConvert.class)
-    @ExcelEnumFormat(enumClass = UserActionEnum.class)
-    private UserActionEnum status;
+    @ExcelEnumFormat(enumClass = LoginActionEnum.class)
+    private LoginActionEnum status;
 
     /**
      * 登录IP地址

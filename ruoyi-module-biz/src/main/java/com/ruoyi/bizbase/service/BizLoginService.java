@@ -83,7 +83,7 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        recordLogininfor(username, UserActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
+        recordLogininfor(username, LoginActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), username);
         return StpUtil.getTokenValue();
     }
@@ -109,7 +109,7 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        recordLogininfor(user.getUserName(), UserActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
+        recordLogininfor(user.getUserName(), LoginActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
@@ -150,7 +150,7 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        recordLogininfor(user.getUserName(), UserActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
+        recordLogininfor(user.getUserName(), LoginActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
@@ -178,7 +178,7 @@ public class BizLoginService {
         // 生成token
         BizLoginHelper.loginByDevice(loginUser, DeviceType.XCX);
 
-        recordLogininfor(user.getUserName(), UserActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
+        recordLogininfor(user.getUserName(), LoginActionEnum.LOGINOK, MessageUtils.message("user.login.success"));
         recordLoginInfo(user.getUserId(), user.getUserName());
         return StpUtil.getTokenValue();
     }
@@ -189,7 +189,7 @@ public class BizLoginService {
      * 退出登录
      */
     public void logout(String loginName) {
-        recordLogininfor(loginName, UserActionEnum.LOGOUT, MessageUtils.message("user.logout.success"));
+        recordLogininfor(loginName, LoginActionEnum.LOGOUT, MessageUtils.message("user.logout.success"));
     }
 
 
@@ -201,7 +201,7 @@ public class BizLoginService {
      * @param message  消息内容
      * @return
      */
-    private void recordLogininfor(String username, UserActionEnum status, String message) {
+    private void recordLogininfor(String username, LoginActionEnum status, String message) {
         BizLogininforEvent logininfor = new BizLogininforEvent();
         logininfor.setUsername(username);
         logininfor.setStatus(status);
@@ -216,7 +216,7 @@ public class BizLoginService {
     public boolean validateSmsCode(String phoneNumber, String smsCode, HttpServletRequest request) {
         String code = RedisUtils.getCacheObject(CacheConstants.CAPTCHA_CODE_KEY + phoneNumber);
         if (StringUtils.isBlank(code)) {
-            recordLogininfor(phoneNumber, UserActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.expire"));
+            recordLogininfor(phoneNumber, LoginActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
         }
         return code.equals(smsCode);
@@ -244,11 +244,11 @@ public class BizLoginService {
         String captcha = RedisUtils.getCacheObject(verifyKey);
         RedisUtils.deleteObject(verifyKey);
         if (captcha == null) {
-            recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.expire"));
+            recordLogininfor(username, LoginActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
         }
         if (!code.equalsIgnoreCase(captcha)) {
-            recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.error"));
+            recordLogininfor(username, LoginActionEnum.LOGINFAIL, MessageUtils.message("user.jcaptcha.error"));
             throw new CaptchaException();
         }
     }
@@ -369,7 +369,7 @@ public class BizLoginService {
         Integer errorNumber = RedisUtils.getCacheObject(errorKey);
         // 锁定时间内登录 则踢出
         if (ObjectUtil.isNotNull(errorNumber) && errorNumber.equals(maxRetryCount)) {
-            recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
+            recordLogininfor(username, LoginActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
             throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
         }
 
@@ -379,12 +379,12 @@ public class BizLoginService {
             // 达到规定错误次数 则锁定登录
             if (errorNumber.equals(maxRetryCount)) {
                 RedisUtils.setCacheObject(errorKey, errorNumber, Duration.ofMinutes(lockTime));
-                recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
+                recordLogininfor(username, LoginActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
                 throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
             } else {
                 // 未达到规定错误次数 则递增
                 RedisUtils.setCacheObject(errorKey, errorNumber);
-                recordLogininfor(username, UserActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitCount(), errorNumber));
+                recordLogininfor(username, LoginActionEnum.LOGINFAIL, MessageUtils.message(loginType.getRetryLimitCount(), errorNumber));
                 throw new UserException(loginType.getRetryLimitCount(), errorNumber);
             }
         }
