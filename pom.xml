@@ -61,6 +61,9 @@
         <!-- 微信支付 -->
         <weixin-java-pay.version>4.4.0</weixin-java-pay.version>
 
+
+        <changelog.version>1.95.5</changelog.version>
+
     </properties>
 
     <profiles>
@@ -490,6 +493,63 @@
                     <!-- 排除标签 -->
                     <excludedGroups>exclude</excludedGroups>
                 </configuration>
+            </plugin>
+            <!-- 自动changelog 版本发布工具 -->
+            <plugin>
+                <groupId>se.bjurr.gitchangelog</groupId>
+                <artifactId>git-changelog-maven-plugin</artifactId>
+                <version>${changelog.version}</version>
+                <executions>
+                    <execution>
+                        <id>GenerateGitChangelog</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>git-changelog</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Suffix version with -SNAPSHOT //-->
+                            <updatePomWithNextSemanticVersionSuffixSnapshot>true</updatePomWithNextSemanticVersionSuffixSnapshot>
+
+                            <!-- Regexp patterns used to identify next version can optionally be adjusted //-->
+                            <semanticMajorVersionPattern>^[Bb]reaking</semanticMajorVersionPattern>
+                            <semanticMinorVersionPattern>[Ff]eature</semanticMinorVersionPattern>
+                            <semanticPatchVersionPattern>[Ff]ix</semanticPatchVersionPattern>
+
+                            <templateContent>
+                                <![CDATA[
+{{#tags}}
+## {{name}}
+ {{#issues}}
+  {{#hasIssue}}
+   {{#hasLink}}
+### {{name}} [{{issue}}]({{link}}) {{title}} {{#hasIssueType}} *{{issueType}}* {{/hasIssueType}} {{#hasLabels}} {{#labels}} *{{.}}* {{/labels}} {{/hasLabels}}
+   {{/hasLink}}
+   {{^hasLink}}
+### {{name}} {{issue}} {{title}} {{#hasIssueType}} *{{issueType}}* {{/hasIssueType}} {{#hasLabels}} {{#labels}} *{{.}}* {{/labels}} {{/hasLabels}}
+   {{/hasLink}}
+  {{/hasIssue}}
+  {{^hasIssue}}
+### {{name}}
+  {{/hasIssue}}
+
+  {{#commits}}
+**{{{messageTitle}}}**
+
+{{#messageBodyItems}}
+ * {{.}}
+{{/messageBodyItems}}
+
+[{{hash}}](https://github.com/{{ownerName}}/{{repoName}}/commit/{{hash}}) {{authorName}} *{{commitTime}}*
+
+  {{/commits}}
+
+ {{/issues}}
+{{/tags}}
+         ]]>
+                            </templateContent>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <resources>
