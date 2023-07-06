@@ -51,6 +51,11 @@ public interface CacheNames {
     String SYS_OSS_CONFIG = "sys_oss_config";
 
     /**
+     * SMS配置
+     */
+    String SYS_SMS_CONFIG = "sys_sms_config";
+
+    /**
      * 在线业务用户 redis key
      */
     String ONLINE_BIZ_TOKEN = "online_biz_tokens:";

@@ -1,6 +1,7 @@
 package com.ruoyi.sms.config.properties;
 
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,13 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "sms")
+@ToString
 public class SmsProperties {
+
+    /**
+     * 厂商
+     */
+    private String manufacturer;
 
     private Boolean enabled;
 
