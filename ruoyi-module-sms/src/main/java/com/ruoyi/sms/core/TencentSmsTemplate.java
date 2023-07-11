@@ -5,6 +5,11 @@ import cn.hutool.core.util.ArrayUtil;
 import com.ruoyi.common.utils.JsonUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.sms.config.properties.SmsProperties;
+import com.ruoyi.sms.domain.bo.AddSmsTemplateBo;
+import com.ruoyi.sms.domain.bo.ModifySmsTemplateBo;
+import com.ruoyi.sms.domain.bo.QuerySmsTemplateBo;
+import com.ruoyi.sms.domain.vo.UnifySmsTemplatePageVo;
+import com.ruoyi.sms.domain.vo.UnifySmsTemplateVo;
 import com.ruoyi.sms.entity.SmsResult;
 import com.ruoyi.sms.exception.SmsException;
 import com.tencentcloudapi.common.Credential;
@@ -77,5 +82,31 @@ public class TencentSmsTemplate implements SmsTemplate {
             throw new SmsException(e.getMessage());
         }
     }
+
+    @Override
+    public UnifySmsTemplatePageVo querySmsTemplateList(QuerySmsTemplateBo querySmsTemplateBo) {
+        return null;
+    }
+
+    @Override
+    public String addSmsTemplate(AddSmsTemplateBo addSmsTemplateBo) {
+        return null;
+    }
+
+    @Override
+    public String modifySmsTemplate(ModifySmsTemplateBo modifySmsTemplateBo) {
+        return null;
+    }
+
+    @Override
+    public Boolean deleteSmsTemplate(String templateCode) {
+        return null;
+    }
+
+    @Override
+    public UnifySmsTemplateVo querySmsTemplate(String templateCode) {
+        return null;
+    }
+
 
 }

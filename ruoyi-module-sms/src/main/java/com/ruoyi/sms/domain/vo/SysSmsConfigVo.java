@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * 对象存储配置对象 sys_oss_config
+ * 短信配置对象 sys_oss_config
  *
  * @author Lion Li
  */
