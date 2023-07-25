@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.constant.CacheNames;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.enums.CommonNormalDisableEnum;
 import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.JsonUtils;
@@ -56,7 +57,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
         // 加载OSS初始化配置
         for (SysOssConfig config : list) {
             String configKey = config.getConfigKey();
-            if ("0".equals(config.getStatus())) {
+            if (CommonNormalDisableEnum.NORMAL.equals(config.getStatus())) {
                 RedisUtils.setCacheObject(OssConstant.DEFAULT_CONFIG_KEY, configKey);
             }
             SpringUtils.context().publishEvent(config);

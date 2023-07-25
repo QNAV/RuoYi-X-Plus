@@ -16,17 +16,17 @@ public enum AccessPolicyType {
     /**
      * private
      */
-    PRIVATE("0", CannedAccessControlList.Private, PolicyType.WRITE),
+    PRIVATE("PRIVATE", CannedAccessControlList.Private, PolicyType.WRITE),
 
     /**
      * public
      */
-    PUBLIC("1", CannedAccessControlList.PublicRead, PolicyType.READ),
+    PUBLIC("PUBLIC", CannedAccessControlList.PublicRead, PolicyType.READ),
 
     /**
      * custom
      */
-    CUSTOM("2",CannedAccessControlList.PublicRead, PolicyType.READ);
+    CUSTOM("CUSTOM",CannedAccessControlList.PublicRead, PolicyType.READ);
 
     /**
      * 桶 权限类型
