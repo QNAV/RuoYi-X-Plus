@@ -77,7 +77,7 @@ public class ${ClassName}Controller extends AdminBaseController {
     @SaCheckPermission("${permissionPrefix}:export")
     @AdminLog(title = "${functionName}", businessType = BusinessTypeEnum.EXPORT)
     @PostMapping("/export")
-    public void export(@RequestBody(required = false) ${ClassName}QueryBo bo, @ApiParam(hidden = true) HttpServletResponse response) {
+    public void export(@RequestBody(required = false) ${ClassName}QueryBo bo, @Parameter(hidden = true) HttpServletResponse response) {
         List<${ClassName}Vo> list = i${ClassName}Service.queryList(bo);
         ExcelUtil.exportExcel(list, "${functionName}", ${ClassName}Vo.class, response);
     }

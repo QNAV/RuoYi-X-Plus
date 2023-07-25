@@ -31,7 +31,7 @@ public class ${ClassName}PageQueryBo extends PageQuery {
     /**
      * $column.columnComment
      */
-    @ApiModelProperty(value = "$column.columnComment")
+    @Schema(description = "$column.columnComment")
     private $column.javaType.getCode() $column.javaField;
 
 #end
