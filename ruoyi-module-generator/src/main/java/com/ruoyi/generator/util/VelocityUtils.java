@@ -187,7 +187,7 @@ public class VelocityUtils {
             fileName = StringUtils.format("{}/domain/{}.java", javaPath, className);
         }
         if (template.contains("vo.java.vm")) {
-            fileName = StringUtils.format("{}/domain/bo/{}Vo.java", javaPath, className);
+            fileName = StringUtils.format("{}/domain/vo/{}Vo.java", javaPath, className);
         }
         if (template.contains("bo-add.java.vm")) {
             fileName = StringUtils.format("{}/domain/bo/{}AddBo.java", javaPath, className);
