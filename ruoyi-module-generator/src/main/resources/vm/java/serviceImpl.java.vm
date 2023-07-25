@@ -92,7 +92,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     #set($javaType=$column.javaType.getCode())
     #set($columnName=$column.columnName)
     #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-    #set($mpMethod=$column.queryType.toLowerCase())
+    #set($mpMethod=$column.queryType.toString().toLowerCase())
     #if($queryType != 'BETWEEN')
         #if($javaType == 'String')
             #set($condition='StringUtils.isNotBlank(queryBo.get'+$AttrName+'())')
