@@ -73,7 +73,7 @@ public class ${ClassName}Controller extends AdminBaseController {
     /**
      * 导出${functionName}列表
      */
-    @Operation(description = "导出${functionName}列表", summary = "${ClassName}PostExport")
+    @Operation(description = "导出${functionName}列表", operationId = "${ClassName}PostExport")
     @SaCheckPermission("${permissionPrefix}:export")
     @AdminLog(title = "${functionName}", businessType = BusinessTypeEnum.EXPORT)
     @PostMapping("/export")
@@ -85,7 +85,7 @@ public class ${ClassName}Controller extends AdminBaseController {
     /**
      * 获取${functionName}详细信息
      */
-    @Operation(description = "获取${functionName}详细信息", summary = "${ClassName}GetInfo")
+    @Operation(description = "获取${functionName}详细信息", operationId = "${ClassName}GetInfo")
     @SaCheckPermission("${permissionPrefix}:query")
     @GetMapping(value = "/info")
     public R<${ClassName}Vo> getInfo(@Parameter(description = "主键", required = true)
@@ -97,7 +97,7 @@ public class ${ClassName}Controller extends AdminBaseController {
     /**
      * 新增${functionName}
      */
-    @Operation(description = "新增${functionName}", summary = "${ClassName}PostAdd")
+    @Operation(description = "新增${functionName}", operationId = "${ClassName}PostAdd")
     @SaCheckPermission("${permissionPrefix}:add")
     @AdminLog(title = "${functionName}", businessType = BusinessTypeEnum.ADD)
     @RepeatSubmit()
@@ -109,7 +109,7 @@ public class ${ClassName}Controller extends AdminBaseController {
     /**
      * 修改${functionName}
      */
-    @Operation(description = "修改${functionName}", summary = "${ClassName}PostEdit")
+    @Operation(description = "修改${functionName}", operationId = "${ClassName}PostEdit")
     @SaCheckPermission("${permissionPrefix}:edit")
     @AdminLog(title = "${functionName}", businessType = BusinessTypeEnum.MODIFY)
     @RepeatSubmit()
@@ -121,7 +121,7 @@ public class ${ClassName}Controller extends AdminBaseController {
     /**
      * 删除${functionName}
      */
-    @Operation(description = "删除${functionName}", summary = "${ClassName}PostRemove")
+    @Operation(description = "删除${functionName}", operationId = "${ClassName}PostRemove")
     @SaCheckPermission("${permissionPrefix}:remove")
     @AdminLog(title = "${functionName}", businessType = BusinessTypeEnum.DELETE)
     @PostMapping("/remove")
