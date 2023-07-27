@@ -15,6 +15,7 @@ import com.ruoyi.common.utils.BeanCopyUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
+import com.ruoyi.oss.constant.OssConstant;
 import com.ruoyi.oss.core.OssClient;
 import com.ruoyi.oss.entity.UploadResult;
 import com.ruoyi.oss.enumd.AccessPolicyType;
@@ -113,7 +114,7 @@ public class SysOssServiceImpl implements ISysOssService, OssService {
         }
         FileUtils.setAttachmentResponseHeader(response, sysOss.getOriginalName());
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE + "; charset=UTF-8");
-        OssClient storage = OssFactory.instance();
+        OssClient storage = OssFactory.instance(OssConstant.DEFAULT_CONFIG_KEY);
         try(InputStream inputStream = storage.getObjectContent(sysOss.getUrl())) {
             int available = inputStream.available();
             IoUtil.copy(inputStream, response.getOutputStream(), available);
@@ -127,7 +128,7 @@ public class SysOssServiceImpl implements ISysOssService, OssService {
     public SysOssVo upload(MultipartFile file) {
         String originalfileName = file.getOriginalFilename();
         String suffix = StringUtils.substring(originalfileName, originalfileName.lastIndexOf("."), originalfileName.length());
-        OssClient storage = OssFactory.instance();
+        OssClient storage = OssFactory.instance(OssConstant.DEFAULT_CONFIG_KEY);
         UploadResult uploadResult;
         try {
             uploadResult = storage.uploadSuffix(file.getBytes(), suffix, file.getContentType());
