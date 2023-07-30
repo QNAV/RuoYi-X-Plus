@@ -8,6 +8,8 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import com.ruoyi.biz.satoken.BizSaTokenDao;
 import com.ruoyi.biz.satoken.SecurityProperties;
+import com.ruoyi.common.helper.AllUrlHandler;
+import com.ruoyi.common.utils.spring.SpringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -34,10 +36,11 @@ public class BizSaTokenConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册路由拦截器，自定义验证规则
         registry.addInterceptor(new SaInterceptor(handler -> {
+            AllUrlHandler allUrlHandler = SpringUtils.getBean(AllUrlHandler.class);
             // 登录验证 -- 排除多个路径
             SaRouter
                 // 获取所有的
-                .match("/**")
+                .match(allUrlHandler.getUrls())
                 // 对未排除的路径进行检查
                 .check(() -> {
                     // 检查是否登录 是否有token
