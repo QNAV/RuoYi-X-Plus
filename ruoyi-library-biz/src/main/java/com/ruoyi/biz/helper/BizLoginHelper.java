@@ -3,6 +3,7 @@ package com.ruoyi.biz.helper;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.biz.domain.model.BizLoginUser;
 import com.ruoyi.common.enums.DeviceType;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BizLoginHelper {
     public static final String LOGIN_USER_KEY = "loginBizUser";
+    public static final String USER_KEY = "bizUserId";
 
     /**
      * 登录系统
@@ -38,7 +40,8 @@ public class BizLoginHelper {
         if (ObjectUtil.isNotNull(deviceType)) {
             model.setDevice(deviceType.getDevice());
         }
-        StpUtil.login(loginUser.getLoginId(), model.setExtra(LOGIN_USER_KEY, loginUser));
+        StpUtil.login(loginUser.getLoginId(), model.setExtra(USER_KEY, loginUser.getUserId()));
+        StpUtil.getTokenSession().set(LOGIN_USER_KEY, loginUser);
     }
 
 
@@ -75,13 +78,13 @@ public class BizLoginHelper {
      * 获取用户id
      */
     public static Long getUserId() {
-        BizLoginUser loginUser;
+        Long userId;
         try {
-            loginUser = getLoginUser();
+            userId = Convert.toLong(StpUtil.getExtra(USER_KEY));
         } catch (Exception e) {
             return null;
         }
-        return loginUser.getUserId();
+        return userId;
     }
 
 
