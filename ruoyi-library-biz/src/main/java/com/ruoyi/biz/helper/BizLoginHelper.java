@@ -1,13 +1,12 @@
 package com.ruoyi.biz.helper;
 
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.biz.domain.model.BizLoginUser;
 import com.ruoyi.common.enums.DeviceType;
 import com.ruoyi.common.enums.UserTypeEnum;
-import com.ruoyi.common.exception.UtilException;
-import com.ruoyi.common.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -16,8 +15,6 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BizLoginHelper {
-
-    public static final String JOIN_CODE = ":";
     public static final String LOGIN_USER_KEY = "loginBizUser";
 
     /**
@@ -26,9 +23,7 @@ public class BizLoginHelper {
      * @param loginUser 登录用户信息
      */
     public static void login(BizLoginUser loginUser) {
-        SaHolder.getStorage().set(LOGIN_USER_KEY, loginUser);
-        StpUtil.login(loginUser.getLoginId());
-        setLoginUser(loginUser);
+        loginByDevice(loginUser, null);
     }
 
     /**
@@ -39,8 +34,11 @@ public class BizLoginHelper {
      */
     public static void loginByDevice(BizLoginUser loginUser, DeviceType deviceType) {
         SaHolder.getStorage().set(LOGIN_USER_KEY, loginUser);
-        StpUtil.login(loginUser.getLoginId(), deviceType.getDevice());
-        setLoginUser(loginUser);
+        SaLoginModel model = new SaLoginModel();
+        if (ObjectUtil.isNotNull(deviceType)) {
+            model.setDevice(deviceType.getDevice());
+        }
+        StpUtil.login(loginUser.getLoginId(), model.setExtra(LOGIN_USER_KEY, loginUser));
     }
 
 
@@ -77,21 +75,11 @@ public class BizLoginHelper {
      * 获取用户id
      */
     public static Long getUserId() {
-        BizLoginUser loginUser = getLoginUser();
-        if (ObjectUtil.isNull(loginUser)) {
-            String loginId = StpUtil.getLoginIdAsString();
-            String userId = null;
-            for (UserTypeEnum value : UserTypeEnum.values()) {
-                if (StringUtils.contains(loginId, value.getCode())) {
-                    String[] strs = StringUtils.split(loginId, JOIN_CODE);
-                    // 用户id在总是在最后
-                    userId = strs[strs.length - 1];
-                }
-            }
-            if (StringUtils.isBlank(userId)) {
-                throw new UtilException("登录用户: LoginId异常 => " + loginId);
-            }
-            return Long.parseLong(userId);
+        BizLoginUser loginUser;
+        try {
+            loginUser = getLoginUser();
+        } catch (Exception e) {
+            return null;
         }
         return loginUser.getUserId();
     }

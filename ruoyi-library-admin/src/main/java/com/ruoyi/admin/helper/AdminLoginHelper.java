@@ -1,16 +1,17 @@
 package com.ruoyi.admin.helper;
 
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.admin.domain.model.AdminLoginUser;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.enums.DeviceType;
 import com.ruoyi.common.enums.UserTypeEnum;
-import com.ruoyi.common.exception.UtilException;
-import com.ruoyi.common.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 /**
  * 后台登录鉴权助手
@@ -27,8 +28,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdminLoginHelper {
 
-    public static final String JOIN_CODE = ":";
     public static final String LOGIN_USER_KEY = "loginAdminUser";
+    public static final String MENU_PERMISSION = "menuPermission";
 
     /**
      * 登录系统
@@ -36,9 +37,7 @@ public class AdminLoginHelper {
      * @param loginUser 登录用户信息
      */
     public static void login(AdminLoginUser loginUser) {
-        SaHolder.getStorage().set(LOGIN_USER_KEY, loginUser);
-        StpUtil.login(loginUser.getLoginId());
-        setLoginUser(loginUser);
+        loginByDevice(loginUser, null);
     }
 
     /**
@@ -49,8 +48,15 @@ public class AdminLoginHelper {
      */
     public static void loginByDevice(AdminLoginUser loginUser, DeviceType deviceType) {
         SaHolder.getStorage().set(LOGIN_USER_KEY, loginUser);
-        StpUtil.login(loginUser.getLoginId(), deviceType.getDevice());
-        setLoginUser(loginUser);
+        Set<String> menuPermission = loginUser.getMenuPermission();
+        loginUser.setMenuPermission(null);
+        SaLoginModel model = new SaLoginModel();
+        if (ObjectUtil.isNotNull(deviceType)) {
+            model.setDevice(deviceType.getDevice());
+        }
+        StpUtil.login(loginUser.getLoginId(), model.setExtra(LOGIN_USER_KEY, loginUser));
+        // 解决菜单权限过度 token 臃肿过长问题
+        StpUtil.getTokenSession().set(MENU_PERMISSION, menuPermission);
     }
 
     /**
@@ -63,12 +69,16 @@ public class AdminLoginHelper {
     /**
      * 获取用户(多级缓存)
      */
+    @SuppressWarnings("unchecked cast")
     public static AdminLoginUser getLoginUser() {
         AdminLoginUser loginUser = (AdminLoginUser) SaHolder.getStorage().get(LOGIN_USER_KEY);
         if (loginUser != null) {
             return loginUser;
         }
         loginUser = (AdminLoginUser) StpUtil.getTokenSession().get(LOGIN_USER_KEY);
+        // 解决菜单权限过度 token 臃肿过长问题
+        Set<String> menuPermission = (Set<String>) StpUtil.getTokenSession().get(MENU_PERMISSION);
+        loginUser.setMenuPermission(menuPermission);
         SaHolder.getStorage().set(LOGIN_USER_KEY, loginUser);
         return loginUser;
     }
@@ -77,28 +87,22 @@ public class AdminLoginHelper {
      * 获取用户基于token
      */
     public static AdminLoginUser getLoginUser(String token) {
-        return (AdminLoginUser) StpUtil.getExtra(token, LOGIN_USER_KEY);
+        AdminLoginUser loginUser = (AdminLoginUser) StpUtil.getExtra(token, LOGIN_USER_KEY);
+        // 解决菜单权限过多 token 臃肿过长问题
+        Set<String> menuPermission = (Set<String>) StpUtil.getTokenSessionByToken(token).get(MENU_PERMISSION);
+        loginUser.setMenuPermission(menuPermission);
+        return loginUser;
     }
 
     /**
      * 获取用户id
      */
     public static Long getUserId() {
-        AdminLoginUser loginUser = getLoginUser();
-        if (ObjectUtil.isNull(loginUser)) {
-            String loginId = StpUtil.getLoginIdAsString();
-            String userId = null;
-            for (UserTypeEnum value : UserTypeEnum.values()) {
-                if (StringUtils.contains(loginId, value.getCode())) {
-                    String[] strs = StringUtils.split(loginId, JOIN_CODE);
-                    // 用户id在总是在最后
-                    userId = strs[strs.length - 1];
-                }
-            }
-            if (StringUtils.isBlank(userId)) {
-                throw new UtilException("登录用户: LoginId异常 => " + loginId);
-            }
-            return Long.parseLong(userId);
+        AdminLoginUser loginUser;
+        try {
+            loginUser = getLoginUser();
+        } catch (Exception e) {
+            return null;
         }
         return loginUser.getUserId();
     }
