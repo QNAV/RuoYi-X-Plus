@@ -74,6 +74,13 @@ public class AdminLoginHelper {
     }
 
     /**
+     * 获取用户基于token
+     */
+    public static AdminLoginUser getLoginUser(String token) {
+        return (AdminLoginUser) StpUtil.getExtra(token, LOGIN_USER_KEY);
+    }
+
+    /**
      * 获取用户id
      */
     public static Long getUserId() {

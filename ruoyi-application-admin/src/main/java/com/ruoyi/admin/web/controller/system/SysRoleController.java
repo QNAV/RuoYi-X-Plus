@@ -1,7 +1,11 @@
 package com.ruoyi.admin.web.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.hutool.core.util.ObjectUtil;
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.collection.CollUtil;
+import com.ruoyi.common.constant.CacheConstants;
+import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.domain.model.AdminLoginUser;
 import com.ruoyi.admin.helper.AdminLoginHelper;
@@ -9,7 +13,6 @@ import com.ruoyi.common.annotation.AdminLog;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.bo.PageQuery;
 import com.ruoyi.common.core.domain.entity.SysRole;
-import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessTypeEnum;
 import com.ruoyi.common.enums.CommonYesOrNoEnum;
@@ -118,13 +121,25 @@ public class SysRoleController extends AdminBaseController {
         }
 
         if (roleService.updateRole(role) > 0) {
-            // 更新缓存用户权限
-            AdminLoginUser loginUser = getLoginUser();
-            SysUser sysUser = userService.selectUserById(loginUser.getUserId());
-            if (ObjectUtil.isNotNull(sysUser) && !AdminLoginHelper.isAdmin()) {
-                loginUser.setMenuPermission(permissionService.getMenuPermission(sysUser));
-                AdminLoginHelper.setLoginUser(loginUser);
+            List<String> keys = StpUtil.searchTokenValue("", 0, -1, false);
+            if (CollUtil.isEmpty(keys)) {
+                return R.ok();
             }
+            // 角色关联的在线用户量过大会导致redis阻塞卡顿 谨慎操作
+            keys.parallelStream().forEach(key -> {
+                String token = key.replace(CacheConstants.ADMIN_LOGIN_TOKEN_KEY, "");
+                // 如果已经过期则跳过
+                if (StpUtil.stpLogic.getTokenActivityTimeoutByToken(token) < -1) {
+                    return;
+                }
+                AdminLoginUser loginUser = AdminLoginHelper.getLoginUser(token);
+                if (loginUser.getRoles().stream().anyMatch(r -> r.getRoleId().equals(role.getRoleId()))) {
+                    try {
+                        StpUtil.logoutByTokenValue(token);
+                    } catch (NotLoginException ignored) {
+                    }
+                }
+            });
             return R.ok();
         }
         return R.fail("修改角色'" + role.getRoleName() + "'失败，请联系管理员");
