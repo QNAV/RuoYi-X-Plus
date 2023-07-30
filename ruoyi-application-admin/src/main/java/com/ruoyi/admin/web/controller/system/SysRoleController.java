@@ -5,7 +5,6 @@ import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollUtil;
 import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.admin.controller.AdminBaseController;
 import com.ruoyi.admin.domain.model.AdminLoginUser;
 import com.ruoyi.admin.helper.AdminLoginHelper;

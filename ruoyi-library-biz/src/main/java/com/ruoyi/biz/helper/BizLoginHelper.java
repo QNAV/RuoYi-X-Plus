@@ -65,6 +65,14 @@ public class BizLoginHelper {
         return loginUser;
     }
 
+
+    /**
+     * 获取用户基于token
+     */
+    public static BizLoginUser getLoginUser(String token) {
+        return (BizLoginUser) StpUtil.getExtra(token, LOGIN_USER_KEY);
+    }
+
     /**
      * 获取用户id
      */
