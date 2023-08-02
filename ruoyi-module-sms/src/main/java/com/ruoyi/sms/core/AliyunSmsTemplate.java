@@ -145,6 +145,9 @@ public class AliyunSmsTemplate implements SmsTemplate {
 
     @Override
     public Boolean deleteSmsTemplate(String templateCode) {
+        if(StringUtils.isBlank(templateCode)){
+            throw new SmsException("短信模板ID不能为空!");
+        }
         DeleteSmsTemplateRequest deleteSmsTemplateRequest=new DeleteSmsTemplateRequest();
         RuntimeOptions runtimeOptions = new RuntimeOptions();
         deleteSmsTemplateRequest.setTemplateCode(templateCode);
@@ -164,7 +167,10 @@ public class AliyunSmsTemplate implements SmsTemplate {
     }
 
     @Override
-    public UnifySmsTemplateVo querySmsTemplate(String templateCode) {
+    public UnifySmsTemplateVo querySmsTemplate(String templateCode,Long international) {
+        if(StringUtils.isBlank(templateCode)){
+            throw new SmsException("短信模板ID不能为空!");
+        }
         QuerySmsTemplateRequest querySmsTemplateRequest=new QuerySmsTemplateRequest();
         RuntimeOptions runtimeOptions = new RuntimeOptions();
         querySmsTemplateRequest.setTemplateCode(templateCode);

@@ -60,7 +60,8 @@ public interface SmsTemplate {
     /**
      *  查询短信模板审核状态
      * @param templateCode 短信模板ID
+     * @param international 是否国际/港澳台短信：
      * @return 查询短信模板审核状态模板结果
      */
-    UnifySmsTemplateVo querySmsTemplate(String templateCode);
+    UnifySmsTemplateVo querySmsTemplate(String templateCode,Long international);
 }

@@ -43,6 +43,11 @@ public class SysSmsConfig extends BaseEntity {
     private String accessKeySecret;
 
     /**
+     * 配置节点
+     */
+    private String endpoint;
+
+    /**
      * 短信签名
      */
     private String signName;

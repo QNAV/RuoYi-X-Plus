@@ -35,6 +35,12 @@ public class SysSmsConfigEditBo implements Serializable {
     private String manufacturer;
 
     /**
+     * 配置节点
+     */
+    @NotBlank(message = "配置节点不能为空")
+    private String endpoint;
+
+    /**
      * 是否启用
      */
 //    @Schema(description = "是否启用", required = true)

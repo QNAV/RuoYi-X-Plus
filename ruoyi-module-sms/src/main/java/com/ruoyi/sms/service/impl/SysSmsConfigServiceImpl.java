@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.ruoyi.common.constant.CacheNames;
 import com.ruoyi.common.enums.CommonYesOrNoEnum;
 import com.ruoyi.common.exception.ServiceException;
@@ -65,6 +66,7 @@ public class SysSmsConfigServiceImpl implements ISysSmsConfigService {
     public Boolean insertByBo(SysSmsConfigEditBo bo) {
         SysSmsConfig config = BeanUtil.toBean(bo, SysSmsConfig.class);
         validEntityBeforeSave(config);
+        config.setId(IdWorker.getId());
         boolean flag = baseMapper.insert(config) > 0;
         if (flag) {
             SpringUtils.context().publishEvent(config);
@@ -116,6 +118,7 @@ public class SysSmsConfigServiceImpl implements ISysSmsConfigService {
         }
         return row;
     }
+
 
     private void validEntityBeforeSave(SysSmsConfig config) {
         if (StringUtils.isNotEmpty(config.getAccessKeyId())

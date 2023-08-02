@@ -1,9 +1,12 @@
 package com.ruoyi.sms.constant;
 
+import lombok.Getter;
+
 /**
  * @Author Administrator
  * @Date 2023/7/5 10:53
  */
+@Getter
 public enum ManufacturerNameEnum {
 
     ALIYUN("aliyun","阿里云"),

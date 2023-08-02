@@ -17,6 +17,8 @@ public class UnifySmsTemplateVo {
 
     private String auditStatus; //审核状态
 
+    private String reason;//审核失败原因
+
     private String orderId; //编号
 
     private Integer templateType ;//模板类型 ,0：验证码。1：短信通知。2：推广短信。3：国际/港澳台消息。

@@ -19,28 +19,29 @@ import javax.validation.constraints.NotNull;
 public class ModifySmsTemplateBo {
 
     //短信模板申请说明
-    @NameInMap("Remark")
     @NotBlank(message = "短信模板申请说明不能为空")
     public String remark;
 
     //模板内容,例子 您正在申请手机注册，验证码为：${code}，5分钟内有效！
-    @NameInMap("TemplateContent")
     @NotBlank(message = "模板内容不能为空")
     public String templateContent;
 
     //模板名称
-    @NameInMap("TemplateName")
     @NotBlank(message = "模板名称不能为空")
     public String templateName;
 
     //短信模板CODE
-    @NameInMap("TemplateName")
     @NotBlank(message = "短信模板CODE为空")
-    public String  TemplateCode;
+    public String  templateCode;
 
-    //短信类型
-    @NameInMap("TemplateType")
-    @NotNull(message = "模板名称不能为空")
+    //短信类型: 阿里云 0：验证码。1：短信通知。2：推广短信。3：国际/港澳台消息。
+    //短信类型: 腾讯云 0表示普通短信, 1表示营销短信。
+    @NotNull(message = "模板类型不能为空")
     public Integer templateType;
+
+    //是否国际/港澳台短信：
+    //0：表示国内短信。
+    //1：表示国际/港澳台短信。
+    public Long international;
 
 }

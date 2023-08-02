@@ -21,4 +21,8 @@ public class QuerySmsTemplateBo {
     //页码(aliyun默认为10.)
     public Integer pageSize;
 
+    //是否国际/港澳台短信：
+    //0：表示国内短信。
+    //1：表示国际/港澳台短信。
+    public Long international;
 }

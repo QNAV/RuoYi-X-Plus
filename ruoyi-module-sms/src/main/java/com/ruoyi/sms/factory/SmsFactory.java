@@ -45,7 +45,7 @@ public class SmsFactory {
         //获取redis 默认类型
       String accessKeyId=  RedisUtils.getCacheObject(SmsConstant.DEFAULT_CONFIG_KEY);
       if (StringUtils.isEmpty(accessKeyId)) {
-            throw new SmsException("文件存储服务类型无法找到!");
+            throw new SmsException("SMS服务类型无法找到!");
       }
       return instance(accessKeyId);
     }
@@ -55,7 +55,7 @@ public class SmsFactory {
      * @param accessKeyId
      * @return
      */
-    private static SmsTemplate instance(String accessKeyId) {
+    public static SmsTemplate instance(String accessKeyId) {
         SmsTemplate smsTemplate = getSmsTemplate(accessKeyId);
         if(smsTemplate==null){
             refresh(accessKeyId);
