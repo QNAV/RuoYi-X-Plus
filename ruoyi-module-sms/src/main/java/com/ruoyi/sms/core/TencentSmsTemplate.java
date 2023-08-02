@@ -17,15 +17,11 @@ import com.ruoyi.sms.exception.SmsException;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.profile.ClientProfile;
 import com.tencentcloudapi.common.profile.HttpProfile;
-import com.tencentcloudapi.sms.v20190711.SmsClient;
-import com.tencentcloudapi.sms.v20190711.models.*;
+import com.tencentcloudapi.sms.v20210111.models.*;
+import com.tencentcloudapi.sms.v20210111.SmsClient;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,7 +44,7 @@ public class TencentSmsTemplate implements SmsTemplate {
         httpProfile.setEndpoint(smsProperties.getEndpoint());
         ClientProfile clientProfile = new ClientProfile();
         clientProfile.setHttpProfile(httpProfile);
-        this.client = new SmsClient(credential, "", clientProfile);
+        this.client = new SmsClient(credential, smsProperties.getRegion(), clientProfile);
     }
 
     @Override
@@ -65,9 +61,9 @@ public class TencentSmsTemplate implements SmsTemplate {
         if (CollUtil.isNotEmpty(param)) {
             req.setTemplateParamSet(ArrayUtil.toArray(param.values(), String.class));
         }
-        req.setTemplateID(templateId);
-        req.setSign(properties.getSignName());
-        req.setSmsSdkAppid(properties.getSdkAppId());
+        req.setTemplateId(templateId);
+        req.setSignName(properties.getSignName());
+        req.setSmsSdkAppId(properties.getSdkAppId());
         try {
             SendSmsResponse resp = client.SendSms(req);
             SmsResult.SmsResultBuilder builder = SmsResult.builder()
@@ -107,6 +103,7 @@ public class TencentSmsTemplate implements SmsTemplate {
                     unifySmsTemplateVo.setTemplateCode(describeTemplateListStatus.getTemplateId().toString());
                     unifySmsTemplateVo.setTemplateStatus(convertStatus(describeTemplateListStatus.getStatusCode()));
                     unifySmsTemplateVo.setTemplateType(1);
+                    unifySmsTemplateVo.setTemplateContent(describeTemplateListStatus.getTemplateContent());
                     unifySmsTemplateVo.setTemplateName(describeTemplateListStatus.getTemplateName());
                     unifySmsTemplateVo.setCreateDate(DateFormatUtils.format(new Date(describeTemplateListStatus.getCreateTime()),DateUtils.YYYY_MM_DD_HH_MM_SS));
                     unifySmsTemplateVo.setReason(describeTemplateListStatus.getReviewReply());
@@ -188,6 +185,7 @@ public class TencentSmsTemplate implements SmsTemplate {
                 unifySmsTemplateVo.setTemplateCode(describeTemplateListStatus.getTemplateId().toString());
                 unifySmsTemplateVo.setTemplateStatus(convertStatus(describeTemplateListStatus.getStatusCode()));
                 unifySmsTemplateVo.setTemplateType(1);
+                unifySmsTemplateVo.setTemplateContent(describeTemplateListStatus.getTemplateContent());
                 unifySmsTemplateVo.setTemplateName(describeTemplateListStatus.getTemplateName());
                 unifySmsTemplateVo.setCreateDate(DateFormatUtils.format(new Date(describeTemplateListStatus.getCreateTime()),DateUtils.YYYY_MM_DD_HH_MM_SS));
                 unifySmsTemplateVo.setReason(describeTemplateListStatus.getReviewReply());

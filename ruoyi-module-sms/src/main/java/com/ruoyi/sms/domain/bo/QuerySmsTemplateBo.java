@@ -25,4 +25,5 @@ public class QuerySmsTemplateBo {
     //0：表示国内短信。
     //1：表示国际/港澳台短信。
     public Long international;
+
 }

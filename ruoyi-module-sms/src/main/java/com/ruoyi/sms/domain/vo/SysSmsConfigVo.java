@@ -54,7 +54,10 @@ public class SysSmsConfigVo extends BaseVo {
      * 短信应用ID (腾讯专属)
      */
     private String sdkAppId;
-
+    /**
+     * 地区
+     */
+    private String region;
 
     /**
      * 备注

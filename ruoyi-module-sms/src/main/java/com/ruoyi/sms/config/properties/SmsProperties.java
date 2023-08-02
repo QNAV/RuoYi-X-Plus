@@ -50,4 +50,9 @@ public class SmsProperties {
      */
     private String sdkAppId;
 
+    /**
+     * 地区
+     */
+    private String region;
+
 }

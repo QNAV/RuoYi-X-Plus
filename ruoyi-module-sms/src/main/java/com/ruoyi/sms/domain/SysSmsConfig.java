@@ -57,6 +57,10 @@ public class SysSmsConfig extends BaseEntity {
      */
     private String sdkAppId;
 
+    /**
+     * 地区
+     */
+    private String region;
 
     /**
      * 备注
