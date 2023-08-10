@@ -280,14 +280,25 @@
                 <version>${alibaba-ttl.version}</version>
             </dependency>
 
-            <!-- 微信小程序SDK -->
+            <!--weixin-java-common-->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-common</artifactId>
+                <version>${weixin-java-open.version}</version>
+            </dependency>
+            <!--weixin-java-admin-->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-mp</artifactId>
+                <version>${weixin-java-mp.version}</version>
+            </dependency>
+            <!--weixin-java-miniapp-->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-miniapp</artifactId>
                 <version>${weixin-java-miniapp.version}</version>
             </dependency>
-
-            <!-- 微信支付 -->
+            <!--weixin-java-pay-->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>weixin-java-pay</artifactId>
@@ -392,6 +403,12 @@
             <!-- weixin-miniapp微信小程序模块 -->
             <dependency>
                 <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-module-wx</artifactId>
+                <version>${ruoyi-x-plus.version}</version>
+            </dependency>
+            <!-- weixin-miniapp微信小程序模块 -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
                 <artifactId>ruoyi-module-weixin-miniapp</artifactId>
                 <version>${ruoyi-x-plus.version}</version>
             </dependency>
@@ -431,9 +448,12 @@
         <module>ruoyi-module-demo</module>
         <module>ruoyi-module-oss</module>
         <module>ruoyi-module-sms</module>
-        <module>ruoyi-module-weixin-miniapp</module>
         <module>ruoyi-module-system</module>
         <module>ruoyi-module-biz</module>
+        <module>ruoyi-module-weixin</module>
+        <module>ruoyi-module-weixin-miniapp</module>
+        <module>ruoyi-module-weixin-mp</module>
+        <module>ruoyi-module-weixin-pay</module>
     </modules>
     <packaging>pom</packaging>
 

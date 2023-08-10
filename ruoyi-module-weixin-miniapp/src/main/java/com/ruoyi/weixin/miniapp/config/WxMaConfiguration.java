@@ -1,69 +1,79 @@
-package com.ruoyi.weixin.miniapp;
+package com.ruoyi.weixin.miniapp.config;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
+import cn.binarywang.wx.miniapp.bean.WxMaMessage;
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.message.WxMaMessageHandler;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
+import cn.binarywang.wx.miniapp.message.WxMaMessageRouterRule;
 import com.google.common.collect.Lists;
+import com.ruoyi.common.utils.spring.SpringUtils;
+import com.ruoyi.wx.config.WxMaProperties;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.EventListener;
 
 import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 微信小程序配置
- * @author weibocy
+ * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(WeixinMiniappProperties.class)
-@ConditionalOnProperty(prefix = "weixin.miniapp", name = "enable", havingValue = "true")
-public class WeixinMiniappConfiguration {
+public class WxMaConfiguration {
 
-    private final WeixinMiniappProperties properties;
+    private static  WxMaService wxMaService;
+    private static  WxMaMessageRouter wxMaMessageRouter;
 
-    @Autowired
-    public WeixinMiniappConfiguration(WeixinMiniappProperties properties) {
-        this.properties = properties;
+    public static WxMaService getMaService(String appId) {
+        if (wxMaService == null || (wxMaService!=null && !wxMaService.switchover(appId))) {
+            throw new IllegalArgumentException(String.format("未找到对应appId=[%s]的配置，请核实！", appId));
+        }
+        return wxMaService;
     }
 
-    @Bean("weixinMiniappMaService")
-    public WxMaService wxMaService() {
-        List<WeixinMiniappProperties.Config> configs = this.properties.getConfigs();
-        if (configs == null || configs.size() == 0) {
+    public static WxMaMessageRouter getRouter(String appId) {
+        if (wxMaMessageRouter == null) {
+            throw new IllegalArgumentException(String.format("未找到对应appId=[%s]的配置，请核实！", appId));
+        }
+        return wxMaMessageRouter;
+    }
+
+
+    @EventListener
+    public void wxMaService(WxMaProperties properties) {
+        List<WxMaProperties.Config> configs = properties.getConfigs();
+        if (configs == null) {
             throw new WxRuntimeException("大哥，拜托先看下项目首页的说明（readme文件），添加下相关配置，注意别配错了！");
         }
-        WxMaService maService = new WxMaServiceImpl();
+        WxMaService maService  = new WxMaServiceImpl();
         maService.setMultiConfigs(
             configs.stream()
                 .map(a -> {
                     WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
 //                WxMaDefaultConfigImpl config = new WxMaRedisConfigImpl(new JedisPool());
                     // 使用上面的配置时，需要同时引入jedis-lock的依赖，否则会报类无法找到的异常
-                    config.setAppid(a.getAppid());
+                    config.setAppid(a.getAppId());
                     config.setSecret(a.getSecret());
                     config.setToken(a.getToken());
                     config.setAesKey(a.getAesKey());
                     config.setMsgDataFormat(a.getMsgDataFormat());
                     return config;
                 }).collect(Collectors.toMap(WxMaDefaultConfigImpl::getAppid, a -> a, (o, n) -> o)));
-        return maService;
+        wxMaService=maService;
+        SpringUtils.context().publishEvent(maService);
     }
 
-    @Bean
-    public WxMaMessageRouter wxMaMessageRouter(WxMaService wxMaService) {
+    @EventListener
+    public void wxMaMessageRouter(WxMaService wxMaService) {
         final WxMaMessageRouter router = new WxMaMessageRouter(wxMaService);
         router
             .rule().handler(logHandler).next()
@@ -71,7 +81,7 @@ public class WeixinMiniappConfiguration {
             .rule().async(false).content("文本").handler(textHandler).end()
             .rule().async(false).content("图片").handler(picHandler).end()
             .rule().async(false).content("二维码").handler(qrcodeHandler).end();
-        return router;
+        wxMaMessageRouter=router;
     }
 
     private final WxMaMessageHandler subscribeMsgHandler = (wxMessage, context, service, sessionManager) -> {
@@ -131,6 +141,5 @@ public class WeixinMiniappConfiguration {
 
         return null;
     };
-
 
 }

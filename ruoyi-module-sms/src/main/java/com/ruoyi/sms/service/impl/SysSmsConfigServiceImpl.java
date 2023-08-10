@@ -15,6 +15,7 @@ import com.ruoyi.common.utils.redis.RedisUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
 
 import com.ruoyi.sms.constant.SmsConstant;
+import com.ruoyi.sms.exception.SmsException;
 import com.ruoyi.sms.factory.SmsFactory;
 import com.ruoyi.sms.domain.SysSmsConfig;
 import com.ruoyi.sms.domain.bo.SysSmsConfigEditBo;
@@ -49,6 +50,7 @@ public class SysSmsConfigServiceImpl implements ISysSmsConfigService {
     @Override
     public void init() {
         List<SysSmsConfig> list = baseMapper.selectList();
+        CacheUtils.clear(CacheNames.SYS_SMS_CONFIG);
         if(!CollectionUtils.isEmpty(list)){
             for (SysSmsConfig config : list) {
                 String accessKeyId = config.getAccessKeyId();
@@ -66,7 +68,9 @@ public class SysSmsConfigServiceImpl implements ISysSmsConfigService {
     public Boolean insertByBo(SysSmsConfigEditBo bo) {
         SysSmsConfig config = BeanUtil.toBean(bo, SysSmsConfig.class);
         validEntityBeforeSave(config);
-        config.setId(IdWorker.getId());
+        if(config.getId()==null){
+            config.setId(IdWorker.getId());
+        }
         boolean flag = baseMapper.insert(config) > 0;
         if (flag) {
             SpringUtils.context().publishEvent(config);
@@ -77,11 +81,12 @@ public class SysSmsConfigServiceImpl implements ISysSmsConfigService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateByBo(SysSmsConfigEditBo bo) {
+        if(bo.getId()==null){
+            throw new SmsException("短信配置ID不能为空!");
+        }
         SysSmsConfig config = BeanUtil.toBean(bo, SysSmsConfig.class);
         validEntityBeforeSave(config);
         LambdaUpdateWrapper<SysSmsConfig> luw = new LambdaUpdateWrapper<>();
-        luw.set(ObjectUtil.isNull(config.getRemark()), SysSmsConfig::getRemark, "");
-        luw.set(ObjectUtil.isNull(config.getSdkAppId()), SysSmsConfig::getSdkAppId, "");
         luw.eq(SysSmsConfig::getId, config.getId());
         boolean flag = baseMapper.update(config, luw) > 0;
         if (flag) {
@@ -93,6 +98,9 @@ public class SysSmsConfigServiceImpl implements ISysSmsConfigService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteWithValidByIds(Collection<Long> ids) {
+        if(CollectionUtils.isEmpty(ids)){
+            throw new SmsException("删除的配置ID不能为空!");
+        }
         List<SysSmsConfig> list = Lists.newArrayList();
         for (Long configId : ids) {
             SysSmsConfig config = baseMapper.selectById(configId);
@@ -128,11 +136,11 @@ public class SysSmsConfigServiceImpl implements ISysSmsConfigService {
     }
 
     private CommonYesOrNoEnum checkConfigKeyUnique(SysSmsConfig sysSmsConfig) {
-        long smsConfigId = ObjectUtil.isNull(sysSmsConfig.getId()) ? -1L : sysSmsConfig.getId();
+        long id = ObjectUtil.isNull(sysSmsConfig.getId()) ? -1L : sysSmsConfig.getId();
         SysSmsConfig info = baseMapper.selectOne(new LambdaQueryWrapper<SysSmsConfig>()
-                .select(SysSmsConfig::getId, SysSmsConfig::getId)
+                .select(SysSmsConfig::getId,SysSmsConfig::getAccessKeyId)
                 .eq(SysSmsConfig::getAccessKeyId, sysSmsConfig.getAccessKeyId()));
-        if (ObjectUtil.isNotNull(info) && info.getId() != smsConfigId) {
+        if (ObjectUtil.isNotNull(info) && info.getId() != id) {
             return CommonYesOrNoEnum.NO;
         }
         return CommonYesOrNoEnum.YES;

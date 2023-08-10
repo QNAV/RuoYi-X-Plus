@@ -56,6 +56,11 @@ public interface CacheNames {
     String SYS_SMS_CONFIG = "sys_sms_config";
 
     /**
+     * 微信配置
+     */
+    String SYS_WX_CONFIG = "sys_wx_config";
+
+    /**
      * 在线业务用户 redis key
      */
     String ONLINE_BIZ_TOKEN = "online_biz_tokens:";

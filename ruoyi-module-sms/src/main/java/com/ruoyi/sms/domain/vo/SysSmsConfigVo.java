@@ -22,7 +22,6 @@ public class SysSmsConfigVo extends BaseVo {
     /**
      * 主建
      */
-    @TableId(value = "id")
     private Long id;
 
     /**

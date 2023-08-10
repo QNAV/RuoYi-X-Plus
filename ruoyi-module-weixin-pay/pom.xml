@@ -9,15 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ruoyi-module-weixin-miniapp</artifactId>
+    <artifactId>ruoyi-module-weixin-pay</artifactId>
 
 
     <dependencies>
 
-    <!-- 通用工具依赖库-->
-       <dependency>
-           <groupId>com.ruoyi</groupId>
-           <artifactId>ruoyi-library-common</artifactId>
+        <!-- 通用工具依赖库-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-library-common</artifactId>
         </dependency>
 
         <!-- weixin-miniapp微信小程序模块 -->
@@ -29,7 +29,7 @@
 
         <dependency>
             <groupId>com.github.binarywang</groupId>
-            <artifactId>weixin-java-miniapp</artifactId>
+            <artifactId>weixin-java-pay</artifactId>
         </dependency>
     </dependencies>
 </project>
