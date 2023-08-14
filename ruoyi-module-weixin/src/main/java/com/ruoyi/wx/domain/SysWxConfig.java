@@ -49,6 +49,11 @@ public class SysWxConfig extends BaseEntity {
     private String msgDataFormat;
 
     /**
+     * 消息模板ID
+     */
+    private String newMsgTemplId;
+
+    /**
      *  名称
      */
     private String name;
@@ -92,6 +97,11 @@ public class SysWxConfig extends BaseEntity {
      * 租户ID 预留
      */
     private String tenantId;
+
+    /**
+     * 组织ID
+     */
+    private String originalId;
 
     /**
      * p12证书的位置，可以指定绝对路径，也可以指定类路径（以classpath:开头）

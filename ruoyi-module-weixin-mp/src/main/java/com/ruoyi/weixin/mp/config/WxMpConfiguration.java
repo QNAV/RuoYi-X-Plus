@@ -23,6 +23,8 @@ SOFTWARE.
 */
 package com.ruoyi.weixin.mp.config;
 
+import cn.hutool.extra.spring.SpringUtil;
+import com.google.common.collect.Maps;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.weixin.mp.handler.*;
 import com.ruoyi.wx.config.WxMpProperties;
@@ -35,6 +37,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static me.chanjar.weixin.common.api.WxConsts.EventType;
@@ -63,10 +66,15 @@ public class WxMpConfiguration {
 //    private final SubscribeHandler subscribeHandler;
     private final ScanHandler scanHandler;
 
-    private static  WxMpService wxMpService;
-    private static  WxMpMessageRouter wxMpMessageRouter;
+    private final static  String  WX_MP_SERVICE="wxMpService";
+    private final static Map<String, WxMpMessageRouter> routers = Maps.newHashMap();
 
     public static WxMpService getMxService(String appId) {
+        boolean flag = SpringUtils.containsBean(WX_MP_SERVICE);
+        if(!flag){
+            throw new IllegalArgumentException(String.format("未找到对应appId=[%s]的配置，请核实！", appId));
+        }
+        WxMpService wxMpService =  SpringUtils.getBean(WX_MP_SERVICE);
         if (wxMpService == null || (wxMpService!=null && !wxMpService.switchover(appId))) {
             throw new IllegalArgumentException(String.format("未找到对应appId=[%s]的配置，请核实！", appId));
         }
@@ -74,10 +82,7 @@ public class WxMpConfiguration {
     }
 
     public static WxMpMessageRouter getRouter(String appId) {
-        if (wxMpMessageRouter == null) {
-            throw new IllegalArgumentException(String.format("未找到对应appId=[%s]的配置，请核实！", appId));
-        }
-        return wxMpMessageRouter;
+        return routers.get(appId);
     }
 
     @EventListener
@@ -87,8 +92,8 @@ public class WxMpConfiguration {
         if (configs == null) {
             throw new RuntimeException("大哥，拜托先看下项目首页的说明（readme文件），添加下相关配置，注意别配错了！");
         }
-
-        WxMpService service = new WxMpServiceImpl();
+        boolean flag = SpringUtils.containsBean(WX_MP_SERVICE);
+        WxMpService service = flag ? SpringUtils.getBean(WX_MP_SERVICE) : new WxMpServiceImpl();
         service.setMultiConfigStorages(configs
                 .stream().map(a -> {
                     WxMpDefaultConfigImpl configStorage = new WxMpDefaultConfigImpl();
@@ -96,14 +101,17 @@ public class WxMpConfiguration {
                     configStorage.setSecret(a.getSecret());
                     configStorage.setToken(a.getToken());
                     configStorage.setAesKey(a.getAesKey());
+                    WxMpService wxMpService=new WxMpServiceImpl();
+                    wxMpService.setWxMpConfigStorage(configStorage);
+                    routers.put(a.getAppId(),  messageRouter(wxMpService));
                     return configStorage;
                 }).collect(Collectors.toMap(WxMpDefaultConfigImpl::getAppId, a -> a, (o, n) -> o)));
-        SpringUtils.context().publishEvent(service);
-        wxMpService=service;
+        if(flag){
+            SpringUtil.registerBean(WX_MP_SERVICE,service);
+        }
     }
 
-    @EventListener
-    public void messageRouter(WxMpService wxMpService) {
+    public WxMpMessageRouter messageRouter(WxMpService wxMpService) {
         final WxMpMessageRouter newRouter = new WxMpMessageRouter(wxMpService);
 
         // 记录所有事件的日志 （异步执行）
@@ -143,7 +151,7 @@ public class WxMpConfiguration {
 
         // 默认
 //        newRouter.rule().async(false).handler(this.msgHandler).end();
-        wxMpMessageRouter=newRouter;
+        return newRouter;
     }
 
 }

@@ -9,7 +9,9 @@ import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.message.WxMaMessageHandler;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouterRule;
+import cn.hutool.extra.spring.SpringUtil;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.wx.config.WxMaProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import org.springframework.context.event.EventListener;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -30,10 +33,16 @@ import java.util.stream.Collectors;
 @Configuration
 public class WxMaConfiguration {
 
-    private static  WxMaService wxMaService;
-    private static  WxMaMessageRouter wxMaMessageRouter;
+    private final static String WX_MA_SERVICE="wxMaService";
+
+    private final static  Map<String, WxMaMessageRouter> routers = Maps.newHashMap();
 
     public static WxMaService getMaService(String appId) {
+        boolean flag = SpringUtils.containsBean(WX_MA_SERVICE);
+        if(!flag){
+            throw new IllegalArgumentException(String.format("未找到对应appId=[%s]的配置，请核实！", appId));
+        }
+        WxMaService wxMaService=SpringUtils.getBean(WX_MA_SERVICE);
         if (wxMaService == null || (wxMaService!=null && !wxMaService.switchover(appId))) {
             throw new IllegalArgumentException(String.format("未找到对应appId=[%s]的配置，请核实！", appId));
         }
@@ -41,11 +50,9 @@ public class WxMaConfiguration {
     }
 
     public static WxMaMessageRouter getRouter(String appId) {
-        if (wxMaMessageRouter == null) {
-            throw new IllegalArgumentException(String.format("未找到对应appId=[%s]的配置，请核实！", appId));
-        }
-        return wxMaMessageRouter;
+        return routers.get(appId);
     }
+
 
 
     @EventListener
@@ -54,7 +61,8 @@ public class WxMaConfiguration {
         if (configs == null) {
             throw new WxRuntimeException("大哥，拜托先看下项目首页的说明（readme文件），添加下相关配置，注意别配错了！");
         }
-        WxMaService maService  = new WxMaServiceImpl();
+        boolean flag = SpringUtils.containsBean(WX_MA_SERVICE);
+        WxMaService maService  =  flag ? SpringUtils.getBean(WX_MA_SERVICE) : new WxMaServiceImpl() ;
         maService.setMultiConfigs(
             configs.stream()
                 .map(a -> {
@@ -66,22 +74,25 @@ public class WxMaConfiguration {
                     config.setToken(a.getToken());
                     config.setAesKey(a.getAesKey());
                     config.setMsgDataFormat(a.getMsgDataFormat());
+                    WxMaService service = new WxMaServiceImpl();
+                    service.setWxMaConfig(config);
+                    routers.put(a.getAppId(), this.newRouter(service));
                     return config;
                 }).collect(Collectors.toMap(WxMaDefaultConfigImpl::getAppid, a -> a, (o, n) -> o)));
-        wxMaService=maService;
-        SpringUtils.context().publishEvent(maService);
+        if(!flag){
+            SpringUtil.registerBean(WX_MA_SERVICE,maService);
+        }
     }
 
-    @EventListener
-    public void wxMaMessageRouter(WxMaService wxMaService) {
-        final WxMaMessageRouter router = new WxMaMessageRouter(wxMaService);
+    private WxMaMessageRouter newRouter(WxMaService service) {
+        final WxMaMessageRouter router = new WxMaMessageRouter(service);
         router
-            .rule().handler(logHandler).next()
-            .rule().async(false).content("订阅消息").handler(subscribeMsgHandler).end()
-            .rule().async(false).content("文本").handler(textHandler).end()
-            .rule().async(false).content("图片").handler(picHandler).end()
-            .rule().async(false).content("二维码").handler(qrcodeHandler).end();
-        wxMaMessageRouter=router;
+                .rule().handler(logHandler).next()
+                .rule().async(false).content("订阅消息").handler(subscribeMsgHandler).end()
+                .rule().async(false).content("文本").handler(textHandler).end()
+                .rule().async(false).content("图片").handler(picHandler).end()
+                .rule().async(false).content("二维码").handler(qrcodeHandler).end();
+        return router;
     }
 
     private final WxMaMessageHandler subscribeMsgHandler = (wxMessage, context, service, sessionManager) -> {

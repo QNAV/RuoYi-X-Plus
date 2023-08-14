@@ -62,6 +62,10 @@ public class WxMaProperties {
          */
         private String msgDataFormat;
         /**
+         * 消息模板ID
+         */
+        private String newMsgTemplId;
+        /**
          * 微信支付商户号
          */
         private String mchId;

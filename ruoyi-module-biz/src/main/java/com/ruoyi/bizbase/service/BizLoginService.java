@@ -22,7 +22,7 @@ import com.ruoyi.system.domain.bo.BizUserAddBo;
 import com.ruoyi.system.domain.bo.BizUserEditBo;
 import com.ruoyi.system.service.IBizUserService;
 import com.ruoyi.system.service.ISysConfigService;
-import com.ruoyi.weixin.miniapp.WeixinMiniappService;
+import com.ruoyi.weixin.miniapp.service.WeixinMiniappService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

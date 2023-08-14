@@ -9,6 +9,7 @@ package com.ruoyi.weixin.pay.config;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
+import com.google.common.collect.Maps;
 import com.ruoyi.wx.config.WxMaProperties;
 import com.ruoyi.wx.exception.WxException;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 @Configuration
 public class WxPayConfiguration {
 
-	private static Map<String ,WxPayService>  wxPayServiceMap;
+	private static Map<String ,WxPayService>  wxPayServiceMap =Maps.newHashMap();
 
 	public static WxPayService getMxPayService(String appId) {
 		if (wxPayServiceMap == null || (!CollectionUtils.isEmpty(wxPayServiceMap) && !wxPayServiceMap.containsKey(appId))) {
