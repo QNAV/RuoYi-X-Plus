@@ -1,14 +1,14 @@
 package com.ruoyi.admin.helper;
 
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.admin.domain.model.AdminLoginUser;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.enums.DeviceType;
 import com.ruoyi.common.enums.UserTypeEnum;
-import com.ruoyi.common.exception.UtilException;
-import com.ruoyi.common.utils.StringUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -27,8 +27,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AdminLoginHelper {
 
-    public static final String JOIN_CODE = ":";
     public static final String LOGIN_USER_KEY = "loginAdminUser";
+    public static final String USER_KEY = "adminUserId";
 
     /**
      * 登录系统
@@ -36,9 +36,7 @@ public class AdminLoginHelper {
      * @param loginUser 登录用户信息
      */
     public static void login(AdminLoginUser loginUser) {
-        SaHolder.getStorage().set(LOGIN_USER_KEY, loginUser);
-        StpUtil.login(loginUser.getLoginId());
-        setLoginUser(loginUser);
+        loginByDevice(loginUser, null);
     }
 
     /**
@@ -49,8 +47,12 @@ public class AdminLoginHelper {
      */
     public static void loginByDevice(AdminLoginUser loginUser, DeviceType deviceType) {
         SaHolder.getStorage().set(LOGIN_USER_KEY, loginUser);
-        StpUtil.login(loginUser.getLoginId(), deviceType.getDevice());
-        setLoginUser(loginUser);
+        SaLoginModel model = new SaLoginModel();
+        if (ObjectUtil.isNotNull(deviceType)) {
+            model.setDevice(deviceType.getDevice());
+        }
+        StpUtil.login(loginUser.getLoginId(), model.setExtra(USER_KEY, loginUser.getUserId()));
+        StpUtil.getTokenSession().set(LOGIN_USER_KEY, loginUser);
     }
 
     /**
@@ -74,26 +76,23 @@ public class AdminLoginHelper {
     }
 
     /**
+     * 获取用户基于token
+     */
+    public static AdminLoginUser getLoginUser(String token) {
+        return (AdminLoginUser) StpUtil.getExtra(token, LOGIN_USER_KEY);
+    }
+
+    /**
      * 获取用户id
      */
     public static Long getUserId() {
-        AdminLoginUser loginUser = getLoginUser();
-        if (ObjectUtil.isNull(loginUser)) {
-            String loginId = StpUtil.getLoginIdAsString();
-            String userId = null;
-            for (UserTypeEnum value : UserTypeEnum.values()) {
-                if (StringUtils.contains(loginId, value.getCode())) {
-                    String[] strs = StringUtils.split(loginId, JOIN_CODE);
-                    // 用户id在总是在最后
-                    userId = strs[strs.length - 1];
-                }
-            }
-            if (StringUtils.isBlank(userId)) {
-                throw new UtilException("登录用户: LoginId异常 => " + loginId);
-            }
-            return Long.parseLong(userId);
+        Long userId;
+        try {
+            userId = Convert.toLong(StpUtil.getExtra(USER_KEY));
+        } catch (Exception e) {
+            return null;
         }
-        return loginUser.getUserId();
+        return userId;
     }
 
     /**

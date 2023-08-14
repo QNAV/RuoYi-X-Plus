@@ -6,7 +6,6 @@
 # com.ruoyi.framework.config.properties.ExcludeUrlProperties,\
 # com.ruoyi.framework.config.properties.MailProperties,\
 # com.ruoyi.framework.config.properties.RedissonProperties,\
-# com.ruoyi.framework.config.properties.SecurityProperties,\
 # com.ruoyi.framework.config.properties.SwaggerProperties,\
 # com.ruoyi.framework.config.properties.ThreadPoolProperties,\
 # com.ruoyi.framework.config.properties.XssProperties,\
@@ -17,10 +16,8 @@
 # com.ruoyi.framework.config.I18nConfig,\
 # com.ruoyi.framework.config.JacksonConfig,\
 # com.ruoyi.framework.config.MailConfig,\
-# com.ruoyi.framework.config.MybatisPlusConfig,\
 # com.ruoyi.framework.config.RedisConfig,\
 # com.ruoyi.framework.config.ResourcesConfig,\
-# com.ruoyi.framework.config.SaTokenConfig,\
 # com.ruoyi.framework.config.SwaggerConfig,\
 # com.ruoyi.framework.config.ThreadPoolConfig,\
 # com.ruoyi.framework.config.TLogConfig,\
@@ -28,6 +25,4 @@
 # com.ruoyi.framework.config.ValidatorConfig,\
 # com.ruoyi.framework.listener.UserActionListener,\
 # com.ruoyi.framework.manager.ShutdownManager,\
-# com.ruoyi.framework.satoken.dao.SaTokenDao,\
-# com.ruoyi.framework.satoken.service.SaPermissionImpl,\
 # com.ruoyi.framework.web.exception.GlobalExceptionHandler

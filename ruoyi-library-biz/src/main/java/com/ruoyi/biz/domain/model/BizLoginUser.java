@@ -134,7 +134,7 @@ public class BizLoginUser implements Serializable {
         if (userId == null) {
             throw new IllegalArgumentException("用户ID不能为空");
         }
-        return userType + BizLoginHelper.JOIN_CODE + userId;
+        return userType + ":" + userId;
     }
 
 

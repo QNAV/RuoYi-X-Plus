@@ -106,7 +106,7 @@ public class AdminLoginUser implements Serializable {
      * 获取登录id
      */
     public String getLoginId() {
-        return userType.getCode() + AdminLoginHelper.JOIN_CODE + userId;
+        return userType.getCode() + ":" + userId;
     }
 
 }

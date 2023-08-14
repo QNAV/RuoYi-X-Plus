@@ -1,0 +1,4 @@
+# org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+# com.ruoyi.biz.config.BizMybatisPlusConfig,\
+# com.ruoyi.biz.config.BizSaTokenConfig,\
+# com.ruoyi.biz.satoken.SecurityProperties
